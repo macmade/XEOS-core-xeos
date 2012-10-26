@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void xeos_interrupt_page_fault_exception( void )
+void xeos_int_machine_check_exception( void )
 {
-    panic( "Page-Fault Exception (#PF)" );
+    panic( "Machine-Check Exception (#MC)" );
 }

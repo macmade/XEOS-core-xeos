@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void xeos_interrupt_nmi_interrupt( void )
+void xeos_int_floating_point_error_exception( void )
 {
-    panic( "NMI Interrupt" );
+    panic( "Floating-Point Error Exception (#MF)" );
 }

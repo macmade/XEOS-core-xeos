@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void xeos_interrupt_general_protection_exception( void )
+void xeos_int_invalid_tss_exception( void )
 {
-    panic( "General Protection Exception (#GP)" );
+    panic( "Invalid TSS Exception (#TS)" );
 }

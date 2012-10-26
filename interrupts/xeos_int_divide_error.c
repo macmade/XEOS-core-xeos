@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void xeos_interrupt_bound_range_exceeded_exception( void )
+void xeos_int_divide_error( void )
 {
-    panic( "BOUND Range Exceeded Exception (#BR)" );
+    panic( "Divide Error Exception (#DE)" );
 }

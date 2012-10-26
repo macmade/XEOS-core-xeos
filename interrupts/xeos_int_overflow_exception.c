@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void xeos_interrupt_default_handler( void )
+void xeos_int_overflow_exception( void )
 {
-    panic( "Un-handled interrupt" );
+    panic( "Overflow Exception (#OF)" );
 }

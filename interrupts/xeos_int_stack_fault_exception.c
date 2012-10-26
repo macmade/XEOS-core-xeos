@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void xeos_interrupt_machine_check_exception( void )
+void xeos_int_stack_fault_exception( void )
 {
-    panic( "Machine-Check Exception (#MC)" );
+    panic( "Stack Fault Exception (#SS)" );
 }

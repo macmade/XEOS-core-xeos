@@ -61,38 +61,10 @@
 
 /* $Id$ */
 
-#ifndef __XEOS_INTERRUPTS_H__
-#define __XEOS_INTERRUPTS_H__
-#pragma once
+#include "private/interrupts.h"
+#include "system.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void xeos_int_default_handler( void );
-void xeos_int_divide_error( void );
-void xeos_int_debug_exception( void );
-void xeos_int_nmi_interrupt( void );
-void xeos_int_breakpoint_exception( void );
-void xeos_int_overflow_exception( void );
-void xeos_int_bound_range_exceeded_exception( void );
-void xeos_int_invalid_opcode_exception( void );
-void xeos_int_device_not_available_exception( void );
-void xeos_int_double_fault_exception( void );
-void xeos_int_coprocessor_segment_overrun( void );
-void xeos_int_invalid_tss_exception( void );
-void xeos_int_segment_not_present( void );
-void xeos_int_stack_fault_exception( void );
-void xeos_int_general_protection_exception( void );
-void xeos_int_page_fault_exception( void );
-void xeos_int_floating_point_error_exception( void );
-void xeos_int_alignment_check_exception( void );
-void xeos_int_machine_check_exception( void );
-void xeos_int_simd_floating_point_exception( void );
-void xeos_int_syscall( void );
-
-#ifdef __cplusplus
+void xeos_int_double_fault_exception( void )
+{
+    panic( "Double Fault Exception (#DF)" );
 }
-#endif
-
-#endif /* __XEOS_INTERRUPTS_H__ */

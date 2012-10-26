@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void xeos_interrupt_stack_fault_exception( void )
+void xeos_int_nmi_interrupt( void )
 {
-    panic( "Stack Fault Exception (#SS)" );
+    panic( "NMI Interrupt" );
 }

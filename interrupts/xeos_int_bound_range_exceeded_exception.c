@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void xeos_interrupt_invalid_tss_exception( void )
+void xeos_int_bound_range_exceeded_exception( void )
 {
-    panic( "Invalid TSS Exception (#TS)" );
+    panic( "BOUND Range Exceeded Exception (#BR)" );
 }

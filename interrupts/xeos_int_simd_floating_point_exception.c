@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void xeos_interrupt_overflow_exception( void )
+void xeos_int_simd_floating_point_exception( void )
 {
-    panic( "Overflow Exception (#OF)" );
+    panic( "SIMD Floating-Point Exception (#XF)" );
 }

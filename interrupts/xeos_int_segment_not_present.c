@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void xeos_interrupt_device_not_available_exception( void )
+void xeos_int_segment_not_present( void )
 {
-    panic( "Device Not Available Exception (#NM)" );
+    panic( "Segment Not Present (#NP)" );
 }

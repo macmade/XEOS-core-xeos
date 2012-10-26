@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void xeos_interrupt_debug_exception( void )
+void xeos_int_invalid_opcode_exception( void )
 {
-    panic( "Debug Exception (#DB)" );
+    panic( "Invalid Opcode Exception (#UD)" );
 }

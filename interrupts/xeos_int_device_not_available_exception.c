@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void xeos_interrupt_invalid_opcode_exception( void )
+void xeos_int_device_not_available_exception( void )
 {
-    panic( "Invalid Opcode Exception (#UD)" );
+    panic( "Device Not Available Exception (#NM)" );
 }

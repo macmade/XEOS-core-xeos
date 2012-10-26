@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void xeos_interrupt_segment_not_present( void )
+void xeos_int_default_handler( void )
 {
-    panic( "Segment Not Present (#NP)" );
+    panic( "Un-handled interrupt" );
 }

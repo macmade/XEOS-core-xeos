@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void xeos_interrupt_floating_point_error_exception( void )
+void xeos_int_page_fault_exception( void )
 {
-    panic( "Floating-Point Error Exception (#MF)" );
+    panic( "Page-Fault Exception (#PF)" );
 }

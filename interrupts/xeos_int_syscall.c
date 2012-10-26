@@ -62,9 +62,64 @@
 /* $Id$ */
 
 #include "private/interrupts.h"
-#include "system.h"
+#include "syscalls.h"
 
-void xeos_interrupt_breakpoint_exception( void )
+void xeos_int_syscall( void )
 {
-    panic( "Breakpoint Exception (#BP)" );
+    unsigned char syscall;
+    
+    __asm__
+    (
+        "mov    %%al,   %[n]"
+        
+        : [ n ] "=m" ( syscall )
+    );
+    
+    switch( syscall )
+    {
+        case SYS_exit:
+            
+            
+            break;
+            
+        case SYS_read:
+            
+            
+            break;
+            
+        case SYS_write:
+            
+            
+            break;
+            
+        case SYS_open:
+            
+            
+            break;
+            
+        case SYS_close:
+            
+            
+            break;
+            
+        case SYS_time:
+            
+            
+            break;
+            
+        case SYS_brk:
+            
+            
+            break;
+            
+        case SYS_reboot:
+            
+            
+            break;
+            
+        case SYS_mmap:
+            
+            
+            break;
+    }
 }

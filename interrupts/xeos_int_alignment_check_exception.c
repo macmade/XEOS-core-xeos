@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void xeos_interrupt_divide_error( void )
+void xeos_int_alignment_check_exception( void )
 {
-    panic( "Divide Error Exception (#DE)" );
+    panic( "Alignment Check Exception (#AC)" );
 }

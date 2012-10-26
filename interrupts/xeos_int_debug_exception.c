@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void xeos_interrupt_coprocessor_segment_overrun( void )
+void xeos_int_debug_exception( void )
 {
-    panic( "Coprocessor Segment Overrun" );
+    panic( "Debug Exception (#DB)" );
 }
