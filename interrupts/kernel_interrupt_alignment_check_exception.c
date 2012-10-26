@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void kernel_interrupt_alignment_check_exception( void )
+void xeos_interrupt_alignment_check_exception( void )
 {
     panic( "Alignment Check Exception (#AC)" );
 }

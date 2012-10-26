@@ -65,19 +65,19 @@
 
 #include "private/video.h"
 
-extern unsigned int __kernel_video_x;
-extern unsigned int __kernel_video_y;
+extern unsigned int __xeos_video_x;
+extern unsigned int __xeos_video_y;
 
-void kernel_video_cursor_move( unsigned int x, unsigned int y )
+void xeos_video_cursor_move( unsigned int x, unsigned int y )
 {
     unsigned int cursor_pos;
     
-    __kernel_video_x = x;
-    __kernel_video_y = y;
+    __xeos_video_x = x;
+    __xeos_video_y = y;
     
-    x          = ( x < KERNEL_VIDEO_COLS - 1 ) ? x : KERNEL_VIDEO_COLS - 1;
-    y          = ( y < KERNEL_VIDEO_ROWS - 1 ) ? y : KERNEL_VIDEO_ROWS - 1;
-    cursor_pos = x + ( y * KERNEL_VIDEO_COLS );
+    x          = ( x < XEOS_VIDEO_COLS - 1 ) ? x : XEOS_VIDEO_COLS - 1;
+    y          = ( y < XEOS_VIDEO_ROWS - 1 ) ? y : XEOS_VIDEO_ROWS - 1;
+    cursor_pos = x + ( y * XEOS_VIDEO_COLS );
     
     hal_io_port_out( CRTC_DATA_REGISTER, CRTC_CURSOR_LOCATION_HIGH );
     hal_io_port_out( CRTC_INDEX_REGISTER, cursor_pos >> 8 );

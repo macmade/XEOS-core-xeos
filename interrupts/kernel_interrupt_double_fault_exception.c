@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void kernel_interrupt_double_fault_exception( void )
+void xeos_interrupt_double_fault_exception( void )
 {
     panic( "Double Fault Exception (#DF)" );
 }

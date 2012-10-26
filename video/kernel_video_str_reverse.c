@@ -64,7 +64,7 @@
 #include "private/video.h"
 #include <string.h>
 
-void kernel_video_str_reverse( char s[] )
+void xeos_video_str_reverse( char s[] )
 {
     int i;
     int j;

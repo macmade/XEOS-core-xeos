@@ -62,14 +62,14 @@
 /* $Id$ */
 
 /* Video attribute byte */
-unsigned char __kernel_video_attr = 0x00;
+unsigned char __xeos_video_attr = 0x00;
 
 /* Cursor position */
-unsigned int __kernel_video_x     = 0x00;
-unsigned int __kernel_video_y     = 0x00;
+unsigned int __xeos_video_x     = 0x00;
+unsigned int __xeos_video_y     = 0x00;
 
 /* Hexadecimal characters */
-char __kernel_video_hex_chars[] =
+char __xeos_video_hex_chars[]   =
 {
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
     'A', 'B', 'C', 'D', 'E', 'F'

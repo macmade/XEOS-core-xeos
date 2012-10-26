@@ -63,32 +63,32 @@
 
 #include "private/video.h"
 
-extern unsigned char __kernel_video_attr;
+extern unsigned char __xeos_video_attr;
 
-void kernel_video_scroll( unsigned int n )
+void xeos_video_scroll( unsigned int n )
 {
     unsigned char * mem;
     unsigned int    i;
     
-    if( n >= KERNEL_VIDEO_ROWS )
+    if( n >= XEOS_VIDEO_ROWS )
     {
-        kernel_video_clear();
+        xeos_video_clear();
         
         return;
     }
     
-    mem = ( unsigned char * )KERNEL_VIDEO_MEM;
+    mem = ( unsigned char * )XEOS_VIDEO_MEM;
     
-    for( i = 0; i < ( KERNEL_VIDEO_COLS * ( KERNEL_VIDEO_ROWS - n ) ) * 2; i++ )
+    for( i = 0; i < ( XEOS_VIDEO_COLS * ( XEOS_VIDEO_ROWS - n ) ) * 2; i++ )
     {
-        mem[ i ] = mem[ i + ( KERNEL_VIDEO_COLS * 2 * n ) ];
+        mem[ i ] = mem[ i + ( XEOS_VIDEO_COLS * 2 * n ) ];
     }
     
     mem += i;
     
-    for( i = 0; i < KERNEL_VIDEO_COLS * 2 * n; i += 2 )
+    for( i = 0; i < XEOS_VIDEO_COLS * 2 * n; i += 2 )
     {
         mem[ i ]     = ' ';
-        mem[ i + 1 ] = __kernel_video_attr;
+        mem[ i + 1 ] = __xeos_video_attr;
     }
 }

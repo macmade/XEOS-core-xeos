@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void kernel_interrupt_general_protection_exception( void )
+void xeos_interrupt_general_protection_exception( void )
 {
     panic( "General Protection Exception (#GP)" );
 }

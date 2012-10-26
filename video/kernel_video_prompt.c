@@ -63,9 +63,9 @@
 
 #include "private/video.h"
 
-void kernel_video_prompt( char * s )
+void xeos_video_prompt( char * s )
 {
-    kernel_video_print( "<XEOS>: " );
-    kernel_video_print( s );
-    kernel_video_print( "\n" );
+    xeos_video_print( "<XEOS>: " );
+    xeos_video_print( s );
+    xeos_video_print( "\n" );
 }

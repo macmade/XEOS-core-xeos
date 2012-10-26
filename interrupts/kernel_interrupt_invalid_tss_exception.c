@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void kernel_interrupt_invalid_tss_exception( void )
+void xeos_interrupt_invalid_tss_exception( void )
 {
     panic( "Invalid TSS Exception (#TS)" );
 }

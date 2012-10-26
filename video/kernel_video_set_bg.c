@@ -61,12 +61,12 @@
 
 /* $Id$ */
 
-extern unsigned char __kernel_video_attr;
+extern unsigned char __xeos_video_attr;
 
 #include "private/video.h"
 
-void kernel_video_set_bg( kernel_video_color color )
+void xeos_video_set_bg( xeos_video_color color )
 {
-    __kernel_video_attr &= ( 0x0F );
-    __kernel_video_attr |= ( color << 4 );
+    __xeos_video_attr &= ( 0x0F );
+    __xeos_video_attr |= ( color << 4 );
 }

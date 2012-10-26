@@ -61,38 +61,38 @@
 
 /* $Id$ */
 
-#ifndef __KERNEL_INTERRUPTS_H__
-#define __KERNEL_INTERRUPTS_H__
+#ifndef __XEOS_INTERRUPTS_H__
+#define __XEOS_INTERRUPTS_H__
 #pragma once
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void kernel_interrupt_default_handler( void );
-void kernel_interrupt_divide_error( void );
-void kernel_interrupt_debug_exception( void );
-void kernel_interrupt_nmi_interrupt( void );
-void kernel_interrupt_breakpoint_exception( void );
-void kernel_interrupt_overflow_exception( void );
-void kernel_interrupt_bound_range_exceeded_exception( void );
-void kernel_interrupt_invalid_opcode_exception( void );
-void kernel_interrupt_device_not_available_exception( void );
-void kernel_interrupt_double_fault_exception( void );
-void kernel_interrupt_coprocessor_segment_overrun( void );
-void kernel_interrupt_invalid_tss_exception( void );
-void kernel_interrupt_segment_not_present( void );
-void kernel_interrupt_stack_fault_exception( void );
-void kernel_interrupt_general_protection_exception( void );
-void kernel_interrupt_page_fault_exception( void );
-void kernel_interrupt_floating_point_error_exception( void );
-void kernel_interrupt_alignment_check_exception( void );
-void kernel_interrupt_machine_check_exception( void );
-void kernel_interrupt_simd_floating_point_exception( void );
-void kernel_interrupt_syscall( void );
+void xeos_interrupt_default_handler( void );
+void xeos_interrupt_divide_error( void );
+void xeos_interrupt_debug_exception( void );
+void xeos_interrupt_nmi_interrupt( void );
+void xeos_interrupt_breakpoint_exception( void );
+void xeos_interrupt_overflow_exception( void );
+void xeos_interrupt_bound_range_exceeded_exception( void );
+void xeos_interrupt_invalid_opcode_exception( void );
+void xeos_interrupt_device_not_available_exception( void );
+void xeos_interrupt_double_fault_exception( void );
+void xeos_interrupt_coprocessor_segment_overrun( void );
+void xeos_interrupt_invalid_tss_exception( void );
+void xeos_interrupt_segment_not_present( void );
+void xeos_interrupt_stack_fault_exception( void );
+void xeos_interrupt_general_protection_exception( void );
+void xeos_interrupt_page_fault_exception( void );
+void xeos_interrupt_floating_point_error_exception( void );
+void xeos_interrupt_alignment_check_exception( void );
+void xeos_interrupt_machine_check_exception( void );
+void xeos_interrupt_simd_floating_point_exception( void );
+void xeos_interrupt_syscall( void );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __KERNEL_INTERRUPTS_H__ */
+#endif /* __XEOS_INTERRUPTS_H__ */

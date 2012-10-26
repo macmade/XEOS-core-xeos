@@ -66,11 +66,11 @@
 
 void panic( char * s )
 {
-    kernel_video_set_fg( KERNEL_VIDEO_COLOR_WHITE );
-    kernel_video_set_bg( KERNEL_VIDEO_COLOR_BLACK );
-    kernel_video_clear();
+    xeos_video_set_fg( XEOS_VIDEO_COLOR_WHITE );
+    xeos_video_set_bg( XEOS_VIDEO_COLOR_BLACK );
+    xeos_video_clear();
     
-    kernel_video_print
+    xeos_video_print
     (
         "\n"
         "    ************************************************************************\n"
@@ -81,13 +81,13 @@ void panic( char * s )
         "\n"
     );
     
-    kernel_video_prompt( "A fatal error occured:" );
-    kernel_video_print( "\n" );
-    kernel_video_set_fg( KERNEL_VIDEO_COLOR_RED );
-    kernel_video_print( s );
-    kernel_video_set_fg( KERNEL_VIDEO_COLOR_WHITE );
-    kernel_video_print( "\n\n" );
-    kernel_video_prompt( "Please reboot the system..." );
+    xeos_video_prompt( "A fatal error occured:" );
+    xeos_video_print( "\n" );
+    xeos_video_set_fg( XEOS_VIDEO_COLOR_RED );
+    xeos_video_print( s );
+    xeos_video_set_fg( XEOS_VIDEO_COLOR_WHITE );
+    xeos_video_print( "\n\n" );
+    xeos_video_prompt( "Please reboot the system..." );
     
     for( ; ; );
 }

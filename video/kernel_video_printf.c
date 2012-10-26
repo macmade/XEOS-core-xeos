@@ -63,11 +63,11 @@
 
 #include "private/video.h"
 
-void kernel_video_printf( char * format, ... )
+void xeos_video_printf( char * format, ... )
 {
     va_list args;
     
     va_start( args, format );
-    kernel_video_vprintf( format, args );
+    xeos_video_vprintf( format, args );
     va_end( args );
 }

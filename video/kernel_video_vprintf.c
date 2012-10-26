@@ -65,7 +65,7 @@
 #include <stdlib.h>
 #include "private/video.h"
 
-void kernel_video_vprintf( char * format, va_list arg )
+void xeos_video_vprintf( char * format, va_list arg )
 {
     unsigned int x;
     unsigned int y;
@@ -92,7 +92,7 @@ void kernel_video_vprintf( char * format, va_list arg )
                 
                 if( *( format ) == '\0' )
                 {
-                    kernel_video_putc( '%', false );
+                    xeos_video_putc( '%', false );
                     break;
                 }
                 
@@ -103,16 +103,16 @@ void kernel_video_vprintf( char * format, va_list arg )
                         
                         va_int = va_arg( arg, int );
                         
-                        kernel_video_itoa( va_int, nbuf, 10 );
-                        kernel_video_print( nbuf );
+                        xeos_video_itoa( va_int, nbuf, 10 );
+                        xeos_video_print( nbuf );
                         break;
                     
                     case 'f':
                         
                         va_double = va_arg( arg, double );
                         
-                        kernel_video_itoa( ( int )va_double, nbuf, 10 );
-                        kernel_video_print( nbuf );
+                        xeos_video_itoa( ( int )va_double, nbuf, 10 );
+                        xeos_video_print( nbuf );
                         break;
                         
                     case 'x':
@@ -120,33 +120,33 @@ void kernel_video_vprintf( char * format, va_list arg )
                         
                         va_uint = va_arg( arg, unsigned int );
                         
-                        kernel_video_utoa( va_uint, nbuf, 16 );
-                        kernel_video_print( "0x" );
-                        kernel_video_print( nbuf );
+                        xeos_video_utoa( va_uint, nbuf, 16 );
+                        xeos_video_print( "0x" );
+                        xeos_video_print( nbuf );
                         break;
                         
                     case 'o':
                         
                         va_uint = va_arg( arg, unsigned int );
                         
-                        kernel_video_utoa( va_uint, nbuf, 8 );
-                        kernel_video_print( "0" );
-                        kernel_video_print( nbuf );
+                        xeos_video_utoa( va_uint, nbuf, 8 );
+                        xeos_video_print( "0" );
+                        xeos_video_print( nbuf );
                         break;
                         
                     case 'u':
                         
                         va_uint = va_arg( arg, unsigned int );
                         
-                        kernel_video_utoa( va_uint, nbuf, 10 );
-                        kernel_video_print( nbuf );
+                        xeos_video_utoa( va_uint, nbuf, 10 );
+                        xeos_video_print( nbuf );
                         break;
                         
                     case 'c':
                         
                         va_char = ( char )va_arg( arg, int );
                         
-                        kernel_video_putc( va_char, false );
+                        xeos_video_putc( va_char, false );
                         break;
                         
                     case 's':
@@ -155,12 +155,12 @@ void kernel_video_vprintf( char * format, va_list arg )
                         
                         if( va_char_ptr == NULL )
                         {
-                            kernel_video_print( "(NULL)" );
+                            xeos_video_print( "(NULL)" );
                             
                         }
                         else
                         {
-                            kernel_video_print( va_char_ptr );
+                            xeos_video_print( va_char_ptr );
                         }
                         
                         break;
@@ -169,20 +169,20 @@ void kernel_video_vprintf( char * format, va_list arg )
                         
                         va_uint_ptr = va_arg( arg, uintptr_t );
                         
-                        kernel_video_utoa( va_uint_ptr, nbuf, 16 );
-                        kernel_video_print( "0x" );
-                        kernel_video_print( nbuf );
+                        xeos_video_utoa( va_uint_ptr, nbuf, 16 );
+                        xeos_video_print( "0x" );
+                        xeos_video_print( nbuf );
                         break;
                         
                     case '%':
                         
-                        kernel_video_putc( '%', false );
+                        xeos_video_putc( '%', false );
                         break;
                     
                     default:
                         
-                        kernel_video_putc( '%', false );
-                        kernel_video_putc( *( format ), false );
+                        xeos_video_putc( '%', false );
+                        xeos_video_putc( *( format ), false );
                         break;
                 }
                 
@@ -190,15 +190,15 @@ void kernel_video_vprintf( char * format, va_list arg )
             
             default:
                 
-                kernel_video_putc( *( format ), false );
+                xeos_video_putc( *( format ), false );
                 break;
         }
         
         format++;
     }
     
-    x = kernel_video_cursor_x();
-    y = kernel_video_cursor_y();
+    x = xeos_video_cursor_x();
+    y = xeos_video_cursor_y();
     
-    kernel_video_cursor_move( x, y );
+    xeos_video_cursor_move( x, y );
 }

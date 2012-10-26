@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "syscalls.h"
 
-void kernel_interrupt_syscall( void )
+void xeos_interrupt_syscall( void )
 {
     unsigned char syscall;
     

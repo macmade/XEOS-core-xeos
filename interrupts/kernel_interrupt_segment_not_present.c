@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void kernel_interrupt_segment_not_present( void )
+void xeos_interrupt_segment_not_present( void )
 {
     panic( "Segment Not Present (#NP)" );
 }

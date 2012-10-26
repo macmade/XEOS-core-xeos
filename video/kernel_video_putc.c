@@ -64,11 +64,11 @@
 #include <stdbool.h>
 #include "private/video.h"
 
-extern unsigned char __kernel_video_attr;
-extern unsigned int __kernel_video_x;
-extern unsigned int __kernel_video_y;
+extern unsigned char __xeos_video_attr;
+extern unsigned int __xeos_video_x;
+extern unsigned int __xeos_video_y;
 
-void kernel_video_putc( char c, bool update_cursor )
+void xeos_video_putc( char c, bool update_cursor )
 {
     unsigned char * mem;
     
@@ -77,37 +77,37 @@ void kernel_video_putc( char c, bool update_cursor )
         return;
     }
     
-    if( __kernel_video_x == KERNEL_VIDEO_COLS )
+    if( __xeos_video_x == XEOS_VIDEO_COLS )
     {
-        __kernel_video_x = 0;
+        __xeos_video_x = 0;
         
-        __kernel_video_y++;
+        __xeos_video_y++;
     }
     
-    if( __kernel_video_y == KERNEL_VIDEO_ROWS - 1 )
+    if( __xeos_video_y == XEOS_VIDEO_ROWS - 1 )
     {
-        kernel_video_scroll( 1 );
-        __kernel_video_y--;
+        xeos_video_scroll( 1 );
+        __xeos_video_y--;
     }
     
     if( c == '\n' )
     {
-        __kernel_video_y++;
+        __xeos_video_y++;
         
-        __kernel_video_x = 0;
+        __xeos_video_x = 0;
     }
     else
     {
-        mem      = ( unsigned char * )KERNEL_VIDEO_MEM;
-        mem     += 2 * ( __kernel_video_x + ( __kernel_video_y * KERNEL_VIDEO_COLS ) );
+        mem      = ( unsigned char * )XEOS_VIDEO_MEM;
+        mem     += 2 * ( __xeos_video_x + ( __xeos_video_y * XEOS_VIDEO_COLS ) );
         mem[ 0 ] = c;
-        mem[ 1 ] = __kernel_video_attr;
+        mem[ 1 ] = __xeos_video_attr;
         
-        __kernel_video_x++;
+        __xeos_video_x++;
     }
     
     if( update_cursor == true )
     {
-        kernel_video_cursor_move( __kernel_video_x, __kernel_video_y );
+        xeos_video_cursor_move( __xeos_video_x, __xeos_video_y );
     }
 }

@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void kernel_interrupt_default_handler( void )
+void xeos_interrupt_default_handler( void )
 {
     panic( "Un-handled interrupt" );
 }

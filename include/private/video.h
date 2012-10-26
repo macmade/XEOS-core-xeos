@@ -61,8 +61,8 @@
 
 /* $Id$ */
 
-#ifndef __KERNEL_VIDEO_H__
-#define __KERNEL_VIDEO_H__
+#ifndef __XEOS_VIDEO_H__
+#define __XEOS_VIDEO_H__
 #pragma once
 
 #include <stdbool.h>
@@ -73,53 +73,53 @@ extern "C" {
 #endif
 
 /* Location of the video memory */
-#define KERNEL_VIDEO_MEM    0xB8000
+#define XEOS_VIDEO_MEM    0xB8000
 
 /* BIOS screen dimensions */
-#define KERNEL_VIDEO_COLS   80
-#define KERNEL_VIDEO_ROWS   25
+#define XEOS_VIDEO_COLS   80
+#define XEOS_VIDEO_ROWS   25
 
 /* BIOS colors */
 typedef enum
 {
-    KERNEL_VIDEO_COLOR_BLACK        = 0x00,
-    KERNEL_VIDEO_COLOR_BLUE         = 0x01,
-    KERNEL_VIDEO_COLOR_GREEN        = 0x02,
-    KERNEL_VIDEO_COLOR_CYAN         = 0x03,
-    KERNEL_VIDEO_COLOR_RED          = 0x04,
-    KERNEL_VIDEO_COLOR_MAGENTA      = 0x05,
-    KERNEL_VIDEO_COLOR_BROWN        = 0x06,
-    KERNEL_VIDEO_COLOR_LIGHTGRAY    = 0x07,
-    KERNEL_VIDEO_COLOR_DARKGRAY     = 0x08,
-    KERNEL_VIDEO_COLOR_LIGHTBLUE    = 0x09,
-    KERNEL_VIDEO_COLOR_LIGHTGREEN   = 0x0A,
-    KERNEL_VIDEO_COLOR_LIGHTCYAN    = 0x0B,
-    KERNEL_VIDEO_COLOR_LIGHTRED     = 0x0C,
-    KERNEL_VIDEO_COLOR_LIGHTMAGENTA = 0x0D,
-    KERNEL_VIDEO_COLOR_LIGHTBROWN   = 0x0E,
-    KERNEL_VIDEO_COLOR_WHITE        = 0x0F
+    XEOS_VIDEO_COLOR_BLACK        = 0x00,
+    XEOS_VIDEO_COLOR_BLUE         = 0x01,
+    XEOS_VIDEO_COLOR_GREEN        = 0x02,
+    XEOS_VIDEO_COLOR_CYAN         = 0x03,
+    XEOS_VIDEO_COLOR_RED          = 0x04,
+    XEOS_VIDEO_COLOR_MAGENTA      = 0x05,
+    XEOS_VIDEO_COLOR_BROWN        = 0x06,
+    XEOS_VIDEO_COLOR_LIGHTGRAY    = 0x07,
+    XEOS_VIDEO_COLOR_DARKGRAY     = 0x08,
+    XEOS_VIDEO_COLOR_LIGHTBLUE    = 0x09,
+    XEOS_VIDEO_COLOR_LIGHTGREEN   = 0x0A,
+    XEOS_VIDEO_COLOR_LIGHTCYAN    = 0x0B,
+    XEOS_VIDEO_COLOR_LIGHTRED     = 0x0C,
+    XEOS_VIDEO_COLOR_LIGHTMAGENTA = 0x0D,
+    XEOS_VIDEO_COLOR_LIGHTBROWN   = 0x0E,
+    XEOS_VIDEO_COLOR_WHITE        = 0x0F
 }
-kernel_video_color;
+xeos_video_color;
 
-void kernel_video_clear( void );
-void kernel_video_set_bg( kernel_video_color color );
-void kernel_video_set_fg( kernel_video_color color );
-void kernel_video_cursor_move( unsigned int x, unsigned int y );
-unsigned int kernel_video_cursor_x( void );
-unsigned int kernel_video_cursor_y( void );
-void kernel_video_prompt( char * s );
-void kernel_video_promptf( char * format, ... );
-void kernel_video_print( char * s );
-void kernel_video_printf( char * format, ... );
-void kernel_video_vprintf( char * format, va_list arg );
-void kernel_video_putc( char c, bool update_cursor );
-void kernel_video_scroll( unsigned int n );
-void kernel_video_str_reverse( char s[] );
-void kernel_video_itoa( int n, char s[], int radix );
-void kernel_video_utoa( unsigned int n, char s[], int radix );
+void xeos_video_clear( void );
+void xeos_video_set_bg( xeos_video_color color );
+void xeos_video_set_fg( xeos_video_color color );
+void xeos_video_cursor_move( unsigned int x, unsigned int y );
+unsigned int xeos_video_cursor_x( void );
+unsigned int xeos_video_cursor_y( void );
+void xeos_video_prompt( char * s );
+void xeos_video_promptf( char * format, ... );
+void xeos_video_print( char * s );
+void xeos_video_printf( char * format, ... );
+void xeos_video_vprintf( char * format, va_list arg );
+void xeos_video_putc( char c, bool update_cursor );
+void xeos_video_scroll( unsigned int n );
+void xeos_video_str_reverse( char s[] );
+void xeos_video_itoa( int n, char s[], int radix );
+void xeos_video_utoa( unsigned int n, char s[], int radix );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __KERNEL_VIDEO_H__ */
+#endif /* __XEOS_VIDEO_H__ */

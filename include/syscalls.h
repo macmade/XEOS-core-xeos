@@ -61,8 +61,8 @@
 
 /* $Id$ */
 
-#ifndef __KERNEL_SYSCALLS_H__
-#define __KERNEL_SYSCALLS_H__
+#ifndef __XEOS_SYSCALLS_H__
+#define __XEOS_SYSCALLS_H__
 #pragma once
 
 #ifdef __cplusplus
@@ -87,4 +87,4 @@ void syscall( unsigned char n );
 }
 #endif
 
-#endif /* __KERNEL_SYSCALLS_H__ */
+#endif /* __XEOS_SYSCALLS_H__ */

@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void kernel_interrupt_coprocessor_segment_overrun( void )
+void xeos_interrupt_coprocessor_segment_overrun( void )
 {
     panic( "Coprocessor Segment Overrun" );
 }

@@ -38,25 +38,25 @@
 #include "system.h"
 #include "syscalls.h"
 
-#define KERNEL_CODE_SEGMENT         0x08
-#define KERNEL_SYSCALL_INTERRUPT    0x20
-#define KERNEL_INTERRUPT_FLAGS      HAL_IDT_FLAG_PRESENT | HAL_IDT_FLAG_32BITS
+#define XEOS_CODE_SEGMENT         0x08
+#define XEOS_SYSCALL_INTERRUPT    0x20
+#define XEOS_INTERRUPT_FLAGS      HAL_IDT_FLAG_PRESENT | HAL_IDT_FLAG_32BITS
 
-#define KERNEL_HR                   "        --------------------------------------------------------------------"
+#define XEOS_HR                   "        --------------------------------------------------------------------"
 
-void kernel_main( void );
-void kernel_main( void )
+void xeos_main( void );
+void xeos_main( void )
 {
     hal_smbios_table_entry     * smbios;
     hal_smbios_bios_infos      * infos_bios;
     hal_smbios_system_infos    * infos_sys;
     hal_smbios_processor_infos * infos_cpu;
     
-    kernel_video_set_fg( KERNEL_VIDEO_COLOR_WHITE );
-    kernel_video_set_bg( KERNEL_VIDEO_COLOR_LIGHTBLUE );
-    kernel_video_clear();
+    xeos_video_set_fg( XEOS_VIDEO_COLOR_WHITE );
+    xeos_video_set_bg( XEOS_VIDEO_COLOR_LIGHTBLUE );
+    xeos_video_clear();
     
-    kernel_video_print
+    xeos_video_print
     (
         "\n"
         "    ------------------------------------------------------------------------ \n"
@@ -78,55 +78,55 @@ void kernel_main( void )
         "\n"
     );
     
-    kernel_video_prompt( "Entering the XEOS kernel:\n" KERNEL_HR );
-    kernel_video_print
+    xeos_video_prompt( "Entering the XEOS kernel:\n" XEOS_HR );
+    xeos_video_print
     (
         "        $Revision$\n"
         "        $Date$\n\n"
     );
     
-    kernel_video_prompt( "Initializing the IDT (Interrupt Descriptor Table)..." );
+    xeos_video_prompt( "Initializing the IDT (Interrupt Descriptor Table)..." );
     
-    hal_idt_init( 0x08, kernel_interrupt_default_handler );
+    hal_idt_init( 0x08, xeos_interrupt_default_handler );
     
-    kernel_video_prompt( "Registering the exception handlers..." );
+    xeos_video_prompt( "Registering the exception handlers..." );
     
-    hal_idt_set_descriptor( HAL_INT_DIVIDE_ERROR,                   kernel_interrupt_divide_error,                   KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_DEBUG_EXCEPTION,                kernel_interrupt_debug_exception,                KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_NMI_INTERRUPT,                  kernel_interrupt_nmi_interrupt,                  KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_BREAKPOINT_EXCEPTION,           kernel_interrupt_breakpoint_exception,           KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_OVERFLOW_EXCEPTION,             kernel_interrupt_overflow_exception,             KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_BOUND_RANGE_EXCEEDED_EXCEPTION, kernel_interrupt_bound_range_exceeded_exception, KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_INVALID_OPCODE_EXCEPTION,       kernel_interrupt_invalid_opcode_exception,       KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_DEVICE_NOT_AVAILABLE_EXCEPTION, kernel_interrupt_device_not_available_exception, KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_DOUBLE_FAULT_EXCEPTION,         kernel_interrupt_double_fault_exception,         KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_COPROCESSOR_SEGMENT_OVERRUN,    kernel_interrupt_coprocessor_segment_overrun,    KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_INVALID_TSS_EXCEPTION,          kernel_interrupt_invalid_tss_exception,          KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_SEGMENT_NOT_PRESENT,            kernel_interrupt_segment_not_present,            KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_STACK_FAULT_EXCEPTION,          kernel_interrupt_stack_fault_exception,          KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_GENERAL_PROTECTION_EXCEPTION,   kernel_interrupt_general_protection_exception,   KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_PAGE_FAULT_EXCEPTION,           kernel_interrupt_page_fault_exception,           KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_FLOATING_POINT_ERROR_EXCEPTION, kernel_interrupt_floating_point_error_exception, KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_ALIGNMENT_CHECK_EXCEPTION,      kernel_interrupt_alignment_check_exception,      KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_MACHINE_CHECK_EXCEPTION,        kernel_interrupt_machine_check_exception,        KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_SIMD_FLOATING_POINT_EXCEPTION,  kernel_interrupt_simd_floating_point_exception,  KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_DIVIDE_ERROR,                   xeos_interrupt_divide_error,                   XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_DEBUG_EXCEPTION,                xeos_interrupt_debug_exception,                XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_NMI_INTERRUPT,                  xeos_interrupt_nmi_interrupt,                  XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_BREAKPOINT_EXCEPTION,           xeos_interrupt_breakpoint_exception,           XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_OVERFLOW_EXCEPTION,             xeos_interrupt_overflow_exception,             XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_BOUND_RANGE_EXCEEDED_EXCEPTION, xeos_interrupt_bound_range_exceeded_exception, XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_INVALID_OPCODE_EXCEPTION,       xeos_interrupt_invalid_opcode_exception,       XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_DEVICE_NOT_AVAILABLE_EXCEPTION, xeos_interrupt_device_not_available_exception, XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_DOUBLE_FAULT_EXCEPTION,         xeos_interrupt_double_fault_exception,         XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_COPROCESSOR_SEGMENT_OVERRUN,    xeos_interrupt_coprocessor_segment_overrun,    XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_INVALID_TSS_EXCEPTION,          xeos_interrupt_invalid_tss_exception,          XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_SEGMENT_NOT_PRESENT,            xeos_interrupt_segment_not_present,            XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_STACK_FAULT_EXCEPTION,          xeos_interrupt_stack_fault_exception,          XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_GENERAL_PROTECTION_EXCEPTION,   xeos_interrupt_general_protection_exception,   XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_PAGE_FAULT_EXCEPTION,           xeos_interrupt_page_fault_exception,           XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_FLOATING_POINT_ERROR_EXCEPTION, xeos_interrupt_floating_point_error_exception, XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_ALIGNMENT_CHECK_EXCEPTION,      xeos_interrupt_alignment_check_exception,      XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_MACHINE_CHECK_EXCEPTION,        xeos_interrupt_machine_check_exception,        XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_SIMD_FLOATING_POINT_EXCEPTION,  xeos_interrupt_simd_floating_point_exception,  XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
     
-    kernel_video_prompt( "Registering the system calls..." );
+    xeos_video_prompt( "Registering the system calls..." );
     
-    hal_idt_set_descriptor( KERNEL_SYSCALL_INTERRUPT, kernel_interrupt_syscall, KERNEL_CODE_SEGMENT, KERNEL_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( XEOS_SYSCALL_INTERRUPT, xeos_interrupt_syscall, XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
     
-    kernel_video_print( "\n" );
-    kernel_video_prompt( "Locating the SMBIOS entry point:\n" KERNEL_HR );
+    xeos_video_print( "\n" );
+    xeos_video_prompt( "Locating the SMBIOS entry point:\n" XEOS_HR );
         
     if( ( smbios = hal_smbios_find_entry() ) == NULL )
     {
         /* Fatal error */
         
-        kernel_video_printf( "        SMBIOS entry point not found!" );
+        xeos_video_printf( "        SMBIOS entry point not found!" );
         for( ; ; );
     }
     
-    kernel_video_printf
+    xeos_video_printf
     (
         "        Entry point address:   %p\n"
         "        Number of structures:  %u\n"
@@ -139,12 +139,12 @@ void kernel_main( void )
         ( unsigned int )smbios->version_minor
     );
     
-    kernel_video_print( "\n" );
-    kernel_video_prompt( "Getting BIOS informations:\n" KERNEL_HR );
+    xeos_video_print( "\n" );
+    xeos_video_prompt( "Getting BIOS informations:\n" XEOS_HR );
     
     infos_bios = ( hal_smbios_bios_infos * )hal_smbios_get_infos( smbios, HAL_SMBIOS_STRUCT_BIOS_INFORMATION );
     
-    kernel_video_printf
+    xeos_video_printf
     (
         "        BIOS vendor:         %s\n"
         "        BIOS version:        %s\n"
@@ -156,7 +156,7 @@ void kernel_main( void )
     
     if( infos_bios->release_major < 0xFF )
     {
-        kernel_video_printf
+        xeos_video_printf
         (
             "        System BIOS version: %i.%i\n",
             infos_bios->release_major,
@@ -165,12 +165,12 @@ void kernel_main( void )
     }
     else
     {
-        kernel_video_print( "        System BIOS version: Unknown\n" );
+        xeos_video_print( "        System BIOS version: Unknown\n" );
     }
     
     if( infos_bios->embedded_controller_firmware_major < 0xFF )
     {
-        kernel_video_printf
+        xeos_video_printf
         (
             "        ECF version:         %i.%i\n",
             infos_bios->embedded_controller_firmware_major,
@@ -179,15 +179,15 @@ void kernel_main( void )
     }
     else
     {
-        kernel_video_print( "        ECF version:         Unknown\n" );
+        xeos_video_print( "        ECF version:         Unknown\n" );
     }
     
-    kernel_video_print( "\n" );
-    kernel_video_prompt( "Getting system informations:\n" KERNEL_HR );
+    xeos_video_print( "\n" );
+    xeos_video_prompt( "Getting system informations:\n" XEOS_HR );
     
     infos_sys = ( hal_smbios_system_infos * )hal_smbios_get_infos( smbios, HAL_SMBIOS_STRUCT_SYSTEM_INFORMATION );
     
-    kernel_video_printf
+    xeos_video_printf
     (
         "        Manufacturer:  %s\n"
         "        Product name:  %s\n"
@@ -207,12 +207,12 @@ void kernel_main( void )
         ( infos_sys->family     == NULL ) ? "Unknown" : infos_sys->family
     );
     
-    kernel_video_print( "\n" );
-    kernel_video_prompt( "Getting CPU informations:\n" KERNEL_HR );
+    xeos_video_print( "\n" );
+    xeos_video_prompt( "Getting CPU informations:\n" XEOS_HR );
     
     infos_cpu = ( hal_smbios_processor_infos * )hal_smbios_get_infos( smbios, HAL_SMBIOS_STRUCT_PROCESSOR_INFORMATION );
     
-    kernel_video_printf
+    xeos_video_printf
     (
         "        CPU socket:          %s\n"
         "        CPU type:            %s\n"

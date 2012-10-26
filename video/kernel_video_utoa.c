@@ -63,9 +63,9 @@
 
 #include "private/video.h"
 
-extern char __kernel_video_hex_chars[];
+extern char __xeos_video_hex_chars[];
 
-void kernel_video_utoa( unsigned int n, char s[], int radix )
+void xeos_video_utoa( unsigned int n, char s[], int radix )
 {
     unsigned int i;
     
@@ -82,11 +82,11 @@ void kernel_video_utoa( unsigned int n, char s[], int radix )
     
     do
     {
-        s[ i++ ] = __kernel_video_hex_chars[ n % radix ];
+        s[ i++ ] = __xeos_video_hex_chars[ n % radix ];
     }
     while( ( n /= radix ) > 0 );
     
     s[ i ] = '\0';
     
-    kernel_video_str_reverse( s );
+    xeos_video_str_reverse( s );
 }

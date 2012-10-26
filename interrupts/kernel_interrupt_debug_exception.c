@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void kernel_interrupt_debug_exception( void )
+void xeos_interrupt_debug_exception( void )
 {
     panic( "Debug Exception (#DB)" );
 }

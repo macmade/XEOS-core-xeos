@@ -63,13 +63,13 @@
 
 #include "private/video.h"
 
-void kernel_video_promptf( char * format, ... )
+void xeos_video_promptf( char * format, ... )
 {
     va_list args;
     
     va_start( args, format );
-    kernel_video_print( "<XEOS>: " );
-    kernel_video_vprintf( format, args );
-    kernel_video_print( "\n" );
+    xeos_video_print( "<XEOS>: " );
+    xeos_video_vprintf( format, args );
+    xeos_video_print( "\n" );
     va_end( args );
 }

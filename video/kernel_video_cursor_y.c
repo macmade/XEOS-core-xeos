@@ -61,11 +61,11 @@
 
 /* $Id$ */
 
-extern unsigned int __kernel_video_y;
+extern unsigned int __xeos_video_y;
 
 #include "private/video.h"
 
-unsigned int kernel_video_cursor_y( void )
+unsigned int xeos_video_cursor_y( void )
 {
-    return __kernel_video_y;
+    return __xeos_video_y;
 }

@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void kernel_interrupt_divide_error( void )
+void xeos_interrupt_divide_error( void )
 {
     panic( "Divide Error Exception (#DE)" );
 }

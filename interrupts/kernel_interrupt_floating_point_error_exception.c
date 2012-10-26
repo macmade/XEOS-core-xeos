@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void kernel_interrupt_floating_point_error_exception( void )
+void xeos_interrupt_floating_point_error_exception( void )
 {
     panic( "Floating-Point Error Exception (#MF)" );
 }

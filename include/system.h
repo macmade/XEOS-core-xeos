@@ -61,8 +61,8 @@
 
 /* $Id$ */
 
-#ifndef __KERNEL_SYSTEM_H__
-#define __KERNEL_SYSTEM_H__
+#ifndef __XEOS_SYSTEM_H__
+#define __XEOS_SYSTEM_H__
 #pragma once
 
 #ifdef __cplusplus
@@ -75,4 +75,4 @@ void panic( char * s );
 }
 #endif
 
-#endif /* __KERNEL_SYSTEM_H__ */
+#endif /* __XEOS_SYSTEM_H__ */

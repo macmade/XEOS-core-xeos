@@ -88,7 +88,7 @@ BITS    32
 global  start
 
 ; XEOS kernel is written in C, and is linked with the file
-extern  kernel_main
+extern  xeos_main
 
 ;-------------------------------------------------------------------------------
 ; XEOS kernel entry point
@@ -105,7 +105,7 @@ start:
     mov     esp,        0x90000
     
     ; Calls the XEOS kernel
-    call    kernel_main
+    call    xeos_main
     
     ; Halts the system
     cli

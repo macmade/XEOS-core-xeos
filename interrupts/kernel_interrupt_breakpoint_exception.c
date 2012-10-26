@@ -64,7 +64,7 @@
 #include "private/interrupts.h"
 #include "system.h"
 
-void kernel_interrupt_breakpoint_exception( void )
+void xeos_interrupt_breakpoint_exception( void )
 {
     panic( "Breakpoint Exception (#BP)" );
 }

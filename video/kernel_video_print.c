@@ -64,20 +64,20 @@
 #include <stdbool.h>
 #include "private/video.h"
 
-void kernel_video_print( char * s )
+void xeos_video_print( char * s )
 {
     unsigned int x;
     unsigned int y;
     
     while( *( s ) != '\0' )
     {
-        kernel_video_putc( *( s ), false );
+        xeos_video_putc( *( s ), false );
         
         s++;
     }
     
-    x = kernel_video_cursor_x();
-    y = kernel_video_cursor_y();
+    x = xeos_video_cursor_x();
+    y = xeos_video_cursor_y();
     
-    kernel_video_cursor_move( x, y );
+    xeos_video_cursor_move( x, y );
 }
