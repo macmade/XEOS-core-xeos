@@ -87,33 +87,33 @@ void xeos_main( void )
     
     xeos_video_prompt( "Initializing the IDT (Interrupt Descriptor Table)..." );
     
-    hal_idt_init( 0x08, xeos_interrupt_default_handler );
+    hal_idt_init( 0x08, xeos_int_default_handler );
     
     xeos_video_prompt( "Registering the exception handlers..." );
     
-    hal_idt_set_descriptor( HAL_INT_DIVIDE_ERROR,                   xeos_interrupt_divide_error,                   XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_DEBUG_EXCEPTION,                xeos_interrupt_debug_exception,                XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_NMI_INTERRUPT,                  xeos_interrupt_nmi_interrupt,                  XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_BREAKPOINT_EXCEPTION,           xeos_interrupt_breakpoint_exception,           XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_OVERFLOW_EXCEPTION,             xeos_interrupt_overflow_exception,             XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_BOUND_RANGE_EXCEEDED_EXCEPTION, xeos_interrupt_bound_range_exceeded_exception, XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_INVALID_OPCODE_EXCEPTION,       xeos_interrupt_invalid_opcode_exception,       XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_DEVICE_NOT_AVAILABLE_EXCEPTION, xeos_interrupt_device_not_available_exception, XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_DOUBLE_FAULT_EXCEPTION,         xeos_interrupt_double_fault_exception,         XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_COPROCESSOR_SEGMENT_OVERRUN,    xeos_interrupt_coprocessor_segment_overrun,    XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_INVALID_TSS_EXCEPTION,          xeos_interrupt_invalid_tss_exception,          XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_SEGMENT_NOT_PRESENT,            xeos_interrupt_segment_not_present,            XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_STACK_FAULT_EXCEPTION,          xeos_interrupt_stack_fault_exception,          XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_GENERAL_PROTECTION_EXCEPTION,   xeos_interrupt_general_protection_exception,   XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_PAGE_FAULT_EXCEPTION,           xeos_interrupt_page_fault_exception,           XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_FLOATING_POINT_ERROR_EXCEPTION, xeos_interrupt_floating_point_error_exception, XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_ALIGNMENT_CHECK_EXCEPTION,      xeos_interrupt_alignment_check_exception,      XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_MACHINE_CHECK_EXCEPTION,        xeos_interrupt_machine_check_exception,        XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
-    hal_idt_set_descriptor( HAL_INT_SIMD_FLOATING_POINT_EXCEPTION,  xeos_interrupt_simd_floating_point_exception,  XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_DIVIDE_ERROR,                   xeos_int_divide_error,                   XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_DEBUG_EXCEPTION,                xeos_int_debug_exception,                XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_NMI_INTERRUPT,                  xeos_int_nmi_interrupt,                  XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_BREAKPOINT_EXCEPTION,           xeos_int_breakpoint_exception,           XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_OVERFLOW_EXCEPTION,             xeos_int_overflow_exception,             XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_BOUND_RANGE_EXCEEDED_EXCEPTION, xeos_int_bound_range_exceeded_exception, XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_INVALID_OPCODE_EXCEPTION,       xeos_int_invalid_opcode_exception,       XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_DEVICE_NOT_AVAILABLE_EXCEPTION, xeos_int_device_not_available_exception, XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_DOUBLE_FAULT_EXCEPTION,         xeos_int_double_fault_exception,         XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_COPROCESSOR_SEGMENT_OVERRUN,    xeos_int_coprocessor_segment_overrun,    XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_INVALID_TSS_EXCEPTION,          xeos_int_invalid_tss_exception,          XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_SEGMENT_NOT_PRESENT,            xeos_int_segment_not_present,            XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_STACK_FAULT_EXCEPTION,          xeos_int_stack_fault_exception,          XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_GENERAL_PROTECTION_EXCEPTION,   xeos_int_general_protection_exception,   XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_PAGE_FAULT_EXCEPTION,           xeos_int_page_fault_exception,           XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_FLOATING_POINT_ERROR_EXCEPTION, xeos_int_floating_point_error_exception, XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_ALIGNMENT_CHECK_EXCEPTION,      xeos_int_alignment_check_exception,      XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_MACHINE_CHECK_EXCEPTION,        xeos_int_machine_check_exception,        XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( HAL_INT_SIMD_FLOATING_POINT_EXCEPTION,  xeos_int_simd_floating_point_exception,  XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
     
     xeos_video_prompt( "Registering the system calls..." );
     
-    hal_idt_set_descriptor( XEOS_SYSCALL_INTERRUPT, xeos_interrupt_syscall, XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
+    hal_idt_set_descriptor( XEOS_SYSCALL_INTERRUPT, xeos_int_syscall, XEOS_CODE_SEGMENT, XEOS_INTERRUPT_FLAGS );
     
     xeos_video_print( "\n" );
     xeos_video_prompt( "Locating the SMBIOS entry point:\n" XEOS_HR );
