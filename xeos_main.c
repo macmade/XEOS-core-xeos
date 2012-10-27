@@ -31,6 +31,7 @@
 
 /* $Id$ */
 
+void xeos_main( void ) __attribute__( ( noreturn ) );
 void xeos_main( void )
 {
     for( ; ; );

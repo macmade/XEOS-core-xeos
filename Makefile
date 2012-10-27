@@ -71,10 +71,6 @@ PROMPT              := "    ["$(COLOR_GREEN)" XEOS "$(COLOR_NONE)"]> ["$(COLOR_G
 # Paths
 #-------------------------------------------------------------------------------
 
-DIR_SRC_INTERRUPTS  := $(PATH_SRC_CORE_KERNEL)interrupts/
-DIR_SRC_VIDEO       := $(PATH_SRC_CORE_KERNEL)video/
-DIR_SRC_SYSCALLS    := $(PATH_SRC_CORE_KERNEL)syscalls/
-DIR_SRC_SYSTEM      := $(PATH_SRC_CORE_KERNEL)system/
 DIR_SRC_INC         := $(PATH_SRC_CORE_KERNEL)include/
 
 #-------------------------------------------------------------------------------
@@ -101,10 +97,6 @@ EXT_ASM_64           = 64.s
 vpath %$(EXT_ASM_32)    $(PATH_SRC_CORE_KERNEL)
 vpath %$(EXT_ASM_64)    $(PATH_SRC_CORE_KERNEL)
 vpath %$(EXT_C)         $(PATH_SRC_CORE_KERNEL)
-vpath %$(EXT_C)         $(DIR_SRC_VIDEO)
-vpath %$(EXT_C)         $(DIR_SRC_INTERRUPTS)
-vpath %$(EXT_C)         $(DIR_SRC_SYSCALLS)
-vpath %$(EXT_C)         $(DIR_SRC_SYSTEM)
 vpath %$(EXT_H)         $(DIR_SRC_INC)
 
 #-------------------------------------------------------------------------------
@@ -122,37 +114,21 @@ vpath %$(EXT_H)         $(DIR_SRC_INC)
 _FILES_ASM_32                   = $(foreach dir,$(PATH_SRC_CORE_KERNEL),$(wildcard $(PATH_SRC_CORE_KERNEL)*$(EXT_ASM_32)))
 _FILES_ASM_64                   = $(foreach dir,$(PATH_SRC_CORE_KERNEL),$(wildcard $(PATH_SRC_CORE_KERNEL)*$(EXT_ASM_64)))
 _FILES_C                        = $(foreach dir,$(PATH_SRC_CORE_KERNEL),$(wildcard $(PATH_SRC_CORE_KERNEL)*$(EXT_C)))
-_FILES_C_INTERRUPTS             = $(foreach dir,$(DIR_SRC_INTERRUPTS),$(wildcard $(DIR_SRC_INTERRUPTS)*$(EXT_C)))
-_FILES_C_VIDEO                  = $(foreach dir,$(DIR_SRC_VIDEO),$(wildcard $(DIR_SRC_VIDEO)*$(EXT_C)))
-_FILES_C_SYSCALLS               = $(foreach dir,$(DIR_SRC_SYSCALLS),$(wildcard $(DIR_SRC_SYSCALLS)*$(EXT_C)))
-_FILES_C_SYSTEM                 = $(foreach dir,$(DIR_SRC_SYSTEM),$(wildcard $(DIR_SRC_SYSTEM)*$(EXT_C)))
 
 # Gets only the file name of the code files
 _FILES_ASM_REL_32               = $(notdir $(_FILES_ASM_32))
 _FILES_ASM_REL_64               = $(notdir $(_FILES_ASM_64))
 _FILES_C_REL                    = $(notdir $(_FILES_C))
-_FILES_C_REL_INTERRUPTS         = $(notdir $(_FILES_C_INTERRUPTS))
-_FILES_C_REL_VIDEO              = $(notdir $(_FILES_C_VIDEO))
-_FILES_C_REL_SYSCALLS           = $(notdir $(_FILES_C_SYSCALLS))
-_FILES_C_REL_SYSTEM             = $(notdir $(_FILES_C_SYSTEM))
 
 # Replace the code extension by the object one
 _FILES_ASM_OBJ_32               = $(subst $(EXT_ASM_32),$(EXT_ASM_32)$(EXT_OBJ),$(_FILES_ASM_REL_32))
 _FILES_ASM_OBJ_64               = $(subst $(EXT_ASM_64),$(EXT_ASM_64)$(EXT_OBJ),$(_FILES_ASM_REL_64))
 _FILES_C_OBJ                    = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL))
-_FILES_C_OBJ_INTERRUPTS         = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_INTERRUPTS))
-_FILES_C_OBJ_VIDEO              = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_VIDEO))
-_FILES_C_OBJ_SYSCALLS           = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_SYSCALLS))
-_FILES_C_OBJ_SYSTEM             = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_SYSTEM))
 
 # Prefix all binary files with the build directory
 _FILES_ASM_OBJ_BUILD_32         = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_ASM_OBJ_32))
 _FILES_ASM_OBJ_BUILD_64         = $(addprefix $(PATH_BUILD_64_CORE_OBJ_KERNEL),$(_FILES_ASM_OBJ_64))
 _FILES_C_OBJ_BUILD              = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ))
-_FILES_C_OBJ_BUILD_INTERRUPTS   = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_INTERRUPTS))
-_FILES_C_OBJ_BUILD_VIDEO        = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_VIDEO))
-_FILES_C_OBJ_BUILD_SYSCALLS     = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_SYSCALLS))
-_FILES_C_OBJ_BUILD_SYSTEM       = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_SYSTEM))
 
 #-------------------------------------------------------------------------------
 # Built-in targets
@@ -169,7 +145,7 @@ _FILES_C_OBJ_BUILD_SYSTEM       = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$
 #-------------------------------------------------------------------------------
 
 # Build the full project
-all: $(_FILES_ASM_OBJ_BUILD_32) $(_FILES_ASM_OBJ_BUILD_64) $(_FILES_C_OBJ_BUILD) $(_FILES_C_OBJ_BUILD_INTERRUPTS) $(_FILES_C_OBJ_BUILD_VIDEO) $(_FILES_C_OBJ_BUILD_SYSCALLS) $(_FILES_C_OBJ_BUILD_SYSTEM)
+all: $(_FILES_ASM_OBJ_BUILD_32) $(_FILES_ASM_OBJ_BUILD_64) $(_FILES_C_OBJ_BUILD)
 	
 	@:
 
