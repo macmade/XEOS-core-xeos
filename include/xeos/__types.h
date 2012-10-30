@@ -73,11 +73,16 @@ extern "C" {
 #define __XEOS_FLT_EVAL_METHOD__        1
 
 typedef unsigned int                    __XEOS_size_t;
-typedef char *                          __XEOS_va_list;
 typedef long                            __XEOS_clock_t;
 typedef unsigned long                   __XEOS_time_t;
 typedef long                            __XEOS_intptr_t;
 typedef unsigned long                   __XEOS_uintptr_t;
+
+#ifdef __clang__
+    typedef __builtin_va_list           __XEOS_va_list;
+#else
+    typedef char *                      __XEOS_va_list;
+#endif
 
 #ifdef __WCHAR_TYPE__
     typedef __WCHAR_TYPE__              __XEOS_wchar_t;
