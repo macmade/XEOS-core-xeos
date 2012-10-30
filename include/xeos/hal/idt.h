@@ -71,90 +71,37 @@
 extern "C" {
 #endif
 
-#define HAL_IDT_MAX_DESCRIPTORS 256
+#define XEOS_HAL_IDT_MAX_DESCRIPTORS    256
 
-#define HAL_IDT_FLAG_16BITS     0x06    /* 00000110 */
-#define HAL_IDT_FLAG_32BITS     0x0E    /* 00001110 */
-#define HAL_IDT_FLAG_RING1      0x40    /* 01000000 */
-#define HAL_IDT_FLAG_RING2      0x20    /* 00100000 */
-#define HAL_IDT_FLAG_RING3      0x60    /* 01100000 */
-#define HAL_IDT_FLAG_PRESENT    0x80    /* 10000000 */
+#define XEOS_HAL_IDT_FLAG_16BITS        0x06    /* 00000110 */
+#define XEOS_HAL_IDT_FLAG_32BITS        0x0E    /* 00001110 */
+#define XEOS_HAL_IDT_FLAG_RING1         0x40    /* 01000000 */
+#define XEOS_HAL_IDT_FLAG_RING2         0x20    /* 00100000 */
+#define XEOS_HAL_IDT_FLAG_RING3         0x60    /* 01100000 */
+#define XEOS_HAL_IDT_FLAG_PRESENT       0x80    /* 10000000 */
 
-/**
- * A descriptor for the IDT takes the following formats. Some of the format
- * changes depending on what type of descriptor this is:
- *      
- *      Bits 0-15:
- *          
- *          Interrupt:  Offset address - Bits 0-15 of IR address
- *          Trap Gate:  Offset address - Bits 0-15 of IR address
- *          Task Gate:  Not used.
- *      
- *      Bits 16-31:
- *          
- *          Interrupt:  Segment selector (useually 0x10)
- *          Trap Gate:  Segment selector (useually 0x10)
- *          Task Gate:  TSS Selector
- *      
- *      Bits 31-35:     Not used
- *      
- *      Bits 36-38:
- *          
- *          Interrupt:  Reserved. Must be 0.
- *          Trap Gate:  Reserved. Must be 0.
- *          Task Gate:  Not used.
- *      
- *      Bits 39-41:
- *          
- *          Interrupt:  Of the format 0D110, where D determins size:
- *              
- *              01110 - 32 bit descriptor
- *              00110 - 16 bit descriptor
- *              
- *          Trap Gate: Of the format 0D111, where D determins size
- *              
- *              01111 - 32 bit descriptor
- *              00111 - 16 bit descriptor
- *              
- *          Task Gate:  Must be 00101
- *      
- *      Bits 42-44: Descriptor Privilege Level (DPL)
- *          
- *          00:     Ring 0
- *          01:     Ring 1
- *          10:     Ring 2
- *          11:     Ring 3
- *      
- *      Bit 45: Segment is present (1: present, 0: not present)
- *      
- *      Bits 46-62:
- *          
- *          Interrupt:  Offset address - Bits 16-31 of IR address
- *          Trap Gate:  Offset address - Bits 16-31 of IR address
- *          Task Gate:  Not used
- */
-struct hal_idt_entry
+typedef struct _XEOS_HAL_IDT_Entry
 {
-    uint16_t    address_low;
+    uint16_t    addressLow;
     uint16_t    selector;
     uint8_t     reserved;
     uint8_t     flags;
-    uint16_t    address_high;
+    uint16_t    addressHigh;
 }
-__attribute__( ( packed ) );
+XEOS_HAL_IDT_Entry;
 
-struct hal_idt_ptr
+typedef struct _XEOS_HAL_IDT_Pointer
 {
     uint16_t    limit;
     uint32_t    base;
 }
-__attribute__( ( packed ) );
+XEOS_HAL_IDT_Pointer;
 
-typedef void ( * hal_irq_handler )( void );
+typedef void ( * XEOS_HAL_IDT_IRQHandler )( void );
 
-void hal_idt_init( uint16_t sel, hal_irq_handler default_handler );
-struct hal_idt_entry * hal_idt_get_descriptor( unsigned int i );
-void hal_idt_set_descriptor( unsigned int i, hal_irq_handler handler, uint16_t sel, uint8_t flags );
+void XEOS_HAL_IDT_Init( uint16_t sel, XEOS_HAL_IDT_IRQHandler defaultHandler );
+XEOS_HAL_IDT_Entry * XEOS_HAL_IDT_GetDescriptor( unsigned int i );
+void XEOS_HAL_IDT_SetDescriptor( unsigned int i, XEOS_HAL_IDT_IRQHandler handler, uint16_t sel, uint8_t flags );
 
 #ifdef __cplusplus
 }

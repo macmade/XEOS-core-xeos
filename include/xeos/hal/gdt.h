@@ -71,58 +71,9 @@
 extern "C" {
 #endif
 
-#define HAL_GDT_MAX_DESCRIPTORS 5
+#define HAL_GDT_MAX_DESCRIPTORS     5
 
-/**
- * A descriptor for the GDT takes the following format:
- *      
- *      Bits  0 - 15:   Segment limit (0-15)
- * 
- *      Bits 16 - 30:   Base address (0-23)
- * 
- *      Bit  40:        Access bit (only for virtual memory)
- * 
- *      Bits 41 - 43:   Descriptor type
- * 
- *                          Bit 41: Readable and writeable
- *                                      0:  Read only (data segment)
- *                                          Execute only (code segment)
- *                                      1:  Read and write (data segment)
- *                                      1:  Read and execute (code segment)
- *                          Bit 42: Expansion direction (for data segment)
- *                                  or conforming (code segment)
- *                          Bit 43: Executable segment
- *                                      0:  Data segment
- *                                      1:  Code segment
- * 
- *      Bit  44:        Descriptor bit
- * 
- *                          0:      System descriptor
- *                          1:      Code or data descriptor
- * 
- *      Bits 45 - 46:   Descriptor privilege level (rings 0 to 3)
- * 
- *      Bit  47:        Segment is in memory (only for virtual memory)
- * 
- *      Bits 48 - 51:   Segment limit (16-19)
- * 
- *      Bit  52:        Reserved (for OS)
- * 
- *      Bit  53:        Reserved
- * 
- *      Bit  54:        Segment type
- * 
- *                          0:      16 bits
- *                          1:      32 bits
- * 
- *      Bit  55:        Granularity
- * 
- *                          0:      None
- *                          1:      Limit is multiplied by 4K
- * 
- *      Bits 56 - 63:   Base address (24-31)
- */
-struct hal_gdt_entry
+typedef struct _XEOS_HAL_GDT_Entry
 {
     uint16_t    limit;
     uint16_t    address_low;
@@ -130,18 +81,18 @@ struct hal_gdt_entry
     uint16_t    flags;
     uint8_t     address_high;
 }
-__attribute__( ( packed ) );
+XEOS_HAL_GDT_Entry;
 
-struct hal_gdt_ptr
+typedef struct _XEOS_HAL_GDT_Pointer
 {
     uint16_t    limit;
     uint32_t    base;
 }
-__attribute__( ( packed ) );
+XEOS_HAL_GDT_Pointer;
 
-void hal_gdt_init( void );
-struct hal_gdt_entry * hal_gdt_get_descriptor( unsigned int i );
-void hal_gdt_set_descriptor( unsigned int i );
+void XEOS_HAL_GDT_Init( void );
+XEOS_HAL_GDT_Entry * XEOS_HAL_GDT_GetDescriptor( unsigned int i );
+void XEOS_HAL_GDT_SetDescriptor( unsigned int i );
 
 #ifdef __cplusplus
 }
