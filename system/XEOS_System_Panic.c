@@ -66,10 +66,37 @@
 
 void XEOS_System_Panic( char * message )
 {
+    XEOS_Video_SetFG( XEOS_Video_ColorWhite );
     XEOS_Video_SetBG( XEOS_Video_ColorBlue );
     XEOS_Video_Clear();
     
-    ( void )message;
+    XEOS_Video_Print( "\n" );
+    XEOS_Video_Print( "                             " );
+    XEOS_Video_SetFG( XEOS_Video_ColorBlue );
+    XEOS_Video_SetBG( XEOS_Video_ColorGrayLight );
+    XEOS_Video_Print( " XEOS - KERNEL PANIC " );
+    XEOS_Video_SetFG( XEOS_Video_ColorWhite );
+    XEOS_Video_SetBG( XEOS_Video_ColorBlue );
+    XEOS_Video_Print( "                             " );
+    XEOS_Video_Print( "\n" );
+    XEOS_Video_Print( "\n" );
+    XEOS_Video_Print( "\n" );
+    XEOS_Video_Print( "A problem has been detected and XEOS has been shut down to prevent damage\nto your computer." );
+    XEOS_Video_Print( "\n" );
+    XEOS_Video_Print( "\n" );
+    XEOS_Video_Print( "Please restart your computer." );
+    XEOS_Video_Print( "\n" );
+    XEOS_Video_Print( "Any unsaved information will be lost." );
+    XEOS_Video_Print( "\n" );
+    XEOS_Video_Print( "\n" );
+    XEOS_Video_Print( "\n" );
+    XEOS_Video_SetFG( XEOS_Video_ColorGrayLight );
+    XEOS_Video_Print( "Technical information:" );
+    XEOS_Video_SetFG( XEOS_Video_ColorWhite );
+    XEOS_Video_Print( "\n" );
+    XEOS_Video_Print( "\n" );
+    XEOS_Video_Print( message );
+    XEOS_Video_Print( "\n" );
     
     __asm__
     (
