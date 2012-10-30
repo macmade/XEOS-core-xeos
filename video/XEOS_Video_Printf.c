@@ -65,5 +65,9 @@
 
 void XEOS_Video_Printf( char * format, ... )
 {
-    ( void )format;
+    va_list args;
+    
+    va_start( args, format );
+    XEOS_Video_VPrintf( format, args );
+    va_end( args );
 }

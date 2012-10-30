@@ -108,7 +108,7 @@ void XEOS_Video_Promptf( char * format, ... );
 void XEOS_Video_Print( char * s );
 void XEOS_Video_Printf( char * format, ... );
 void XEOS_Video_VPrintf( char * format, va_list arg );
-void XEOS_Video_Putc( char c, bool updateCursor );
+void XEOS_Video_Putc( unsigned char c, bool updateCursor );
 void XEOS_Video_Scroll( unsigned int n );
 void XEOS_Video_StringReverse( char s[] );
 void XEOS_Video_Itoa( int n, char s[], int radix );
@@ -117,6 +117,7 @@ void XEOS_Video_Utoa( unsigned int n, char s[], int radix );
 extern unsigned char    __XEOS_Video_Attribute;
 extern unsigned int     __XEOS_Video_X;
 extern unsigned int     __XEOS_Video_Y;
+extern char           * __XEOS_Video_Prompt;
 extern char             __XEOS_Video_HexChars[ 16 ];
 
 #ifdef __cplusplus

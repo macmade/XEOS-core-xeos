@@ -65,5 +65,6 @@
 
 void XEOS_Video_SetBG( XEOS_Video_Color color )
 {
-    ( void )color;
+    __XEOS_Video_Attribute &= ( 0x0F );
+    __XEOS_Video_Attribute |= ( color << 4 );
 }

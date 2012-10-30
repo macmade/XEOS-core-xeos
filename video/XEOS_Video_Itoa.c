@@ -65,7 +65,37 @@
 
 void XEOS_Video_Itoa( int n, char s[], int radix )
 {
-    ( void )n;
-    ( void )s;
-    ( void )radix;
+    unsigned int i;
+    int          sign;
+    
+    if( radix > 16 )
+    {
+        radix = 16;
+    }
+    else if( radix < 2 )
+    {
+        radix = 10;
+    }
+    
+    if( ( sign = n ) < 0 )
+    {
+        n = -n;
+    }
+    
+    i = 0;
+    
+    do
+    {
+        s[ i++ ] = __XEOS_Video_HexChars[ n % radix ];
+    }
+    while( ( n /= radix ) > 0 );
+    
+    if( sign < 0 )
+    {
+        s[ i++ ] = '-';
+    }
+    
+    s[ i ] = '\0';
+    
+    XEOS_Video_StringReverse( s );
 }

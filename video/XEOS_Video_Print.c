@@ -65,5 +65,18 @@
 
 void XEOS_Video_Print( char * s )
 {
-    ( void )s;
+    unsigned int x;
+    unsigned int y;
+    
+    while( *( s ) != 0 )
+    {
+        XEOS_Video_Putc( ( unsigned char )( *( s ) ), false );
+        
+        s++;
+    }
+    
+    x = XEOS_Video_X();
+    y = XEOS_Video_Y();
+    
+    XEOS_Video_MoveCursor( x, y );
 }

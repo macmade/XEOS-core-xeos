@@ -65,5 +65,7 @@
 
 void XEOS_Video_Prompt( char * s )
 {
-    ( void )s;
+    XEOS_Video_Print( __XEOS_Video_Prompt );
+    XEOS_Video_Print( s );
+    XEOS_Video_Print( "\n" );
 }

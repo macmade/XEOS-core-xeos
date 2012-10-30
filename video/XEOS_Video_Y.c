@@ -65,5 +65,5 @@
 
 unsigned int XEOS_Video_Y( void )
 {
-    return 0;
+    return __XEOS_Video_Y;
 }

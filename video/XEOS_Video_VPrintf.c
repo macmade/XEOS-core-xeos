@@ -62,9 +62,148 @@
 /* $Id$ */
 
 #include "xeos/video.h"
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
 
 void XEOS_Video_VPrintf( char * format, va_list arg )
 {
-    ( void )format;
+    unsigned int x;
+    unsigned int y;
+    int          va_int;
+    unsigned int va_uint;
+    double       va_double;
+    char         va_char;
+    char       * va_char_ptr;
+    uintptr_t    va_uint_ptr;
+    char         nbuf[ 32 ];
+    
+    memset( nbuf, 0, 32 );
+    
+    if( format == NULL || *( format ) == 0 )
+    {
+        return;
+    }
+    
     ( void )arg;
+    
+    while( *( format ) != 0 )
+    {
+        switch( *( format ) )
+        {
+            case '%':
+                
+                format++;
+                
+                if( *( format ) == 0 )
+                {
+                    XEOS_Video_Putc( '%', false );
+                    break;
+                }
+                
+                switch( *( format ) )
+                {
+                    case 'd':
+                    case 'i':
+                        
+                        va_int = va_arg( arg, int );
+                        
+                        XEOS_Video_Itoa( va_int, nbuf, 10 );
+                        XEOS_Video_Print( nbuf );
+                        break;
+                    
+                    case 'f':
+                        
+                        va_double = va_arg( arg, double );
+                        
+                        XEOS_Video_Itoa( ( int )va_double, nbuf, 10 );
+                        XEOS_Video_Print( nbuf );
+                        break;
+                        
+                    case 'x':
+                    case 'X':
+                        
+                        va_uint = va_arg( arg, unsigned int );
+                        
+                        XEOS_Video_Utoa( va_uint, nbuf, 16 );
+                        XEOS_Video_Print( "0x" );
+                        XEOS_Video_Print( nbuf );
+                        break;
+                        
+                    case 'o':
+                        
+                        va_uint = va_arg( arg, unsigned int );
+                        
+                        XEOS_Video_Utoa( va_uint, nbuf, 8 );
+                        XEOS_Video_Print( "0" );
+                        XEOS_Video_Print( nbuf );
+                        break;
+                        
+                    case 'u':
+                        
+                        va_uint = va_arg( arg, unsigned int );
+                        
+                        XEOS_Video_Utoa( va_uint, nbuf, 10 );
+                        XEOS_Video_Print( nbuf );
+                        break;
+                        
+                    case 'c':
+                        
+                        va_char = ( char )va_arg( arg, int );
+                        
+                        XEOS_Video_Putc( ( unsigned char )va_char, false );
+                        break;
+                        
+                    case 's':
+                        
+                        va_char_ptr = va_arg( arg, char * );
+                        
+                        if( va_char_ptr == NULL )
+                        {
+                            XEOS_Video_Print( "(NULL)" );
+                            
+                        }
+                        else
+                        {
+                            XEOS_Video_Print( va_char_ptr );
+                        }
+                        
+                        break;
+                        
+                    case 'p':
+                        
+                        va_uint_ptr = va_arg( arg, uintptr_t );
+                        
+                        XEOS_Video_Utoa( ( unsigned int )va_uint_ptr, nbuf, 16 );
+                        XEOS_Video_Print( "0x" );
+                        XEOS_Video_Print( nbuf );
+                        break;
+                        
+                    case '%':
+                        
+                        XEOS_Video_Putc( '%', false );
+                        break;
+                    
+                    default:
+                        
+                        XEOS_Video_Putc( '%', false );
+                        XEOS_Video_Putc( ( unsigned char )( *( format ) ), false );
+                        break;
+                }
+                
+                break;
+            
+            default:
+                
+                XEOS_Video_Putc( ( unsigned char )( *( format ) ), false );
+                break;
+        }
+        
+        format++;
+    }
+    
+    x = XEOS_Video_X();
+    y = XEOS_Video_Y();
+    
+    XEOS_Video_MoveCursor( x, y );
 }

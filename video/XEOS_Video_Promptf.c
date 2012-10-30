@@ -65,5 +65,12 @@
 
 void XEOS_Video_Promptf( char * format, ... )
 {
-    ( void )format;
+    va_list args;
+    
+    va_start( args, format );
+    XEOS_Video_Print( __XEOS_Video_Prompt );
+    XEOS_Video_VPrintf( format, args );
+    XEOS_Video_Print( "\n" );
+    va_end( args );
 }
+

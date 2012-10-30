@@ -62,8 +62,22 @@
 /* $Id$ */
 
 #include "xeos/video.h"
+#include <string.h>
 
 void XEOS_Video_StringReverse( char s[] )
 {
-    ( void )s;
+    size_t i;
+    size_t j;
+    char   c;
+    
+    j = strlen( s ) - 1;
+    
+    for( i = 0; i < j; i++ )
+    {
+        c      = s[ i ];
+        s[ i ] = s[ j ];
+        s[ j ] = c;
+        
+        j--;
+    }
 }

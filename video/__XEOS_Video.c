@@ -63,10 +63,11 @@
 
 #include "xeos/video.h"
 
-unsigned char __XEOS_Video_Attribute    = XEOS_Video_ColorBlack << 4 | XEOS_Video_ColorWhite;
-unsigned int __XEOS_Video_X             = 0x00;
-unsigned int __XEOS_Video_Y             = 0x00;
-char __XEOS_Video_HexChars[ 16 ]        =
+unsigned char __XEOS_Video_Attribute        = XEOS_Video_ColorBlack << 4 | XEOS_Video_ColorWhite;
+unsigned int  __XEOS_Video_X                = 0x00;
+unsigned int  __XEOS_Video_Y                = 0x00;
+char        * __XEOS_Video_Prompt           = "[ XEOS ]> ";
+char          __XEOS_Video_HexChars[ 16 ]   =
 {
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
     'A', 'B', 'C', 'D', 'E', 'F'

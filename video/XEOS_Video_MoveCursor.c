@@ -63,9 +63,27 @@
 
 #include "xeos/video.h"
 #include "xeos/hal.h"
+#include <stdint.h>
 
 void XEOS_Video_MoveCursor( unsigned int x, unsigned int y )
 {
-    ( void )x;
-    ( void )y;
+    uint16_t        pos;
+    unsigned char   posH;
+    unsigned char   posL;
+    
+    __XEOS_Video_X = x;
+    __XEOS_Video_Y = y;
+    
+    x = ( x < XEOS_VIDEO_COLS - 1 ) ? x : XEOS_VIDEO_COLS - 1;
+    y = ( y < XEOS_VIDEO_ROWS - 1 ) ? y : XEOS_VIDEO_ROWS - 1;
+    
+    pos  = ( uint16_t )( x + ( y * XEOS_VIDEO_COLS ) );
+    posH = ( unsigned char )( pos >> 8 );
+    posL = ( unsigned char )( pos & 0x00FF );
+    
+    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_DATA_REGISTER, XEOS_HAL_CRTC_CURSOR_LOCATION_HIGH );
+    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_INDEX_REGISTER, posH );
+    
+    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_DATA_REGISTER, XEOS_HAL_CRTC_CURSOR_LOCATION_LOW );
+    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_INDEX_REGISTER, posL );
 }

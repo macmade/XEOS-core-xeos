@@ -63,8 +63,46 @@
 
 #include "xeos/video.h"
 
-void XEOS_Video_Putc( char c, bool updateCursor )
+void XEOS_Video_Putc( unsigned char c, bool updateCursor )
 {
-    ( void )c;
-    ( void )updateCursor;
+    unsigned char * mem;
+    
+    if( c == 0 )
+    {
+        return;
+    }
+    
+    if( __XEOS_Video_X == XEOS_VIDEO_COLS )
+    {
+        __XEOS_Video_X = 0;
+        
+        __XEOS_Video_Y++;
+    }
+    
+    if( __XEOS_Video_Y == XEOS_VIDEO_ROWS - 1 )
+    {
+        XEOS_Video_Scroll( 1 );
+        
+        __XEOS_Video_Y--;
+    }
+    
+    if( c == '\n' )
+    {
+        __XEOS_Video_Y += 1;
+        __XEOS_Video_X  = 0;
+    }
+    else
+    {
+        mem      = ( unsigned char * )XEOS_VIDEO_MEM;
+        mem     += 2 * ( __XEOS_Video_X + ( __XEOS_Video_Y * XEOS_VIDEO_COLS ) );
+        mem[ 0 ] = c;
+        mem[ 1 ] = __XEOS_Video_Attribute;
+        
+        __XEOS_Video_X++;
+    }
+    
+    if( updateCursor == true )
+    {
+        XEOS_Video_MoveCursor( __XEOS_Video_X, __XEOS_Video_Y );
+    }
 }

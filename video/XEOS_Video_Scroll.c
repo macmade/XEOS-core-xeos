@@ -65,5 +65,28 @@
 
 void XEOS_Video_Scroll( unsigned int n )
 {
-    ( void )n;
+    unsigned char * mem;
+    unsigned int    i;
+    
+    if( n >= XEOS_VIDEO_ROWS )
+    {
+        XEOS_Video_Clear();
+        
+        return;
+    }
+    
+    mem = ( unsigned char * )XEOS_VIDEO_MEM;
+    
+    for( i = 0; i < ( XEOS_VIDEO_COLS * ( XEOS_VIDEO_ROWS - n ) ) * 2; i++ )
+    {
+        mem[ i ] = mem[ i + ( XEOS_VIDEO_COLS * 2 * n ) ];
+    }
+    
+    mem += i;
+    
+    for( i = 0; i < XEOS_VIDEO_COLS * 2 * n; i += 2 )
+    {
+        mem[ i ]     = ' ';
+        mem[ i + 1 ] = __XEOS_Video_Attribute;
+    }
 }
