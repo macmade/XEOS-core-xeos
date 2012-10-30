@@ -62,12 +62,17 @@
 /* $Id$ */
 
 #include "xeos/video.h"
+#include "xeos/system.h"
 
 void XEOS_Main( void ) __attribute__( ( noreturn ) );
 void XEOS_Main( void )
 {
-    XEOS_Video_SetBG( XEOS_Video_ColorGray );
+    XEOS_Video_SetFG( XEOS_Video_ColorWhite );
+    XEOS_Video_SetBG( XEOS_Video_ColorBlack );
     XEOS_Video_Clear();
+    
+    XEOS_System_Panic( "Nothing to do here for now..." );
     
     for( ; ; );
 }
+
