@@ -61,66 +61,45 @@
 
 /* $Id$ */
 
-#ifndef __XEOS_VIDEO_H__
-#define __XEOS_VIDEO_H__
+#ifndef __XEOS_HAL_CRTC_H__
+#define __XEOS_HAL_CRTC_H__
 #pragma once
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include <stdarg.h>
-#include <stdbool.h>
+#define XEOS_HAL_CRTC_DATA_REGISTER                 0x03D4
+#define XEOS_HAL_CRTC_INDEX_REGISTER                0x03D5
 
-#define XEOS_VIDEO_MEM    0xB8000
-#define XEOS_VIDEO_COLS   80
-#define XEOS_VIDEO_ROWS   25
-
-typedef enum
-{
-    XEOS_Video_ColorBlack           = 0x00,
-    XEOS_Video_ColorBlue            = 0x01,
-    XEOS_Video_ColorGreen           = 0x02,
-    XEOS_Video_ColorCyan            = 0x03,
-    XEOS_Video_ColorRed             = 0x04,
-    XEOS_Video_ColorMagenta         = 0x05,
-    XEOS_Video_ColorBrown           = 0x06,
-    XEOS_Video_ColorGrayLight       = 0x07,
-    XEOS_Video_ColorGray            = 0x08,
-    XEOS_Video_ColorBlueLight       = 0x09,
-    XEOS_Video_ColorGreenLight      = 0x0A,
-    XEOS_Video_ColorCyanLight       = 0x0B,
-    XEOS_Video_ColorRedLight        = 0x0C,
-    XEOS_Video_ColorMagentaLight    = 0x0D,
-    XEOS_Video_ColorBrownLight      = 0x0E,
-    XEOS_Video_ColorWhite           = 0x0F
-}
-XEOS_Video_Color;
-
-void XEOS_Video_Clear( void );
-void XEOS_Video_SetBG( XEOS_Video_Color color );
-void XEOS_Video_SetFG( XEOS_Video_Color color );
-void XEOS_Video_MoveCursor( unsigned int x, unsigned int y );
-unsigned int XEOS_Video_X( void );
-unsigned int XEOS_Video_Y( void );
-void XEOS_Video_Prompt( char * s );
-void XEOS_Video_Promptf( char * format, ... );
-void XEOS_Video_Print( char * s );
-void XEOS_Video_Printf( char * format, ... );
-void XEOS_Video_VPrintf( char * format, va_list arg );
-void XEOS_Video_Putc( char c, bool updateCursor );
-void XEOS_Video_Scroll( unsigned int n );
-void XEOS_Video_StringReverse( char s[] );
-void XEOS_Video_Itoa( int n, char s[], int radix );
-void XEOS_Video_Utoa( unsigned int n, char s[], int radix );
-
-extern unsigned char    __XEOS_Video_Attribute;
-extern unsigned int     __XEOS_Video_X;
-extern unsigned int     __XEOS_Video_Y;
-extern char             __XEOS_Video_HexChars[ 16 ];
+#define XEOS_HAL_CRTC_HORIZONTAL_TOTAL              0x0000
+#define XEOS_HAL_CRTC_END_HORIZONTAL_DISPLAY        0x0001
+#define XEOS_HAL_CRTC_START_HORIZONTAL_BLANKING     0x0002
+#define XEOS_HAL_CRTC_END_HORIZONTAL_BLANKING       0x0003
+#define XEOS_HAL_CRTC_START_HORIZONTAL_RETRACE      0x0004
+#define XEOS_HAL_CRTC_END_HORIZONTAL_RETRACE        0x0005
+#define XEOS_HAL_CRTC_VERTICAL_TOTAL                0x0006
+#define XEOS_HAL_CRTC_OVERFLOW                      0x0007
+#define XEOS_HAL_CRTC_PRESET_ROW_SCAN               0x0008
+#define XEOS_HAL_CRTC_MAXIMUM_SCAN_LINE             0x0009
+#define XEOS_HAL_CRTC_CURSOR_START                  0x000A
+#define XEOS_HAL_CRTC_CURSOR_END                    0x000B
+#define XEOS_HAL_CRTC_START_ADDRESS_HIGH            0x000C
+#define XEOS_HAL_CRTC_START_ADDRESS_LOW             0x000D
+#define XEOS_HAL_CRTC_CURSOR_LOCATION_HIGH          0x000E
+#define XEOS_HAL_CRTC_CURSOR_LOCATION_LOW           0x000F
+#define XEOS_HAL_CRTC_VERTICAL_RETRACE_START        0x0010
+#define XEOS_HAL_CRTC_VERTICAL_RETRACE_END          0x0011
+#define XEOS_HAL_CRTC_VERTICAL_DISPLAY_END          0x0012
+#define XEOS_HAL_CRTC_OFFSET                        0x0013
+#define XEOS_HAL_CRTC_UNDERLINE_LOCATION            0x0014
+#define XEOS_HAL_CRTC_START_VERTICAL_BLANKING       0x0015
+#define XEOS_HAL_CRTC_END_VERTICAL_BLANKING         0x0016
+#define XEOS_HAL_CRTC_CRTC_MODE_CONTROL             0x0017
+#define XEOS_HAL_CRTC_LINE_COMPARE                  0x0018
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __XEOS_VIDEO_H__ */
+#endif /* __XEOS_HAL_CRTC_H__ */

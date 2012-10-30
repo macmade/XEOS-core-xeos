@@ -61,9 +61,9 @@
 
 /* $Id$ */
 
-#include "xeos/system.h"
+#include "xeos/video.h"
 
-void panic( char * message )
+void XEOS_Video_Promptf( char * format, ... )
 {
-    ( void )message;
+    ( void )format;
 }

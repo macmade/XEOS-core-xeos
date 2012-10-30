@@ -72,55 +72,55 @@ extern "C" {
 #define __XEOS_NULL                     ( ( void * )0 )
 #define __XEOS_FLT_EVAL_METHOD__        1
 
-typedef unsigned int                    __xeos_size_t;
-typedef char *                          __xeos_va_list;
-typedef long                            __xeos_clock_t;
-typedef unsigned long                   __xeos_time_t;
-typedef long                            __xeos_intptr_t;
-typedef unsigned long                   __xeos_uintptr_t;
+typedef unsigned int                    __XEOS_size_t;
+typedef char *                          __XEOS_va_list;
+typedef long                            __XEOS_clock_t;
+typedef unsigned long                   __XEOS_time_t;
+typedef long                            __XEOS_intptr_t;
+typedef unsigned long                   __XEOS_uintptr_t;
 
 #ifdef __WCHAR_TYPE__
-    typedef __WCHAR_TYPE__              __xeos_wchar_t;
+    typedef __WCHAR_TYPE__              __XEOS_wchar_t;
 #else
-    typedef short                       __xeos_wchar_t;
+    typedef short                       __XEOS_wchar_t;
 #endif
 
-typedef int                             __xeos_blkcnt_t;
-typedef int                             __xeos_blksize_t;
-typedef int                             __xeos_clockid_t;
-typedef int                             __xeos_dev_t;
-typedef int                             __xeos_fsblkcnt_t;
-typedef int                             __xeos_fsfilcnt_t;
-typedef int                             __xeos_gid_t;
-typedef int                             __xeos_id_t;
-typedef int                             __xeos_ino_t;
-typedef int                             __xeos_key_t;
-typedef int                             __xeos_mode_t;
-typedef int                             __xeos_nlink_t;
-typedef int                             __xeos_off_t;
-typedef int                             __xeos_pid_t;
-typedef int                             __xeos_pthread_attr_t;
-typedef int                             __xeos_pthread_barrier_t;
-typedef int                             __xeos_pthread_barrierattr_t;
-typedef int                             __xeos_pthread_cond_t;
-typedef int                             __xeos_pthread_condattr_t;
-typedef int                             __xeos_pthread_key_t;
-typedef int                             __xeos_pthread_mutex_t;
-typedef int                             __xeos_pthread_mutexattr_t;
-typedef int                             __xeos_pthread_once_t;
-typedef int                             __xeos_pthread_rwlock_t;
-typedef int                             __xeos_pthread_rwlockattr_t;
-typedef int                             __xeos_pthread_spinlock_t;
-typedef int                             __xeos_pthread_t;
-typedef int                             __xeos_ssize_t;
-typedef int                             __xeos_suseconds_t;
-typedef int                             __xeos_timer_t;
-typedef int                             __xeos_trace_attr_t;
-typedef int                             __xeos_trace_event_id_t;
-typedef int                             __xeos_trace_event_set_t;
-typedef int                             __xeos_trace_id_t;
-typedef int                             __xeos_uid_t;
-typedef int                             __xeos_useconds_t;
+typedef int                             __XEOS_blkcnt_t;
+typedef int                             __XEOS_blksize_t;
+typedef int                             __XEOS_clockid_t;
+typedef int                             __XEOS_dev_t;
+typedef int                             __XEOS_fsblkcnt_t;
+typedef int                             __XEOS_fsfilcnt_t;
+typedef int                             __XEOS_gid_t;
+typedef int                             __XEOS_id_t;
+typedef int                             __XEOS_ino_t;
+typedef int                             __XEOS_key_t;
+typedef int                             __XEOS_mode_t;
+typedef int                             __XEOS_nlink_t;
+typedef int                             __XEOS_off_t;
+typedef int                             __XEOS_pid_t;
+typedef int                             __XEOS_pthread_attr_t;
+typedef int                             __XEOS_pthread_barrier_t;
+typedef int                             __XEOS_pthread_barrierattr_t;
+typedef int                             __XEOS_pthread_cond_t;
+typedef int                             __XEOS_pthread_condattr_t;
+typedef int                             __XEOS_pthread_key_t;
+typedef int                             __XEOS_pthread_mutex_t;
+typedef int                             __XEOS_pthread_mutexattr_t;
+typedef int                             __XEOS_pthread_once_t;
+typedef int                             __XEOS_pthread_rwlock_t;
+typedef int                             __XEOS_pthread_rwlockattr_t;
+typedef int                             __XEOS_pthread_spinlock_t;
+typedef int                             __XEOS_pthread_t;
+typedef int                             __XEOS_ssize_t;
+typedef int                             __XEOS_suseconds_t;
+typedef int                             __XEOS_timer_t;
+typedef int                             __XEOS_trace_attr_t;
+typedef int                             __XEOS_trace_event_id_t;
+typedef int                             __XEOS_trace_event_set_t;
+typedef int                             __XEOS_trace_id_t;
+typedef int                             __XEOS_uid_t;
+typedef int                             __XEOS_useconds_t;
 
 #ifdef __cplusplus
 }

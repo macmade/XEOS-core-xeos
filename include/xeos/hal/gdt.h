@@ -61,14 +61,90 @@
 
 /* $Id$ */
 
-#ifndef __XEOS_HAL_H__
-#define __XEOS_HAL_H__
+#ifndef __HAL_GDT_H__
+#define __HAL_GDT_H__
 #pragma once
 
-#include <xeos/hal/crtc.h>
-#include <xeos/hal/io.h>
-#include <xeos/hal/idt.h>
-#include <xeos/hal/gdt.h>
-#include <xeos/hal/smbios.h>
+#include <stdint.h>
 
-#endif /* __XEOS_HAL_H__ */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#define HAL_GDT_MAX_DESCRIPTORS 5
+
+/**
+ * A descriptor for the GDT takes the following format:
+ *      
+ *      Bits  0 - 15:   Segment limit (0-15)
+ * 
+ *      Bits 16 - 30:   Base address (0-23)
+ * 
+ *      Bit  40:        Access bit (only for virtual memory)
+ * 
+ *      Bits 41 - 43:   Descriptor type
+ * 
+ *                          Bit 41: Readable and writeable
+ *                                      0:  Read only (data segment)
+ *                                          Execute only (code segment)
+ *                                      1:  Read and write (data segment)
+ *                                      1:  Read and execute (code segment)
+ *                          Bit 42: Expansion direction (for data segment)
+ *                                  or conforming (code segment)
+ *                          Bit 43: Executable segment
+ *                                      0:  Data segment
+ *                                      1:  Code segment
+ * 
+ *      Bit  44:        Descriptor bit
+ * 
+ *                          0:      System descriptor
+ *                          1:      Code or data descriptor
+ * 
+ *      Bits 45 - 46:   Descriptor privilege level (rings 0 to 3)
+ * 
+ *      Bit  47:        Segment is in memory (only for virtual memory)
+ * 
+ *      Bits 48 - 51:   Segment limit (16-19)
+ * 
+ *      Bit  52:        Reserved (for OS)
+ * 
+ *      Bit  53:        Reserved
+ * 
+ *      Bit  54:        Segment type
+ * 
+ *                          0:      16 bits
+ *                          1:      32 bits
+ * 
+ *      Bit  55:        Granularity
+ * 
+ *                          0:      None
+ *                          1:      Limit is multiplied by 4K
+ * 
+ *      Bits 56 - 63:   Base address (24-31)
+ */
+struct hal_gdt_entry
+{
+    uint16_t    limit;
+    uint16_t    address_low;
+    uint8_t     address_mid;
+    uint16_t    flags;
+    uint8_t     address_high;
+}
+__attribute__( ( packed ) );
+
+struct hal_gdt_ptr
+{
+    uint16_t    limit;
+    uint32_t    base;
+}
+__attribute__( ( packed ) );
+
+void hal_gdt_init( void );
+struct hal_gdt_entry * hal_gdt_get_descriptor( unsigned int i );
+void hal_gdt_set_descriptor( unsigned int i );
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __HAL_GDT_H__ */

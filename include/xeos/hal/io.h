@@ -61,14 +61,23 @@
 
 /* $Id$ */
 
-#ifndef __XEOS_HAL_H__
-#define __XEOS_HAL_H__
+#ifndef __XEOS_HAL_IO_H__
+#define __XEOS_HAL_IO_H__
 #pragma once
 
-#include <xeos/hal/crtc.h>
-#include <xeos/hal/io.h>
-#include <xeos/hal/idt.h>
-#include <xeos/hal/gdt.h>
-#include <xeos/hal/smbios.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-#endif /* __XEOS_HAL_H__ */
+#include <stdint.h>
+
+typedef uint16_t XEOS_HAL_IO_Port;
+
+unsigned char XEOS_HAL_IO_PortIn( XEOS_HAL_IO_Port port );
+void XEOS_HAL_IO_PortOut( XEOS_HAL_IO_Port port, unsigned char value );
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __XEOS_HAL_IO_H__ */

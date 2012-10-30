@@ -61,66 +61,9 @@
 
 /* $Id$ */
 
-#ifndef __XEOS_VIDEO_H__
-#define __XEOS_VIDEO_H__
-#pragma once
+#include "xeos/video.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <stdarg.h>
-#include <stdbool.h>
-
-#define XEOS_VIDEO_MEM    0xB8000
-#define XEOS_VIDEO_COLS   80
-#define XEOS_VIDEO_ROWS   25
-
-typedef enum
+void XEOS_Video_Prompt( char * s )
 {
-    XEOS_Video_ColorBlack           = 0x00,
-    XEOS_Video_ColorBlue            = 0x01,
-    XEOS_Video_ColorGreen           = 0x02,
-    XEOS_Video_ColorCyan            = 0x03,
-    XEOS_Video_ColorRed             = 0x04,
-    XEOS_Video_ColorMagenta         = 0x05,
-    XEOS_Video_ColorBrown           = 0x06,
-    XEOS_Video_ColorGrayLight       = 0x07,
-    XEOS_Video_ColorGray            = 0x08,
-    XEOS_Video_ColorBlueLight       = 0x09,
-    XEOS_Video_ColorGreenLight      = 0x0A,
-    XEOS_Video_ColorCyanLight       = 0x0B,
-    XEOS_Video_ColorRedLight        = 0x0C,
-    XEOS_Video_ColorMagentaLight    = 0x0D,
-    XEOS_Video_ColorBrownLight      = 0x0E,
-    XEOS_Video_ColorWhite           = 0x0F
+    ( void )s;
 }
-XEOS_Video_Color;
-
-void XEOS_Video_Clear( void );
-void XEOS_Video_SetBG( XEOS_Video_Color color );
-void XEOS_Video_SetFG( XEOS_Video_Color color );
-void XEOS_Video_MoveCursor( unsigned int x, unsigned int y );
-unsigned int XEOS_Video_X( void );
-unsigned int XEOS_Video_Y( void );
-void XEOS_Video_Prompt( char * s );
-void XEOS_Video_Promptf( char * format, ... );
-void XEOS_Video_Print( char * s );
-void XEOS_Video_Printf( char * format, ... );
-void XEOS_Video_VPrintf( char * format, va_list arg );
-void XEOS_Video_Putc( char c, bool updateCursor );
-void XEOS_Video_Scroll( unsigned int n );
-void XEOS_Video_StringReverse( char s[] );
-void XEOS_Video_Itoa( int n, char s[], int radix );
-void XEOS_Video_Utoa( unsigned int n, char s[], int radix );
-
-extern unsigned char    __XEOS_Video_Attribute;
-extern unsigned int     __XEOS_Video_X;
-extern unsigned int     __XEOS_Video_Y;
-extern char             __XEOS_Video_HexChars[ 16 ];
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* __XEOS_VIDEO_H__ */

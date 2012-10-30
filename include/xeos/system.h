@@ -69,7 +69,7 @@
 extern "C" {
 #endif
 
-void panic( char * message );
+void XEOS_System_Panic( char * message );
 
 #ifdef __cplusplus
 }

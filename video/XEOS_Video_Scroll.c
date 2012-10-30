@@ -61,8 +61,9 @@
 
 /* $Id$ */
 
-void xeos_main( void ) __attribute__( ( noreturn ) );
-void xeos_main( void )
+#include "xeos/video.h"
+
+void XEOS_Video_Scroll( unsigned int n )
 {
-    for( ; ; );
+    ( void )n;
 }

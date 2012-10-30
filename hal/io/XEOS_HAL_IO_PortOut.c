@@ -61,14 +61,17 @@
 
 /* $Id$ */
 
-#ifndef __XEOS_HAL_H__
-#define __XEOS_HAL_H__
-#pragma once
+#include "xeos/hal/io.h"
 
-#include <xeos/hal/crtc.h>
-#include <xeos/hal/io.h>
-#include <xeos/hal/idt.h>
-#include <xeos/hal/gdt.h>
-#include <xeos/hal/smbios.h>
-
-#endif /* __XEOS_HAL_H__ */
+void XEOS_HAL_IO_PortOut( XEOS_HAL_IO_Port port, unsigned char value )
+{
+    __asm__
+    (
+        "movb   %[value],   %%al;"
+        "movw   %[port],    %%dx;"
+        "out    %%al,       %%dx;"
+        
+        : 
+        : [ port ] "m" ( port ), [ value ] "m" ( value )
+    );
+}
