@@ -61,18 +61,11 @@
 
 /* $Id$ */
 
-#ifndef __XEOS_INTERRUPTS_H__
-#define __XEOS_INTERRUPTS_H__
-#pragma once
+#include "xeos/isr.h"
+#include "xeos/system.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void XEOS_ISR_DefaultHandler( void );
-
-#ifdef __cplusplus
+void XEOS_ISR_DefaultHandler( void )
+{
+    XEOS_System_Panic( "Received unknown IRQ" );
 }
-#endif
 
-#endif /* __XEOS_INTERRUPTS_H__ */
