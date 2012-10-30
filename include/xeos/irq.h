@@ -61,18 +61,18 @@
 
 /* $Id$ */
 
-#ifndef __XEOS_INTERRUPTS_H__
-#define __XEOS_INTERRUPTS_H__
+#ifndef __XEOS_IRQ_H__
+#define __XEOS_IRQ_H__
 #pragma once
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void XEOS_ISR_DefaultHandler( void );
+void XEOS_IRQ_DefaultHandler( void );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __XEOS_INTERRUPTS_H__ */
+#endif /* __XEOS_IRQ_H__ */

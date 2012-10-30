@@ -61,10 +61,10 @@
 
 /* $Id$ */
 
-#include "xeos/isr.h"
+#include "xeos/irq.h"
 #include "xeos/system.h"
 
-void XEOS_ISR_DefaultHandler( void )
+void XEOS_IRQ_DefaultHandler( void )
 {
     XEOS_System_Panic( "Received unknown IRQ" );
 }
