@@ -69,7 +69,90 @@
 extern "C" {
 #endif
 
-typedef void * XEOS_HAL_IDT_Pointer;
+#define XEOS_HAL_IDT_MAX_DESCRIPTORS
+
+#ifdef __clang__
+#pragma pack( 1 )
+#endif
+
+struct _XEOS_HAL_IDT_Entry32
+{
+    uint16_t    baseLow;
+    uint16_t    selector;
+    uint8_t     __reserved_0;
+    uint8_t     flags;
+    uint16_t    baseHigh;
+};
+
+typedef struct _XEOS_HAL_IDT_Pointer32
+{
+    uint16_t    limit;
+    uint32_t    base;
+};
+
+struct _XEOS_HAL_IDT_Entry64
+{
+    uint16_t    baseLow;
+    uint16_t    selector;
+    uint8_t     __reserved_0;
+    uint8_t     flags;
+    uint16_t    baseMiddle;
+    uint32_t    baseHigh;
+    uint32_t    __reserved_1;
+};
+
+typedef struct _XEOS_HAL_IDT_Pointer64
+{
+    uint16_t    limit;
+    uint64_t    base;
+};
+
+#ifdef __clang__
+#pragma pack()
+#endif
+
+#ifdef __LP64__
+
+typedef struct _XEOS_HAL_IDT_Entry64    XEOS_HAL_IDT_Entry;
+typedef struct _XEOS_HAL_IDT_Pointer64  XEOS_HAL_IDT_Pointer;
+
+#else
+
+typedef struct _XEOS_HAL_IDT_Entry32    XEOS_HAL_IDT_Entry;
+typedef struct _XEOS_HAL_IDT_Pointer32  XEOS_HAL_IDT_Pointer;
+
+#endif
+
+typedef void ( * XEOS_HAL_IDT_IRQHandler )( unsigned int irq );
+
+typedef enum
+{
+    XEOS_HAL_IDT_EntryType_Task32       = 0x05,
+    XEOS_HAL_IDT_EntryType_Interrupt16  = 0x06,
+    XEOS_HAL_IDT_EntryType_Trap16       = 0x07,
+    XEOS_HAL_IDT_EntryType_Interrupt32  = 0x0E,
+    XEOS_HAL_IDT_EntryType_Trap32       = 0x0F
+}
+XEOS_HAL_IDT_EntryType;
+
+typedef enum
+{
+    XEOS_HAL_IDT_PrivilegeLevel_Ring0 = 0x00,
+    XEOS_HAL_IDT_PrivilegeLevel_Ring1 = 0x01,
+    XEOS_HAL_IDT_PrivilegeLevel_Ring2 = 0x02,
+    XEOS_HAL_IDT_PrivilegeLevel_Ring3 = 0x03
+}
+XEOS_HAL_IDT_PrivilegeLevel;
+
+void                        XEOS_HAL_IDT_Init( XEOS_HAL_IDT_IRQHandler defaultHandler );
+void                        XEOS_HAL_IDT_SetIRQ( unsigned int irq, XEOS_HAL_IDT_IRQHandler handler, XEOS_HAL_IDT_EntryType type, XEOS_HAL_IDT_PrivilegeLevel level );
+XEOS_HAL_IDT_IRQHandler     XEOS_HAL_IDT_GetIRQHandler( unsigned int irq );
+XEOS_HAL_IDT_EntryType      XEOS_HAL_IDT_GetIRQEntryType( unsigned int irq );
+XEOS_HAL_IDT_PrivilegeLevel XEOS_HAL_IDT_GetIRQPrivilegeLevel( unsigned int irq );
+
+extern XEOS_HAL_IDT_Pointer     __XEOS_HAL_IDT_Pointer;
+extern XEOS_HAL_IDT_Entry       __XEOS_HAL_IDT_Entries[ XEOS_HAL_IDT_MAX_DESCRIPTORS ];
+extern XEOS_HAL_IDT_IRQHandler  __XEOS_HAL_IDT_Handlers[ XEOS_HAL_IDT_MAX_DESCRIPTORS ];
 
 #ifdef __cplusplus
 }
