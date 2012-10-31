@@ -69,7 +69,7 @@
 extern "C" {
 #endif
 
-void XEOS_IRQ_DefaultHandler( void );
+void XEOS_IRQ_DefaultHandler( unsigned int irq );
 
 #ifdef __cplusplus
 }
