@@ -69,7 +69,9 @@
 extern "C" {
 #endif
 
-#define XEOS_HAL_IDT_MAX_DESCRIPTORS
+#include <stdint.h>
+
+#define XEOS_HAL_IDT_MAX_DESCRIPTORS    256
 
 #ifdef __clang__
 #pragma pack( 1 )
@@ -84,7 +86,7 @@ struct _XEOS_HAL_IDT_Entry32
     uint16_t    baseHigh;
 };
 
-typedef struct _XEOS_HAL_IDT_Pointer32
+struct _XEOS_HAL_IDT_Pointer32
 {
     uint16_t    limit;
     uint32_t    base;
@@ -101,7 +103,7 @@ struct _XEOS_HAL_IDT_Entry64
     uint32_t    __reserved_1;
 };
 
-typedef struct _XEOS_HAL_IDT_Pointer64
+struct _XEOS_HAL_IDT_Pointer64
 {
     uint16_t    limit;
     uint64_t    base;
@@ -149,6 +151,8 @@ void                        XEOS_HAL_IDT_SetIRQ( unsigned int irq, XEOS_HAL_IDT_
 XEOS_HAL_IDT_IRQHandler     XEOS_HAL_IDT_GetIRQHandler( unsigned int irq );
 XEOS_HAL_IDT_EntryType      XEOS_HAL_IDT_GetIRQEntryType( unsigned int irq );
 XEOS_HAL_IDT_PrivilegeLevel XEOS_HAL_IDT_GetIRQPrivilegeLevel( unsigned int irq );
+
+extern void __XEOS_HAL_IDT_IRQHandlerStub( void );
 
 extern XEOS_HAL_IDT_Pointer     __XEOS_HAL_IDT_Pointer;
 extern XEOS_HAL_IDT_Entry       __XEOS_HAL_IDT_Entries[ XEOS_HAL_IDT_MAX_DESCRIPTORS ];

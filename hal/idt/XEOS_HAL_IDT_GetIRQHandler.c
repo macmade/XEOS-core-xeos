@@ -62,7 +62,11 @@
 /* $Id$ */
 
 #include "xeos/hal/idt.h"
+#include <stdlib.h>
 
-XEOS_HAL_IDT_Pointer     __XEOS_HAL_IDT_Pointer;
-XEOS_HAL_IDT_Entry       __XEOS_HAL_IDT_Entries[ XEOS_HAL_IDT_MAX_DESCRIPTORS ];
-XEOS_HAL_IDT_IRQHandler  __XEOS_HAL_IDT_Handlers[ XEOS_HAL_IDT_MAX_DESCRIPTORS ];
+XEOS_HAL_IDT_IRQHandler XEOS_HAL_IDT_GetIRQHandler( unsigned int irq )
+{
+    ( void )irq;
+    
+    return NULL;
+}

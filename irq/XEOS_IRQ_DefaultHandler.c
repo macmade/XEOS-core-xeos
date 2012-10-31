@@ -64,7 +64,7 @@
 #include "xeos/irq.h"
 #include "xeos/system.h"
 
-void XEOS_IRQ_DefaultHandler( unsigned int irq );
+void XEOS_IRQ_DefaultHandler( unsigned int irq )
 {
     ( void )irq;
     
