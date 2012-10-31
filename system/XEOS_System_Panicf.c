@@ -65,8 +65,10 @@
 #include "xeos/video.h"
 #include "xeos/hal.h"
 
-void XEOS_System_Panic( char * message )
+void XEOS_System_Panicf( char * format, ... )
 {
+    va_list args;
+    
     XEOS_HAL_CPU_DisableInterrupts();
     
     XEOS_Video_SetFG( XEOS_Video_ColorWhite );
@@ -99,7 +101,9 @@ void XEOS_System_Panic( char * message )
     XEOS_Video_Print( "\n" );
     XEOS_Video_Print( "\n" );
     
-    XEOS_Video_Print( message );
+    va_start( args, format );
+    XEOS_Video_VPrintf( format, args );
+    va_end( args );
     
     XEOS_Video_Print( "\n" );
     
