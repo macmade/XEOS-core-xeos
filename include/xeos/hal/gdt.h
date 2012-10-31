@@ -65,34 +65,11 @@
 #define __HAL_GDT_H__
 #pragma once
 
-#include <stdint.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define HAL_GDT_MAX_DESCRIPTORS     5
-
-typedef struct _XEOS_HAL_GDT_Entry
-{
-    uint16_t    limit;
-    uint16_t    address_low;
-    uint8_t     address_mid;
-    uint16_t    flags;
-    uint8_t     address_high;
-}
-XEOS_HAL_GDT_Entry;
-
-typedef struct _XEOS_HAL_GDT_Pointer
-{
-    uint16_t    limit;
-    uint32_t    base;
-}
-XEOS_HAL_GDT_Pointer;
-
-void XEOS_HAL_GDT_Init( void );
-XEOS_HAL_GDT_Entry * XEOS_HAL_GDT_GetDescriptor( unsigned int i );
-void XEOS_HAL_GDT_SetDescriptor( unsigned int i );
+typedef void * XEOS_HAL_GDT_Pointer;
 
 #ifdef __cplusplus
 }

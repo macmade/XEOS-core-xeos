@@ -65,43 +65,11 @@
 #define __HAL_IDT_H__
 #pragma once
 
-#include <stdint.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define XEOS_HAL_IDT_MAX_DESCRIPTORS    256
-
-#define XEOS_HAL_IDT_FLAG_16BITS        0x06    /* 00000110 */
-#define XEOS_HAL_IDT_FLAG_32BITS        0x0E    /* 00001110 */
-#define XEOS_HAL_IDT_FLAG_RING1         0x40    /* 01000000 */
-#define XEOS_HAL_IDT_FLAG_RING2         0x20    /* 00100000 */
-#define XEOS_HAL_IDT_FLAG_RING3         0x60    /* 01100000 */
-#define XEOS_HAL_IDT_FLAG_PRESENT       0x80    /* 10000000 */
-
-typedef struct _XEOS_HAL_IDT_Entry
-{
-    uint16_t    addressLow;
-    uint16_t    selector;
-    uint8_t     reserved;
-    uint8_t     flags;
-    uint16_t    addressHigh;
-}
-XEOS_HAL_IDT_Entry;
-
-typedef struct _XEOS_HAL_IDT_Pointer
-{
-    uint16_t    limit;
-    uint32_t    base;
-}
-XEOS_HAL_IDT_Pointer;
-
-typedef void ( * XEOS_HAL_IDT_IRQHandler )( void );
-
-void XEOS_HAL_IDT_Init( uint16_t sel, XEOS_HAL_IDT_IRQHandler defaultHandler );
-XEOS_HAL_IDT_Entry * XEOS_HAL_IDT_GetDescriptor( unsigned int i );
-void XEOS_HAL_IDT_SetDescriptor( unsigned int i, XEOS_HAL_IDT_IRQHandler handler, uint16_t sel, uint8_t flags );
+typedef void * XEOS_HAL_IDT_Pointer;
 
 #ifdef __cplusplus
 }

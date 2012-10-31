@@ -63,10 +63,14 @@
 
 #include "xeos/video.h"
 #include "xeos/system.h"
+#include "xeos/hal.h"
+#include "xeos/irq.h"
 
 void XEOS_Main( void ) __attribute__( ( noreturn ) );
 void XEOS_Main( void )
 {
+    XEOS_HAL_CPU_DisableInterrupts();
+    
     XEOS_Video_SetFG( XEOS_Video_ColorWhite );
     XEOS_Video_SetBG( XEOS_Video_ColorBlack );
     XEOS_Video_Clear();

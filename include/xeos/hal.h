@@ -65,6 +65,7 @@
 #define __XEOS_HAL_H__
 #pragma once
 
+#include <xeos/hal/cpu.h>
 #include <xeos/hal/crtc.h>
 #include <xeos/hal/io.h>
 #include <xeos/hal/idt.h>

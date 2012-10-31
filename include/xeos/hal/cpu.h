@@ -61,44 +61,26 @@
 
 /* $Id$ */
 
-#include "xeos/system.h"
-#include "xeos/video.h"
-#include "xeos/hal.h"
+#ifndef __XEOS_HAL_CPU_H__
+#define __XEOS_HAL_CPU_H__
+#pragma once
 
-void XEOS_System_Panic( char * message )
-{
-    XEOS_Video_SetFG( XEOS_Video_ColorWhite );
-    XEOS_Video_SetBG( XEOS_Video_ColorBlue );
-    XEOS_Video_Clear();
-    
-    XEOS_Video_Print( "\n" );
-    XEOS_Video_Print( "                             " );
-    XEOS_Video_SetFG( XEOS_Video_ColorBlue );
-    XEOS_Video_SetBG( XEOS_Video_ColorGrayLight );
-    XEOS_Video_Print( " XEOS - KERNEL PANIC " );
-    XEOS_Video_SetFG( XEOS_Video_ColorWhite );
-    XEOS_Video_SetBG( XEOS_Video_ColorBlue );
-    XEOS_Video_Print( "                             " );
-    XEOS_Video_Print( "\n" );
-    XEOS_Video_Print( "\n" );
-    XEOS_Video_Print( "\n" );
-    XEOS_Video_Print( "A problem has been detected and XEOS has been shut down to prevent damage\nto your computer." );
-    XEOS_Video_Print( "\n" );
-    XEOS_Video_Print( "\n" );
-    XEOS_Video_Print( "Please restart your computer." );
-    XEOS_Video_Print( "\n" );
-    XEOS_Video_Print( "Any unsaved information will be lost." );
-    XEOS_Video_Print( "\n" );
-    XEOS_Video_Print( "\n" );
-    XEOS_Video_Print( "\n" );
-    XEOS_Video_SetFG( XEOS_Video_ColorGrayLight );
-    XEOS_Video_Print( "Technical information:" );
-    XEOS_Video_SetFG( XEOS_Video_ColorWhite );
-    XEOS_Video_Print( "\n" );
-    XEOS_Video_Print( "\n" );
-    XEOS_Video_Print( message );
-    XEOS_Video_Print( "\n" );
-    
-    XEOS_HAL_CPU_DisableInterrupts();
-    XEOS_HAL_CPU_Halt();
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <xeos/hal/idt.h>
+#include <xeos/hal/gdt.h>
+
+void XEOS_HAL_CPU_Halt( void );
+void XEOS_HAL_CPU_EnableInterrupts( void );
+void XEOS_HAL_CPU_DisableInterrupts( void );
+void XEOS_HAL_CPU_LoadIDT( XEOS_HAL_IDT_Pointer p );
+void XEOS_HAL_CPU_LoadGDT( XEOS_HAL_GDT_Pointer p );
+
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* __XEOS_HAL_CPU_H__ */
