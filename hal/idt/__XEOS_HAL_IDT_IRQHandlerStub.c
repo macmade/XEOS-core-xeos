@@ -62,6 +62,9 @@
 /* $Id$ */
 
 #include "xeos/hal/idt.h"
+#include "xeos/system.h"
 
 void __XEOS_HAL_IDT_IRQHandlerStub( void )
-{}
+{
+    XEOS_System_Panic( "Entering IRQ handler stub..." );
+}

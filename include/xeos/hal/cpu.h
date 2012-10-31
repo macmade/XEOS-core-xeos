@@ -75,8 +75,8 @@ extern "C" {
 void XEOS_HAL_CPU_Halt( void );
 void XEOS_HAL_CPU_EnableInterrupts( void );
 void XEOS_HAL_CPU_DisableInterrupts( void );
-void XEOS_HAL_CPU_LoadIDT( XEOS_HAL_IDT_Pointer p );
-void XEOS_HAL_CPU_LoadGDT( XEOS_HAL_GDT_Pointer p );
+void XEOS_HAL_CPU_LoadIDT( XEOS_HAL_IDT_Pointer * p );
+void XEOS_HAL_CPU_LoadGDT( XEOS_HAL_GDT_Pointer * p );
 
 
 #ifdef __cplusplus

@@ -62,11 +62,48 @@
 /* $Id$ */
 
 #include "xeos/hal/idt.h"
+#include "xeos/hal/cpu.h"
+#include <string.h>
 
-void XEOS_HAL_IDT_SetIRQ( unsigned int irq, XEOS_HAL_IDT_IRQHandler handler, XEOS_HAL_IDT_EntryType type, XEOS_HAL_IDT_PrivilegeLevel level )
+void XEOS_HAL_IDT_SetIRQ( unsigned int irq, XEOS_HAL_IDT_IRQHandler handler, XEOS_HAL_IDT_EntryType type, XEOS_HAL_IDT_PrivilegeLevel level, bool reload )
 {
-    ( void )irq;
-    ( void )handler;
-    ( void )type;
-    ( void )level;
+    uint8_t              flags;
+    XEOS_HAL_IDT_Entry * entry;
+    
+    void ( * base )( void );
+    
+    if( irq >= XEOS_HAL_IDT_MAX_DESCRIPTORS )
+    {
+        return;
+    }
+    
+    entry = &(  __XEOS_HAL_IDT_Entries[ irq ] );
+    
+    memset( entry, 0, sizeof( XEOS_HAL_IDT_Entry ) );
+    
+    base   = __XEOS_HAL_IDT_IRQHandlerStub;
+    flags  = ( uint8_t )( level << 6 );
+    flags |= ( uint8_t )type;
+    
+    entry->baseLow  = ( uint16_t )( ( uintptr_t )&( * base ) & 0xFFFF );
+    entry->selector = 0x08;
+    entry->flags    = flags;
+    
+    #ifdef __LP64__
+        
+        entry->baseMiddle = ( uint16_t )( ( ( uintptr_t )&( * base ) >> 16 & 0xFFFF ) );
+        entry->baseHigh   = ( uint32_t )( ( ( uintptr_t )&( * base ) >> 32 & 0xFFFFFFFF ) );
+        
+    #else
+        
+        entry->baseHigh = ( uint16_t )( ( ( uintptr_t )&( * base ) >> 16 & 0xFFFF ) );
+        
+    #endif
+    
+    __XEOS_HAL_IDT_Handlers[ irq ] = handler;
+    
+    if( reload == true )
+    {
+        XEOS_HAL_IDT_Reload();
+    }
 }

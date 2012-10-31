@@ -62,8 +62,33 @@
 /* $Id$ */
 
 #include "xeos/hal/idt.h"
+#include "xeos/hal/cpu.h"
+#include <string.h>
 
 void XEOS_HAL_IDT_Init( XEOS_HAL_IDT_IRQHandler defaultHandler )
 {
-    ( void )defaultHandler;
+    unsigned int i;
+    
+    memset( &__XEOS_HAL_IDT_Pointer,  0, sizeof( XEOS_HAL_IDT_Pointer    ) );
+    memset(  __XEOS_HAL_IDT_Entries,  0, sizeof( XEOS_HAL_IDT_Entry      ) * XEOS_HAL_IDT_MAX_DESCRIPTORS );
+    memset(  __XEOS_HAL_IDT_Handlers, 0, sizeof( XEOS_HAL_IDT_IRQHandler ) * XEOS_HAL_IDT_MAX_DESCRIPTORS );
+    
+    for( i = 0; i < XEOS_HAL_IDT_MAX_DESCRIPTORS; i++ )
+    {
+        XEOS_HAL_IDT_SetIRQ( i, defaultHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    }
+    
+    __XEOS_HAL_IDT_Pointer.limit = ( uint16_t )( sizeof( XEOS_HAL_IDT_Entry ) * XEOS_HAL_IDT_MAX_DESCRIPTORS ) - 1;
+    
+    #ifdef __LP64__
+        
+        __XEOS_HAL_IDT_Pointer.base = ( uint64_t )&__XEOS_HAL_IDT_Entries;
+        
+    #else
+        
+        __XEOS_HAL_IDT_Pointer.base = ( uint32_t )&__XEOS_HAL_IDT_Entries;
+        
+    #endif
+    
+    XEOS_HAL_IDT_Reload();
 }

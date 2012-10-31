@@ -63,7 +63,7 @@
 
 #include "xeos/hal/cpu.h"
 
-void XEOS_HAL_CPU_LoadGDT( XEOS_HAL_GDT_Pointer p )
+void XEOS_HAL_CPU_LoadGDT( XEOS_HAL_GDT_Pointer * p )
 {
     ( void )p;
 }
