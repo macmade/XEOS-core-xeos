@@ -62,11 +62,31 @@
 /* $Id$ */
 
 #include "xeos/hal/idt.h"
-#include <stdlib.h>
+#include "xeos/hal/cpu.h"
+#include <string.h>
 
-XEOS_HAL_IDT_IRQHandler XEOS_HAL_IDT_GetIRQHandler( unsigned int irq )
+void XEOS_HAL_IDT_SetISR( unsigned int isr, XEOS_HAL_IDT_ISRHandler handler, XEOS_HAL_IDT_EntryType type, XEOS_HAL_IDT_PrivilegeLevel level, bool reload )
 {
-    ( void )irq;
+    uint8_t              flags;
+    XEOS_HAL_IDT_Entry * entry;
     
-    return NULL;
+    if( isr >= XEOS_HAL_IDT_MAX_DESCRIPTORS )
+    {
+        return;
+    }
+    
+    entry = &(  __XEOS_HAL_IDT_Entries[ isr ] );
+    
+    flags  = ( uint8_t )( level << 6 );
+    flags |= ( uint8_t )type;
+    
+    entry->selector = 0x08;
+    entry->flags    = flags;
+    
+    __XEOS_HAL_IDT_Handlers[ isr ] = handler;
+    
+    if( reload == true )
+    {
+        XEOS_HAL_IDT_Reload();
+    }
 }

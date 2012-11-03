@@ -67,6 +67,6 @@ void XEOS_HAL_CPU_DisableInterrupts( void )
 {
     __asm__
     (
-        "cli;"
+        "cli"
     );
 }

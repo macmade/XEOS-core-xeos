@@ -67,6 +67,6 @@ void XEOS_HAL_CPU_EnableInterrupts( void )
 {
     __asm__
     (
-        "sti;"
+        "sti"
     );
 }

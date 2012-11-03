@@ -77,7 +77,7 @@ DIR_SRC_HAL_IO      := $(DIR_SRC_HAL)io/
 DIR_SRC_HAL_IDT     := $(DIR_SRC_HAL)idt/
 DIR_SRC_HAL_GDT     := $(DIR_SRC_HAL)gdt/
 DIR_SRC_HAL_SMBIOS  := $(DIR_SRC_HAL)smbios/
-DIR_SRC_IRQ         := $(PATH_SRC_CORE_KERNEL)irq/
+DIR_SRC_ISR         := $(PATH_SRC_CORE_KERNEL)isr/
 DIR_SRC_SYSTEM      := $(PATH_SRC_CORE_KERNEL)system/
 DIR_SRC_VIDEO       := $(PATH_SRC_CORE_KERNEL)video/
 DIR_SRC_INC         := $(PATH_SRC_CORE_KERNEL)include/
@@ -112,7 +112,7 @@ vpath %$(EXT_C)         $(DIR_SRC_HAL_CPU)
 vpath %$(EXT_C)         $(DIR_SRC_HAL_IDT)
 vpath %$(EXT_C)         $(DIR_SRC_HAL_GDT)
 vpath %$(EXT_C)         $(DIR_SRC_HAL_SMBIOS)
-vpath %$(EXT_C)         $(DIR_SRC_IRQ)
+vpath %$(EXT_C)         $(DIR_SRC_ISR)
 vpath %$(EXT_C)         $(DIR_SRC_SYSTEM)
 vpath %$(EXT_C)         $(DIR_SRC_VIDEO)
 vpath %$(EXT_H)         $(DIR_SRC_INC)
@@ -138,7 +138,7 @@ _FILES_C_HAL_CPU                = $(foreach dir,$(DIR_SRC_HAL_CPU),$(wildcard $(
 _FILES_C_HAL_IDT                = $(foreach dir,$(DIR_SRC_HAL_IDT),$(wildcard $(DIR_SRC_HAL_IDT)*$(EXT_C)))
 _FILES_C_HAL_GDT                = $(foreach dir,$(DIR_SRC_HAL_GDT),$(wildcard $(DIR_SRC_HAL_GDT)*$(EXT_C)))
 _FILES_C_HAL_SMBIOS             = $(foreach dir,$(DIR_SRC_HAL_SMBIOS),$(wildcard $(DIR_SRC_HAL_SMBIOS)*$(EXT_C)))
-_FILES_C_IRQ                    = $(foreach dir,$(DIR_SRC_IRQ),$(wildcard $(DIR_SRC_IRQ)*$(EXT_C)))
+_FILES_C_ISR                    = $(foreach dir,$(DIR_SRC_ISR),$(wildcard $(DIR_SRC_ISR)*$(EXT_C)))
 _FILES_C_SYSTEM                 = $(foreach dir,$(DIR_SRC_SYSTEM),$(wildcard $(DIR_SRC_SYSTEM)*$(EXT_C)))
 _FILES_C_VIDEO                  = $(foreach dir,$(DIR_SRC_VIDEO),$(wildcard $(DIR_SRC_VIDEO)*$(EXT_C)))
 
@@ -152,7 +152,7 @@ _FILES_C_REL_HAL_IO             = $(notdir $(_FILES_C_HAL_IO))
 _FILES_C_REL_HAL_IDT            = $(notdir $(_FILES_C_HAL_IDT))
 _FILES_C_REL_HAL_GDT            = $(notdir $(_FILES_C_HAL_GDT))
 _FILES_C_REL_HAL_SMBIOS         = $(notdir $(_FILES_C_HAL_SMBIOS))
-_FILES_C_REL_IRQ                = $(notdir $(_FILES_C_IRQ))
+_FILES_C_REL_ISR                = $(notdir $(_FILES_C_ISR))
 _FILES_C_REL_SYSTEM             = $(notdir $(_FILES_C_SYSTEM))
 _FILES_C_REL_VIDEO              = $(notdir $(_FILES_C_VIDEO))
 
@@ -166,7 +166,7 @@ _FILES_C_OBJ_HAL_IO             = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C
 _FILES_C_OBJ_HAL_IDT            = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_HAL_IDT))
 _FILES_C_OBJ_HAL_GDT            = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_HAL_GDT))
 _FILES_C_OBJ_HAL_SMBIOS         = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_HAL_SMBIOS))
-_FILES_C_OBJ_IRQ                = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_IRQ))
+_FILES_C_OBJ_ISR                = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_ISR))
 _FILES_C_OBJ_SYSTEM             = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_SYSTEM))
 _FILES_C_OBJ_VIDEO              = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_VIDEO))
 
@@ -180,7 +180,7 @@ _FILES_C_OBJ_BUILD_HAL_IO       = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$
 _FILES_C_OBJ_BUILD_HAL_IDT      = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_HAL_IDT))
 _FILES_C_OBJ_BUILD_HAL_GDT      = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_HAL_GDT))
 _FILES_C_OBJ_BUILD_HAL_SMBIOS   = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_HAL_SMBIOS))
-_FILES_C_OBJ_BUILD_IRQ          = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_IRQ))
+_FILES_C_OBJ_BUILD_ISR          = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_ISR))
 _FILES_C_OBJ_BUILD_SYSTEM       = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_SYSTEM))
 _FILES_C_OBJ_BUILD_VIDEO        = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_VIDEO))
 
@@ -199,7 +199,7 @@ _FILES_C_OBJ_BUILD_VIDEO        = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$
 #-------------------------------------------------------------------------------
 
 # Build the full project
-all: $(_FILES_ASM_OBJ_BUILD_32) $(_FILES_ASM_OBJ_BUILD_64) $(_FILES_C_OBJ_BUILD) $(_FILES_C_OBJ_BUILD_HAL) $(_FILES_C_OBJ_BUILD_HAL_CPU) $(_FILES_C_OBJ_BUILD_HAL_IO) $(_FILES_C_OBJ_BUILD_HAL_IDT) $(_FILES_C_OBJ_BUILD_HAL_GDT) $(_FILES_C_OBJ_BUILD_HAL_SMBIOS) $(_FILES_C_OBJ_BUILD_IRQ) $(_FILES_C_OBJ_BUILD_SYSTEM) $(_FILES_C_OBJ_BUILD_VIDEO)
+all: $(_FILES_ASM_OBJ_BUILD_32) $(_FILES_ASM_OBJ_BUILD_64) $(_FILES_C_OBJ_BUILD) $(_FILES_C_OBJ_BUILD_HAL) $(_FILES_C_OBJ_BUILD_HAL_CPU) $(_FILES_C_OBJ_BUILD_HAL_IO) $(_FILES_C_OBJ_BUILD_HAL_IDT) $(_FILES_C_OBJ_BUILD_HAL_GDT) $(_FILES_C_OBJ_BUILD_HAL_SMBIOS) $(_FILES_C_OBJ_BUILD_ISR) $(_FILES_C_OBJ_BUILD_SYSTEM) $(_FILES_C_OBJ_BUILD_VIDEO)
 	
 	@:
 

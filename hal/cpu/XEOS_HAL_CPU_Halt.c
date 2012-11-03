@@ -69,6 +69,6 @@ void XEOS_HAL_CPU_Halt( void )
     
     __asm__
     (
-        "hlt;"
+        "hlt"
     );
 }

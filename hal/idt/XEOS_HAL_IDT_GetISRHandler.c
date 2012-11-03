@@ -61,13 +61,15 @@
 
 /* $Id$ */
 
-#include "xeos/irq.h"
-#include "xeos/system.h"
+#include "xeos/hal/idt.h"
+#include <stdlib.h>
 
-void XEOS_IRQ_DefaultHandler( unsigned int irq )
+XEOS_HAL_IDT_ISRHandler XEOS_HAL_IDT_GetISRHandler( unsigned int isr )
 {
-    ( void )irq;
+    if( isr >= XEOS_HAL_IDT_MAX_DESCRIPTORS )
+    {
+        return NULL;
+    }
     
-    XEOS_System_Panic( "Received unknown IRQ" );
+    return __XEOS_HAL_IDT_Handlers[ isr ];
 }
-

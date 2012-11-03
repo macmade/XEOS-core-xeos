@@ -61,10 +61,18 @@
 
 /* $Id$ */
 
-#include "xeos/hal/idt.h"
-#include "xeos/system.h"
+#ifndef __XEOS_ISR_H__
+#define __XEOS_ISR_H__
+#pragma once
 
-void __XEOS_HAL_IDT_IRQHandlerStub( void )
-{
-    XEOS_System_Panic( "Entering IRQ handler stub..." );
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void XEOS_ISR_ExceptionHandler( unsigned int isr );
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* __XEOS_ISR_H__ */

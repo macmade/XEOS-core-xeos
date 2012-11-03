@@ -67,9 +67,9 @@ void XEOS_HAL_IO_PortOut( XEOS_HAL_IO_Port port, unsigned char value )
 {
     __asm__
     (
-        "movb   %[value],   %%al;"
-        "movw   %[port],    %%dx;"
-        "out    %%al,       %%dx;"
+        "movb   %[value],   %%al\n"
+        "movw   %[port],    %%dx\n"
+        "out    %%al,       %%dx\n"
         
         : 
         : [ port ] "m" ( port ), [ value ] "m" ( value )

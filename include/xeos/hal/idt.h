@@ -126,7 +126,7 @@ typedef struct _XEOS_HAL_IDT_Pointer32  XEOS_HAL_IDT_Pointer;
 
 #endif
 
-typedef void ( * XEOS_HAL_IDT_IRQHandler )( unsigned int irq );
+typedef void ( * XEOS_HAL_IDT_ISRHandler )( unsigned int isr );
 
 typedef enum
 {
@@ -147,18 +147,16 @@ typedef enum
 }
 XEOS_HAL_IDT_PrivilegeLevel;
 
-void                        XEOS_HAL_IDT_Init( XEOS_HAL_IDT_IRQHandler defaultHandler );
-void                        XEOS_HAL_IDT_SetIRQ( unsigned int irq, XEOS_HAL_IDT_IRQHandler handler, XEOS_HAL_IDT_EntryType type, XEOS_HAL_IDT_PrivilegeLevel level, bool reload );
+void                        XEOS_HAL_IDT_Init( void );
+void                        XEOS_HAL_IDT_SetISR( unsigned int isr, XEOS_HAL_IDT_ISRHandler handler, XEOS_HAL_IDT_EntryType type, XEOS_HAL_IDT_PrivilegeLevel level, bool reload );
 void                        XEOS_HAL_IDT_Reload( void );
-XEOS_HAL_IDT_IRQHandler     XEOS_HAL_IDT_GetIRQHandler( unsigned int irq );
-XEOS_HAL_IDT_EntryType      XEOS_HAL_IDT_GetIRQEntryType( unsigned int irq );
-XEOS_HAL_IDT_PrivilegeLevel XEOS_HAL_IDT_GetIRQPrivilegeLevel( unsigned int irq );
-
-extern void __XEOS_HAL_IDT_IRQHandlerStub( void );
+XEOS_HAL_IDT_ISRHandler     XEOS_HAL_IDT_GetISRHandler( unsigned int isr );
+XEOS_HAL_IDT_EntryType      XEOS_HAL_IDT_GetISREntryType( unsigned int isr );
+XEOS_HAL_IDT_PrivilegeLevel XEOS_HAL_IDT_GetISRPrivilegeLevel( unsigned int isr );
 
 extern XEOS_HAL_IDT_Pointer     __XEOS_HAL_IDT_Pointer;
 extern XEOS_HAL_IDT_Entry       __XEOS_HAL_IDT_Entries[];
-extern XEOS_HAL_IDT_IRQHandler  __XEOS_HAL_IDT_Handlers[];
+extern XEOS_HAL_IDT_ISRHandler  __XEOS_HAL_IDT_Handlers[];
 
 #ifdef __cplusplus
 }

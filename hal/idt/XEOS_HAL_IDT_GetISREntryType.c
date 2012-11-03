@@ -61,18 +61,11 @@
 
 /* $Id$ */
 
-#ifndef __XEOS_IRQ_H__
-#define __XEOS_IRQ_H__
-#pragma once
+#include "xeos/hal/idt.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void XEOS_IRQ_DefaultHandler( unsigned int irq );
-
-#ifdef __cplusplus
+XEOS_HAL_IDT_EntryType XEOS_HAL_IDT_GetISREntryType( unsigned int isr )
+{
+    ( void )isr;
+    
+    return XEOS_HAL_IDT_EntryType_Interrupt32;
 }
-#endif
-
-#endif /* __XEOS_IRQ_H__ */

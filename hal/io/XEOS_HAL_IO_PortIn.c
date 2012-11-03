@@ -69,9 +69,9 @@ unsigned char XEOS_HAL_IO_PortIn( XEOS_HAL_IO_Port port )
     
     __asm__
     (
-        "movw   %[port],    %%dx;"
-        "in     %%dx,       %%al;"
-        "movb   %%al,       %[value];"
+        "movw   %[port],    %%dx\n"
+        "in     %%dx,       %%al\n"
+        "movb   %%al,       %[value]\n"
         
         : [ value ] "=m" ( value )
         : [ port ] "m" ( port )

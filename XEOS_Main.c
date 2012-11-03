@@ -64,7 +64,7 @@
 #include "xeos/video.h"
 #include "xeos/system.h"
 #include "xeos/hal.h"
-#include "xeos/irq.h"
+#include "xeos/isr.h"
 
 void XEOS_Main( void );
 void XEOS_Main( void )
@@ -74,17 +74,6 @@ void XEOS_Main( void )
     XEOS_Video_SetFG( XEOS_Video_ColorWhite );
     XEOS_Video_SetBG( XEOS_Video_ColorBlack );
     XEOS_Video_Clear();
-    
-    XEOS_HAL_IDT_Init( XEOS_IRQ_DefaultHandler );
-    
-    XEOS_HAL_CPU_EnableInterrupts();
-    
-    XEOS_Video_Print( "Testing IRQs: " );
-    
-    __asm__
-    (
-        "int    $32"
-    );
     
     XEOS_System_Panic( "Nothing to do here for now..." );
     
