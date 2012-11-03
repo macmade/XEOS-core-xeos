@@ -75,6 +75,33 @@ void XEOS_Main( void )
     XEOS_Video_SetBG( XEOS_Video_ColorBlack );
     XEOS_Video_Clear();
     
+    XEOS_HAL_IDT_Init( 0x08 );
+    
+    XEOS_HAL_IDT_SetISR( 0x00, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    XEOS_HAL_IDT_SetISR( 0x01, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    XEOS_HAL_IDT_SetISR( 0x02, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    XEOS_HAL_IDT_SetISR( 0x03, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    XEOS_HAL_IDT_SetISR( 0x04, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    XEOS_HAL_IDT_SetISR( 0x05, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    XEOS_HAL_IDT_SetISR( 0x06, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    XEOS_HAL_IDT_SetISR( 0x07, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    XEOS_HAL_IDT_SetISR( 0x08, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    XEOS_HAL_IDT_SetISR( 0x09, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    XEOS_HAL_IDT_SetISR( 0x0A, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    XEOS_HAL_IDT_SetISR( 0x0B, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    XEOS_HAL_IDT_SetISR( 0x0C, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    XEOS_HAL_IDT_SetISR( 0x0D, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    XEOS_HAL_IDT_SetISR( 0x0E, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    XEOS_HAL_IDT_SetISR( 0x0F, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    XEOS_HAL_IDT_SetISR( 0x10, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    XEOS_HAL_IDT_SetISR( 0x11, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    XEOS_HAL_IDT_SetISR( 0x12, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+    XEOS_HAL_IDT_SetISR( 0x13, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+
+    /*
+    XEOS_HAL_CPU_EnableInterrupts();
+    */
+    
     XEOS_System_Panic( "Nothing to do here for now..." );
     
     XEOS_HAL_CPU_Halt();

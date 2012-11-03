@@ -90,11 +90,45 @@ void __XEOS_HAL_IDT_HandleISR( unsigned int isr )
 __asm__                                         \
 (                                               \
     ".global __XEOS_HAL_IDT_ISR_" # _n_ "\n"    \
-    "\n"                                        \
     "__XEOS_HAL_IDT_ISR_" # _n_ ":\n"           \
+    "\n"                                        \
+    "push %rax\n"                               \
+    "push %rbx\n"                               \
+    "push %rcx\n"                               \
+    "push %rdx\n"                               \
+    "push %rdi\n"                               \
+    "push %rsi\n"                               \
+    "push %r8\n"                                \
+    "push %r9\n"                                \
+    "push %r10\n"                               \
+    "push %r11\n"                               \
+    "push %r12\n"                               \
+    "push %r13\n"                               \
+    "push %r14\n"                               \
+    "push %r15\n"                               \
+    "push %rsp\n"                               \
+    "push %rbp\n"                               \
     "\n"                                        \
     "movq $0x" # _n_ ", %rdi\n"                 \
     "call __XEOS_HAL_IDT_HandleISR\n"           \
+    "\n"                                        \
+    "pop %rbp\n"                                \
+    "pop %rsp\n"                                \
+    "pop %r15\n"                                \
+    "pop %r14\n"                                \
+    "pop %r13\n"                                \
+    "pop %r12\n"                                \
+    "pop %r11\n"                                \
+    "pop %r10\n"                                \
+    "pop %r9\n"                                 \
+    "pop %r8\n"                                 \
+    "pop %rsi\n"                                \
+    "pop %rdi\n"                                \
+    "pop %rdx\n"                                \
+    "pop %rcx\n"                                \
+    "pop %rbx\n"                                \
+    "pop %rax\n"                                \
+    "\n"                                        \
     "iret\n"                                    \
 )
 
@@ -108,8 +142,27 @@ __asm__                                         \
     "\n"                                        \
     "__XEOS_HAL_IDT_ISR_" # _n_ ":\n"           \
     "\n"                                        \
+    "push %eax\n"                               \
+    "push %ebx\n"                               \
+    "push %ecx\n"                               \
+    "push %edx\n"                               \
+    "push %edi\n"                               \
+    "push %esi\n"                               \
+    "push %esp\n"                               \
+    "push %ebp\n"                               \
+    "\n"                                        \
     "push $0x" # _n_ "\n"                       \
     "call __XEOS_HAL_IDT_HandleISR\n"           \
+    "\n"                                        \
+    "pop %ebp\n"                                \
+    "pop %esp\n"                                \
+    "pop %esi\n"                                \
+    "pop %edi\n"                                \
+    "pop %edx\n"                                \
+    "pop %ecx\n"                                \
+    "pop %ebx\n"                                \
+    "pop %eax\n"                                \
+    "\n"                                        \
     "iret\n"                                    \
 ) 
 
