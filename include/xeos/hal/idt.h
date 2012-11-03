@@ -147,7 +147,7 @@ typedef enum
 }
 XEOS_HAL_IDT_PrivilegeLevel;
 
-void                        XEOS_HAL_IDT_Init( void );
+void                        XEOS_HAL_IDT_Init( uint16_t selector );
 void                        XEOS_HAL_IDT_SetISR( unsigned int isr, XEOS_HAL_IDT_ISRHandler handler, XEOS_HAL_IDT_EntryType type, XEOS_HAL_IDT_PrivilegeLevel level, bool reload );
 void                        XEOS_HAL_IDT_Reload( void );
 XEOS_HAL_IDT_ISRHandler     XEOS_HAL_IDT_GetISRHandler( unsigned int isr );

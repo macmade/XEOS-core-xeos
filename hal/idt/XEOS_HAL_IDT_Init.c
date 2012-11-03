@@ -83,8 +83,7 @@
                                                                                                     \
             entry = &(  __XEOS_HAL_IDT_Entries[ 0x ## _i_ ] );                                      \
                                                                                                     \
-                                                                                                    \
-            entry->selector   = 0x08;                                                               \
+            entry->selector   = selector;                                                           \
             entry->baseLow    = ( uint16_t )(   ( uintptr_t )&( * isr )       & 0x0000FFFF );       \
             entry->baseMiddle = ( uint16_t )( ( ( uintptr_t )&( * isr ) >> 16 & 0x0000FFFF ) );     \
             entry->baseHigh   = ( uint32_t )( ( ( uintptr_t )&( * isr ) >> 32 & 0xFFFFFFFF ) );     \
@@ -92,7 +91,26 @@
         
 #else
     
-    #define __XEOS_HAL_IDT_INIT_ISR( _i_ )
+    #define __XEOS_HAL_IDT_INIT_ISR( _i_ )                                                          \
+                                                                                                    \
+        {                                                                                           \
+            XEOS_HAL_IDT_Entry * entry;                                                             \
+                                                                                                    \
+            void ( * isr )( void );                                                                 \
+                                                                                                    \
+            __asm__                                                                                 \
+            (                                                                                       \
+                "leal __XEOS_HAL_IDT_ISR_" # _i_ ", %[isr];"                                        \
+                : [ isr ] "=r" ( isr )                                                              \
+                :                                                                                   \
+            );                                                                                      \
+                                                                                                    \
+            entry = &(  __XEOS_HAL_IDT_Entries[ 0x ## _i_ ] );                                      \
+                                                                                                    \
+            entry->selector   = selector;                                                           \
+            entry->baseLow    = ( uint16_t )(   ( uintptr_t )&( * isr )       & 0x0000FFFF );       \
+            entry->baseHigh   = ( uint16_t )( ( ( uintptr_t )&( * isr ) >> 16 & 0x0000FFFF ) );     \
+        }
     
 #endif
 
@@ -114,7 +132,7 @@
         __XEOS_HAL_IDT_INIT_ISR( _i_ ## E )     \
         __XEOS_HAL_IDT_INIT_ISR( _i_ ## F )
 
-void XEOS_HAL_IDT_Init( void )
+void XEOS_HAL_IDT_Init( uint16_t selector )
 {
     unsigned int i;
     
