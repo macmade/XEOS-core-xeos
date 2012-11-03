@@ -83,6 +83,8 @@
                                                                                                     \
             entry = &(  __XEOS_HAL_IDT_Entries[ 0x ## _i_ ] );                                      \
                                                                                                     \
+                                                                                                    \
+            entry->selector   = 0x08;                                                               \
             entry->baseLow    = ( uint16_t )(   ( uintptr_t )&( * isr )       & 0x0000FFFF );       \
             entry->baseMiddle = ( uint16_t )( ( ( uintptr_t )&( * isr ) >> 16 & 0x0000FFFF ) );     \
             entry->baseHigh   = ( uint32_t )( ( ( uintptr_t )&( * isr ) >> 32 & 0xFFFFFFFF ) );     \
