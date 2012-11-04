@@ -63,25 +63,12 @@
 
 #include "xeos/hal/cpu.h"
 
-void XEOS_HAL_CPU_LoadIDT( XEOS_HAL_IDT_Pointer * p )
+void XEOS_HAL_CPU_LoadIDT( void * p )
 {
-    #ifdef __LP64__
-        
-        __asm__
-        (
-            "lidt (%[p])"
-            : 
-            : [ p ] "r" ( p )
-        );
-        
-    #else
-        
-        __asm__
-        (
-            "lidt (%[p])"
-            : 
-            : [ p ] "r" ( p )
-        );
-        
-    #endif
+    __asm__
+    (
+        "lidt (%[p])"
+        : 
+        : [ p ] "r" ( p )
+    );
 }

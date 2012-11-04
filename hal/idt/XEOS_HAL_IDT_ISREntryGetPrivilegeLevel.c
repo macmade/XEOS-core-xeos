@@ -61,7 +61,16 @@
 
 /* $Id$ */
 
-#include "xeos/hal/gdt.h"
+#include "xeos/hal/idt.h"
+#include "xeos/hal/__idt.h"
+#include <stdlib.h>
 
-void XEOS_HAL_GDT_Init( void )
-{}
+XEOS_HAL_IDT_ISREntryPrivilegeLevel XEOS_HAL_IDT_ISREntryGetPrivilegeLevel( XEOS_HAL_IDT_ISREntryRef entry )
+{
+    if( entry == NULL )
+    {
+        return XEOS_HAL_IDT_ISREntryPrivilegeLevelRing0;
+    }
+    
+    return ( XEOS_HAL_IDT_ISREntryPrivilegeLevel )( ( entry->flags >> 5 ) & 0x03 );
+}

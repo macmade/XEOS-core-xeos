@@ -61,29 +61,18 @@
 
 /* $Id$ */
 
-#include "xeos/video.h"
-#include "xeos/hal.h"
-#include <stdint.h>
+#ifndef __XEOS_HAL_PIC_H__
+#define __XEOS_HAL_PIC_H__
+#pragma once
 
-void XEOS_Video_MoveCursor( unsigned int x, unsigned int y )
-{
-    uint16_t        pos;
-    unsigned char   posH;
-    unsigned char   posL;
-    
-    __XEOS_Video_X = x;
-    __XEOS_Video_Y = y;
-    
-    x = ( x < XEOS_VIDEO_COLS - 1 ) ? x : XEOS_VIDEO_COLS - 1;
-    y = ( y < XEOS_VIDEO_ROWS - 1 ) ? y : XEOS_VIDEO_ROWS - 1;
-    
-    pos  = ( uint16_t )( x + ( y * XEOS_VIDEO_COLS ) );
-    posH = ( unsigned char )( pos >> 8 );
-    posL = ( unsigned char )( pos & 0x00FF );
-    
-    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_RegisterData, XEOS_HAL_CRTC_RegisterCursorLocationHigh );
-    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_RegisterAddress, posH );
-    
-    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_RegisterData, XEOS_HAL_CRTC_RegisterCursorLocationLow );
-    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_RegisterAddress, posL );
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* __XEOS_HAL_PIC_H__ */

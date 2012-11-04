@@ -62,7 +62,7 @@
 /* $Id$ */
 
 #include "xeos/hal/idt.h"
-#include "xeos/hal/cpu.h"
+#include "xeos/hal/__idt.h"
 #include <string.h>
 
 #ifdef __LP64__
@@ -70,7 +70,7 @@
     #define __XEOS_HAL_IDT_INIT_ISR( _i_ )                                                          \
                                                                                                     \
         {                                                                                           \
-            XEOS_HAL_IDT_Entry * entry;                                                             \
+            __XEOS_HAL_IDT_ISREntry * entry;                                                        \
                                                                                                     \
             void ( * isr )( void );                                                                 \
                                                                                                     \
@@ -81,9 +81,8 @@
                 :                                                                                   \
             );                                                                                      \
                                                                                                     \
-            entry = &(  __XEOS_HAL_IDT_Entries[ 0x ## _i_ ] );                                      \
+            entry = &(  __XEOS_HAL_IDT_ISREntries[ 0x ## _i_ ] );                                   \
                                                                                                     \
-            entry->selector   = selector;                                                           \
             entry->baseLow    = ( uint16_t )(   ( uintptr_t )&( * isr )       & 0x0000FFFF );       \
             entry->baseMiddle = ( uint16_t )( ( ( uintptr_t )&( * isr ) >> 16 & 0x0000FFFF ) );     \
             entry->baseHigh   = ( uint32_t )( ( ( uintptr_t )&( * isr ) >> 32 & 0xFFFFFFFF ) );     \
@@ -94,7 +93,7 @@
     #define __XEOS_HAL_IDT_INIT_ISR( _i_ )                                                          \
                                                                                                     \
         {                                                                                           \
-            XEOS_HAL_IDT_Entry * entry;                                                             \
+            __XEOS_HAL_IDT_ISREntry * entry;                                                        \
                                                                                                     \
             void ( * isr )( void );                                                                 \
                                                                                                     \
@@ -105,9 +104,8 @@
                 :                                                                                   \
             );                                                                                      \
                                                                                                     \
-            entry = &(  __XEOS_HAL_IDT_Entries[ 0x ## _i_ ] );                                      \
+            entry = &(  __XEOS_HAL_IDT_ISREntries[ 0x ## _i_ ] );                                   \
                                                                                                     \
-            entry->selector   = selector;                                                           \
             entry->baseLow    = ( uint16_t )(   ( uintptr_t )&( * isr )       & 0x0000FFFF );       \
             entry->baseHigh   = ( uint16_t )( ( ( uintptr_t )&( * isr ) >> 16 & 0x0000FFFF ) );     \
         }
@@ -132,13 +130,13 @@
         __XEOS_HAL_IDT_INIT_ISR( _i_ ## E )     \
         __XEOS_HAL_IDT_INIT_ISR( _i_ ## F )
 
-void XEOS_HAL_IDT_Init( uint16_t selector )
+void XEOS_HAL_IDT_Init( void )
 {
     unsigned int i;
     
-    memset( &__XEOS_HAL_IDT_Pointer,  0, sizeof( XEOS_HAL_IDT_Pointer    ) );
-    memset(  __XEOS_HAL_IDT_Entries,  0, sizeof( XEOS_HAL_IDT_Entry      ) * XEOS_HAL_IDT_MAX_DESCRIPTORS );
-    memset(  __XEOS_HAL_IDT_Handlers, 0, sizeof( XEOS_HAL_IDT_ISRHandler ) * XEOS_HAL_IDT_MAX_DESCRIPTORS );
+    memset( &__XEOS_HAL_IDT_Address,    0, sizeof( __XEOS_HAL_IDT_Pointer ) );
+    memset(  __XEOS_HAL_IDT_ISREntries,  0, sizeof( __XEOS_HAL_IDT_ISREntry ) * XEOS_HAL_IDT_MAX_DESCRIPTORS );
+    memset(  __XEOS_HAL_IDT_ISRHandlers, 0, sizeof( XEOS_HAL_IDT_ISRHandler ) * XEOS_HAL_IDT_MAX_DESCRIPTORS );
     
     __XEOS_HAL_IDT_INIT_ISR_GROUP( 0 )
     __XEOS_HAL_IDT_INIT_ISR_GROUP( 1 )
@@ -156,21 +154,31 @@ void XEOS_HAL_IDT_Init( uint16_t selector )
     __XEOS_HAL_IDT_INIT_ISR_GROUP( D )
     __XEOS_HAL_IDT_INIT_ISR_GROUP( E )
     __XEOS_HAL_IDT_INIT_ISR_GROUP( F )
-        
+    
     for( i = 0; i < XEOS_HAL_IDT_MAX_DESCRIPTORS; i++ )
     {
-        XEOS_HAL_IDT_SetISR( i, NULL, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
+        {
+            XEOS_HAL_IDT_ISREntryRef entry;
+            
+            entry = XEOS_HAL_IDT_GetISREntry( i );
+            
+            XEOS_HAL_IDT_ISREntrySetSelector( entry, 0x08 );
+            XEOS_HAL_IDT_ISREntrySetType( entry, XEOS_HAL_IDT_ISREntryTypeInterrupt32 );
+            XEOS_HAL_IDT_ISREntrySetPrivilegeLevel( entry, XEOS_HAL_IDT_ISREntryPrivilegeLevelRing3 );
+            XEOS_HAL_IDT_ISREntrySetPresent( entry, true );
+            XEOS_HAL_IDT_ISREntrySetHandler( entry, NULL );
+        }
     }
     
-    __XEOS_HAL_IDT_Pointer.limit = ( uint16_t )( sizeof( XEOS_HAL_IDT_Entry ) * XEOS_HAL_IDT_MAX_DESCRIPTORS ) - 1;
+    __XEOS_HAL_IDT_Address.limit = ( uint16_t )( sizeof( __XEOS_HAL_IDT_ISREntry ) * XEOS_HAL_IDT_MAX_DESCRIPTORS ) - 1;
     
     #ifdef __LP64__
         
-        __XEOS_HAL_IDT_Pointer.base = ( uint64_t )&__XEOS_HAL_IDT_Entries;
+        __XEOS_HAL_IDT_Address.base = ( uint64_t )&__XEOS_HAL_IDT_ISREntries;
         
     #else
         
-        __XEOS_HAL_IDT_Pointer.base = ( uint32_t )&__XEOS_HAL_IDT_Entries;
+        __XEOS_HAL_IDT_Address.base = ( uint32_t )&__XEOS_HAL_IDT_ISREntries;
         
     #endif
     

@@ -61,29 +61,23 @@
 
 /* $Id$ */
 
-#include "xeos/video.h"
-#include "xeos/hal.h"
-#include <stdint.h>
+#include "xeos/hal/idt.h"
+#include "xeos/hal/__idt.h"
+#include <stdlib.h>
 
-void XEOS_Video_MoveCursor( unsigned int x, unsigned int y )
+void XEOS_HAL_IDT_ISREntrySetPresent( XEOS_HAL_IDT_ISREntryRef entry, bool present )
 {
-    uint16_t        pos;
-    unsigned char   posH;
-    unsigned char   posL;
+    if( entry == NULL )
+    {
+        return;
+    }
     
-    __XEOS_Video_X = x;
-    __XEOS_Video_Y = y;
-    
-    x = ( x < XEOS_VIDEO_COLS - 1 ) ? x : XEOS_VIDEO_COLS - 1;
-    y = ( y < XEOS_VIDEO_ROWS - 1 ) ? y : XEOS_VIDEO_ROWS - 1;
-    
-    pos  = ( uint16_t )( x + ( y * XEOS_VIDEO_COLS ) );
-    posH = ( unsigned char )( pos >> 8 );
-    posL = ( unsigned char )( pos & 0x00FF );
-    
-    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_RegisterData, XEOS_HAL_CRTC_RegisterCursorLocationHigh );
-    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_RegisterAddress, posH );
-    
-    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_RegisterData, XEOS_HAL_CRTC_RegisterCursorLocationLow );
-    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_RegisterAddress, posL );
+    if( present == true )
+    {
+        entry->flags |= 0x8000; /* 1000 0000 0000 0000 */
+    }
+    else
+    {
+        entry->flags &= 0x7FFF; /* 0111 1111 1111 1111 */
+    }
 }

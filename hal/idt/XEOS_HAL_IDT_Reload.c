@@ -62,9 +62,10 @@
 /* $Id$ */
 
 #include "xeos/hal/idt.h"
+#include "xeos/hal/__idt.h"
 #include "xeos/hal/cpu.h"
 
 void XEOS_HAL_IDT_Reload( void )
 {
-    XEOS_HAL_CPU_LoadIDT( &__XEOS_HAL_IDT_Pointer );
+    XEOS_HAL_CPU_LoadIDT( &__XEOS_HAL_IDT_Address );
 }

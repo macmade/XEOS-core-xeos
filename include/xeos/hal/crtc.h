@@ -69,34 +69,38 @@
 extern "C" {
 #endif
 
-#define XEOS_HAL_CRTC_DATA_REGISTER                 0x03D4
-#define XEOS_HAL_CRTC_INDEX_REGISTER                0x03D5
-
-#define XEOS_HAL_CRTC_HORIZONTAL_TOTAL              0x0000
-#define XEOS_HAL_CRTC_END_HORIZONTAL_DISPLAY        0x0001
-#define XEOS_HAL_CRTC_START_HORIZONTAL_BLANKING     0x0002
-#define XEOS_HAL_CRTC_END_HORIZONTAL_BLANKING       0x0003
-#define XEOS_HAL_CRTC_START_HORIZONTAL_RETRACE      0x0004
-#define XEOS_HAL_CRTC_END_HORIZONTAL_RETRACE        0x0005
-#define XEOS_HAL_CRTC_VERTICAL_TOTAL                0x0006
-#define XEOS_HAL_CRTC_OVERFLOW                      0x0007
-#define XEOS_HAL_CRTC_PRESET_ROW_SCAN               0x0008
-#define XEOS_HAL_CRTC_MAXIMUM_SCAN_LINE             0x0009
-#define XEOS_HAL_CRTC_CURSOR_START                  0x000A
-#define XEOS_HAL_CRTC_CURSOR_END                    0x000B
-#define XEOS_HAL_CRTC_START_ADDRESS_HIGH            0x000C
-#define XEOS_HAL_CRTC_START_ADDRESS_LOW             0x000D
-#define XEOS_HAL_CRTC_CURSOR_LOCATION_HIGH          0x000E
-#define XEOS_HAL_CRTC_CURSOR_LOCATION_LOW           0x000F
-#define XEOS_HAL_CRTC_VERTICAL_RETRACE_START        0x0010
-#define XEOS_HAL_CRTC_VERTICAL_RETRACE_END          0x0011
-#define XEOS_HAL_CRTC_VERTICAL_DISPLAY_END          0x0012
-#define XEOS_HAL_CRTC_OFFSET                        0x0013
-#define XEOS_HAL_CRTC_UNDERLINE_LOCATION            0x0014
-#define XEOS_HAL_CRTC_START_VERTICAL_BLANKING       0x0015
-#define XEOS_HAL_CRTC_END_VERTICAL_BLANKING         0x0016
-#define XEOS_HAL_CRTC_CRTC_MODE_CONTROL             0x0017
-#define XEOS_HAL_CRTC_LINE_COMPARE                  0x0018
+typedef enum
+{
+    XEOS_HAL_CRTC_RegisterHorizontalTotal           = 0x0000,
+    XEOS_HAL_CRTC_RegisterEndHorizontalDisplay      = 0x0001,
+    XEOS_HAL_CRTC_RegisterStartHorizontalBlanking   = 0x0002,
+    XEOS_HAL_CRTC_RegisterEndHorizontalBlanking     = 0x0003,
+    XEOS_HAL_CRTC_RegisterStartHorizontalRetrace    = 0x0004,
+    XEOS_HAL_CRTC_RegisterEndHorizontalRetrace      = 0x0005,
+    XEOS_HAL_CRTC_RegisterVerticalTotal             = 0x0006,
+    XEOS_HAL_CRTC_RegisterOverflow                  = 0x0007,
+    XEOS_HAL_CRTC_RegisterPresetRowScan             = 0x0008,
+    XEOS_HAL_CRTC_RegisterMaximumScanLine           = 0x0009,
+    XEOS_HAL_CRTC_RegisterCursorStart               = 0x000A,
+    XEOS_HAL_CRTC_RegisterCursorEnd                 = 0x000B,
+    XEOS_HAL_CRTC_RegisterStartAddressHigh          = 0x000C,
+    XEOS_HAL_CRTC_RegisterStartAddressLow           = 0x000D,
+    XEOS_HAL_CRTC_RegisterCursorLocationHigh        = 0x000E,
+    XEOS_HAL_CRTC_RegisterCursorLocationLow         = 0x000F,
+    XEOS_HAL_CRTC_RegisterVerticalRetraceStart      = 0x0010,
+    XEOS_HAL_CRTC_RegisterVerticalRetraceEnd        = 0x0011,
+    XEOS_HAL_CRTC_RegisterVerticalDisplayEnd        = 0x0012,
+    XEOS_HAL_CRTC_RegisterOffset                    = 0x0013,
+    XEOS_HAL_CRTC_RegisterUnderlineLocation         = 0x0014,
+    XEOS_HAL_CRTC_RegisterStartVerticalBlanking     = 0x0015,
+    XEOS_HAL_CRTC_RegisterEndVertical               = 0x0016,
+    XEOS_HAL_CRTC_RegisterCRTCModeControl           = 0x0017,
+    XEOS_HAL_CRTC_RegisterLineCompare               = 0x0018,
+    
+    XEOS_HAL_CRTC_RegisterData                      = 0x03D4,
+    XEOS_HAL_CRTC_RegisterAddress                   = 0x03D5
+}
+XEOS_HAL_CRTC_Register;
 
 #ifdef __cplusplus
 }

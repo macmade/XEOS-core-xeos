@@ -69,35 +69,33 @@
 void XEOS_Main( void );
 void XEOS_Main( void )
 {
+    unsigned int i;
+    
     XEOS_HAL_CPU_DisableInterrupts();
     
     XEOS_Video_SetFG( XEOS_Video_ColorWhite );
     XEOS_Video_SetBG( XEOS_Video_ColorBlack );
     XEOS_Video_Clear();
     
-    XEOS_HAL_IDT_Init( 0x08 );
+    XEOS_HAL_IDT_Init();
     
-    XEOS_HAL_IDT_SetISR( 0x00, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-    XEOS_HAL_IDT_SetISR( 0x01, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-    XEOS_HAL_IDT_SetISR( 0x02, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-    XEOS_HAL_IDT_SetISR( 0x03, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-    XEOS_HAL_IDT_SetISR( 0x04, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-    XEOS_HAL_IDT_SetISR( 0x05, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-    XEOS_HAL_IDT_SetISR( 0x06, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-    XEOS_HAL_IDT_SetISR( 0x07, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-    XEOS_HAL_IDT_SetISR( 0x08, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-    XEOS_HAL_IDT_SetISR( 0x09, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-    XEOS_HAL_IDT_SetISR( 0x0A, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-    XEOS_HAL_IDT_SetISR( 0x0B, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-    XEOS_HAL_IDT_SetISR( 0x0C, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-    XEOS_HAL_IDT_SetISR( 0x0D, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-    XEOS_HAL_IDT_SetISR( 0x0E, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-    XEOS_HAL_IDT_SetISR( 0x0F, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-    XEOS_HAL_IDT_SetISR( 0x10, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-    XEOS_HAL_IDT_SetISR( 0x11, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-    XEOS_HAL_IDT_SetISR( 0x12, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-    XEOS_HAL_IDT_SetISR( 0x13, XEOS_ISR_ExceptionHandler, XEOS_HAL_IDT_EntryType_Interrupt32, XEOS_HAL_IDT_PrivilegeLevel_Ring3, false );
-
+    for( i = 0; i < 20; i++ )
+    {
+        {
+            XEOS_HAL_IDT_ISREntryRef entry;
+            
+            entry = XEOS_HAL_IDT_GetISREntry( i );
+            
+            XEOS_HAL_IDT_ISREntrySetSelector( entry, 0x08 );
+            XEOS_HAL_IDT_ISREntrySetType( entry, XEOS_HAL_IDT_ISREntryTypeInterrupt32 );
+            XEOS_HAL_IDT_ISREntrySetPrivilegeLevel( entry, XEOS_HAL_IDT_ISREntryPrivilegeLevelRing3 );
+            XEOS_HAL_IDT_ISREntrySetPresent( entry, true );
+            XEOS_HAL_IDT_ISREntrySetHandler( entry, XEOS_ISR_ExceptionHandler );
+        }
+    }
+    
+    XEOS_HAL_IDT_Reload();
+    
     /*
     XEOS_HAL_CPU_EnableInterrupts();
     */

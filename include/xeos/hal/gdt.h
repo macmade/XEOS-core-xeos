@@ -69,37 +69,7 @@
 extern "C" {
 #endif
 
-#include <stdint.h>
 
-#define XEOS_HAL_GDT_MAX_DESCRIPTORS    3
-
-#ifdef __clang__
-#pragma pack( 1 )
-#endif
-
-struct _XEOS_HAL_GDT_Entry
-{
-    uint16_t    limit;
-    uint16_t    baseLow;
-    uint8_t     baseMiddle;
-    uint16_t    flags;
-    uint8_t     baseHigh;
-};
-
-struct _XEOS_HAL_GDT_Pointer
-{
-    uint16_t    limit;
-    uint32_t    base;
-};
-
-#ifdef __clang__
-#pragma pack()
-#endif
-
-typedef struct _XEOS_HAL_GDT_Entry      XEOS_HAL_GDT_Entry;
-typedef struct _XEOS_HAL_GDT_Pointer    XEOS_HAL_GDT_Pointer;
-
-void XEOS_HAL_GDT_Init( void );
 
 #ifdef __cplusplus
 }

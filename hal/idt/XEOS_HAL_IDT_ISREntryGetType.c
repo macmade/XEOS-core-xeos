@@ -61,7 +61,16 @@
 
 /* $Id$ */
 
-#include "xeos/hal/gdt.h"
+#include "xeos/hal/idt.h"
+#include "xeos/hal/__idt.h"
+#include <stdlib.h>
 
-XEOS_HAL_GDT_Pointer     __XEOS_HAL_GDT_Pointer;
-XEOS_HAL_GDT_Entry       __XEOS_HAL_GDT_Entries[ XEOS_HAL_GDT_MAX_DESCRIPTORS ];
+XEOS_HAL_IDT_ISREntryType XEOS_HAL_IDT_ISREntryGetType( XEOS_HAL_IDT_ISREntryRef entry )
+{
+    if( entry == NULL )
+    {
+        return XEOS_HAL_IDT_ISREntryTypeUnknown;
+    }
+    
+    return ( XEOS_HAL_IDT_ISREntryType )( entry->flags & 0x0F ); /* 0000 1111 */
+}

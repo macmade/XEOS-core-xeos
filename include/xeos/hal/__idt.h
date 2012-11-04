@@ -61,29 +61,78 @@
 
 /* $Id$ */
 
-#include "xeos/video.h"
-#include "xeos/hal.h"
-#include <stdint.h>
+#ifndef __HAL___IDT_H__
+#define __HAL___IDT_H__
+#pragma once
 
-void XEOS_Video_MoveCursor( unsigned int x, unsigned int y )
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include "xeos/hal/idt.h"
+
+#ifdef __clang__
+#pragma pack( 1 )
+#endif
+
+struct __XEOS_HAL_IDT_ISREntry32
 {
-    uint16_t        pos;
-    unsigned char   posH;
-    unsigned char   posL;
+    uint16_t    baseLow;
+    uint16_t    selector;
+    uint8_t     __reserved_0;
+    uint8_t     flags;
+    uint16_t    baseHigh;
+};
+
+struct __XEOS_HAL_IDT_Pointer32
+{
+    uint16_t    limit;
+    uint32_t    base;
+};
+
+struct __XEOS_HAL_IDT_ISREntry64
+{
+    uint16_t    baseLow;
+    uint16_t    selector;
+    uint8_t     __reserved_0;
+    uint8_t     flags;
+    uint16_t    baseMiddle;
+    uint32_t    baseHigh;
+    uint32_t    __reserved_1;
+};
+
+struct __XEOS_HAL_IDT_Pointer64
+{
+    uint16_t    limit;
+    uint64_t    base;
+};
+
+#ifdef __clang__
+#pragma pack()
+#endif
+
+#ifdef __LP64__
     
-    __XEOS_Video_X = x;
-    __XEOS_Video_Y = y;
+    extern struct __XEOS_HAL_IDT_Pointer64      __XEOS_HAL_IDT_Address;
+    extern struct __XEOS_HAL_IDT_ISREntry64     __XEOS_HAL_IDT_ISREntries[];
     
-    x = ( x < XEOS_VIDEO_COLS - 1 ) ? x : XEOS_VIDEO_COLS - 1;
-    y = ( y < XEOS_VIDEO_ROWS - 1 ) ? y : XEOS_VIDEO_ROWS - 1;
+    typedef struct __XEOS_HAL_IDT_ISREntry64    __XEOS_HAL_IDT_ISREntry;
+    typedef struct __XEOS_HAL_IDT_Pointer64     __XEOS_HAL_IDT_Pointer;
     
-    pos  = ( uint16_t )( x + ( y * XEOS_VIDEO_COLS ) );
-    posH = ( unsigned char )( pos >> 8 );
-    posL = ( unsigned char )( pos & 0x00FF );
+#else
     
-    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_RegisterData, XEOS_HAL_CRTC_RegisterCursorLocationHigh );
-    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_RegisterAddress, posH );
+    extern struct __XEOS_HAL_IDT_Pointer32      __XEOS_HAL_IDT_Address;
+    extern struct __XEOS_HAL_IDT_ISREntry32     __XEOS_HAL_IDT_ISREntries[];
+
+    typedef struct __XEOS_HAL_IDT_ISREntry32    __XEOS_HAL_IDT_ISREntry;
+    typedef struct __XEOS_HAL_IDT_Pointer32     __XEOS_HAL_IDT_Pointer;
     
-    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_RegisterData, XEOS_HAL_CRTC_RegisterCursorLocationLow );
-    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_RegisterAddress, posL );
+#endif
+
+extern XEOS_HAL_IDT_ISRHandler __XEOS_HAL_IDT_ISRHandlers[];
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* __HAL___IDT_H__ */

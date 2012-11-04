@@ -62,10 +62,15 @@
 /* $Id$ */
 
 #include "xeos/hal/idt.h"
+#include "xeos/hal/__idt.h"
+#include <stdlib.h>
 
-XEOS_HAL_IDT_PrivilegeLevel XEOS_HAL_IDT_GetISRPrivilegeLevel( unsigned int isr )
+bool XEOS_HAL_IDT_ISREntryGetPresent( XEOS_HAL_IDT_ISREntryRef entry )
 {
-    ( void )isr;
+    if( entry == NULL )
+    {
+        return false;
+    }
     
-    return XEOS_HAL_IDT_PrivilegeLevel_Ring0;
+    return ( ( entry->flags & 0x8000 ) != 0 ); /* 1000 0000 0000 0000 */
 }

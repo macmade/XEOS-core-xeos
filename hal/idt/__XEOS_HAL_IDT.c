@@ -62,20 +62,37 @@
 /* $Id$ */
 
 #include "xeos/hal/idt.h"
-#include "xeos/system.h"
+#include "xeos/hal/__idt.h"
 #include <stdlib.h>
-#include "xeos/isr.h"
 
-XEOS_HAL_IDT_Pointer     __XEOS_HAL_IDT_Pointer;
-XEOS_HAL_IDT_Entry       __XEOS_HAL_IDT_Entries[ XEOS_HAL_IDT_MAX_DESCRIPTORS ];
-XEOS_HAL_IDT_ISRHandler  __XEOS_HAL_IDT_Handlers[ XEOS_HAL_IDT_MAX_DESCRIPTORS ];
+#ifdef __LP64__
+    
+    struct __XEOS_HAL_IDT_Pointer64  __XEOS_HAL_IDT_Address;
+    struct __XEOS_HAL_IDT_ISREntry64 __XEOS_HAL_IDT_ISREntries[ XEOS_HAL_IDT_MAX_DESCRIPTORS ];
+    
+#else
+    
+    struct __XEOS_HAL_IDT_Pointer32  __XEOS_HAL_IDT_Address;
+    struct __XEOS_HAL_IDT_ISREntry32 __XEOS_HAL_IDT_ISREntries[ XEOS_HAL_IDT_MAX_DESCRIPTORS ];
+    
+#endif
+
+XEOS_HAL_IDT_ISRHandler __XEOS_HAL_IDT_ISRHandlers[ XEOS_HAL_IDT_MAX_DESCRIPTORS ];
 
 void __XEOS_HAL_IDT_HandleISR( unsigned int isr );
 void __XEOS_HAL_IDT_HandleISR( unsigned int isr )
 {
-    XEOS_HAL_IDT_ISRHandler handler;
+    XEOS_HAL_IDT_ISREntryRef entry;
+    XEOS_HAL_IDT_ISRHandler  handler;
     
-    handler = XEOS_HAL_IDT_GetISRHandler( isr );
+    entry = XEOS_HAL_IDT_GetISREntry( isr );
+    
+    if( entry == NULL )
+    {
+        return;
+    }
+    
+    handler = XEOS_HAL_IDT_ISREntryGetHandler( entry );
     
     if( handler != NULL )
     {
@@ -185,7 +202,7 @@ __asm__                                         \
         __XEOS_HAL_IDT_DEF_ISR( _n_ ## D );     \
         __XEOS_HAL_IDT_DEF_ISR( _n_ ## E );     \
         __XEOS_HAL_IDT_DEF_ISR( _n_ ## F )
-    
+
 __XEOS_HAL_IDT_DEF_ISR_GROUP( 0 );
 __XEOS_HAL_IDT_DEF_ISR_GROUP( 1 );
 __XEOS_HAL_IDT_DEF_ISR_GROUP( 2 );

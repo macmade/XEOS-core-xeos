@@ -74,89 +74,54 @@ extern "C" {
 
 #define XEOS_HAL_IDT_MAX_DESCRIPTORS    256
 
-#ifdef __clang__
-#pragma pack( 1 )
-#endif
-
-struct _XEOS_HAL_IDT_Entry32
-{
-    uint16_t    baseLow;
-    uint16_t    selector;
-    uint8_t     __reserved_0;
-    uint8_t     flags;
-    uint16_t    baseHigh;
-};
-
-struct _XEOS_HAL_IDT_Pointer32
-{
-    uint16_t    limit;
-    uint32_t    base;
-};
-
-struct _XEOS_HAL_IDT_Entry64
-{
-    uint16_t    baseLow;
-    uint16_t    selector;
-    uint8_t     __reserved_0;
-    uint8_t     flags;
-    uint16_t    baseMiddle;
-    uint32_t    baseHigh;
-    uint32_t    __reserved_1;
-};
-
-struct _XEOS_HAL_IDT_Pointer64
-{
-    uint16_t    limit;
-    uint64_t    base;
-};
-
-#ifdef __clang__
-#pragma pack()
-#endif
-
-#ifdef __LP64__
-
-typedef struct _XEOS_HAL_IDT_Entry64    XEOS_HAL_IDT_Entry;
-typedef struct _XEOS_HAL_IDT_Pointer64  XEOS_HAL_IDT_Pointer;
-
-#else
-
-typedef struct _XEOS_HAL_IDT_Entry32    XEOS_HAL_IDT_Entry;
-typedef struct _XEOS_HAL_IDT_Pointer32  XEOS_HAL_IDT_Pointer;
-
-#endif
-
 typedef void ( * XEOS_HAL_IDT_ISRHandler )( unsigned int isr );
 
 typedef enum
 {
-    XEOS_HAL_IDT_EntryType_Task32       = 0x05,
-    XEOS_HAL_IDT_EntryType_Interrupt16  = 0x06,
-    XEOS_HAL_IDT_EntryType_Trap16       = 0x07,
-    XEOS_HAL_IDT_EntryType_Interrupt32  = 0x0E,
-    XEOS_HAL_IDT_EntryType_Trap32       = 0x0F
+    XEOS_HAL_IDT_ISREntryTypeUnknown            = 0x00,
+    XEOS_HAL_IDT_ISREntryTypeTask32             = 0x05,
+    XEOS_HAL_IDT_ISREntryTypeInterrupt16        = 0x06,
+    XEOS_HAL_IDT_ISREntryTypeTrap16             = 0x07,
+    XEOS_HAL_IDT_ISREntryTypeInterrupt32        = 0x0E,
+    XEOS_HAL_IDT_ISREntryTypeTrap32             = 0x0F
 }
-XEOS_HAL_IDT_EntryType;
+XEOS_HAL_IDT_ISREntryType;
 
 typedef enum
 {
-    XEOS_HAL_IDT_PrivilegeLevel_Ring0 = 0x00,
-    XEOS_HAL_IDT_PrivilegeLevel_Ring1 = 0x01,
-    XEOS_HAL_IDT_PrivilegeLevel_Ring2 = 0x02,
-    XEOS_HAL_IDT_PrivilegeLevel_Ring3 = 0x03
+    XEOS_HAL_IDT_ISREntryPrivilegeLevelRing0    = 0x00,
+    XEOS_HAL_IDT_ISREntryPrivilegeLevelRing1    = 0x01,
+    XEOS_HAL_IDT_ISREntryPrivilegeLevelRing2    = 0x02,
+    XEOS_HAL_IDT_ISREntryPrivilegeLevelRing3    = 0x03
 }
-XEOS_HAL_IDT_PrivilegeLevel;
+XEOS_HAL_IDT_ISREntryPrivilegeLevel;
 
-void                        XEOS_HAL_IDT_Init( uint16_t selector );
-void                        XEOS_HAL_IDT_SetISR( unsigned int isr, XEOS_HAL_IDT_ISRHandler handler, XEOS_HAL_IDT_EntryType type, XEOS_HAL_IDT_PrivilegeLevel level, bool reload );
-void                        XEOS_HAL_IDT_Reload( void );
-XEOS_HAL_IDT_ISRHandler     XEOS_HAL_IDT_GetISRHandler( unsigned int isr );
-XEOS_HAL_IDT_EntryType      XEOS_HAL_IDT_GetISREntryType( unsigned int isr );
-XEOS_HAL_IDT_PrivilegeLevel XEOS_HAL_IDT_GetISRPrivilegeLevel( unsigned int isr );
+#ifdef __LP64__
 
-extern XEOS_HAL_IDT_Pointer     __XEOS_HAL_IDT_Pointer;
-extern XEOS_HAL_IDT_Entry       __XEOS_HAL_IDT_Entries[];
-extern XEOS_HAL_IDT_ISRHandler  __XEOS_HAL_IDT_Handlers[];
+typedef struct __XEOS_HAL_IDT_ISREntry64 * XEOS_HAL_IDT_ISREntryRef;
+
+#else
+
+typedef struct __XEOS_HAL_IDT_ISREntry32 * XEOS_HAL_IDT_ISREntryRef;
+
+#endif
+
+void                                    XEOS_HAL_IDT_Init( void );
+void                                    XEOS_HAL_IDT_Reload( void );
+XEOS_HAL_IDT_ISREntryRef                XEOS_HAL_IDT_GetISREntry( unsigned int isr );
+
+void                                    XEOS_HAL_IDT_ISREntrySetSelector( XEOS_HAL_IDT_ISREntryRef entry, uint16_t selector );
+void                                    XEOS_HAL_IDT_ISREntrySetType( XEOS_HAL_IDT_ISREntryRef entry, XEOS_HAL_IDT_ISREntryType type );
+void                                    XEOS_HAL_IDT_ISREntrySetPrivilegeLevel( XEOS_HAL_IDT_ISREntryRef entry, XEOS_HAL_IDT_ISREntryPrivilegeLevel level );
+void                                    XEOS_HAL_IDT_ISREntrySetPresent( XEOS_HAL_IDT_ISREntryRef entry, bool present );
+void                                    XEOS_HAL_IDT_ISREntrySetHandler( XEOS_HAL_IDT_ISREntryRef entry, XEOS_HAL_IDT_ISRHandler handler );
+
+uint16_t                                XEOS_HAL_IDT_ISREntryGetSelector( XEOS_HAL_IDT_ISREntryRef entry );
+XEOS_HAL_IDT_ISREntryType               XEOS_HAL_IDT_ISREntryGetType( XEOS_HAL_IDT_ISREntryRef entry );
+XEOS_HAL_IDT_ISREntryPrivilegeLevel     XEOS_HAL_IDT_ISREntryGetPrivilegeLevel( XEOS_HAL_IDT_ISREntryRef entry );
+bool                                    XEOS_HAL_IDT_ISREntryGetPresent( XEOS_HAL_IDT_ISREntryRef entry );
+XEOS_HAL_IDT_ISRHandler                 XEOS_HAL_IDT_ISREntryGetHandler( XEOS_HAL_IDT_ISREntryRef entry );
+int                                     XEOS_HAL_IDT_ISREntryGetIndex( XEOS_HAL_IDT_ISREntryRef entry );
 
 #ifdef __cplusplus
 }

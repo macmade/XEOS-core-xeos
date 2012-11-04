@@ -61,29 +61,25 @@
 
 /* $Id$ */
 
-#include "xeos/video.h"
-#include "xeos/hal.h"
-#include <stdint.h>
+#include "xeos/hal/idt.h"
+#include "xeos/hal/__idt.h"
+#include <stdlib.h>
 
-void XEOS_Video_MoveCursor( unsigned int x, unsigned int y )
+XEOS_HAL_IDT_ISRHandler XEOS_HAL_IDT_ISREntryGetHandler( XEOS_HAL_IDT_ISREntryRef entry )
 {
-    uint16_t        pos;
-    unsigned char   posH;
-    unsigned char   posL;
+    int isr;
     
-    __XEOS_Video_X = x;
-    __XEOS_Video_Y = y;
+    if( entry == NULL )
+    {
+        return NULL;
+    }
     
-    x = ( x < XEOS_VIDEO_COLS - 1 ) ? x : XEOS_VIDEO_COLS - 1;
-    y = ( y < XEOS_VIDEO_ROWS - 1 ) ? y : XEOS_VIDEO_ROWS - 1;
+    isr = XEOS_HAL_IDT_ISREntryGetIndex( entry );
     
-    pos  = ( uint16_t )( x + ( y * XEOS_VIDEO_COLS ) );
-    posH = ( unsigned char )( pos >> 8 );
-    posL = ( unsigned char )( pos & 0x00FF );
+    if( isr < 0 && isr >= XEOS_HAL_IDT_MAX_DESCRIPTORS )
+    {
+        return NULL;
+    }
     
-    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_RegisterData, XEOS_HAL_CRTC_RegisterCursorLocationHigh );
-    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_RegisterAddress, posH );
-    
-    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_RegisterData, XEOS_HAL_CRTC_RegisterCursorLocationLow );
-    XEOS_HAL_IO_PortOut( XEOS_HAL_CRTC_RegisterAddress, posL );
+    return __XEOS_HAL_IDT_ISRHandlers[ isr ];
 }

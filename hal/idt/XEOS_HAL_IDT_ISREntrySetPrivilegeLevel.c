@@ -62,10 +62,21 @@
 /* $Id$ */
 
 #include "xeos/hal/idt.h"
+#include "xeos/hal/__idt.h"
+#include <stdlib.h>
 
-XEOS_HAL_IDT_EntryType XEOS_HAL_IDT_GetISREntryType( unsigned int isr )
+void XEOS_HAL_IDT_ISREntrySetPrivilegeLevel( XEOS_HAL_IDT_ISREntryRef entry, XEOS_HAL_IDT_ISREntryPrivilegeLevel level )
 {
-    ( void )isr;
+    uint8_t flags;
     
-    return XEOS_HAL_IDT_EntryType_Interrupt32;
+    if( entry == NULL )
+    {
+        return;
+    }
+    
+    flags = ( uint8_t )( level << 5 );
+    flags = flags & 0x60; /* 0110 0000 */
+    
+    entry->flags &= 0x9F; /* 1001 1111 */
+    entry->flags |= flags;
 }

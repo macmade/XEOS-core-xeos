@@ -62,14 +62,15 @@
 /* $Id$ */
 
 #include "xeos/hal/idt.h"
+#include "xeos/hal/__idt.h"
 #include <stdlib.h>
 
-XEOS_HAL_IDT_ISRHandler XEOS_HAL_IDT_GetISRHandler( unsigned int isr )
+void XEOS_HAL_IDT_ISREntrySetSelector( XEOS_HAL_IDT_ISREntryRef entry, uint16_t selector )
 {
-    if( isr >= XEOS_HAL_IDT_MAX_DESCRIPTORS )
+    if( entry == NULL )
     {
-        return NULL;
+        return;
     }
     
-    return __XEOS_HAL_IDT_Handlers[ isr ];
+    entry->selector = selector;
 }
