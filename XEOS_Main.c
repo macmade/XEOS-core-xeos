@@ -96,9 +96,9 @@ void XEOS_Main( void )
     
     XEOS_HAL_IDT_Reload();
     
-    /*
     XEOS_HAL_CPU_EnableInterrupts();
-    */
+    
+    XEOS_HAL_CPU_SoftwareInterrupt( 0 );
     
     XEOS_System_Panic( "Nothing to do here for now..." );
     

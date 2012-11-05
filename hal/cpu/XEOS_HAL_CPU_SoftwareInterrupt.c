@@ -61,27 +61,50 @@
 
 /* $Id$ */
 
-#ifndef __XEOS_HAL_CPU_H__
-#define __XEOS_HAL_CPU_H__
-#pragma once
+#include "xeos/hal/cpu.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#define __XEOS_HAL_CPU_GENT_INT( _n_ )  __asm__( "int $0x" # _n_ )
 
-#include <xeos/hal/idt.h>
-#include <xeos/hal/gdt.h>
+#define __XEOS_HAL_CPU_GENT_INT_CASE_GROUP( _n_ )                       \
+                                                                        \
+    case 0x ## _n_ ## 0: __XEOS_HAL_CPU_GENT_INT( _n_ ## 0 ); break;    \
+    case 0x ## _n_ ## 1: __XEOS_HAL_CPU_GENT_INT( _n_ ## 1 ); break;    \
+    case 0x ## _n_ ## 2: __XEOS_HAL_CPU_GENT_INT( _n_ ## 2 ); break;    \
+    case 0x ## _n_ ## 3: __XEOS_HAL_CPU_GENT_INT( _n_ ## 3 ); break;    \
+    case 0x ## _n_ ## 4: __XEOS_HAL_CPU_GENT_INT( _n_ ## 4 ); break;    \
+    case 0x ## _n_ ## 5: __XEOS_HAL_CPU_GENT_INT( _n_ ## 5 ); break;    \
+    case 0x ## _n_ ## 6: __XEOS_HAL_CPU_GENT_INT( _n_ ## 6 ); break;    \
+    case 0x ## _n_ ## 7: __XEOS_HAL_CPU_GENT_INT( _n_ ## 7 ); break;    \
+    case 0x ## _n_ ## 8: __XEOS_HAL_CPU_GENT_INT( _n_ ## 8 ); break;    \
+    case 0x ## _n_ ## 9: __XEOS_HAL_CPU_GENT_INT( _n_ ## 9 ); break;    \
+    case 0x ## _n_ ## A: __XEOS_HAL_CPU_GENT_INT( _n_ ## A ); break;    \
+    case 0x ## _n_ ## B: __XEOS_HAL_CPU_GENT_INT( _n_ ## B ); break;    \
+    case 0x ## _n_ ## C: __XEOS_HAL_CPU_GENT_INT( _n_ ## C ); break;    \
+    case 0x ## _n_ ## D: __XEOS_HAL_CPU_GENT_INT( _n_ ## D ); break;    \
+    case 0x ## _n_ ## E: __XEOS_HAL_CPU_GENT_INT( _n_ ## E ); break;    \
+    case 0x ## _n_ ## F: __XEOS_HAL_CPU_GENT_INT( _n_ ## F ); break
 
-void XEOS_HAL_CPU_Halt( void );
-void XEOS_HAL_CPU_EnableInterrupts( void );
-void XEOS_HAL_CPU_DisableInterrupts( void );
-void XEOS_HAL_CPU_LoadIDT( void * p );
-void XEOS_HAL_CPU_LoadGDT( void * p );
-void XEOS_HAL_CPU_SoftwareInterrupt( unsigned int n );
-
-
-#ifdef __cplusplus
+void XEOS_HAL_CPU_SoftwareInterrupt( unsigned int n )
+{
+    switch( n )
+    {
+        __XEOS_HAL_CPU_GENT_INT_CASE_GROUP( 0 );
+        __XEOS_HAL_CPU_GENT_INT_CASE_GROUP( 1 );
+        __XEOS_HAL_CPU_GENT_INT_CASE_GROUP( 2 );
+        __XEOS_HAL_CPU_GENT_INT_CASE_GROUP( 3 );
+        __XEOS_HAL_CPU_GENT_INT_CASE_GROUP( 4 );
+        __XEOS_HAL_CPU_GENT_INT_CASE_GROUP( 5 );
+        __XEOS_HAL_CPU_GENT_INT_CASE_GROUP( 6 );
+        __XEOS_HAL_CPU_GENT_INT_CASE_GROUP( 7 );
+        __XEOS_HAL_CPU_GENT_INT_CASE_GROUP( 8 );
+        __XEOS_HAL_CPU_GENT_INT_CASE_GROUP( 9 );
+        __XEOS_HAL_CPU_GENT_INT_CASE_GROUP( A );
+        __XEOS_HAL_CPU_GENT_INT_CASE_GROUP( B );
+        __XEOS_HAL_CPU_GENT_INT_CASE_GROUP( C );
+        __XEOS_HAL_CPU_GENT_INT_CASE_GROUP( D );
+        __XEOS_HAL_CPU_GENT_INT_CASE_GROUP( E );
+        __XEOS_HAL_CPU_GENT_INT_CASE_GROUP( F );
+        
+        default: break;
+    }
 }
-#endif
-
-#endif /* __XEOS_HAL_CPU_H__ */
