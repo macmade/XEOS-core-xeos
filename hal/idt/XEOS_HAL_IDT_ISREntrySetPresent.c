@@ -74,10 +74,10 @@ void XEOS_HAL_IDT_ISREntrySetPresent( XEOS_HAL_IDT_ISREntryRef entry, bool prese
     
     if( present == true )
     {
-        entry->flags |= 0x8000; /* 1000 0000 0000 0000 */
+        entry->flags |= 0x80; /* 1000 0000 */
     }
     else
     {
-        entry->flags &= 0x7FFF; /* 0111 1111 1111 1111 */
+        entry->flags &= 0x7F; /* 0111 1111 */
     }
 }
