@@ -79,8 +79,8 @@
 
 XEOS_HAL_IDT_ISRHandler __XEOS_HAL_IDT_ISRHandlers[ XEOS_HAL_IDT_MAX_DESCRIPTORS ];
 
-void __XEOS_HAL_IDT_HandleISR( unsigned int isr );
-void __XEOS_HAL_IDT_HandleISR( unsigned int isr )
+void __XEOS_HAL_IDT_HandleISR( uint8_t isr );
+void __XEOS_HAL_IDT_HandleISR( uint8_t isr )
 {
     XEOS_HAL_IDT_ISREntryRef entry;
     XEOS_HAL_IDT_ISRHandler  handler;

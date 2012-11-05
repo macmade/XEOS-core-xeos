@@ -74,7 +74,7 @@ extern "C" {
 
 #define XEOS_HAL_IDT_MAX_DESCRIPTORS    256
 
-typedef void ( * XEOS_HAL_IDT_ISRHandler )( unsigned int isr );
+typedef void ( * XEOS_HAL_IDT_ISRHandler )( uint8_t isr );
 
 typedef enum
 {
@@ -108,7 +108,7 @@ typedef struct __XEOS_HAL_IDT_ISREntry32 * XEOS_HAL_IDT_ISREntryRef;
 
 void                                    XEOS_HAL_IDT_Init( void );
 void                                    XEOS_HAL_IDT_Reload( void );
-XEOS_HAL_IDT_ISREntryRef                XEOS_HAL_IDT_GetISREntry( unsigned int isr );
+XEOS_HAL_IDT_ISREntryRef                XEOS_HAL_IDT_GetISREntry( uint8_t isr );
 
 void                                    XEOS_HAL_IDT_ISREntrySetSelector( XEOS_HAL_IDT_ISREntryRef entry, uint16_t selector );
 void                                    XEOS_HAL_IDT_ISREntrySetType( XEOS_HAL_IDT_ISREntryRef entry, XEOS_HAL_IDT_ISREntryType type );

@@ -64,7 +64,7 @@
 #include "xeos/isr.h"
 #include "xeos/system.h"
 
-void XEOS_ISR_ExceptionHandler( unsigned int isr )
+void XEOS_ISR_ExceptionHandler( uint8_t isr )
 {
     char * format;
     

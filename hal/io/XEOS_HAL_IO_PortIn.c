@@ -63,7 +63,7 @@
 
 #include "xeos/hal/io.h"
 
-unsigned char XEOS_HAL_IO_PortIn( XEOS_HAL_IO_Port port )
+unsigned char XEOS_HAL_IO_PortIn( uint16_t port )
 {
     unsigned char value;
     

@@ -77,7 +77,7 @@ void XEOS_HAL_CPU_EnableInterrupts( void );
 void XEOS_HAL_CPU_DisableInterrupts( void );
 void XEOS_HAL_CPU_LoadIDT( void * p );
 void XEOS_HAL_CPU_LoadGDT( void * p );
-void XEOS_HAL_CPU_SoftwareInterrupt( unsigned int n );
+void XEOS_HAL_CPU_SoftwareInterrupt( uint8_t n );
 
 
 #ifdef __cplusplus

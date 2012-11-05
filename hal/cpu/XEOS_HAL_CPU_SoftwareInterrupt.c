@@ -84,7 +84,7 @@
     case 0x ## _n_ ## E: __XEOS_HAL_CPU_GENT_INT( _n_ ## E ); break;    \
     case 0x ## _n_ ## F: __XEOS_HAL_CPU_GENT_INT( _n_ ## F ); break
 
-void XEOS_HAL_CPU_SoftwareInterrupt( unsigned int n )
+void XEOS_HAL_CPU_SoftwareInterrupt( uint8_t n )
 {
     switch( n )
     {

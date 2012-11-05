@@ -63,7 +63,7 @@
 
 #include "xeos/hal/io.h"
 
-void XEOS_HAL_IO_PortOut( XEOS_HAL_IO_Port port, unsigned char value )
+void XEOS_HAL_IO_PortOut( uint16_t port, uint8_t value )
 {
     __asm__
     (

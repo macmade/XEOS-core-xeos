@@ -65,12 +65,7 @@
 #include "xeos/hal/__idt.h"
 #include <stdlib.h>
 
-XEOS_HAL_IDT_ISREntryRef XEOS_HAL_IDT_GetISREntry( unsigned int isr )
+XEOS_HAL_IDT_ISREntryRef XEOS_HAL_IDT_GetISREntry( uint8_t isr )
 {
-    if( isr >= XEOS_HAL_IDT_MAX_DESCRIPTORS )
-    {
-        return NULL;
-    }
-    
     return &( __XEOS_HAL_IDT_ISREntries[ isr ] );
 }

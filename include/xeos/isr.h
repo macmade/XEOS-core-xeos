@@ -69,7 +69,9 @@
 extern "C" {
 #endif
 
-void XEOS_ISR_ExceptionHandler( unsigned int isr );
+#include <stdint.h>
+
+void XEOS_ISR_ExceptionHandler( uint8_t isr );
 
 #ifdef __cplusplus
 }
