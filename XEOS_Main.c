@@ -71,22 +71,30 @@ void XEOS_Main( void )
 {
     unsigned int i;
     
+    /* Ensures interrupts are disabled, as we are setting up the kernel */
     XEOS_HAL_CPU_DisableInterrupts();
     
+    /* Clears the screen */
     XEOS_Video_SetFG( XEOS_Video_ColorWhite );
     XEOS_Video_SetBG( XEOS_Video_ColorBlack );
     XEOS_Video_Clear();
     
+    /* Initializes the Interrupt Descriptor Table */
     XEOS_HAL_IDT_Init();
+    
+    /* Maps IRQs 0-7 to 0x20-0x27 and IRQs 8-15 to 0x28-0x36 */
     XEOS_HAL_PIC_Init( 0x20, 0x28 );
     
+    /* Sets exception handlers */
     for( i = 0; i < 20; i++ )
     {
         {
             XEOS_HAL_IDT_ISREntryRef entry;
             
+            /* Gets the ISR entry */
             entry = XEOS_HAL_IDT_GetISREntry( ( uint8_t )i );
             
+            /* Set-ups the ISR entry */
             XEOS_HAL_IDT_ISREntrySetSelector( entry, 0x08 );
             XEOS_HAL_IDT_ISREntrySetType( entry, XEOS_HAL_IDT_ISREntryTypeInterrupt32 );
             XEOS_HAL_IDT_ISREntrySetPrivilegeLevel( entry, XEOS_HAL_IDT_ISREntryPrivilegeLevelRing3 );
@@ -95,13 +103,14 @@ void XEOS_Main( void )
         }
     }
     
+    /* Installs the new Interrupt Descriptor Table */
     XEOS_HAL_IDT_Reload();
+    
+    /* (Re)enables the interrupts */
     XEOS_HAL_CPU_EnableInterrupts();
     
     XEOS_HAL_CPU_SoftwareInterrupt( 0 );
-    
     XEOS_System_Panic( "Nothing to do here for now..." );
-    
     XEOS_HAL_CPU_Halt();
 }
 
