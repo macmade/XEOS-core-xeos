@@ -82,7 +82,11 @@ void XEOS_Main( void )
     /* Initializes the Interrupt Descriptor Table */
     XEOS_HAL_IDT_Init();
     
-    /* Maps IRQs 0-7 to 0x20-0x27 and IRQs 8-15 to 0x28-0x36 */
+    /*
+     * Maps IRQs 0-7 to 0x20-0x27 and IRQs 8-15 to 0x28-0x36.
+     * This will allow us to install the exception handlers, and avoid
+     * conflicts with existing IRQs mapping to exceptions.
+     */
     XEOS_HAL_PIC_Init( 0x20, 0x28 );
     
     /* Sets exception handlers */
