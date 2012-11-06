@@ -84,7 +84,7 @@ void XEOS_Main( void )
         {
             XEOS_HAL_IDT_ISREntryRef entry;
             
-            entry = XEOS_HAL_IDT_GetISREntry( i );
+            entry = XEOS_HAL_IDT_GetISREntry( ( uint8_t )i );
             
             XEOS_HAL_IDT_ISREntrySetSelector( entry, 0x08 );
             XEOS_HAL_IDT_ISREntrySetType( entry, XEOS_HAL_IDT_ISREntryTypeInterrupt32 );
@@ -95,7 +95,7 @@ void XEOS_Main( void )
     }
     
     XEOS_HAL_IDT_Reload();
-    
+    XEOS_HAL_PIC_Init( 0x20, 0x28 );
     XEOS_HAL_CPU_EnableInterrupts();
     
     XEOS_HAL_CPU_SoftwareInterrupt( 0 );

@@ -76,6 +76,8 @@ DIR_SRC_HAL_CPU     := $(DIR_SRC_HAL)cpu/
 DIR_SRC_HAL_IO      := $(DIR_SRC_HAL)io/
 DIR_SRC_HAL_IDT     := $(DIR_SRC_HAL)idt/
 DIR_SRC_HAL_GDT     := $(DIR_SRC_HAL)gdt/
+DIR_SRC_HAL_PIC     := $(DIR_SRC_HAL)pic/
+DIR_SRC_HAL_PIT     := $(DIR_SRC_HAL)pit/
 DIR_SRC_HAL_SMBIOS  := $(DIR_SRC_HAL)smbios/
 DIR_SRC_ISR         := $(PATH_SRC_CORE_KERNEL)isr/
 DIR_SRC_SYSTEM      := $(PATH_SRC_CORE_KERNEL)system/
@@ -111,6 +113,8 @@ vpath %$(EXT_C)         $(DIR_SRC_HAL_IO)
 vpath %$(EXT_C)         $(DIR_SRC_HAL_CPU)
 vpath %$(EXT_C)         $(DIR_SRC_HAL_IDT)
 vpath %$(EXT_C)         $(DIR_SRC_HAL_GDT)
+vpath %$(EXT_C)         $(DIR_SRC_HAL_PIC)
+vpath %$(EXT_C)         $(DIR_SRC_HAL_PIT)
 vpath %$(EXT_C)         $(DIR_SRC_HAL_SMBIOS)
 vpath %$(EXT_C)         $(DIR_SRC_ISR)
 vpath %$(EXT_C)         $(DIR_SRC_SYSTEM)
@@ -137,6 +141,8 @@ _FILES_C_HAL_IO                 = $(foreach dir,$(DIR_SRC_HAL_IO),$(wildcard $(D
 _FILES_C_HAL_CPU                = $(foreach dir,$(DIR_SRC_HAL_CPU),$(wildcard $(DIR_SRC_HAL_CPU)*$(EXT_C)))
 _FILES_C_HAL_IDT                = $(foreach dir,$(DIR_SRC_HAL_IDT),$(wildcard $(DIR_SRC_HAL_IDT)*$(EXT_C)))
 _FILES_C_HAL_GDT                = $(foreach dir,$(DIR_SRC_HAL_GDT),$(wildcard $(DIR_SRC_HAL_GDT)*$(EXT_C)))
+_FILES_C_HAL_PIC                = $(foreach dir,$(DIR_SRC_HAL_PIC),$(wildcard $(DIR_SRC_HAL_PIC)*$(EXT_C)))
+_FILES_C_HAL_PIT                = $(foreach dir,$(DIR_SRC_HAL_PIT),$(wildcard $(DIR_SRC_HAL_PIT)*$(EXT_C)))
 _FILES_C_HAL_SMBIOS             = $(foreach dir,$(DIR_SRC_HAL_SMBIOS),$(wildcard $(DIR_SRC_HAL_SMBIOS)*$(EXT_C)))
 _FILES_C_ISR                    = $(foreach dir,$(DIR_SRC_ISR),$(wildcard $(DIR_SRC_ISR)*$(EXT_C)))
 _FILES_C_SYSTEM                 = $(foreach dir,$(DIR_SRC_SYSTEM),$(wildcard $(DIR_SRC_SYSTEM)*$(EXT_C)))
@@ -151,6 +157,8 @@ _FILES_C_REL_HAL_CPU            = $(notdir $(_FILES_C_HAL_CPU))
 _FILES_C_REL_HAL_IO             = $(notdir $(_FILES_C_HAL_IO))
 _FILES_C_REL_HAL_IDT            = $(notdir $(_FILES_C_HAL_IDT))
 _FILES_C_REL_HAL_GDT            = $(notdir $(_FILES_C_HAL_GDT))
+_FILES_C_REL_HAL_PIC            = $(notdir $(_FILES_C_HAL_PIC))
+_FILES_C_REL_HAL_PIT            = $(notdir $(_FILES_C_HAL_PIT))
 _FILES_C_REL_HAL_SMBIOS         = $(notdir $(_FILES_C_HAL_SMBIOS))
 _FILES_C_REL_ISR                = $(notdir $(_FILES_C_ISR))
 _FILES_C_REL_SYSTEM             = $(notdir $(_FILES_C_SYSTEM))
@@ -165,6 +173,8 @@ _FILES_C_OBJ_HAL_CPU            = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C
 _FILES_C_OBJ_HAL_IO             = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_HAL_IO))
 _FILES_C_OBJ_HAL_IDT            = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_HAL_IDT))
 _FILES_C_OBJ_HAL_GDT            = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_HAL_GDT))
+_FILES_C_OBJ_HAL_PIC            = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_HAL_PIC))
+_FILES_C_OBJ_HAL_PIT            = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_HAL_PIT))
 _FILES_C_OBJ_HAL_SMBIOS         = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_HAL_SMBIOS))
 _FILES_C_OBJ_ISR                = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_ISR))
 _FILES_C_OBJ_SYSTEM             = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_SYSTEM))
@@ -179,6 +189,8 @@ _FILES_C_OBJ_BUILD_HAL_CPU      = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$
 _FILES_C_OBJ_BUILD_HAL_IO       = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_HAL_CPU))
 _FILES_C_OBJ_BUILD_HAL_IDT      = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_HAL_IDT))
 _FILES_C_OBJ_BUILD_HAL_GDT      = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_HAL_GDT))
+_FILES_C_OBJ_BUILD_HAL_PIC      = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_HAL_PIC))
+_FILES_C_OBJ_BUILD_HAL_PIT      = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_HAL_PIT))
 _FILES_C_OBJ_BUILD_HAL_SMBIOS   = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_HAL_SMBIOS))
 _FILES_C_OBJ_BUILD_ISR          = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_ISR))
 _FILES_C_OBJ_BUILD_SYSTEM       = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_SYSTEM))
@@ -199,7 +211,7 @@ _FILES_C_OBJ_BUILD_VIDEO        = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$
 #-------------------------------------------------------------------------------
 
 # Build the full project
-all: $(_FILES_ASM_OBJ_BUILD_32) $(_FILES_ASM_OBJ_BUILD_64) $(_FILES_C_OBJ_BUILD) $(_FILES_C_OBJ_BUILD_HAL) $(_FILES_C_OBJ_BUILD_HAL_CPU) $(_FILES_C_OBJ_BUILD_HAL_IO) $(_FILES_C_OBJ_BUILD_HAL_IDT) $(_FILES_C_OBJ_BUILD_HAL_GDT) $(_FILES_C_OBJ_BUILD_HAL_SMBIOS) $(_FILES_C_OBJ_BUILD_ISR) $(_FILES_C_OBJ_BUILD_SYSTEM) $(_FILES_C_OBJ_BUILD_VIDEO)
+all: $(_FILES_ASM_OBJ_BUILD_32) $(_FILES_ASM_OBJ_BUILD_64) $(_FILES_C_OBJ_BUILD) $(_FILES_C_OBJ_BUILD_HAL) $(_FILES_C_OBJ_BUILD_HAL_CPU) $(_FILES_C_OBJ_BUILD_HAL_IO) $(_FILES_C_OBJ_BUILD_HAL_IDT) $(_FILES_C_OBJ_BUILD_HAL_GDT) $(_FILES_C_OBJ_BUILD_HAL_PIC) $(_FILES_C_OBJ_BUILD_HAL_PIT) $(_FILES_C_OBJ_BUILD_HAL_SMBIOS) $(_FILES_C_OBJ_BUILD_ISR) $(_FILES_C_OBJ_BUILD_SYSTEM) $(_FILES_C_OBJ_BUILD_VIDEO)
 	
 	@:
 

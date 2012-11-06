@@ -160,7 +160,7 @@ void XEOS_HAL_IDT_Init( void )
         {
             XEOS_HAL_IDT_ISREntryRef entry;
             
-            entry = XEOS_HAL_IDT_GetISREntry( i );
+            entry = XEOS_HAL_IDT_GetISREntry( ( uint8_t )i );
             
             XEOS_HAL_IDT_ISREntrySetSelector( entry, 0x08 );
             XEOS_HAL_IDT_ISREntrySetType( entry, XEOS_HAL_IDT_ISREntryTypeInterrupt32 );

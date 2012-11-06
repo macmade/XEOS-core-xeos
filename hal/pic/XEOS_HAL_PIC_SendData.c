@@ -61,62 +61,10 @@
 
 /* $Id$ */
 
-#ifndef __XEOS_HAL_PIC_H__
-#define __XEOS_HAL_PIC_H__
-#pragma once
+#include "xeos/hal/pic.h"
+#include "xeos/hal/io.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <stdint.h>
-
-typedef enum
+void XEOS_HAL_PIC_SendData( XEOS_HAL_PIC_Controller c, uint8_t data )
 {
-    XEOS_HAL_PIC_Controller1        = 0x00,
-    XEOS_HAL_PIC_Controller2        = 0x01
+    XEOS_HAL_IO_PortOut( XEOS_HAL_PIC_GetRegister( c, XEOS_HAL_PIC_RegisterData ), data );
 }
-XEOS_HAL_PIC_Controller;
-
-typedef enum
-{
-    XEOS_HAL_PIC_RegisterCommand    = 0x00,
-    XEOS_HAL_PIC_RegisterStatus     = 0x01,
-    XEOS_HAL_PIC_RegisterData       = 0x02,
-    XEOS_HAL_PIC_RegisterMask       = 0x03
-}
-XEOS_HAL_PIC_Register;
-
-typedef enum
-{
-    XEOS_HAL_PIC_ICW1None           = 0x00,
-    XEOS_HAL_PIC_ICW1IC4            = 0x01,
-    XEOS_HAL_PIC_ICW1SNGL           = 0x02,
-    XEOS_HAL_PIC_ICW1ADI            = 0x04,
-    XEOS_HAL_PIC_ICW1LTIM           = 0x08,
-    XEOS_HAL_PIC_ICW1Init           = 0x10
-}
-XEOS_HAL_PIC_ICW1;
-
-typedef enum
-{
-    XEOS_HAL_PIC_ICW4None           = 0x00,
-    XEOS_HAL_PIC_ICW4UPM            = 0x01,
-    XEOS_HAL_PIC_ICW4AEOI           = 0x02,
-    XEOS_HAL_PIC_ICW4MS             = 0x04,
-    XEOS_HAL_PIC_ICW4BUF            = 0x08,
-    XEOS_HAL_PIC_ICW4SFNM           = 0x10
-}
-XEOS_HAL_PIC_ICW4;
-
-void    XEOS_HAL_PIC_Init( uint8_t base0, uint8_t base1 );
-uint8_t XEOS_HAL_PIC_GetRegister( XEOS_HAL_PIC_Controller c, XEOS_HAL_PIC_Register r );
-void    XEOS_HAL_PIC_SendCommand( XEOS_HAL_PIC_Controller c, uint8_t command );
-uint8_t XEOS_HAL_PIC_ReadData( XEOS_HAL_PIC_Controller c );
-void    XEOS_HAL_PIC_SendData( XEOS_HAL_PIC_Controller c, uint8_t data );
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* __XEOS_HAL_PIC_H__ */

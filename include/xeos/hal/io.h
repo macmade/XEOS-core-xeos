@@ -71,8 +71,8 @@ extern "C" {
 
 #include <stdint.h>
 
-unsigned char   XEOS_HAL_IO_PortIn( uint16_t port );
-void            XEOS_HAL_IO_PortOut( uint16_t port, uint8_t value );
+uint8_t XEOS_HAL_IO_PortIn( uint16_t port );
+void    XEOS_HAL_IO_PortOut( uint16_t port, uint8_t value );
 
 #ifdef __cplusplus
 }
