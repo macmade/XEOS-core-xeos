@@ -76,7 +76,7 @@ void XEOS_HAL_IDT_ISREntrySetHandler( XEOS_HAL_IDT_ISREntryRef entry, XEOS_HAL_I
     
     isr = XEOS_HAL_IDT_ISREntryGetIndex( entry );
     
-    if( isr > 0 && isr < XEOS_HAL_IDT_MAX_DESCRIPTORS )
+    if( isr >= 0 && isr < XEOS_HAL_IDT_MAX_DESCRIPTORS )
     {
         __XEOS_HAL_IDT_ISRHandlers[ isr ] = handler;
     }

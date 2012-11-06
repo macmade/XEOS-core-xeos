@@ -65,6 +65,8 @@
 #include "xeos/hal/__idt.h"
 #include <stdlib.h>
 
+#include "xeos/system.h"
+
 #ifdef __LP64__
     
     struct __XEOS_HAL_IDT_Pointer64  __XEOS_HAL_IDT_Address;
@@ -146,7 +148,7 @@ __asm__                                         \
     "pop %rbx\n"                                \
     "pop %rax\n"                                \
     "\n"                                        \
-    "iret\n"                                    \
+    "iretq\n"                                   \
 )
 
 #else
@@ -180,7 +182,7 @@ __asm__                                         \
     "pop %ebx\n"                                \
     "pop %eax\n"                                \
     "\n"                                        \
-    "iret\n"                                    \
+    "iretl\n"                                   \
 ) 
 
 #endif

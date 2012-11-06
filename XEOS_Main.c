@@ -113,8 +113,7 @@ void XEOS_Main( void )
     /* (Re)enables the interrupts */
     XEOS_HAL_CPU_EnableInterrupts();
     
-    XEOS_HAL_CPU_SoftwareInterrupt( 0 );
-    XEOS_System_Panic( "Nothing to do here for now..." );
+    XEOS_System_Panic( "It works..." );
     XEOS_HAL_CPU_Halt();
 }
 

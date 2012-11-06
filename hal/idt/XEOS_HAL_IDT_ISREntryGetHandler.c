@@ -76,7 +76,7 @@ XEOS_HAL_IDT_ISRHandler XEOS_HAL_IDT_ISREntryGetHandler( XEOS_HAL_IDT_ISREntryRe
     
     isr = XEOS_HAL_IDT_ISREntryGetIndex( entry );
     
-    if( isr < 0 && isr >= XEOS_HAL_IDT_MAX_DESCRIPTORS )
+    if( isr < 0 || isr >= XEOS_HAL_IDT_MAX_DESCRIPTORS )
     {
         return NULL;
     }
