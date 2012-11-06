@@ -78,6 +78,7 @@ void XEOS_Main( void )
     XEOS_Video_Clear();
     
     XEOS_HAL_IDT_Init();
+    XEOS_HAL_PIC_Init( 0x20, 0x28 );
     
     for( i = 0; i < 20; i++ )
     {
@@ -95,7 +96,6 @@ void XEOS_Main( void )
     }
     
     XEOS_HAL_IDT_Reload();
-    XEOS_HAL_PIC_Init( 0x20, 0x28 );
     XEOS_HAL_CPU_EnableInterrupts();
     
     XEOS_HAL_CPU_SoftwareInterrupt( 0 );
