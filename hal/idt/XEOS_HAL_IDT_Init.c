@@ -132,9 +132,10 @@
 
 void XEOS_HAL_IDT_Init( void )
 {
-    unsigned int i;
+    unsigned int             i;
+    XEOS_HAL_IDT_ISREntryRef isrEntry;
     
-    memset( &__XEOS_HAL_IDT_Address,    0, sizeof( __XEOS_HAL_IDT_Pointer ) );
+    memset( &__XEOS_HAL_IDT_Address,     0, sizeof( __XEOS_HAL_IDT_Pointer ) );
     memset(  __XEOS_HAL_IDT_ISREntries,  0, sizeof( __XEOS_HAL_IDT_ISREntry ) * XEOS_HAL_IDT_MAX_DESCRIPTORS );
     memset(  __XEOS_HAL_IDT_ISRHandlers, 0, sizeof( XEOS_HAL_IDT_ISRHandler ) * XEOS_HAL_IDT_MAX_DESCRIPTORS );
     
@@ -157,17 +158,13 @@ void XEOS_HAL_IDT_Init( void )
     
     for( i = 0; i < XEOS_HAL_IDT_MAX_DESCRIPTORS; i++ )
     {
-        {
-            XEOS_HAL_IDT_ISREntryRef entry;
-            
-            entry = XEOS_HAL_IDT_GetISREntry( ( uint8_t )i );
-            
-            XEOS_HAL_IDT_ISREntrySetSelector( entry, 0x08 );
-            XEOS_HAL_IDT_ISREntrySetType( entry, XEOS_HAL_IDT_ISREntryTypeInterrupt32 );
-            XEOS_HAL_IDT_ISREntrySetPrivilegeLevel( entry, XEOS_HAL_IDT_ISREntryPrivilegeLevelRing3 );
-            XEOS_HAL_IDT_ISREntrySetPresent( entry, true );
-            XEOS_HAL_IDT_ISREntrySetHandler( entry, NULL );
-        }
+        isrEntry = XEOS_HAL_IDT_GetISREntry( ( uint8_t )i );
+        
+        XEOS_HAL_IDT_ISREntrySetSelector( isrEntry, 0x08 );
+        XEOS_HAL_IDT_ISREntrySetType( isrEntry, XEOS_HAL_IDT_ISREntryTypeInterrupt32 );
+        XEOS_HAL_IDT_ISREntrySetPrivilegeLevel( isrEntry, XEOS_HAL_IDT_ISREntryPrivilegeLevelRing3 );
+        XEOS_HAL_IDT_ISREntrySetPresent( isrEntry, true );
+        XEOS_HAL_IDT_ISREntrySetHandler( isrEntry, NULL );
     }
     
     __XEOS_HAL_IDT_Address.limit = ( uint16_t )( sizeof( __XEOS_HAL_IDT_ISREntry ) * XEOS_HAL_IDT_MAX_DESCRIPTORS ) - 1;
