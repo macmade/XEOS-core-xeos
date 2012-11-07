@@ -61,23 +61,13 @@
 
 /* $Id$ */
 
-#ifndef __XEOS_ISR_H__
-#define __XEOS_ISR_H__
-#pragma once
+#include "xeos/isr.h"
+#include "xeos/video.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <stdint.h>
-#include <stdarg.h>
-
-void XEOS_ISR_ExceptionHandler( uint8_t isr );
-void XEOS_ISR_Timer( uint8_t isr );
-void XEOS_ISR_SysCall( uint8_t isr, uint16_t syscall );
-
-#ifdef __cplusplus
+void XEOS_ISR_Timer( uint8_t isr )
+{
+    ( void )isr;
+    
+    XEOS_Video_Print( "." );
 }
-#endif
 
-#endif /* __XEOS_ISR_H__ */
