@@ -67,14 +67,12 @@ uint8_t XEOS_HAL_IO_PortIn( uint16_t port )
 {
     unsigned char value;
     
-    __asm__
+    __asm__ __volatile__
     (
-        "movw   %[port],    %%dx\n"
-        "in     %%dx,       %%al\n"
-        "movb   %%al,       %[value]\n"
+        "inb %[port], %[value]"
         
-        : [ value ] "=m" ( value )
-        : [ port ] "m" ( port )
+        : [ value ] "=a" ( value )
+        : [ port ]  "Nd" ( port  )
     );
     
     return value;

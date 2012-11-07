@@ -65,13 +65,12 @@
 
 void XEOS_HAL_IO_PortOut( uint16_t port, uint8_t value )
 {
-    __asm__
+    __asm__ __volatile__
     (
-        "movb   %[value],   %%al\n"
-        "movw   %[port],    %%dx\n"
-        "out    %%al,       %%dx\n"
+        "outb %[value], %[port]"
         
-        : 
-        : [ port ] "m" ( port ), [ value ] "m" ( value )
+        :
+        : [ value ] "a"  ( value ),
+          [ port  ] "Nd" ( port  )
     );
 }
