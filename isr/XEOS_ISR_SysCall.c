@@ -61,67 +61,18 @@
 
 /* $Id$ */
 
-#include "xeos/video.h"
-#include "xeos/system.h"
-#include "xeos/hal.h"
 #include "xeos/isr.h"
-#include <sys/syscall.h>
+#include "xeos/system.h"
 
-void XEOS_Main( void );
-void XEOS_Main( void )
+void XEOS_ISR_SysCall( uint8_t isr, uint16_t syscall )
 {
-    unsigned int             i;
-    XEOS_HAL_IDT_ISREntryRef isrEntry;
-    
-    /* Ensures interrupts are disabled, as we are setting up the kernel */
-    XEOS_HAL_CPU_DisableInterrupts();
-    
-    /* Clears the screen */
-    XEOS_Video_SetFG( XEOS_Video_ColorWhite );
-    XEOS_Video_SetBG( XEOS_Video_ColorBlack );
-    XEOS_Video_Clear();
-    
-    /* Initializes the Interrupt Descriptor Table */
-    XEOS_HAL_IDT_Init();
-    
-    /*
-     * Maps IRQs 0-7 to 0x21-0x28 and IRQs 8-15 to 0x29-0x37.
-     * This will allow us to install the exception handlers, and avoid
-     * conflicts with existing IRQs mapping to exceptions.
-     */
-    XEOS_HAL_PIC_Init( 0x21, 0x29 );
-    
-    /* Sets exception handlers */
-    for( i = 0; i < 20; i++ )
-    {
-        /* Gets the ISR entry */
-        isrEntry = XEOS_HAL_IDT_GetISREntry( ( uint8_t )i );
-        
-        /* Set-ups the ISR entry */
-        XEOS_HAL_IDT_ISREntrySetSelector( isrEntry, 0x08 );
-        XEOS_HAL_IDT_ISREntrySetType( isrEntry, XEOS_HAL_IDT_ISREntryTypeInterrupt32 );
-        XEOS_HAL_IDT_ISREntrySetPrivilegeLevel( isrEntry, XEOS_HAL_IDT_ISREntryPrivilegeLevelRing3 );
-        XEOS_HAL_IDT_ISREntrySetPresent( isrEntry, true );
-        XEOS_HAL_IDT_ISREntrySetHandler( isrEntry, XEOS_ISR_ExceptionHandler );
-    }
-    
-    isrEntry = XEOS_HAL_IDT_GetISREntry( 0x20 );
-    
-    XEOS_HAL_IDT_ISREntrySetSelector( isrEntry, 0x08 );
-    XEOS_HAL_IDT_ISREntrySetType( isrEntry, XEOS_HAL_IDT_ISREntryTypeInterrupt32 );
-    XEOS_HAL_IDT_ISREntrySetPrivilegeLevel( isrEntry, XEOS_HAL_IDT_ISREntryPrivilegeLevelRing3 );
-    XEOS_HAL_IDT_ISREntrySetPresent( isrEntry, true );
-    XEOS_HAL_IDT_ISREntrySetHandler( isrEntry, ( XEOS_HAL_IDT_ISRHandler )XEOS_ISR_SysCall );
-    
-    /* Installs the new Interrupt Descriptor Table */
-    XEOS_HAL_IDT_Reload();
-    
-    /* (Re)enables the interrupts */
-    XEOS_HAL_CPU_EnableInterrupts();
-    
-    syscall( 1, 2, 3, 4, 5 );
-    
-    XEOS_System_Panic( "It works..." );
-    XEOS_HAL_CPU_Halt();
+    XEOS_System_Panicf
+    (
+        "Interrupt #%x - SysCall\n"
+        "\n"
+        "    Number: %i\n",
+        isr,
+        syscall
+    );
 }
 

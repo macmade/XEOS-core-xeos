@@ -70,8 +70,10 @@ extern "C" {
 #endif
 
 #include <stdint.h>
+#include <stdarg.h>
 
 void XEOS_ISR_ExceptionHandler( uint8_t isr );
+void XEOS_ISR_SysCall( uint8_t isr, uint16_t syscall );
 
 #ifdef __cplusplus
 }
