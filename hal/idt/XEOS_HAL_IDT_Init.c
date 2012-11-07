@@ -74,7 +74,7 @@
                                                                                                     \
             void ( * isr )( void );                                                                 \
                                                                                                     \
-            __asm__                                                                                 \
+            __asm__ __volatile__                                                                    \
             (                                                                                       \
                 "leaq __XEOS_HAL_IDT_ISR_" # _i_ ", %[isr];"                                        \
                 : [ isr ] "=r" ( isr )                                                              \
@@ -97,7 +97,7 @@
                                                                                                     \
             void ( * isr )( void );                                                                 \
                                                                                                     \
-            __asm__                                                                                 \
+            __asm__ __volatile__                                                                    \
             (                                                                                       \
                 "leal __XEOS_HAL_IDT_ISR_" # _i_ ", %[isr];"                                        \
                 : [ isr ] "=r" ( isr )                                                              \
