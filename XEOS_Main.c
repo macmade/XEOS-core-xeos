@@ -98,7 +98,7 @@ void XEOS_Main( void )
         
         XEOS_HAL_IDT_ISREntrySetSelector( isrEntry, 0x08 );
         XEOS_HAL_IDT_ISREntrySetType( isrEntry, XEOS_HAL_IDT_ISREntryTypeInterrupt32 );
-        XEOS_HAL_IDT_ISREntrySetPrivilegeLevel( isrEntry, XEOS_HAL_IDT_ISREntryPrivilegeLevelRing3 );
+        XEOS_HAL_IDT_ISREntrySetPrivilegeLevel( isrEntry, XEOS_HAL_IDT_ISREntryPrivilegeLevelRing0 );
         XEOS_HAL_IDT_ISREntrySetPresent( isrEntry, true );
         XEOS_HAL_IDT_ISREntrySetHandler( isrEntry, XEOS_ISR_ExceptionHandler );
     }
@@ -108,7 +108,7 @@ void XEOS_Main( void )
     
     XEOS_HAL_IDT_ISREntrySetSelector( isrEntry, 0x08 );
     XEOS_HAL_IDT_ISREntrySetType( isrEntry, XEOS_HAL_IDT_ISREntryTypeInterrupt32 );
-    XEOS_HAL_IDT_ISREntrySetPrivilegeLevel( isrEntry, XEOS_HAL_IDT_ISREntryPrivilegeLevelRing3 );
+    XEOS_HAL_IDT_ISREntrySetPrivilegeLevel( isrEntry, XEOS_HAL_IDT_ISREntryPrivilegeLevelRing0 );
     XEOS_HAL_IDT_ISREntrySetPresent( isrEntry, true );
     XEOS_HAL_IDT_ISREntrySetHandler( isrEntry, ( XEOS_HAL_IDT_ISRHandler )XEOS_ISR_Timer );
     
