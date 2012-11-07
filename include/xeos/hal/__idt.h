@@ -69,7 +69,7 @@
 extern "C" {
 #endif
 
-#include "xeos/hal/idt.h"
+#include <xeos/hal/idt.h>
 
 #ifdef __clang__
 #pragma pack( 1 )
