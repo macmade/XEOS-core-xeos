@@ -85,19 +85,17 @@ void XEOS_Main( void )
     XEOS_HAL_IDT_Init();
     
     /*
-     * Maps IRQs 0-7 to 0x21-0x28 and IRQs 8-15 to 0x29-0x37.
+     * Maps IRQs 0-7 to 0x20-0x27 and IRQs 8-15 to 0x28-0x2F.
      * This will allow us to install the exception handlers, and avoid
      * conflicts with existing IRQs mapping to exceptions.
      */
-    XEOS_HAL_PIC_Init( 0x21, 0x29 );
+    XEOS_HAL_PIC_Init( 0x20, 0x28 );
     
-    /* Sets exception handlers */
+    /* Installs the exception handlers */
     for( i = 0; i < 20; i++ )
     {
-        /* Gets the ISR entry */
         isrEntry = XEOS_HAL_IDT_GetISREntry( ( uint8_t )i );
         
-        /* Set-ups the ISR entry */
         XEOS_HAL_IDT_ISREntrySetSelector( isrEntry, 0x08 );
         XEOS_HAL_IDT_ISREntrySetType( isrEntry, XEOS_HAL_IDT_ISREntryTypeInterrupt32 );
         XEOS_HAL_IDT_ISREntrySetPrivilegeLevel( isrEntry, XEOS_HAL_IDT_ISREntryPrivilegeLevelRing3 );
@@ -105,7 +103,17 @@ void XEOS_Main( void )
         XEOS_HAL_IDT_ISREntrySetHandler( isrEntry, XEOS_ISR_ExceptionHandler );
     }
     
+    /* Installs the system timer ISR */
     isrEntry = XEOS_HAL_IDT_GetISREntry( 0x20 );
+    
+    XEOS_HAL_IDT_ISREntrySetSelector( isrEntry, 0x08 );
+    XEOS_HAL_IDT_ISREntrySetType( isrEntry, XEOS_HAL_IDT_ISREntryTypeInterrupt32 );
+    XEOS_HAL_IDT_ISREntrySetPrivilegeLevel( isrEntry, XEOS_HAL_IDT_ISREntryPrivilegeLevelRing3 );
+    XEOS_HAL_IDT_ISREntrySetPresent( isrEntry, true );
+    XEOS_HAL_IDT_ISREntrySetHandler( isrEntry, ( XEOS_HAL_IDT_ISRHandler )XEOS_ISR_Timer );
+    
+    /* Installs the system call ISR */
+    isrEntry = XEOS_HAL_IDT_GetISREntry( 0x80 );
     
     XEOS_HAL_IDT_ISREntrySetSelector( isrEntry, 0x08 );
     XEOS_HAL_IDT_ISREntrySetType( isrEntry, XEOS_HAL_IDT_ISREntryTypeInterrupt32 );
@@ -118,8 +126,6 @@ void XEOS_Main( void )
     
     /* (Re)enables the interrupts */
     XEOS_HAL_CPU_EnableInterrupts();
-    
-    syscall( 1, 2, 3, 4, 5 );
     
     XEOS_System_Panic( "It works..." );
     XEOS_HAL_CPU_Halt();
