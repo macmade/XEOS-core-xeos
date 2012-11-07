@@ -71,14 +71,17 @@ extern "C" {
 
 #include <xeos/hal/idt.h>
 #include <xeos/hal/gdt.h>
+#include <stdbool.h>
 
-void XEOS_HAL_CPU_Halt( void );
-void XEOS_HAL_CPU_EnableInterrupts( void );
-void XEOS_HAL_CPU_DisableInterrupts( void );
-void XEOS_HAL_CPU_LoadIDT( void * p );
-void XEOS_HAL_CPU_LoadGDT( void * p );
-void XEOS_HAL_CPU_SoftwareInterrupt( uint8_t n );
-
+void        XEOS_HAL_CPU_Halt( void );
+void        XEOS_HAL_CPU_EnableInterrupts( void );
+void        XEOS_HAL_CPU_DisableInterrupts( void );
+bool        XEOS_HAL_CPU_InterruptsEnabled( void );
+void        XEOS_HAL_CPU_LoadIDT( void * p );
+void        XEOS_HAL_CPU_LoadGDT( void * p );
+void        XEOS_HAL_CPU_SoftwareInterrupt( uint8_t n );
+uint64_t    XEOS_HAL_CPU_RDMSR( uint32_t id );
+void        XEOS_HAL_CPU_WRMSR( uint32_t id, uint64_t value );
 
 #ifdef __cplusplus
 }

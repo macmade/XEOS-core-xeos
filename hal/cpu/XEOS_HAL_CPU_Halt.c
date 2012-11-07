@@ -67,7 +67,7 @@ void XEOS_HAL_CPU_Halt( void )
 {
     XEOS_HAL_CPU_DisableInterrupts();
     
-    __asm__
+    __asm__ __volatile__
     (
         "hlt"
     );

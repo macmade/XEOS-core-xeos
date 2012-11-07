@@ -63,10 +63,14 @@
 
 #include "xeos/hal/cpu.h"
 
-void XEOS_HAL_CPU_EnableInterrupts( void )
+void XEOS_HAL_CPU_WRMSR( uint32_t id, uint64_t value )
 {
     __asm__ __volatile__
     (
-        "sti"
+        "wrmsr"
+        
+        :
+        : "c" ( id ),
+          "A" ( value )
     );
 }

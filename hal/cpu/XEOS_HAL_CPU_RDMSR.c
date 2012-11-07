@@ -63,10 +63,17 @@
 
 #include "xeos/hal/cpu.h"
 
-void XEOS_HAL_CPU_EnableInterrupts( void )
+uint64_t XEOS_HAL_CPU_RDMSR( uint32_t id )
 {
+    uint64_t value;
+    
     __asm__ __volatile__
     (
-        "sti"
+        "rdmsr"
+        
+        : "=A" ( value )
+        : "c"  ( id )
     );
+    
+    return value;
 }

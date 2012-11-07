@@ -63,10 +63,18 @@
 
 #include "xeos/hal/cpu.h"
 
-void XEOS_HAL_CPU_EnableInterrupts( void )
+bool XEOS_HAL_CPU_InterruptsEnabled( void )
 {
+    int f;
+    
     __asm__ __volatile__
     (
-        "sti"
+        "pushf\n"
+        "popl %[f]\n"
+        
+        : [ f ] "=g" ( f )
+        :
     );
+    
+    return ( bool )( ( f & ( 1 << 9 ) ) != 0 );
 }

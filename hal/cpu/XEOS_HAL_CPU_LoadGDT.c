@@ -65,7 +65,7 @@
 
 void XEOS_HAL_CPU_LoadGDT( void * p )
 {
-    __asm__
+    __asm__ __volatile__
     (
         "lgdt (%[p])"
         : 

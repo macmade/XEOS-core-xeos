@@ -63,7 +63,7 @@
 
 #include "xeos/hal/cpu.h"
 
-#define __XEOS_HAL_CPU_GENT_INT( _n_ )  __asm__( "int $0x" # _n_ )
+#define __XEOS_HAL_CPU_GENT_INT( _n_ )  __asm__ __volatile__( "int $0x" # _n_ )
 
 #define __XEOS_HAL_CPU_GENT_INT_CASE_GROUP( _n_ )                       \
                                                                         \
