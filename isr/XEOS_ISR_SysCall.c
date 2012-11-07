@@ -68,7 +68,7 @@ void XEOS_ISR_SysCall( uint8_t isr, uint16_t syscall )
 {
     XEOS_System_Panicf
     (
-        "Interrupt #%x - SysCall\n"
+        "Interrupt #%x - System Call\n"
         "\n"
         "    Number: %i\n",
         isr,
