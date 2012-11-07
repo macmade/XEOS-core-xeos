@@ -61,35 +61,19 @@
 
 /* $Id$ */
 
-#ifndef __XEOS_HAL_CPU_H__
-#define __XEOS_HAL_CPU_H__
-#pragma once
+#include "xeos/hal/cpu.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <xeos/hal/idt.h>
-#include <xeos/hal/gdt.h>
-#include <stdbool.h>
-
-void        XEOS_HAL_CPU_Halt( void );
-void        XEOS_HAL_CPU_EnableInterrupts( void );
-void        XEOS_HAL_CPU_DisableInterrupts( void );
-bool        XEOS_HAL_CPU_InterruptsEnabled( void );
-void        XEOS_HAL_CPU_LoadIDT( void * p );
-void        XEOS_HAL_CPU_LoadGDT( void * p );
-void        XEOS_HAL_CPU_SoftwareInterrupt( uint8_t n );
-uint64_t    XEOS_HAL_CPU_RDMSR( uint32_t id );
-void        XEOS_HAL_CPU_WRMSR( uint32_t id, uint64_t value );
-uint32_t    XEOS_HAL_CPU_ReadCR0( void );
-uint32_t    XEOS_HAL_CPU_ReadCR1( void );
-uint32_t    XEOS_HAL_CPU_ReadCR2( void );
-uint32_t    XEOS_HAL_CPU_ReadCR3( void );
-uint32_t    XEOS_HAL_CPU_ReadCR4( void );
-
-#ifdef __cplusplus
+uint32_t XEOS_HAL_CPU_ReadCR1( void )
+{
+    uint32_t value;
+    
+    __asm__ __volatile__
+    (
+        "mov %%cr1, %[value]"
+        
+        : [ value ] "=r" ( value )
+        :
+    );
+    
+    return value;
 }
-#endif
-
-#endif /* __XEOS_HAL_CPU_H__ */
