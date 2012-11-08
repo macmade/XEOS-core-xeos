@@ -109,7 +109,7 @@ typedef enum
 }
 XEOS_HAL_PIC_ICW4;
 
-void    XEOS_HAL_PIC_Init( uint8_t base0, uint8_t base1 );
+void    XEOS_HAL_PIC_Init( uint8_t masterBase, uint8_t slaveBase );
 uint8_t XEOS_HAL_PIC_GetRegister( XEOS_HAL_PIC_Controller c, XEOS_HAL_PIC_Register r );
 void    XEOS_HAL_PIC_SendCommand( XEOS_HAL_PIC_Controller c, uint8_t command );
 uint8_t XEOS_HAL_PIC_ReadData( XEOS_HAL_PIC_Controller c );

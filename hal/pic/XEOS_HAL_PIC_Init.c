@@ -64,7 +64,7 @@
 #include "xeos/hal/pic.h"
 #include "xeos/hal/io.h"
 
-void XEOS_HAL_PIC_Init( uint8_t base0, uint8_t base1 )
+void XEOS_HAL_PIC_Init( uint8_t masterBase, uint8_t slaveBase )
 {
     uint8_t command;
     
@@ -75,8 +75,8 @@ void XEOS_HAL_PIC_Init( uint8_t base0, uint8_t base1 )
     XEOS_HAL_PIC_SendCommand( XEOS_HAL_PIC_Controller1, command );
     XEOS_HAL_PIC_SendCommand( XEOS_HAL_PIC_Controller2, command );
     
-    XEOS_HAL_PIC_SendData( XEOS_HAL_PIC_Controller1, base0 );
-    XEOS_HAL_PIC_SendData( XEOS_HAL_PIC_Controller2, base1 );
+    XEOS_HAL_PIC_SendData( XEOS_HAL_PIC_Controller1, masterBase );
+    XEOS_HAL_PIC_SendData( XEOS_HAL_PIC_Controller2, slaveBase );
     XEOS_HAL_PIC_SendData( XEOS_HAL_PIC_Controller1, 0x04 );
     XEOS_HAL_PIC_SendData( XEOS_HAL_PIC_Controller2, 0x02 );
     
