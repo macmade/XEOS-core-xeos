@@ -61,6 +61,12 @@
 
 /* $Id$ */
 
+/*!
+ * @header          __idt.h
+ * @author          Jean-David Gadina
+ * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
+ */
+
 #ifndef __HAL___IDT_H__
 #define __HAL___IDT_H__
 #pragma once

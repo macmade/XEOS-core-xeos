@@ -61,6 +61,12 @@
 
 /* $Id$ */
 
+/*!
+ * @header          __types.h
+ * @author          Jean-David Gadina
+ * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
+ */
+
 #ifndef __XEOS___TYPES_H__
 #define __XEOS___TYPES_H__
 #pragma once

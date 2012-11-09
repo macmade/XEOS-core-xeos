@@ -61,6 +61,12 @@
 
 /* $Id$ */
 
+/*!
+ * @header          cpu.h
+ * @author          Jean-David Gadina
+ * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
+ */
+
 #ifndef __XEOS_HAL_CPU_H__
 #define __XEOS_HAL_CPU_H__
 #pragma once

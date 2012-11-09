@@ -61,6 +61,12 @@
 
 /* $Id$ */
 
+/*!
+ * @header          pit.h
+ * @author          Jean-David Gadina
+ * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
+ */
+
 #ifndef __XEOS_HAL_PIT_H__
 #define __XEOS_HAL_PIT_H__
 #pragma once
@@ -69,7 +75,31 @@
 extern "C" {
 #endif
 
+typedef enum
+{
+    XEOS_HAL_PIT_OCWNone                        = 0x00,
+    XEOS_HAL_PIT_OCWBinaryCounterBCD            = 0x01,
+    XEOS_HAL_PIT_OCWModeOneShot                 = 0x02,
+    XEOS_HAL_PIT_OCWModeRateGenerator           = 0x04,
+    XEOS_HAL_PIT_OCWModeSquareWaveGenerator     = 0x06,
+    XEOS_HAL_PIT_OCWModeSoftwareTriggeredStrobe = 0x08,
+    XEOS_HAL_PIT_OCWHardwareTriggeredStrobe     = 0x0A,
+    XEOS_HAL_PIT_OCWRLLSB                       = 0x10,
+    XEOS_HAL_PIT_OCWRLMSB                       = 0x20,
+    XEOS_HAL_PIT_OCWRLLSBMSB                    = 0x30,
+    XEOS_HAL_PIT_OCWCounter1                    = 0x40,
+    XEOS_HAL_PIT_OCWCounter2                    = 0x80
+}
+XEOS_HAL_PIT_OCW;
 
+typedef enum
+{
+    XEOS_HAL_PIT_RegisterCouter0                = 0x40,
+    XEOS_HAL_PIT_RegisterCouter1                = 0x41,
+    XEOS_HAL_PIT_RegisterCouter2                = 0x42,
+    XEOS_HAL_PIT_RegisterCouterCommand          = 0x43
+}
+XEOS_HAL_PIT_Register;
 
 #ifdef __cplusplus
 }
