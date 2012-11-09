@@ -75,7 +75,18 @@
 extern "C" {
 #endif
 
+/*!
+ * @function        XEOS_System_Panic
+ * @abstract        Kernel panic
+ * @param           message     The panic message
+ */
 void XEOS_System_Panic( char * message );
+
+/*!
+ * @function        XEOS_System_Panicf
+ * @abstract        Kernel panic
+ * @param           format      The panic message format
+ */
 void XEOS_System_Panicf( char * format, ... );
 
 #ifdef __cplusplus

@@ -78,7 +78,6 @@ uint8_t XEOS_HAL_PIC_GetRegister( XEOS_HAL_PIC_Controller c, XEOS_HAL_PIC_Regist
             case XEOS_HAL_PIC_RegisterCommand:  return 0x20;
             case XEOS_HAL_PIC_RegisterStatus:   return 0x20;
             case XEOS_HAL_PIC_RegisterData:     return 0x21;
-            case XEOS_HAL_PIC_RegisterMask:     return 0x21;
         }
     }
     else if( c == XEOS_HAL_PIC_Controller2 )
@@ -88,7 +87,6 @@ uint8_t XEOS_HAL_PIC_GetRegister( XEOS_HAL_PIC_Controller c, XEOS_HAL_PIC_Regist
             case XEOS_HAL_PIC_RegisterCommand:  return 0xA0;
             case XEOS_HAL_PIC_RegisterStatus:   return 0xA0;
             case XEOS_HAL_PIC_RegisterData:     return 0xA1;
-            case XEOS_HAL_PIC_RegisterMask:     return 0xA1;
         }
     }
     

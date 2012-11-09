@@ -62,17 +62,51 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_Video_Prompt.c
+ * @header          __video.h
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#include "xeos/video.h"
-#include "xeos/__video.h"
+#ifndef __XEOS___VIDEO_H__
+#define __XEOS___VIDEO_H__
+#pragma once
 
-void XEOS_Video_Prompt( char * s )
-{
-    XEOS_Video_Print( __XEOS_Video_Prompt );
-    XEOS_Video_Print( s );
-    XEOS_Video_Print( "\n" );
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/*!
+ * @var             __XEOS_Video_Attribute
+ * @abstract        Current video color attributes
+ */
+extern unsigned char __XEOS_Video_Attribute;
+
+/*!
+ * @var             __XEOS_Video_X
+ * @abstract        Current cursor X position
+ */
+extern unsigned int __XEOS_Video_X;
+
+/*!
+ * @var             __XEOS_Video_Y
+ * @abstract        Current cursor Y position
+ */
+extern unsigned int __XEOS_Video_Y;
+
+/*!
+ * @var             __XEOS_Video_Prompt
+ * @abstract        Prompt string
+ */
+extern char * __XEOS_Video_Prompt;
+
+/*!
+ * @var             __XEOS_Video_HexChars
+ * @abstract        Hexadecimal characters, used for number to string conversion
+ */
+extern char __XEOS_Video_HexChars[ 16 ];
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* __XEOS___VIDEO_H__ */

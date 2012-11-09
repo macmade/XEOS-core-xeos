@@ -78,10 +78,22 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
-#define XEOS_HAL_IDT_MAX_DESCRIPTORS    256
+/*!
+ * @define          XEOS_HAL_IDT_MAX_DESCRIPTORS
+ * @abstract        The maximum number of descriptors in the IDT
+ */
+#define XEOS_HAL_IDT_MAX_DESCRIPTORS            256
 
-typedef void ( * XEOS_HAL_IDT_ISRHandler )( uint8_t isr );
-
+/*!
+ * @typedef         XEOS_HAL_IDT_ISREntryType
+ * @abstract        Type for an ISR entry
+ * @constant        XEOS_HAL_IDT_ISREntryTypeUnknown        Unknown ISR entry
+ * @constant        XEOS_HAL_IDT_ISREntryTypeTask32         32 bits task gate
+ * @constant        XEOS_HAL_IDT_ISREntryTypeInterrupt16    16 bits interrupt gate
+ * @constant        XEOS_HAL_IDT_ISREntryTypeTrap16         16 bits trap gate
+ * @constant        XEOS_HAL_IDT_ISREntryTypeInterrupt32    32 bits interrupt gate
+ * @constant        XEOS_HAL_IDT_ISREntryTypeTrap32         32 bits trap gate
+ */
 typedef enum
 {
     XEOS_HAL_IDT_ISREntryTypeUnknown            = 0x00,
@@ -93,6 +105,14 @@ typedef enum
 }
 XEOS_HAL_IDT_ISREntryType;
 
+/*!
+ * @typedef         XEOS_HAL_IDT_ISREntryPrivilegeLevel
+ * @abstract        Privilege level of an ISR entry
+ * @constant        XEOS_HAL_IDT_ISREntryPrivilegeLevelRing0    Ring 0
+ * @constant        XEOS_HAL_IDT_ISREntryPrivilegeLevelRing1    Ring 1
+ * @constant        XEOS_HAL_IDT_ISREntryPrivilegeLevelRing2    Ring 2
+ * @constant        XEOS_HAL_IDT_ISREntryPrivilegeLevelRing3    Ring 3
+ */
 typedef enum
 {
     XEOS_HAL_IDT_ISREntryPrivilegeLevelRing0    = 0x00,
@@ -102,32 +122,130 @@ typedef enum
 }
 XEOS_HAL_IDT_ISREntryPrivilegeLevel;
 
+/*!
+ * @typedef         XEOS_HAL_IDT_ISRHandler
+ * @abstract        Handler function for an ISR entry
+ * @param           isr         The ISR number
+ */
+typedef void ( * XEOS_HAL_IDT_ISRHandler )( uint8_t isr );
+
+/*!
+ * @typedef         XEOS_HAL_IDT_ISREntryRef
+ * @abstract        Opaque type for an ISR entry
+ */
 #ifdef __LP64__
-
 typedef struct __XEOS_HAL_IDT_ISREntry64 * XEOS_HAL_IDT_ISREntryRef;
-
 #else
-
 typedef struct __XEOS_HAL_IDT_ISREntry32 * XEOS_HAL_IDT_ISREntryRef;
-
 #endif
 
-void                                    XEOS_HAL_IDT_Init( void );
-void                                    XEOS_HAL_IDT_Reload( void );
-XEOS_HAL_IDT_ISREntryRef                XEOS_HAL_IDT_GetISREntry( uint8_t isr );
+/*!
+ * @function        XEOS_HAL_IDT_Init
+ * @abstract        Initializes the Interrupt Descriptor Table (IDT)
+ */
+void XEOS_HAL_IDT_Init( void );
 
-void                                    XEOS_HAL_IDT_ISREntrySetSelector( XEOS_HAL_IDT_ISREntryRef entry, uint16_t selector );
-void                                    XEOS_HAL_IDT_ISREntrySetType( XEOS_HAL_IDT_ISREntryRef entry, XEOS_HAL_IDT_ISREntryType type );
-void                                    XEOS_HAL_IDT_ISREntrySetPrivilegeLevel( XEOS_HAL_IDT_ISREntryRef entry, XEOS_HAL_IDT_ISREntryPrivilegeLevel level );
-void                                    XEOS_HAL_IDT_ISREntrySetPresent( XEOS_HAL_IDT_ISREntryRef entry, bool present );
-void                                    XEOS_HAL_IDT_ISREntrySetHandler( XEOS_HAL_IDT_ISREntryRef entry, XEOS_HAL_IDT_ISRHandler handler );
+/*!
+ * @function        XEOS_HAL_IDT_Reload
+ * @abstract        Installs/Reload the Interrupt Descriptor Table (IDT)
+ */
+void XEOS_HAL_IDT_Reload( void );
 
-uint16_t                                XEOS_HAL_IDT_ISREntryGetSelector( XEOS_HAL_IDT_ISREntryRef entry );
-XEOS_HAL_IDT_ISREntryType               XEOS_HAL_IDT_ISREntryGetType( XEOS_HAL_IDT_ISREntryRef entry );
-XEOS_HAL_IDT_ISREntryPrivilegeLevel     XEOS_HAL_IDT_ISREntryGetPrivilegeLevel( XEOS_HAL_IDT_ISREntryRef entry );
-bool                                    XEOS_HAL_IDT_ISREntryGetPresent( XEOS_HAL_IDT_ISREntryRef entry );
-XEOS_HAL_IDT_ISRHandler                 XEOS_HAL_IDT_ISREntryGetHandler( XEOS_HAL_IDT_ISREntryRef entry );
-int                                     XEOS_HAL_IDT_ISREntryGetIndex( XEOS_HAL_IDT_ISREntryRef entry );
+/*!
+ * @function        XEOS_HAL_IDT_GetISREntry
+ * @abstract        Gets an ISR entry
+ * @param           isr         The ISR number
+ * @result          The ISR entry or NULL
+ */
+XEOS_HAL_IDT_ISREntryRef XEOS_HAL_IDT_GetISREntry( uint8_t isr );
+
+/*!
+ * @function        XEOS_HAL_IDT_ISREntrySetSelector
+ * @abstract        Sets the code segment selector of an ISR entry
+ * @param           entry       The ISR entry
+ * @param           selector    The code segment selector
+ */
+void XEOS_HAL_IDT_ISREntrySetSelector( XEOS_HAL_IDT_ISREntryRef entry, uint16_t selector );
+
+/*!
+ * @function        XEOS_HAL_IDT_ISREntrySetType
+ * @abstract        Sets the type of an ISR entry
+ * @param           entry       The ISR entry
+ * @param           type        The ISR entry type
+ */
+void XEOS_HAL_IDT_ISREntrySetType( XEOS_HAL_IDT_ISREntryRef entry, XEOS_HAL_IDT_ISREntryType type );
+
+/*!
+ * @function        XEOS_HAL_IDT_ISREntrySetPrivilegeLevel
+ * @abstract        Sets the privilege level of an ISR entry
+ * @param           entry       The ISR entry
+ * @param           level       The privilege level
+ */
+void XEOS_HAL_IDT_ISREntrySetPrivilegeLevel( XEOS_HAL_IDT_ISREntryRef entry, XEOS_HAL_IDT_ISREntryPrivilegeLevel level );
+
+/*!
+ * @function        XEOS_HAL_IDT_ISREntrySetPresent
+ * @abstract        Sets the present flag for an ISR entry
+ * @param           entry       The ISR entry
+ * @param           present     The present flag
+ */
+void XEOS_HAL_IDT_ISREntrySetPresent( XEOS_HAL_IDT_ISREntryRef entry, bool present );
+
+/*!
+ * @function        XEOS_HAL_IDT_ISREntrySetHandler
+ * @abstract        Sets the function handler for an ISR entry
+ * @param           entry       The ISR entry
+ * @param           handler     The ISR function handler
+ */
+void XEOS_HAL_IDT_ISREntrySetHandler( XEOS_HAL_IDT_ISREntryRef entry, XEOS_HAL_IDT_ISRHandler handler );
+
+/*!
+ * @function        XEOS_HAL_IDT_ISREntryGetSelector
+ * @abstract        Gets the code segment selector of an ISR entry
+ * @param           entry       The ISR entry
+ * @result          The code segment selector of the ISR entry
+ */
+uint16_t XEOS_HAL_IDT_ISREntryGetSelector( XEOS_HAL_IDT_ISREntryRef entry );
+
+/*!
+ * @function        XEOS_HAL_IDT_ISREntryGetType
+ * @abstract        Gets the type of an ISR entry
+ * @param           entry       The ISR entry
+ * @result          The type of the ISR entry
+ */
+XEOS_HAL_IDT_ISREntryType XEOS_HAL_IDT_ISREntryGetType( XEOS_HAL_IDT_ISREntryRef entry );
+
+/*!
+ * @function        XEOS_HAL_IDT_ISREntryPrivilegeLevel
+ * @abstract        Gets the privilege level of an ISR entry
+ * @param           entry       The ISR entry
+ * @result          The privilege level of the ISR entry
+ */
+XEOS_HAL_IDT_ISREntryPrivilegeLevel XEOS_HAL_IDT_ISREntryGetPrivilegeLevel( XEOS_HAL_IDT_ISREntryRef entry );
+
+/*!
+ * @function        XEOS_HAL_IDT_ISREntryGetPresent
+ * @abstract        Gets the present flag of an ISR entry
+ * @param           entry       The ISR entry
+ * @result          The present flag of the ISR entry
+ */
+bool XEOS_HAL_IDT_ISREntryGetPresent( XEOS_HAL_IDT_ISREntryRef entry );
+
+/*!
+ * @function        XEOS_HAL_IDT_ISREntryGetHandler
+ * @abstract        Gets the function handler of an ISR entry
+ * @param           entry       The ISR entry
+ * @result          The function handler of the ISR entry or NULL
+ */
+XEOS_HAL_IDT_ISRHandler XEOS_HAL_IDT_ISREntryGetHandler( XEOS_HAL_IDT_ISREntryRef entry );
+
+/*!
+ * @function        XEOS_HAL_IDT_ISREntryGetIndex
+ * @abstract        Gets the index of an ISR entry in the IDT
+ * @param           entry       The ISR entry
+ * @result          THe ISR entry index
+ */
+int XEOS_HAL_IDT_ISREntryGetIndex( XEOS_HAL_IDT_ISREntryRef entry );
 
 #ifdef __cplusplus
 }

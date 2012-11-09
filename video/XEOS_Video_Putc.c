@@ -68,6 +68,7 @@
  */
 
 #include "xeos/video.h"
+#include "xeos/__video.h"
 
 void XEOS_Video_Putc( unsigned char c, bool updateCursor )
 {

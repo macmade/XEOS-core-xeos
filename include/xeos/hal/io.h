@@ -77,9 +77,27 @@ extern "C" {
 
 #include <stdint.h>
 
-void    XEOS_HAL_IO_Wait( void );
+/*!
+ * @function        XEOS_HAL_IO_Wait
+ * @abstract        Forces the COU to wait for a I/O operation
+ */
+void XEOS_HAL_IO_Wait( void );
+
+/*!
+ * @function        XEOS_HAL_IO_PortIn
+ * @abstract        Reads data from a I/O port
+ * @param           port        The I/O port
+ * @result          The data read
+ */
 uint8_t XEOS_HAL_IO_PortIn( uint16_t port );
-void    XEOS_HAL_IO_PortOut( uint16_t port, uint8_t value );
+
+/*!
+ * @function        XEOS_HAL_IO_PortOut
+ * @abstract        Sends data to a I/O port
+ * @param           port        The I/O port
+ * @param           value       The data to send
+ */
+void XEOS_HAL_IO_PortOut( uint16_t port, uint8_t value );
 
 #ifdef __cplusplus
 }

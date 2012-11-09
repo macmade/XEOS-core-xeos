@@ -78,10 +78,44 @@ extern "C" {
 #include <stdarg.h>
 #include <stdbool.h>
 
+/*!
+ * @define      XEOS_VIDEO_MEM
+ * @abstract    The video buffer location
+ */
 #define XEOS_VIDEO_MEM    0xB8000
+
+/*!
+ * @define      XEOS_VIDEO_COLS
+ * @abstract    The number of video columns
+ */
 #define XEOS_VIDEO_COLS   80
+
+/*!
+ * @define      XEOS_VIDEO_ROWS
+ * @abstract    The number of video rows
+ */
 #define XEOS_VIDEO_ROWS   25
 
+/*!
+ * @typedef     XEOS_Video_Color
+ * @abstract    Video colors
+ * @constant    XEOS_Video_ColorBlack           Black
+ * @constant    XEOS_Video_ColorBlue            Dark blue
+ * @constant    XEOS_Video_ColorGreen           Dark green
+ * @constant    XEOS_Video_ColorCyan            Dark cyan
+ * @constant    XEOS_Video_ColorRed             Dark red
+ * @constant    XEOS_Video_ColorMagenta         Dark magenta
+ * @constant    XEOS_Video_ColorBrown           Dark brown
+ * @constant    XEOS_Video_ColorGrayLight       Light gray
+ * @constant    XEOS_Video_ColorGray            Dark gray
+ * @constant    XEOS_Video_ColorBlueLight       Light blue
+ * @constant    XEOS_Video_ColorGreenLight      Light green
+ * @constant    XEOS_Video_ColorCyanLight       Light cyan
+ * @constant    XEOS_Video_ColorRedLight        Light red
+ * @constant    XEOS_Video_ColorMagentaLight    Light magenta
+ * @constant    XEOS_Video_ColorBrownLight      Light brown
+ * @constant    XEOS_Video_ColorWhite           White
+ */
 typedef enum
 {
     XEOS_Video_ColorBlack           = 0x00,
@@ -103,28 +137,123 @@ typedef enum
 }
 XEOS_Video_Color;
 
-void            XEOS_Video_Clear( void );
-void            XEOS_Video_SetBG( XEOS_Video_Color color );
-void            XEOS_Video_SetFG( XEOS_Video_Color color );
-void            XEOS_Video_MoveCursor( unsigned int x, unsigned int y );
-unsigned int    XEOS_Video_X( void );
-unsigned int    XEOS_Video_Y( void );
-void            XEOS_Video_Prompt( char * s );
-void            XEOS_Video_Promptf( char * format, ... );
-void            XEOS_Video_Print( char * s );
-void            XEOS_Video_Printf( char * format, ... );
-void            XEOS_Video_VPrintf( char * format, va_list arg );
-void            XEOS_Video_Putc( unsigned char c, bool updateCursor );
-void            XEOS_Video_Scroll( unsigned int n );
-void            XEOS_Video_StringReverse( char s[] );
-void            XEOS_Video_Itoa( int n, char s[], int radix );
-void            XEOS_Video_Utoa( unsigned int n, char s[], int radix );
+/*!
+ * @function    XEOS_Video_Clear
+ * @abstract    Clears the screem
+ */
+void XEOS_Video_Clear( void );
 
-extern unsigned char    __XEOS_Video_Attribute;
-extern unsigned int     __XEOS_Video_X;
-extern unsigned int     __XEOS_Video_Y;
-extern char           * __XEOS_Video_Prompt;
-extern char             __XEOS_Video_HexChars[ 16 ];
+/*!
+ * @function    XEOS_Video_SetBG
+ * @abstract    Sets the screen background color
+ * @param       color       The background color
+ */
+void XEOS_Video_SetBG( XEOS_Video_Color color );
+
+/*!
+ * @function    XEOS_Video_SetFG
+ * @abstract    Sets the screen foreground color
+ * @param       color       The foregournd color
+ */
+void XEOS_Video_SetFG( XEOS_Video_Color color );
+
+/*!
+ * @function    XEOS_Video_MoveCursor
+ * @abstract    Moves the hardware cursor
+ * @param       x           The X position
+ * @param       y           The Y position
+ */
+void XEOS_Video_MoveCursor( unsigned int x, unsigned int y );
+
+/*!
+ * @function    XEOS_Video_X
+ * @abstract    Gets the hardware cursor's X position
+ * @result      The X position
+ */
+unsigned int XEOS_Video_X( void );
+
+/*!
+ * @function    XEOS_Video_Y
+ * @abstract    Gets the hardware cursor's X position
+ * @result      The Y position
+ */
+unsigned int XEOS_Video_Y( void );
+
+/*!
+ * @function    XEOS_Video_Prompt
+ * @abstract    Displays a message with the standard prompt
+ * @param       s           The message
+ */
+void XEOS_Video_Prompt( char * s );
+
+/*!
+ * @function    XEOS_Video_Promptf
+ * @abstract    Displays a formatted message with the standard prompt
+ * @param       format      The message format
+ */
+void XEOS_Video_Promptf( char * format, ... );
+
+/*!
+ * @function    XEOS_Video_Print
+ * @abstract    Displays a message
+ * @param       s           The message
+ */
+void XEOS_Video_Print( char * s );
+
+/*!
+ * @function    XEOS_Video_Printf
+ * @abstract    Displays a formatted message
+ * @param       format      The message format
+ */
+void XEOS_Video_Printf( char * format, ... );
+
+/*!
+ * @function    XEOS_Video_VPrintf
+ * @abstract    Displays a formatted message
+ * @param       format      The message format
+ * @param       arg         The arguments for the format
+ */
+void XEOS_Video_VPrintf( char * format, va_list arg );
+
+/*!
+ * @function    XEOS_Video_Putc
+ * @abstract    Displays a single character
+ * @param       c               The character to display
+ * @param       updateCursor    If set, updates the hardware cursor
+ */
+void XEOS_Video_Putc( unsigned char c, bool updateCursor );
+
+/*!
+ * @function    XEOS_Video_Scroll
+ * @abstract    Scrolls the screen
+ * @param       n           The number of lines to scroll
+ */
+void XEOS_Video_Scroll( unsigned int n );
+
+/*!
+ * @function    XEOS_Video_StringReverse
+ * @abstract    Reverses a string (in place)
+ * @param       s           The string to reverse
+ */
+void XEOS_Video_StringReverse( char s[] );
+
+/*!
+ * @function    XEOS_Video_Itoa
+ * @abstract    Converts an integer to its ASCII representation
+ * @param       n           The unsigned integer
+ * @param       s           The buffer for the ASCII representation
+ * @param       radix       The radix to use for the conversion
+ */
+void XEOS_Video_Itoa( int n, char s[], int radix );
+
+/*!
+ * @function    XEOS_Video_Utoa
+ * @abstract    Converts an unsigned integer to its ASCII representation
+ * @param       n           The unsigned integer
+ * @param       s           The buffer for the ASCII representation
+ * @param       radix       The radix to use for the conversion
+ */
+void XEOS_Video_Utoa( unsigned int n, char s[], int radix );
 
 #ifdef __cplusplus
 }

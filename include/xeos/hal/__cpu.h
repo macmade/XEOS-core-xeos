@@ -77,9 +77,28 @@ extern "C" {
 
 #include <xeos/hal/cpu.h>
 
-extern char     __XEOS_HAL_CPU_Vendor[];
-extern char     __XEOS_HAL_CPU_BrandName[];
+/*!
+ * @var             __XEOS_HAL_CPU_Vendor
+ * @abstract        CPU vendor ID string
+ */
+extern char __XEOS_HAL_CPU_Vendor[];
+
+/*!
+ * @var             __XEOS_HAL_CPU_BrandName
+ * @abstract        CPU brand name string
+ */
+extern char __XEOS_HAL_CPU_BrandName[];
+
+/*!
+ * @var             __XEOS_HAL_CPU_FeatureLow
+ * @abstract        CPU features (low 32 bits)
+ */
 extern uint32_t __XEOS_HAL_CPU_FeatureLow;
+
+/*!
+ * @var             __XEOS_HAL_CPU_FeatureHigh
+ * @abstract        CPU features (high 32 bits)
+ */
 extern uint32_t __XEOS_HAL_CPU_FeatureHigh;
 
 #ifdef __cplusplus

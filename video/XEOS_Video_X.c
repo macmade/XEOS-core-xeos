@@ -68,6 +68,7 @@
  */
 
 #include "xeos/video.h"
+#include "xeos/__video.h"
 
 unsigned int XEOS_Video_X( void )
 {

@@ -77,6 +77,12 @@ extern "C" {
 
 #include <stdint.h>
 
+/*!
+ * @enum        XEOS_HAL_PIC_Controller
+ * @abstract    Programmable Interrupt Controller
+ * @constant    XEOS_HAL_PIC_Controller1    Master PIC
+ * @constant    XEOS_HAL_PIC_Controller2    Slave PIC
+ */
 typedef enum
 {
     XEOS_HAL_PIC_Controller1        = 0x00,
@@ -84,15 +90,31 @@ typedef enum
 }
 XEOS_HAL_PIC_Controller;
 
+/*!
+ * @enum        XEOS_HAL_PIC_Register
+ * @abstract    PIC register
+ * @constant    XEOS_HAL_PIC_RegisterCommand    PIC command register
+ * @constant    XEOS_HAL_PIC_RegisterStatus     PIC status register
+ * @constant    XEOS_HAL_PIC_RegisterData       PIC data register
+ */
 typedef enum
 {
     XEOS_HAL_PIC_RegisterCommand    = 0x00,
     XEOS_HAL_PIC_RegisterStatus     = 0x01,
     XEOS_HAL_PIC_RegisterData       = 0x02,
-    XEOS_HAL_PIC_RegisterMask       = 0x03
 }
 XEOS_HAL_PIC_Register;
 
+/*!
+ * @enum        XEOS_HAL_PIC_ICW1
+ * @abstract    PIC Initialization Command Word (ICW) 1
+ * @constant    XEOS_HAL_PIC_ICW1None   No value
+ * @constant    XEOS_HAL_PIC_ICW1IC4    PIC expects to recieve IC4 during initialization
+ * @constant    XEOS_HAL_PIC_ICW1SNGL   Only one PIC in system
+ * @constant    XEOS_HAL_PIC_ICW1ADI    CALL address interval is 4
+ * @constant    XEOS_HAL_PIC_ICW1LTIM   Operate in Level Triggered Mode
+ * @constant    XEOS_HAL_PIC_ICW1Init   PIC needs to be initialized
+ */
 typedef enum
 {
     XEOS_HAL_PIC_ICW1None           = 0x00,
@@ -104,6 +126,16 @@ typedef enum
 }
 XEOS_HAL_PIC_ICW1;
 
+/*!
+ * @enum        XEOS_HAL_PIC_ICW4
+ * @abstract    PIC Initialization Command Word (ICW) 4
+ * @constant    XEOS_HAL_PIC_ICW4None   No value
+ * @constant    XEOS_HAL_PIC_ICW4UPM    80x86 mode
+ * @constant    XEOS_HAL_PIC_ICW4AEOI   Performs EOI (End Of Interrupt) on the last interrupt acknowledge pulse
+ * @constant    XEOS_HAL_PIC_ICW4MS     Selects buffer master
+ * @constant    XEOS_HAL_PIC_ICW4BUF    Operates in buffered mode
+ * @constant    XEOS_HAL_PIC_ICW4SFNM   Special fully nested mode
+ */
 typedef enum
 {
     XEOS_HAL_PIC_ICW4None           = 0x00,
@@ -115,11 +147,46 @@ typedef enum
 }
 XEOS_HAL_PIC_ICW4;
 
-void    XEOS_HAL_PIC_Init( uint8_t masterBase, uint8_t slaveBase );
+/*!
+ * @function        XEOS_HAL_PIC_Init
+ * @abstract        Initializes the PIC (Programmable Interrupt Controller)
+ * @param           masterBase      The base IRQ number for the master controller
+ * @param           slaveBase       The base IRQ number for the slave controller
+ */
+void XEOS_HAL_PIC_Init( uint8_t masterBase, uint8_t slaveBase );
+
+/*!
+ * @function        XEOS_HAL_PIC_GetRegister
+ * @abstract        Gets the register number for a PIC register
+ * @param           c               The PIC
+ * @param           r               The PIC register
+ * @result          The register number
+ */
 uint8_t XEOS_HAL_PIC_GetRegister( XEOS_HAL_PIC_Controller c, XEOS_HAL_PIC_Register r );
-void    XEOS_HAL_PIC_SendCommand( XEOS_HAL_PIC_Controller c, uint8_t command );
+
+/*!
+ * @function        XEOS_HAL_PIC_SendCommand
+ * @abstract        Sends a command to a PIC
+ * @param           c               The PIC
+ * @param           command         The command to send
+ */
+void XEOS_HAL_PIC_SendCommand( XEOS_HAL_PIC_Controller c, uint8_t command );
+
+/*!
+ * @function        XEOS_HAL_PIC_ReadData
+ * @abstract        Reads data from a PIC
+ * @param           c               The PIC
+ * @result          The data read
+ */
 uint8_t XEOS_HAL_PIC_ReadData( XEOS_HAL_PIC_Controller c );
-void    XEOS_HAL_PIC_SendData( XEOS_HAL_PIC_Controller c, uint8_t data );
+
+/*!
+ * @function        XEOS_HAL_PIC_SendData
+ * @abstract        Sends data to a PIC
+ * @param           c               The PIC
+ * @param           data            The data to send
+ */
+void XEOS_HAL_PIC_SendData( XEOS_HAL_PIC_Controller c, uint8_t data );
 
 #ifdef __cplusplus
 }

@@ -75,6 +75,37 @@
 extern "C" {
 #endif
 
+/*!
+ * @typedef         XEOS_HAL_CRTC_Register
+ * @abstract        CRT Controller register values
+ * @constant        XEOS_HAL_CRTC_RegisterHorizontalTotal               Horizontal Total Register
+ * @constant        XEOS_HAL_CRTC_RegisterEndHorizontalDisplay          End Horizontal Display Register
+ * @constant        XEOS_HAL_CRTC_RegisterStartHorizontalBlanking       Start Horizontal Blanking Register
+ * @constant        XEOS_HAL_CRTC_RegisterEndHorizontalBlanking         End Horizontal Blanking Register
+ * @constant        XEOS_HAL_CRTC_RegisterStartHorizontalRetrace        Start Horizontal Retrace Register
+ * @constant        XEOS_HAL_CRTC_RegisterEndHorizontalRetrace          End Horizontal Retrace Register
+ * @constant        XEOS_HAL_CRTC_RegisterVerticalTotal                 Vertical Total Register
+ * @constant        XEOS_HAL_CRTC_RegisterOverflow                      Overflow Register
+ * @constant        XEOS_HAL_CRTC_RegisterPresetRowScan                 Preset Row Scan Register
+ * @constant        XEOS_HAL_CRTC_RegisterMaximumScanLine               Maximum Scan Line Register
+ * @constant        XEOS_HAL_CRTC_RegisterCursorStart                   Cursor Start Register
+ * @constant        XEOS_HAL_CRTC_RegisterCursorEnd                     Cursor End Register
+ * @constant        XEOS_HAL_CRTC_RegisterStartAddressHigh              Start Address High Register
+ * @constant        XEOS_HAL_CRTC_RegisterStartAddressLow               Start Address Low Register
+ * @constant        XEOS_HAL_CRTC_RegisterCursorLocationHigh            Cursor Location High Register
+ * @constant        XEOS_HAL_CRTC_RegisterCursorLocationLow             Cursor Location Low Register
+ * @constant        XEOS_HAL_CRTC_RegisterVerticalRetraceStart          Vertical Retrace Start Register
+ * @constant        XEOS_HAL_CRTC_RegisterVerticalRetraceEnd            Vertical Retrace End Register
+ * @constant        XEOS_HAL_CRTC_RegisterVerticalDisplayEnd            Vertical Display End Register
+ * @constant        XEOS_HAL_CRTC_RegisterOffset                        Offset Register
+ * @constant        XEOS_HAL_CRTC_RegisterUnderlineLocation             Underline Location Register
+ * @constant        XEOS_HAL_CRTC_RegisterStartVerticalBlanking         Start Vertical Blanking Register
+ * @constant        XEOS_HAL_CRTC_RegisterEndVertical                   End Vertical Blanking
+ * @constant        XEOS_HAL_CRTC_RegisterCRTCModeControl               CRTC Mode Control Register
+ * @constant        XEOS_HAL_CRTC_RegisterLineCompare                   Line Compare Register
+ * @constant        XEOS_HAL_CRTC_RegisterData                          CRTC Data register
+ * @constant        XEOS_HAL_CRTC_RegisterAddress                       CRTC Address register
+ */
 typedef enum
 {
     XEOS_HAL_CRTC_RegisterHorizontalTotal           = 0x0000,
@@ -102,7 +133,6 @@ typedef enum
     XEOS_HAL_CRTC_RegisterEndVertical               = 0x0016,
     XEOS_HAL_CRTC_RegisterCRTCModeControl           = 0x0017,
     XEOS_HAL_CRTC_RegisterLineCompare               = 0x0018,
-    
     XEOS_HAL_CRTC_RegisterData                      = 0x03D4,
     XEOS_HAL_CRTC_RegisterAddress                   = 0x03D5
 }

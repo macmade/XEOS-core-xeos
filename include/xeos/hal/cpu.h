@@ -79,6 +79,70 @@ extern "C" {
 #include <xeos/hal/gdt.h>
 #include <stdbool.h>
 
+/*!
+ * @typedef         XEOS_HAL_CPUInfos_Feature
+ * @abstract        CPU features
+ * @constant        XEOS_HAL_CPUInfos_FeatureFPU            Onboard x87 FPU
+ * @constant        XEOS_HAL_CPUInfos_FeatureVME            Virtual mode extensions (VIF)
+ * @constant        XEOS_HAL_CPUInfos_FeatureDE             Debugging extensions (CR4 bit 3)
+ * @constant        XEOS_HAL_CPUInfos_FeaturePSE            Page size extensions
+ * @constant        XEOS_HAL_CPUInfos_FeatureTSC            Time Stamp Counter
+ * @constant        XEOS_HAL_CPUInfos_FeatureMSR            Model-specific registers
+ * @constant        XEOS_HAL_CPUInfos_FeaturePAE            Physical Address Extension
+ * @constant        XEOS_HAL_CPUInfos_FeatureMCE            Machine Check Exception
+ * @constant        XEOS_HAL_CPUInfos_FeatureCX8            CMPXCHG8 (compare-and-swap) instruction
+ * @constant        XEOS_HAL_CPUInfos_FeatureAPIC           Onboard Advanced Programmable Interrupt Controller
+ * @constant        XEOS_HAL_CPUInfos_FeatureSEP            SYSENTER and SYSEXIT instructions
+ * @constant        XEOS_HAL_CPUInfos_FeatureMTRR           Memory Type Range Registers
+ * @constant        XEOS_HAL_CPUInfos_FeaturePGE            Page Global Enable bit in CR4
+ * @constant        XEOS_HAL_CPUInfos_FeatureMCA            Machine check architecture
+ * @constant        XEOS_HAL_CPUInfos_FeatureCMOV           Conditional move and FCMOV instructions
+ * @constant        XEOS_HAL_CPUInfos_FeaturePAT            Page Attribute Table
+ * @constant        XEOS_HAL_CPUInfos_FeaturePSE36          36-bit page huge pages
+ * @constant        XEOS_HAL_CPUInfos_FeaturePN             Processor Serial Number
+ * @constant        XEOS_HAL_CPUInfos_FeatureCLFlush        CLFLUSH instruction (SSE2)
+ * @constant        XEOS_HAL_CPUInfos_FeatureDTS            Debug store: save trace of executed jumps
+ * @constant        XEOS_HAL_CPUInfos_FeatureACPI           Onboard thermal control MSRs for ACPI
+ * @constant        XEOS_HAL_CPUInfos_FeatureMMX            MMX instructions
+ * @constant        XEOS_HAL_CPUInfos_FeatureFXSR           FXSAVE, FXRESTOR instructions, CR4 bit 9
+ * @constant        XEOS_HAL_CPUInfos_FeatureSSE            SSE instructions (a.k.a. Katmai New Instructions)
+ * @constant        XEOS_HAL_CPUInfos_FeatureSSE2           SSE2 instructions
+ * @constant        XEOS_HAL_CPUInfos_FeatureSS             CPU cache supports self-snoop
+ * @constant        XEOS_HAL_CPUInfos_FeatureHT             Hyper-threading
+ * @constant        XEOS_HAL_CPUInfos_FeatureTM             Thermal monitor automatically limits temperature
+ * @constant        XEOS_HAL_CPUInfos_FeatureIA64           IA64 processor emulating x86
+ * @constant        XEOS_HAL_CPUInfos_FeaturePBE            Pending Break Enable (PBE# pin) wakeup support
+ * @constant        XEOS_HAL_CPUInfos_FeaturePNI            Prescott New Instructions (SSE3)
+ * @constant        XEOS_HAL_CPUInfos_FeaturePCLMulQDQ      PCLMULQDQ support
+ * @constant        XEOS_HAL_CPUInfos_FeatureDTES64         64-bit debug store (edx bit 21)
+ * @constant        XEOS_HAL_CPUInfos_FeatureMonitor        MONITOR and MWAIT instructions (SSE3)
+ * @constant        XEOS_HAL_CPUInfos_FeatureDSCPL          CPL qualified debug store
+ * @constant        XEOS_HAL_CPUInfos_FeatureVMX            Virtual Machine eXtensions
+ * @constant        XEOS_HAL_CPUInfos_FeatureSMX            Safer Mode Extensions (LaGrande)
+ * @constant        XEOS_HAL_CPUInfos_FeatureEST            Enhanced SpeedStep
+ * @constant        XEOS_HAL_CPUInfos_FeatureTM2            Thermal Monitor 2
+ * @constant        XEOS_HAL_CPUInfos_FeatureSSSE3          Supplemental SSE3 instructions
+ * @constant        XEOS_HAL_CPUInfos_FeatureCID            Context ID
+ * @constant        XEOS_HAL_CPUInfos_FeatureFMA            Fused multiply-add (FMA3)
+ * @constant        XEOS_HAL_CPUInfos_FeatureCX16           CMPXCHG16B instruction
+ * @constant        XEOS_HAL_CPUInfos_FeatureXTPT           Can disable sending task priority messages
+ * @constant        XEOS_HAL_CPUInfos_FeaturePDCM           Perfmon & debug capability
+ * @constant        XEOS_HAL_CPUInfos_FeaturePCID           Process context identifiers (CR4 bit 17)
+ * @constant        XEOS_HAL_CPUInfos_FeatureDCA            Direct cache access for DMA writes
+ * @constant        XEOS_HAL_CPUInfos_FeatureSSE41          SSE4.1 instructions
+ * @constant        XEOS_HAL_CPUInfos_FeatureSSE42          SSE4.2 instructions
+ * @constant        XEOS_HAL_CPUInfos_FeatureX2APIC         x2APIC support
+ * @constant        XEOS_HAL_CPUInfos_FeatureMOVBE          MOVBE instruction (big-endian, Intel Atom only)
+ * @constant        XEOS_HAL_CPUInfos_FeaturePOPCNT         POPCNT instruction
+ * @constant        XEOS_HAL_CPUInfos_FeatureTSCDeadLine    APIC supports one-shot operation using a TSC deadline value
+ * @constant        XEOS_HAL_CPUInfos_FeatureAES            AES instruction set
+ * @constant        XEOS_HAL_CPUInfos_FeatureXSave          XSAVE, XRESTOR, XSETBV, XGETBV
+ * @constant        XEOS_HAL_CPUInfos_FeatureOSXSave        XSAVE enabled by OS
+ * @constant        XEOS_HAL_CPUInfos_FeatureAVX            Advanced Vector Extensions
+ * @constant        XEOS_HAL_CPUInfos_FeatureF16C           CVT16 instruction set (half-precision) FP support
+ * @constant        XEOS_HAL_CPUInfos_FeatureRDRND          RDRAND (on-chip random number generator) support
+ * @constant        XEOS_HAL_CPUInfos_FeatureHypervisor     Running on a hypervisor (always 0 on a real CPU)
+ */
 typedef enum
 {
     XEOS_HAL_CPUInfos_FeatureFPU            = 0x000,
@@ -111,7 +175,6 @@ typedef enum
     XEOS_HAL_CPUInfos_FeatureTM             = 0x01D,
     XEOS_HAL_CPUInfos_FeatureIA64           = 0x01E,
     XEOS_HAL_CPUInfos_FeaturePBE            = 0x01F,
-    
     XEOS_HAL_CPUInfos_FeaturePNI            = 0x100,
     XEOS_HAL_CPUInfos_FeaturePCLMulQDQ      = 0x101,
     XEOS_HAL_CPUInfos_FeatureDTES64         = 0x102,
@@ -145,24 +208,135 @@ typedef enum
 }
 XEOS_HAL_CPUInfos_Feature;
 
-void            XEOS_HAL_CPU_CPUID( uint32_t info, uint32_t * eax, uint32_t * ebx, uint32_t * ecx, uint32_t * edx );
-bool            XEOS_HAL_CPU_HasFeature( XEOS_HAL_CPUInfos_Feature feature );
-const char *    XEOS_HAL_CPU_GetVendorID( void );
-const char *    XEOS_HAL_CPU_GetBrandName( void );
-void            XEOS_HAL_CPU_Halt( void );
-void            XEOS_HAL_CPU_EnableInterrupts( void );
-void            XEOS_HAL_CPU_DisableInterrupts( void );
-bool            XEOS_HAL_CPU_InterruptsEnabled( void );
-void            XEOS_HAL_CPU_LoadIDT( void * p );
-void            XEOS_HAL_CPU_LoadGDT( void * p );
-void            XEOS_HAL_CPU_SoftwareInterrupt( uint8_t n );
-uint64_t        XEOS_HAL_CPU_RDMSR( uint32_t id );
-void            XEOS_HAL_CPU_WRMSR( uint32_t id, uint64_t value );
-uint32_t        XEOS_HAL_CPU_ReadCR0( void );
-uint32_t        XEOS_HAL_CPU_ReadCR1( void );
-uint32_t        XEOS_HAL_CPU_ReadCR2( void );
-uint32_t        XEOS_HAL_CPU_ReadCR3( void );
-uint32_t        XEOS_HAL_CPU_ReadCR4( void );
+/*!
+ * @function        XEOS_HAL_CPU_CPUID
+ * @abstract        CPU identification (cpuid instruction)
+ * @param           info            The info to request
+ * @param           eax             On return, the content of the EAX register
+ * @param           ebx             On return, the content of the EBX register
+ * @param           ecx             On return, the content of the ECX register
+ * @param           edx             On return, the content of the EDX register
+ */
+void XEOS_HAL_CPU_CPUID( uint32_t info, uint32_t * eax, uint32_t * ebx, uint32_t * ecx, uint32_t * edx );
+
+/*!
+ * @function        XEOS_HAL_CPU_HasFeature
+ * @abstract        Checks if the CPU supports a feature
+ * @param           feature         The CPU feature to check
+ * @result          True if the feature is supported, otherwise false
+ */
+bool XEOS_HAL_CPU_HasFeature( XEOS_HAL_CPUInfos_Feature feature );
+
+/*!
+ * @function        XEOS_HAL_CPU_GetVendorID
+ * @abstract        Gets the CPU vendor ID string
+ * @result          The CPU vendor ID string
+ */
+const char * XEOS_HAL_CPU_GetVendorID( void );
+
+/*!
+ * @function        XEOS_HAL_CPU_GetBrandName
+ * @abstract        Gets the CPU brand name string
+ * @result          The CPU brand name string
+ */
+const char * XEOS_HAL_CPU_GetBrandName( void );
+
+/*!
+ * @function        XEOS_HAL_CPU_Halt
+ * @abstract        Halts the CPU
+ */
+void XEOS_HAL_CPU_Halt( void );
+
+/*!
+ * @function        XEOS_HAL_CPU_EnableInterrupts
+ * @abstract        Enables all interrupts
+ */
+void XEOS_HAL_CPU_EnableInterrupts( void );
+
+/*!
+ * @function        XEOS_HAL_CPU_DisableInterrupts
+ * @abstract        Disables all interrupts
+ */
+void XEOS_HAL_CPU_DisableInterrupts( void );
+
+/*!
+ * @function        XEOS_HAL_CPU_InterruptsEnabled
+ * @abstract        Checks if the interrupts are enabled
+ * @result          True if the interrupts are enabled, otherwise false
+ */
+bool XEOS_HAL_CPU_InterruptsEnabled( void );
+
+/*!
+ * @function        XEOS_HAL_CPU_LoadIDT
+ * @abstract        Loads the Interrupt Descriptor Table (IDT) pointer
+ * @param           p           The IDT pointer
+ */
+void XEOS_HAL_CPU_LoadIDT( void * p );
+
+/*!
+ * @function        XEOS_HAL_CPU_LoadGDT
+ * @abstract        Loads the Global Descriptor Table (GDT) pointer
+ * @param           p           The GDT pointer
+ */
+void XEOS_HAL_CPU_LoadGDT( void * p );
+
+/*!
+ * @function        XEOS_HAL_CPU_SoftwareInterrupt
+ * @abstract        Generates a software interrupt
+ * @param           n           The interrupt number
+ */
+void XEOS_HAL_CPU_SoftwareInterrupt( uint8_t n );
+
+/*!
+ * @function        XEOS_HAL_CPU_RDMSR
+ * @abstract        Gets the content of a Model Specific Register (MSR)
+ * @param           id              The MSR ID
+ * @result          The MSR value
+ */
+uint64_t XEOS_HAL_CPU_RDMSR( uint32_t id );
+
+/*!
+ * @function        XEOS_HAL_CPU_WRMSR
+ * @abstract        Writes a value into a Model Specifi Register (MSR)
+ * @param           id              The MSR ID
+ * @param           value           The value to write
+ */
+void XEOS_HAL_CPU_WRMSR( uint32_t id, uint64_t value );
+
+/*!
+ * @function        XEOS_HAL_CPU_ReadCR0
+ * @abstract        Gets the content of the Control Register 0 (CR0)
+ * @result          The content of CR0
+ */
+uint32_t XEOS_HAL_CPU_ReadCR0( void );
+
+/*!
+ * @function        XEOS_HAL_CPU_ReadCR1
+ * @abstract        Gets the content of the Control Register 1 (CR1)
+ * @result          The content of CR1
+ */
+uint32_t XEOS_HAL_CPU_ReadCR1( void );
+
+/*!
+ * @function        XEOS_HAL_CPU_ReadCR2
+ * @abstract        Gets the content of the Control Register 2 (CR2)
+ * @result          The content of CR2
+ */
+uint32_t XEOS_HAL_CPU_ReadCR2( void );
+
+/*!
+ * @function        XEOS_HAL_CPU_ReadCR3
+ * @abstract        Gets the content of the Control Register 3 (CR3)
+ * @result          The content of CR3
+ */
+uint32_t XEOS_HAL_CPU_ReadCR3( void );
+
+/*!
+ * @function        XEOS_HAL_CPU_ReadCR4
+ * @abstract        Gets the content of the Control Register 4 (CR4)
+ * @result          The content of CR4
+ */
+uint32_t XEOS_HAL_CPU_ReadCR4( void );
 
 #ifdef __cplusplus
 }

@@ -78,8 +78,26 @@ extern "C" {
 #include <stdint.h>
 #include <stdarg.h>
 
+/*!
+ * @function        XEOS_ISR_ExceptionHandler
+ * @abstract        ISR handler for the x86 CPU exceptions
+ * @param           isr         The ISR number
+ */
 void XEOS_ISR_ExceptionHandler( uint8_t isr );
+
+/*!
+ * @function        XEOS_ISR_Timer
+ * @abstract        ISR handler for the system timer
+ * @param           isr         The ISR number
+ */
 void XEOS_ISR_Timer( uint8_t isr );
+
+/*!
+ * @function        XEOS_ISR_SysCall
+ * @abstract        ISR handler for system calls
+ * @param           isr         The ISR number
+ * @param           syscall     The system call number
+ */
 void XEOS_ISR_SysCall( uint8_t isr, uint16_t syscall );
 
 #ifdef __cplusplus

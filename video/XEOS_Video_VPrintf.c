@@ -68,6 +68,7 @@
  */
 
 #include "xeos/video.h"
+#include "xeos/__video.h"
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
