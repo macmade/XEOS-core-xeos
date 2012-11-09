@@ -61,6 +61,12 @@
 
 /* $Id$ */
 
+/*!
+ * @file            XEOS_HAL_PIC_GetRegister.c
+ * @author          Jean-David Gadina
+ * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
+ */
+
 #include "xeos/hal/pic.h"
 
 uint8_t XEOS_HAL_PIC_GetRegister( XEOS_HAL_PIC_Controller c, XEOS_HAL_PIC_Register r )

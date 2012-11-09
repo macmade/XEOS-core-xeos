@@ -61,6 +61,12 @@
 
 /* $Id$ */
 
+/*!
+ * @file            XEOS_Video_Y.c
+ * @author          Jean-David Gadina
+ * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
+ */
+
 #include "xeos/video.h"
 
 unsigned int XEOS_Video_Y( void )

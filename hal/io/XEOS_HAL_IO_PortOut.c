@@ -61,6 +61,12 @@
 
 /* $Id$ */
 
+/*!
+ * @file            XEOS_HAL_IO_PortOut.c
+ * @author          Jean-David Gadina
+ * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
+ */
+
 #include "xeos/hal/io.h"
 
 void XEOS_HAL_IO_PortOut( uint16_t port, uint8_t value )

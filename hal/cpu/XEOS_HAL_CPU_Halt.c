@@ -61,6 +61,12 @@
 
 /* $Id$ */
 
+/*!
+ * @file            XEOS_HAL_CPU_Halt.c
+ * @author          Jean-David Gadina
+ * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
+ */
+
 #include "xeos/hal/cpu.h"
 
 void XEOS_HAL_CPU_Halt( void )

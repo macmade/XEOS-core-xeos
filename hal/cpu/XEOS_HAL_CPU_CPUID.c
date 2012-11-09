@@ -61,6 +61,12 @@
 
 /* $Id$ */
 
+/*!
+ * @file            XEOS_HAL_CPU_CPUID.c
+ * @author          Jean-David Gadina
+ * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
+ */
+
 #include "xeos/hal/cpu.h"
 #include "xeos/hal/__cpu.h"
 

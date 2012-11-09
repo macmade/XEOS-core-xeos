@@ -61,6 +61,12 @@
 
 /* $Id$ */
 
+/*!
+ * @file            __XEOS_HAL_IDT.c
+ * @author          Jean-David Gadina
+ * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
+ */
+
 #include "xeos/hal/idt.h"
 #include "xeos/hal/__idt.h"
 #include <stdlib.h>

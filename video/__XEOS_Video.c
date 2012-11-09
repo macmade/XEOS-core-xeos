@@ -61,6 +61,12 @@
 
 /* $Id$ */
 
+/*!
+ * @file            __XEOS_Video.c
+ * @author          Jean-David Gadina
+ * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
+ */
+
 #include "xeos/video.h"
 
 unsigned char __XEOS_Video_Attribute        = XEOS_Video_ColorBlack << 4 | XEOS_Video_ColorWhite;

@@ -61,6 +61,12 @@
 
 /* $Id$ */
 
+/*!
+ * @file            XEOS_HAL_CPU_SoftwareInterrupt.c
+ * @author          Jean-David Gadina
+ * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
+ */
+
 #include "xeos/hal/cpu.h"
 
 #define __XEOS_HAL_CPU_GENT_INT( _n_ )  __asm__ __volatile__( "int $0x" # _n_ )
