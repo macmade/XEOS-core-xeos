@@ -73,21 +73,35 @@
 void XEOS_HAL_PIC_Init( uint8_t masterBase, uint8_t slaveBase )
 {
     uint8_t command;
+    uint8_t mask1;
+    uint8_t mask2;
     
-    command = 0;
-    command = ( command & ~XEOS_HAL_PIC_ICW1Init ) | XEOS_HAL_PIC_ICW1Init;
-    command = ( command & ~XEOS_HAL_PIC_ICW1IC4  ) | XEOS_HAL_PIC_ICW1IC4;
+    mask1 = XEOS_HAL_IO_PortIn( XEOS_HAL_PIC_GetRegister( XEOS_HAL_PIC_Controller1, XEOS_HAL_PIC_RegisterData ) );
+    mask2 = XEOS_HAL_IO_PortIn( XEOS_HAL_PIC_GetRegister( XEOS_HAL_PIC_Controller2, XEOS_HAL_PIC_RegisterData ) );
+    
+    command = XEOS_HAL_PIC_ICW1Init | XEOS_HAL_PIC_ICW1IC4;
     
     XEOS_HAL_PIC_SendCommand( XEOS_HAL_PIC_Controller1, command );
+    XEOS_HAL_IO_Wait();
     XEOS_HAL_PIC_SendCommand( XEOS_HAL_PIC_Controller2, command );
+    XEOS_HAL_IO_Wait();
     
     XEOS_HAL_PIC_SendData( XEOS_HAL_PIC_Controller1, masterBase );
+    XEOS_HAL_IO_Wait();
     XEOS_HAL_PIC_SendData( XEOS_HAL_PIC_Controller2, slaveBase );
+    XEOS_HAL_IO_Wait();
     XEOS_HAL_PIC_SendData( XEOS_HAL_PIC_Controller1, 0x04 );
+    XEOS_HAL_IO_Wait();
     XEOS_HAL_PIC_SendData( XEOS_HAL_PIC_Controller2, 0x02 );
+    XEOS_HAL_IO_Wait();
     
     command = ( command & ~XEOS_HAL_PIC_ICW4UPM ) | XEOS_HAL_PIC_ICW4UPM;
     
     XEOS_HAL_PIC_SendData( XEOS_HAL_PIC_Controller1, command );
+    XEOS_HAL_IO_Wait();
     XEOS_HAL_PIC_SendData( XEOS_HAL_PIC_Controller2, command );
+    XEOS_HAL_IO_Wait();
+    
+    XEOS_HAL_IO_PortOut( XEOS_HAL_PIC_GetRegister( XEOS_HAL_PIC_Controller1, XEOS_HAL_PIC_RegisterData ), mask1 );
+    XEOS_HAL_IO_PortOut( XEOS_HAL_PIC_GetRegister( XEOS_HAL_PIC_Controller2, XEOS_HAL_PIC_RegisterData ), mask2 );
 }
