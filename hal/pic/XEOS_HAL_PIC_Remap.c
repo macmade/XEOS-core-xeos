@@ -70,7 +70,7 @@
 #include "xeos/hal/pic.h"
 #include "xeos/hal/io.h"
 
-void XEOS_HAL_PIC_Init( uint8_t masterBase, uint8_t slaveBase )
+void XEOS_HAL_PIC_Remap( uint8_t masterBase, uint8_t slaveBase )
 {
     uint8_t command;
     uint8_t mask1;

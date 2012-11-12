@@ -95,7 +95,7 @@ void XEOS_Main( void )
      * This will allow us to install the exception handlers, and avoid
      * conflicts with existing IRQs mapping to exceptions.
      */
-    XEOS_HAL_PIC_Init( 0x20, 0x28 );
+    XEOS_HAL_PIC_Remap( 0x20, 0x28 );
     
     /* Installs the exception handlers */
     for( i = 0; i < 20; i++ )

@@ -148,12 +148,12 @@ typedef enum
 XEOS_HAL_PIC_ICW4;
 
 /*!
- * @function        XEOS_HAL_PIC_Init
- * @abstract        Initializes the PIC (Programmable Interrupt Controller)
+ * @function        XEOS_HAL_PIC_Remap
+ * @abstract        Remaps the PIC (Programmable Interrupt Controller)
  * @param           masterBase      The base IRQ number for the master controller
  * @param           slaveBase       The base IRQ number for the slave controller
  */
-void XEOS_HAL_PIC_Init( uint8_t masterBase, uint8_t slaveBase );
+void XEOS_HAL_PIC_Remap( uint8_t masterBase, uint8_t slaveBase );
 
 /*!
  * @function        XEOS_HAL_PIC_GetRegister
