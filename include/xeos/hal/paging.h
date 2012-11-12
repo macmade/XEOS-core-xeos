@@ -62,23 +62,23 @@
 /* $Id$ */
 
 /*!
- * @header          hal.h
+ * @header          paging.h
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS_HAL_H__
-#define __XEOS_HAL_H__
+#ifndef __HAL_PAGING_H__
+#define __HAL_PAGING_H__
 #pragma once
 
-#include <xeos/hal/cpu.h>
-#include <xeos/hal/crtc.h>
-#include <xeos/hal/gdt.h>
-#include <xeos/hal/idt.h>
-#include <xeos/hal/io.h>
-#include <xeos/hal/paging.h>
-#include <xeos/hal/pic.h>
-#include <xeos/hal/pit.h>
-#include <xeos/hal/smbios.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-#endif /* __XEOS_HAL_H__ */
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __HAL_PAGING_H__ */
