@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __HAL_IDT_H__
-#define __HAL_IDT_H__
+#ifndef __XEOS_HAL_IDT_H__
+#define __XEOS_HAL_IDT_H__
 #pragma once
 
 #ifdef __cplusplus
@@ -251,4 +251,4 @@ int XEOS_HAL_IDT_ISREntryGetIndex( XEOS_HAL_IDT_ISREntryRef entry );
 }
 #endif
 
-#endif /* __HAL_IDT_H__ */
+#endif /* __XEOS_HAL_IDT_H__ */

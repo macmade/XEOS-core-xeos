@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __HAL___CPU_H__
-#define __HAL___CPU_H__
+#ifndef __XEOS_HAL___CPU_H__
+#define __XEOS_HAL___CPU_H__
 #pragma once
 
 #ifdef __cplusplus
@@ -105,4 +105,4 @@ extern uint32_t __XEOS_HAL_CPU_FeatureHigh;
 }
 #endif
 
-#endif /* __HAL___CPU_H__ */
+#endif /* __XEOS_HAL___CPU_H__ */

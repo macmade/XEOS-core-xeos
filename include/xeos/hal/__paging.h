@@ -62,141 +62,23 @@
 /* $Id$ */
 
 /*!
- * @header          __idt.h
+ * @header          __paging.h
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS_HAL___IDT_H__
-#define __XEOS_HAL___IDT_H__
+#ifndef __XEOS_HAL___PAGING_H__
+#define __XEOS_HAL___PAGING_H__
 #pragma once
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include <xeos/hal/idt.h>
 
-#ifdef __clang__
-#pragma pack( 1 )
-#endif
-
-/*!
- * @struct          __XEOS_HAL_IDT_ISREntry32
- * @abstract        32 bits ISR entry
- * @field           baseLow         ISR address (bits 0-15)
- * @field           selector        Code segment selector
- * @field           __reserved_0    Unused
- * @field           flags           ISR entry flags
- * @field           baseHigh        ISR address (bits 16-31)
- */
-struct __XEOS_HAL_IDT_ISREntry32
-{
-    uint16_t    baseLow;
-    uint16_t    selector;
-    uint8_t     __reserved_0;
-    uint8_t     flags;
-    uint16_t    baseHigh;
-};
-
-/*!
- * @struct          __XEOS_HAL_IDT_Pointer32
- * @abstract        32 bits IDT pointer
- * @field           limit           IDT size
- * @field           base            IDT address
- */
-struct __XEOS_HAL_IDT_Pointer32
-{
-    uint16_t    limit;
-    uint32_t    base;
-};
-
-/*!
- * @struct          __XEOS_HAL_IDT_ISREntry64
- * @abstract        64 bits ISR entry
- * @field           baseLow         ISR address (bits 0-15)
- * @field           selector        Code segment selector
- * @field           __reserved_0    Unused
- * @field           flags           ISR entry flags
- * @field           baseMiddle      ISR address (bits 16-31)
- * @field           baseHigh        ISR address (bits 32-63)
- * @field           __reserved_1    Unused
- */
-struct __XEOS_HAL_IDT_ISREntry64
-{
-    uint16_t    baseLow;
-    uint16_t    selector;
-    uint8_t     __reserved_0;
-    uint8_t     flags;
-    uint16_t    baseMiddle;
-    uint32_t    baseHigh;
-    uint32_t    __reserved_1;
-};
-
-/*!
- * @struct          __XEOS_HAL_IDT_Pointer64
- * @abstract        64 bits IDT pointer
- * @field           limit           IDT size
- * @field           base            IDT address
- */
-struct __XEOS_HAL_IDT_Pointer64
-{
-    uint16_t    limit;
-    uint64_t    base;
-};
-
-#ifdef __clang__
-#pragma pack()
-#endif
-
-/*!
- * @var         __XEOS_HAL_IDT_Address
- * @abstract    IDT pointer
- */
-#ifdef __LP64__
-    extern struct __XEOS_HAL_IDT_Pointer64      __XEOS_HAL_IDT_Address;
-#else
-    extern struct __XEOS_HAL_IDT_Pointer32      __XEOS_HAL_IDT_Address;
-#endif
-
-/*!
- * @var         __XEOS_HAL_IDT_ISREntries
- * @abstract    Array of ISR entries
- */
-#ifdef __LP64__
-    extern struct __XEOS_HAL_IDT_ISREntry64     __XEOS_HAL_IDT_ISREntries[];
-#else
-    extern struct __XEOS_HAL_IDT_ISREntry32     __XEOS_HAL_IDT_ISREntries[];
-#endif
-
-/*!
- * @typedef     __XEOS_HAL_IDT_ISREntry
- * @abstract    ISR entry type
- */
-#ifdef __LP64__
-    typedef struct __XEOS_HAL_IDT_ISREntry64    __XEOS_HAL_IDT_ISREntry;
-#else
-    typedef struct __XEOS_HAL_IDT_ISREntry32    __XEOS_HAL_IDT_ISREntry;
-#endif
-
-/*!
- * @typedef     __XEOS_HAL_IDT_Pointer
- * @abstract    ISR pointer type
- */
-#ifdef __LP64__
-    typedef struct __XEOS_HAL_IDT_Pointer64     __XEOS_HAL_IDT_Pointer;
-#else
-    typedef struct __XEOS_HAL_IDT_Pointer32     __XEOS_HAL_IDT_Pointer;
-#endif
-
-/*!
- * @var         __XEOS_HAL_IDT_ISRHandlers
- * @abstract    Array of ISR handler functions
- */
-extern XEOS_HAL_IDT_ISRHandler __XEOS_HAL_IDT_ISRHandlers[];
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __XEOS_HAL___IDT_H__ */
+#endif /* __XEOS_HAL___PAGING_H__ */

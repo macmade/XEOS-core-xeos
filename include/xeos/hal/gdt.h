@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __HAL_GDT_H__
-#define __HAL_GDT_H__
+#ifndef __XEOS_HAL_GDT_H__
+#define __XEOS_HAL_GDT_H__
 #pragma once
 
 #ifdef __cplusplus
@@ -81,4 +81,4 @@ extern "C" {
 }
 #endif
 
-#endif /* __HAL_GDT_H__ */
+#endif /* __XEOS_HAL_GDT_H__ */
