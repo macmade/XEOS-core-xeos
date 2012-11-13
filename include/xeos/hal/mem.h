@@ -62,31 +62,23 @@
 /* $Id$ */
 
 /*!
- * @header          __paging.h
+ * @header          mem.h
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS_HAL___PAGING_H__
-#define __XEOS_HAL___PAGING_H__
+#ifndef __XEOS_HAL_MEM_H__
+#define __XEOS_HAL_MEM_H__
 #pragma once
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifdef __clang__
-#pragma pack( 1 )
-#endif
 
-
-
-#ifdef __clang__
-#pragma pack()
-#endif
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __XEOS_HAL___PAGING_H__ */
+#endif /* __XEOS_HAL_MEM_H__ */

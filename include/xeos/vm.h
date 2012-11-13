@@ -62,23 +62,61 @@
 /* $Id$ */
 
 /*!
- * @header          paging.h
+ * @header          vm.h
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS_HAL_PAGING_H__
-#define __XEOS_HAL_PAGING_H__
+#ifndef __XEOS_VM_H__
+#define __XEOS_VM_H__
 #pragma once
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#include <stdint.h>
+#include <stdbool.h>
 
+typedef enum
+{
+    XEOS_VM_PTEntryPermissionsRead           = 0x00,
+    XEOS_VM_PTEntryPermissionsReadWrite      = 0x01
+}
+XEOS_VM_PTEntryPermissions;
+
+typedef enum
+{
+    XEOS_VM_PTEntryPrivilegeLevelSupervisor  = 0x00,
+    XEOS_VM_PTEntryPrivilegeLevelUser        = 0x01
+}
+XEOS_VM_PTEntryPrivilegeLevel;
+
+/*!
+ * @typedef         XEOS_VM_PTEntryRef
+ * @abstract        Opaque type for a page table entry
+ */
+#ifdef __LP64__
+typedef uint64_t * XEOS_VM_PTEntryRef;
+#else
+typedef uint32_t * XEOS_VM_PTEntryRef;
+#endif
+
+void XEOS_VM_PTEntrySetPresent( XEOS_VM_PTEntryRef entry, bool value );
+void XEOS_VM_PTEntrySetPermissions( XEOS_VM_PTEntryRef entry, XEOS_VM_PTEntryPermissions value );
+void XEOS_VM_PTEntrySetDisableCache( XEOS_VM_PTEntryRef entry, bool value );
+void XEOS_VM_PTEntrySetAccessed( XEOS_VM_PTEntryRef entry, bool value );
+void XEOS_VM_PTEntrySetGlobal( XEOS_VM_PTEntryRef entry, bool value );
+void XEOS_VM_PTEntrySetDirty( XEOS_VM_PTEntryRef entry, bool value );
+void XEOS_VM_PTEntrySetPresent( XEOS_VM_PTEntryRef entry, bool value );
+void XEOS_VM_PTEntrySetPermissions( XEOS_VM_PTEntryRef entry, XEOS_VM_PTEntryPermissions value );
+void XEOS_VM_PTEntrySetDisableCache( XEOS_VM_PTEntryRef entry, bool value );
+void XEOS_VM_PTEntrySetAccessed( XEOS_VM_PTEntryRef entry, bool value );
+void XEOS_VM_PTEntrySetGlobal( XEOS_VM_PTEntryRef entry, bool value );
+void XEOS_VM_PTEntrySetDirty( XEOS_VM_PTEntryRef entry, bool value );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __XEOS_HAL_PAGING_H__ */
+#endif /* __XEOS_VM_H__ */
