@@ -73,8 +73,8 @@
 #include "xeos/isr.h"
 #include <sys/syscall.h>
 
-void XEOS_Main( void );
-void XEOS_Main( void )
+void XEOS_Main( XEOS_HAL_MEM_Infos * p );
+void XEOS_Main( XEOS_HAL_MEM_Infos * p )
 {
     unsigned int             i;
     XEOS_HAL_IDT_ISREntryRef isrEntry;
@@ -133,7 +133,7 @@ void XEOS_Main( void )
     /* (Re)enables the interrupts */
     XEOS_HAL_CPU_EnableInterrupts();
     
-    XEOS_System_Panic( "It works..." );
+    XEOS_System_Panicf( "It works... %x %x %x", p, p->base, p->length );
     XEOS_HAL_CPU_Halt();
 }
 

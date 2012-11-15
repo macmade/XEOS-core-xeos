@@ -75,7 +75,14 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
 
+typedef struct
+{
+    uint32_t    base;
+    uint32_t    length;
+}
+XEOS_HAL_MEM_Infos;
 
 #ifdef __cplusplus
 }

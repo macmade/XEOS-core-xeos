@@ -92,6 +92,18 @@ extern  XEOS_Main
 
 ;-------------------------------------------------------------------------------
 ; XEOS kernel entry point
+; 
+; Input registers:
+;       
+;       - RDI:      The address of the memory information structure
+; 
+; Return registers:
+;       
+;       N/A (This procudure does not return)
+; 
+; Killed registers:
+;       
+;       N/A (This procudure does not return)
 ;-------------------------------------------------------------------------------
 start:
     
