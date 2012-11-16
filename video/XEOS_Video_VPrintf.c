@@ -72,145 +72,561 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
-void XEOS_Video_VPrintf( char * format, va_list arg )
+typedef enum
 {
-    unsigned int x;
-    unsigned int y;
-    int          va_int;
-    unsigned int va_uint;
-    double       va_double;
-    char         va_char;
-    char       * va_char_ptr;
-    uintptr_t    va_uint_ptr;
-    char         nbuf[ 32 ];
+    __XEOS_Video_VPrintf_Flag_SignNormal                = 0x00,
+    __XEOS_Video_VPrintf_Flag_SignNone                  = 0x01,
+    __XEOS_Video_VPrintf_Flag_SignAlways                = 0x02
+}
+__XEOS_Video_VPrintf_Flag_Sign;
+
+typedef enum
+{
+    __XEOS_Video_VPrintf_Flag_IntegerLength16       = 0x00,
+    __XEOS_Video_VPrintf_Flag_IntegerLength32       = 0x01,
+    __XEOS_Video_VPrintf_Flag_IntegerLength64       = 0x02
+}
+__XEOS_Video_VPrintf_Flag_IntegerLength;
+
+typedef enum
+{
+    __XEOS_Video_VPrintf_Flag_IntegerTypeNormal         = 0x00,
+    __XEOS_Video_VPrintf_Flag_IntegerTypeOctal          = 0x01,
+    __XEOS_Video_VPrintf_Flag_IntegerTypeHexadecimal    = 0x02,
+    __XEOS_Video_VPrintf_Flag_IntegerTypePointer        = 0x04,
+    __XEOS_Video_VPrintf_Flag_IntegerTypeUnsigned       = 0x08,
+    __XEOS_Video_VPrintf_Flag_IntegerTypeUppercase      = 0x10
+}
+__XEOS_Video_VPrintf_Flag_IntegerType;
+
+void XEOS_Video_VPrintf( char * format, va_list ap )
+{
+    int count;
     
-    memset( nbuf, 0, 32 );
-    
-    if( format == NULL || *( format ) == 0 )
-    {
-        return;
-    }
-    
-    ( void )arg;
+    count = 0;
     
     while( *( format ) != 0 )
     {
-        switch( *( format ) )
+        if( *( format ) != '%' )
         {
-            case '%':
-                
-                format++;
-                
-                if( *( format ) == 0 )
-                {
-                    XEOS_Video_Putc( '%', false );
-                    break;
-                }
-                
+            XEOS_Video_Putc( ( unsigned char )*( format ), false );
+            
+            count++;
+            format++;
+            continue;
+        }
+        
+        format++;
+        
+        if( *( format ) == '%' )
+        {
+            XEOS_Video_Putc( ( unsigned char )*( format ), false );
+            
+            count++;
+            format++;
+            continue;
+        }
+        
+        {
+            bool                                    end;
+            size_t                                  len;
+            int                                     minimumWidth;
+            int                                     precision;
+            unsigned char                           pad;
+            bool                                    sharp;
+            bool                                    align;
+            __XEOS_Video_VPrintf_Flag_Sign          sign;
+            __XEOS_Video_VPrintf_Flag_IntegerLength intLength;
+            unsigned int                            intType;
+            
+            end             = false;
+            minimumWidth    = 0;
+            precision       = 1;
+            pad             = ' ';
+            sharp           = false;
+            align           = false;
+            sign            = __XEOS_Video_VPrintf_Flag_SignNormal;
+            intLength       = __XEOS_Video_VPrintf_Flag_IntegerLength32;
+            intType         = __XEOS_Video_VPrintf_Flag_IntegerTypeNormal;
+            
+            do
+            {
                 switch( *( format ) )
                 {
-                    case 'd':
-                    case 'i':
+                    case 'n':
                         
-                        va_int = va_arg( arg, int );
+                        {
+                            int * p;
+                            
+                            p       = va_arg( ap, int * );
+                            *( p )  = count;
+                        }
                         
-                        XEOS_Video_Itoa( va_int, nbuf, 10 );
-                        XEOS_Video_Print( nbuf );
-                        break;
-                    
-                    case 'f':
+                        format++;
                         
-                        va_double = va_arg( arg, double );
-                        
-                        XEOS_Video_Itoa( ( int )va_double, nbuf, 10 );
-                        XEOS_Video_Print( nbuf );
                         break;
                         
-                    case 'x':
-                    case 'X':
+                    case '-':
                         
-                        va_uint = va_arg( arg, unsigned int );
+                        align = true;
                         
-                        XEOS_Video_Utoa( va_uint, nbuf, 16 );
-                        XEOS_Video_Print( "0x" );
-                        XEOS_Video_Print( nbuf );
+                        format++;
+                        
                         break;
                         
-                    case 'o':
+                    case '+':
                         
-                        va_uint = va_arg( arg, unsigned int );
+                        sign = __XEOS_Video_VPrintf_Flag_SignAlways;
                         
-                        XEOS_Video_Utoa( va_uint, nbuf, 8 );
-                        XEOS_Video_Print( "0" );
-                        XEOS_Video_Print( nbuf );
+                        format++;
+                        
                         break;
                         
-                    case 'u':
+                    case ' ':
                         
-                        va_uint = va_arg( arg, unsigned int );
+                        sign = __XEOS_Video_VPrintf_Flag_SignNone;
                         
-                        XEOS_Video_Utoa( va_uint, nbuf, 10 );
-                        XEOS_Video_Print( nbuf );
+                        format++;
+                        
+                        break;
+                        
+                    case '0':
+                        
+                        pad = '0';
+                        
+                        format++;
+                        
+                        break;
+                        
+                    case '#':
+                        
+                        sharp = true;
+                        
+                        format++;
+                        
+                        break;
+                        
+                    case '1':
+                    case '2':
+                    case '3':
+                    case '4':
+                    case '5':
+                    case '6':
+                    case '7':
+                    case '8':
+                    case '9':
+                        
+                        minimumWidth = atoi( format );
+                        
+                        while( isdigit( *( format ) ) )
+                        {
+                            format++;
+                        }
+                        
+                        break;
+                        
+                    case '*':
+                        
+                        minimumWidth = va_arg( ap, int );
+                        
+                        format++;
+                        
+                        break;
+                        
+                    case '.':
+                        
+                        format++;
+                        
+                        if( *( format ) == '*' )
+                        {
+                            precision = va_arg( ap, int );
+                            
+                            format++;
+                        }
+                        else if( isdigit( *( format ) ) )
+                        {
+                            precision = atoi( format );
+                            
+                            while( isdigit( *( format ) ) )
+                            {
+                                format++;
+                            }
+                        }
+                        else
+                        {
+                            precision = 0;
+                        }
+                        
+                        break;
+                        
+                    case 'h':
+                        
+                        intLength = __XEOS_Video_VPrintf_Flag_IntegerLength16;
+                        
+                        format++;
+                        
+                        break;
+                        
+                    case 'l':
+                        
+                        #ifdef __LP64__
+                        intLength = __XEOS_Video_VPrintf_Flag_IntegerLength64;
+                        #else
+                        intLength = __XEOS_Video_VPrintf_Flag_IntegerLength32;
+                        #endif
+                        
+                        format++;
+                        
+                        break;
+                        
+                    case 'L':
+                        
+                        intLength = __XEOS_Video_VPrintf_Flag_IntegerLength64;
+                        
+                        format++;
+                        
                         break;
                         
                     case 'c':
                         
-                        va_char = ( char )va_arg( arg, int );
-                        
-                        XEOS_Video_Putc( ( unsigned char )va_char, false );
-                        break;
-                        
-                    case 's':
-                        
-                        va_char_ptr = va_arg( arg, char * );
-                        
-                        if( va_char_ptr == NULL )
                         {
-                            XEOS_Video_Print( "(NULL)" );
+                            unsigned char c;
                             
+                            c = ( unsigned char )va_arg( ap, int );
+                            
+                            if( align == false )
+                            {
+                                for( ; minimumWidth > 1; minimumWidth-- )
+                                {
+                                    XEOS_Video_Putc( pad, false );
+                                    
+                                    count++;
+                                }
+                            }
+                            
+                            XEOS_Video_Putc( c, false );
+                            
+                            count++;
+                            
+                            if( align == true )
+                            {
+                                for( ; minimumWidth > 1; minimumWidth-- )
+                                {
+                                    XEOS_Video_Putc( pad, false );
+                                    
+                                    count++;
+                                }
+                            }
                         }
-                        else
-                        {
-                            XEOS_Video_Print( va_char_ptr );
-                        }
                         
-                        break;
+                        format++;
                         
-                    case 'p':
+                        end = true;
                         
-                        va_uint_ptr = va_arg( arg, uintptr_t );
-                        
-                        XEOS_Video_Utoa( ( unsigned int )va_uint_ptr, nbuf, 16 );
-                        XEOS_Video_Print( "0x" );
-                        XEOS_Video_Print( nbuf );
-                        break;
-                        
-                    case '%':
-                        
-                        XEOS_Video_Putc( '%', false );
                         break;
                     
+                    case 's':
+                        
+                        {
+                            char * s;
+                            
+                            s   = va_arg( ap, char * );
+                            len = strlen( s );
+                            
+                            if( s == NULL )
+                            {
+                                s = "(null)";
+                            }
+                            
+                            if( align == false  && len < ( size_t )minimumWidth )
+                            {
+                                while( len++ < ( size_t )minimumWidth )
+                                {
+                                    XEOS_Video_Putc( pad, false );
+                                    
+                                    count++;
+                                }
+                            }
+                            
+                            while( *( s ) != 0 )
+                            {
+                                XEOS_Video_Putc( ( unsigned char )*( s++ ), false );
+                                
+                                count++;
+                            }
+                            
+                            if( align == true && len < ( size_t )minimumWidth )
+                            {
+                                while( len++ < ( size_t )minimumWidth )
+                                {
+                                    XEOS_Video_Putc( pad, false );
+                                    
+                                    count++;
+                                }
+                            }
+                        }
+                        
+                        format++;
+                        
+                        end = true;
+                        
+                        break;
+                    
+                    #ifdef __clang__
+                        #pragma clang diagnostic push
+                        #pragma clang diagnostic ignored "-Wimplicit-fallthrough"
+                    #endif
+                    
+                    case 'o':   intType |= __XEOS_Video_VPrintf_Flag_IntegerTypeOctal;
+                    case 'p':   intType |= __XEOS_Video_VPrintf_Flag_IntegerTypePointer;
+                    case 'X':   intType |= __XEOS_Video_VPrintf_Flag_IntegerTypeUppercase;
+                    case 'x':   intType |= __XEOS_Video_VPrintf_Flag_IntegerTypeHexadecimal;    
+                    case 'u':   intType |= __XEOS_Video_VPrintf_Flag_IntegerTypeUnsigned;
+                    case 'd':
+                    case 'i':
+                    
+                    #ifdef __clang__
+                        #pragma clang diagnostic pop
+                    #endif
+                        
+                        {
+                            uint64_t        n;
+                            bool            positive;
+                            unsigned int    radix;
+                            unsigned int    digits;
+                            unsigned int    mod;
+                            
+                            n           = 0;
+                            positive    = false;
+                            radix       = 10;
+                            digits      = 0;
+                            mod         = 0;
+                            
+                            if( ( intType & __XEOS_Video_VPrintf_Flag_IntegerTypeOctal ) != 0 )
+                            {
+                                intType = __XEOS_Video_VPrintf_Flag_IntegerTypeOctal;
+                            }
+                            else if( ( intType & __XEOS_Video_VPrintf_Flag_IntegerTypePointer ) != 0 )
+                            {
+                                intType = __XEOS_Video_VPrintf_Flag_IntegerTypePointer;
+                            }
+                            else if( ( intType & __XEOS_Video_VPrintf_Flag_IntegerTypeHexadecimal ) != 0 )
+                            {
+                                if( ( intType & __XEOS_Video_VPrintf_Flag_IntegerTypeUppercase ) != 0 )
+                                {
+                                    intType = __XEOS_Video_VPrintf_Flag_IntegerTypeHexadecimal | __XEOS_Video_VPrintf_Flag_IntegerTypeUppercase;
+                                }
+                                else
+                                {
+                                    intType = __XEOS_Video_VPrintf_Flag_IntegerTypeHexadecimal;
+                                }
+                            }
+                            
+                            if( ( intLength & __XEOS_Video_VPrintf_Flag_IntegerLength64 ) != 0 )
+                            {
+                                n = va_arg(ap, uint64_t );
+                            }
+                            else if( ( intLength & __XEOS_Video_VPrintf_Flag_IntegerLength16 ) != 0 )
+                            {
+                                n  = ( uint64_t )( ( short )va_arg( ap, int ) );
+                            }
+                            else if( ( intType & __XEOS_Video_VPrintf_Flag_IntegerTypePointer ) != 0 )
+                            {
+                                n = ( uint64_t )va_arg( ap, void * );
+                            }
+                            else
+                            {
+                                n = ( uint64_t )va_arg( ap, int );
+                            }
+                            
+                            if( ( sign & __XEOS_Video_VPrintf_Flag_SignNone ) == 0 )
+                            {
+                                if( ( intType & __XEOS_Video_VPrintf_Flag_IntegerTypeUnsigned ) == 0 )
+                                {
+                                    positive = ( int64_t )n > 0;
+                                }
+                                else
+                                {
+                                    positive = true;
+                                }
+                                
+                                if( positive == false )
+                                {
+                                    XEOS_Video_Putc( '-', false );
+                                    
+                                    count++;
+                                    
+                                    n = ( uint64_t )( -( int64_t )n );
+                                }
+                                else if( ( sign & __XEOS_Video_VPrintf_Flag_SignAlways ) != 0 )
+                                {
+                                    XEOS_Video_Putc( '+', false );
+                                    
+                                    count++;
+                                }
+                            }
+                            
+                            if( ( intType & __XEOS_Video_VPrintf_Flag_IntegerTypeOctal ) != 0 )
+                            {
+                                radix = 8;
+                                
+                                if( sharp == true && n != 0 )
+                                {
+                                    XEOS_Video_Putc( '0', false );
+                                    
+                                    count++;
+                                }
+                            }
+                            else if( ( intType & __XEOS_Video_VPrintf_Flag_IntegerTypeHexadecimal ) != 0 )
+                            {
+                                radix = 16;
+                                
+                                if( sharp == true && n != 0 )
+                                {
+                                    XEOS_Video_Putc( '0', false );
+                                    
+                                    count++;
+                                    
+                                    if( ( intType & __XEOS_Video_VPrintf_Flag_IntegerTypeUppercase ) != 0 )
+                                    {
+                                        XEOS_Video_Putc( 'x', false );
+                                        
+                                        count++;
+                                    }
+                                    else
+                                    {
+                                        XEOS_Video_Putc( 'x', false );
+                                        
+                                        count++;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                radix = 10;
+                            }
+                            
+                            {
+                                char * s1;
+                                char * s2;
+                                char   buf[ 30 ];
+                                
+                                memset( buf, 0, 30 );
+                                
+                                s1 = buf;
+                                s2 = buf;
+                                
+                                do
+                                {
+                                    if( digits > 0 )
+                                    {
+                                        memmove( s1 + 1, s1, digits * sizeof( char ) );
+                                    }
+                                    
+                                    mod = n % radix;
+                                    
+                                    if( mod < 10 )
+                                    {
+                                        *( s1 ) = '0' + ( char )mod;
+                                        
+                                        s2++;
+                                    }
+                                    else if( ( intType & __XEOS_Video_VPrintf_Flag_IntegerTypeUppercase ) != 0 )
+                                    {
+                                        *( s1 ) = 'A' + ( char )( mod - 10 );
+                                        
+                                        s2++;
+                                    }
+                                    else
+                                    {
+                                        *( s1 ) = 'a' + ( char )( mod - 10 );
+                                        
+                                        s2++;
+                                    }
+                                    
+                                    n = n / radix;
+                                    
+                                    digits++;
+                                }
+                                while( n > 0 );
+                                
+                                if( ( int )digits < minimumWidth )
+                                {
+                                    minimumWidth -= digits;
+                                    
+                                    if( align )
+                                    {
+                                        for (; minimumWidth > 0; minimumWidth--)
+                                        {
+                                            *( s2 )++ = ( char )pad;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        memmove( s1 + ( ( unsigned int )minimumWidth * sizeof( char ) ), s1, digits * sizeof( char ) );
+                                        memset( s1, pad, ( unsigned int )minimumWidth * sizeof( char ) );
+                                        
+                                        s2 += minimumWidth;
+                                    }
+                                }
+                                
+                                s1 = buf;
+                                
+                                while( *( s1 ) != 0 )
+                                {
+                                    XEOS_Video_Putc( ( unsigned char )*( s1 ), false );
+                                    
+                                    count++;
+                                    s1++;
+                                }
+                            }
+                        }
+                        
+                        format++;
+                        
+                        end = true;
+                        
+                        break;
+                        
+                    case 'f':
+                    case 'F':
+                    case 'a':
+                    case 'A':
+                    case 'g':
+                    case 'G':
+                    case 'e':
+                    case 'E':
+                        
+                        va_arg( ap, double );
+                        
+                        format++;
+                        
+                        end = true;
+                        
+                        break;
+                        
                     default:
                         
-                        XEOS_Video_Putc( '%', false );
-                        XEOS_Video_Putc( ( unsigned char )( *( format ) ), false );
+                        format++;
+                        
+                        end = true;
+                        
                         break;
                 }
-                
-                break;
-            
-            default:
-                
-                XEOS_Video_Putc( ( unsigned char )( *( format ) ), false );
-                break;
+            }
+            while( end == false );
         }
-        
-        format++;
     }
     
-    x = XEOS_Video_X();
-    y = XEOS_Video_Y();
-    
-    XEOS_Video_MoveCursor( x, y );
+    {
+        unsigned int x;
+        unsigned int y;
+        
+        x = XEOS_Video_X();
+        y = XEOS_Video_Y();
+        
+        XEOS_Video_MoveCursor( x, y );
+    }
 }
