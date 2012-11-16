@@ -443,9 +443,9 @@ void XEOS_Video_VPrintf( char * format, va_list ap )
                             
                             if( ( sign & __XEOS_Video_VPrintf_Flag_SignNone ) == 0 )
                             {
-                                if( ( intType & __XEOS_Video_VPrintf_Flag_IntegerTypeUnsigned ) == 0 )
+                                if( ( intType & __XEOS_Video_VPrintf_Flag_IntegerTypeNormal ) != 0 )
                                 {
-                                    positive = ( int64_t )n > 0;
+                                    positive = ( int64_t )n >= 0;
                                 }
                                 else
                                 {
