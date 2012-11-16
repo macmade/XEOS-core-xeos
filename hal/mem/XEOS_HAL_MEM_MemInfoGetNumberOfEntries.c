@@ -62,44 +62,21 @@
 /* $Id$ */
 
 /*!
- * @header          mem.h
+ * @file            XEOS_HAL_MEM_MemInfoGetNumberOfEntries.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS_HAL_MEM_H__
-#define __XEOS_HAL_MEM_H__
-#pragma once
+#include "xeos/hal/mem.h"
+#include "xeos/hal/__mem.h"
+#include <stdlib.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <stdint.h>
-
-typedef enum
+unsigned int XEOS_HAL_MEM_MemInfoGetNumberOfEntries( XEOS_HAL_MEM_MemInfoRef info )
 {
-    XEOS_HAL_MEM_MemInfoEntryTypeUnknown            = 0x00,
-    XEOS_HAL_MEM_MemInfoEntryTypeUsable             = 0x01,
-    XEOS_HAL_MEM_MemInfoEntryTypeReserved           = 0x02,
-    XEOS_HAL_MEM_MemInfoEntryTypeACPIReclaimable    = 0x03,
-    XEOS_HAL_MEM_MemInfoEntryTypeACPINVS            = 0x04,
-    XEOS_HAL_MEM_MemInfoEntryTypeBad                = 0x05
+    if( info == NULL )
+    {
+        return 0;
+    }
+    
+    return info->length / sizeof( struct __XEOS_HAL_MEM_MemInfoEntry );
 }
-XEOS_HAL_MEM_MemInfoEntryType;
-
-typedef struct __XEOS_HAL_MEM_MemInfo      * XEOS_HAL_MEM_MemInfoRef;
-typedef struct __XEOS_HAL_MEM_MemInfoEntry * XEOS_HAL_MEM_MemInfoEntryRef;
-
-unsigned int XEOS_HAL_MEM_MemInfoGetNumberOfEntries( XEOS_HAL_MEM_MemInfoRef info );
-XEOS_HAL_MEM_MemInfoEntryRef XEOS_HAL_MEM_MemInfoGetEntryAtIndex( XEOS_HAL_MEM_MemInfoRef info, unsigned int index );
-
-uint64_t XEOS_HAL_MEM_MemInfoEntryGetAddress( XEOS_HAL_MEM_MemInfoEntryRef entry );
-uint64_t XEOS_HAL_MEM_MemInfoEntryGetLength( XEOS_HAL_MEM_MemInfoEntryRef entry );
-XEOS_HAL_MEM_MemInfoEntryType XEOS_HAL_MEM_MemInfoEntryGetType( XEOS_HAL_MEM_MemInfoEntryRef entry );
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* __XEOS_HAL_MEM_H__ */
