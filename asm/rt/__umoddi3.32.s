@@ -68,10 +68,30 @@
 ;-------------------------------------------------------------------------------
 
 ;-------------------------------------------------------------------------------
-; ABOUT / COPYRIGHT NOTICE
+; ABOUT
 ;-------------------------------------------------------------------------------
 ; 
+; The __umoddi3 function is used by compilers on 32 bits x86 architectures
+; to provide 64 bits unsigned integer modulus computation.
+; Unfortunately, while present in the LLVM sources (as part of the Compiler RT
+; sub-project), and used by the compiler, the symbol is not available when
+; linking the whole project.
+; Thats why it's included here. The 64 bits version is not affected, as that
+; kind of operation can be performed by the hardware,
 ; 
+;-------------------------------------------------------------------------------
+; COPYRIGHT NOTICE
+;-------------------------------------------------------------------------------
+; 
+; The following code comes from the Compiler RT LLVM project, and was written
+; by Stephen Canon. It's originally published under the terms of the MIT
+; license.
+; It has been rewritten to use Intel syntax, instead of AT&T syntax.
+; 
+; The original source code can be found at:
+; http://llvm.org/svn/llvm-project/compiler-rt/trunk/
+; 
+; The original license text can be find below.
 ; 
 ;-------------------------------------------------------------------------------
 ; ORIGINAL LICENSE
