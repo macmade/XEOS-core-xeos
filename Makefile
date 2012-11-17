@@ -78,6 +78,7 @@ DIR_SRC_HAL_RTC     := $(DIR_SRC_HAL)rtc/
 DIR_SRC_HAL_CMOS    := $(DIR_SRC_HAL)cmos/
 DIR_SRC_HAL_ACPI    := $(DIR_SRC_HAL)acpi/
 DIR_SRC_HAL_IDT     := $(DIR_SRC_HAL)idt/
+DIR_SRC_HAL_NMI     := $(DIR_SRC_HAL)nmi/
 DIR_SRC_HAL_GDT     := $(DIR_SRC_HAL)gdt/
 DIR_SRC_HAL_PIC     := $(DIR_SRC_HAL)pic/
 DIR_SRC_HAL_PIT     := $(DIR_SRC_HAL)pit/
@@ -122,6 +123,7 @@ vpath %$(EXT_C)         $(DIR_SRC_HAL_CMOS)
 vpath %$(EXT_C)         $(DIR_SRC_HAL_ACPI)
 vpath %$(EXT_C)         $(DIR_SRC_HAL_CPU)
 vpath %$(EXT_C)         $(DIR_SRC_HAL_IDT)
+vpath %$(EXT_C)         $(DIR_SRC_HAL_NMI)
 vpath %$(EXT_C)         $(DIR_SRC_HAL_GDT)
 vpath %$(EXT_C)         $(DIR_SRC_HAL_PIC)
 vpath %$(EXT_C)         $(DIR_SRC_HAL_PIT)
@@ -156,6 +158,7 @@ _FILES_C_HAL_CMOS               = $(foreach dir,$(DIR_SRC_HAL_CMOS),$(wildcard $
 _FILES_C_HAL_ACPI               = $(foreach dir,$(DIR_SRC_HAL_ACPI),$(wildcard $(DIR_SRC_HAL_ACPI)*$(EXT_C)))
 _FILES_C_HAL_CPU                = $(foreach dir,$(DIR_SRC_HAL_CPU),$(wildcard $(DIR_SRC_HAL_CPU)*$(EXT_C)))
 _FILES_C_HAL_IDT                = $(foreach dir,$(DIR_SRC_HAL_IDT),$(wildcard $(DIR_SRC_HAL_IDT)*$(EXT_C)))
+_FILES_C_HAL_NMI                = $(foreach dir,$(DIR_SRC_HAL_NMI),$(wildcard $(DIR_SRC_HAL_NMI)*$(EXT_C)))
 _FILES_C_HAL_GDT                = $(foreach dir,$(DIR_SRC_HAL_GDT),$(wildcard $(DIR_SRC_HAL_GDT)*$(EXT_C)))
 _FILES_C_HAL_PIC                = $(foreach dir,$(DIR_SRC_HAL_PIC),$(wildcard $(DIR_SRC_HAL_PIC)*$(EXT_C)))
 _FILES_C_HAL_PIT                = $(foreach dir,$(DIR_SRC_HAL_PIT),$(wildcard $(DIR_SRC_HAL_PIT)*$(EXT_C)))
@@ -178,6 +181,7 @@ _FILES_C_REL_HAL_RTC            = $(notdir $(_FILES_C_HAL_RTC))
 _FILES_C_REL_HAL_CMOS           = $(notdir $(_FILES_C_HAL_CMOS))
 _FILES_C_REL_HAL_ACPI           = $(notdir $(_FILES_C_HAL_ACPI))
 _FILES_C_REL_HAL_IDT            = $(notdir $(_FILES_C_HAL_IDT))
+_FILES_C_REL_HAL_NMI            = $(notdir $(_FILES_C_HAL_NMI))
 _FILES_C_REL_HAL_GDT            = $(notdir $(_FILES_C_HAL_GDT))
 _FILES_C_REL_HAL_PIC            = $(notdir $(_FILES_C_HAL_PIC))
 _FILES_C_REL_HAL_PIT            = $(notdir $(_FILES_C_HAL_PIT))
@@ -200,6 +204,7 @@ _FILES_C_OBJ_HAL_RTC            = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C
 _FILES_C_OBJ_HAL_CMOS           = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_HAL_CMOS))
 _FILES_C_OBJ_HAL_ACPI           = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_HAL_ACPI))
 _FILES_C_OBJ_HAL_IDT            = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_HAL_IDT))
+_FILES_C_OBJ_HAL_NMI            = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_HAL_NMI))
 _FILES_C_OBJ_HAL_GDT            = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_HAL_GDT))
 _FILES_C_OBJ_HAL_PIC            = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_HAL_PIC))
 _FILES_C_OBJ_HAL_PIT            = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_HAL_PIT))
@@ -222,6 +227,7 @@ _FILES_C_OBJ_BUILD_HAL_RTC      = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$
 _FILES_C_OBJ_BUILD_HAL_CMOS     = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_HAL_CMOS))
 _FILES_C_OBJ_BUILD_HAL_ACPI     = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_HAL_ACPI))
 _FILES_C_OBJ_BUILD_HAL_IDT      = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_HAL_IDT))
+_FILES_C_OBJ_BUILD_HAL_NMI      = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_HAL_NMI))
 _FILES_C_OBJ_BUILD_HAL_GDT      = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_HAL_GDT))
 _FILES_C_OBJ_BUILD_HAL_PIC      = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_HAL_PIC))
 _FILES_C_OBJ_BUILD_HAL_PIT      = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_HAL_PIT))
@@ -246,7 +252,7 @@ _FILES_C_OBJ_BUILD_INFO         = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$
 #-------------------------------------------------------------------------------
 
 # Build the full project
-all: $(_FILES_ASM_OBJ_BUILD_32) $(_FILES_ASM_OBJ_BUILD_64) $(_FILES_ASM_OBJ_BUILD_32_RT) $(_FILES_ASM_OBJ_BUILD_64_RT) $(_FILES_C_OBJ_BUILD) $(_FILES_C_OBJ_BUILD_HAL) $(_FILES_C_OBJ_BUILD_HAL_CPU) $(_FILES_C_OBJ_BUILD_HAL_IO) $(_FILES_C_OBJ_BUILD_HAL_RTC) $(_FILES_C_OBJ_BUILD_HAL_CMOS) $(_FILES_C_OBJ_BUILD_HAL_ACPI) $(_FILES_C_OBJ_BUILD_HAL_IDT) $(_FILES_C_OBJ_BUILD_HAL_GDT) $(_FILES_C_OBJ_BUILD_HAL_PIC) $(_FILES_C_OBJ_BUILD_HAL_PIT) $(_FILES_C_OBJ_BUILD_HAL_SMBIOS) $(_FILES_C_OBJ_BUILD_ISR) $(_FILES_C_OBJ_BUILD_SYSTEM) $(_FILES_C_OBJ_BUILD_VIDEO) $(_FILES_C_OBJ_BUILD_INFO)
+all: $(_FILES_ASM_OBJ_BUILD_32) $(_FILES_ASM_OBJ_BUILD_64) $(_FILES_ASM_OBJ_BUILD_32_RT) $(_FILES_ASM_OBJ_BUILD_64_RT) $(_FILES_C_OBJ_BUILD) $(_FILES_C_OBJ_BUILD_HAL) $(_FILES_C_OBJ_BUILD_HAL_CPU) $(_FILES_C_OBJ_BUILD_HAL_IO) $(_FILES_C_OBJ_BUILD_HAL_RTC) $(_FILES_C_OBJ_BUILD_HAL_CMOS) $(_FILES_C_OBJ_BUILD_HAL_ACPI) $(_FILES_C_OBJ_BUILD_HAL_IDT) $(_FILES_C_OBJ_BUILD_HAL_NMI) $(_FILES_C_OBJ_BUILD_HAL_GDT) $(_FILES_C_OBJ_BUILD_HAL_PIC) $(_FILES_C_OBJ_BUILD_HAL_PIT) $(_FILES_C_OBJ_BUILD_HAL_SMBIOS) $(_FILES_C_OBJ_BUILD_ISR) $(_FILES_C_OBJ_BUILD_SYSTEM) $(_FILES_C_OBJ_BUILD_VIDEO) $(_FILES_C_OBJ_BUILD_INFO)
 	
 	@:
 

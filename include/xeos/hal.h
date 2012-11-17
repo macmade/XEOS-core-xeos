@@ -78,6 +78,7 @@
 #include <xeos/hal/gdt.h>
 #include <xeos/hal/idt.h>
 #include <xeos/hal/io.h>
+#include <xeos/hal/nmi.h>
 #include <xeos/hal/pic.h>
 #include <xeos/hal/pit.h>
 #include <xeos/hal/rtc.h>

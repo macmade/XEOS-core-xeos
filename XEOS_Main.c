@@ -83,6 +83,7 @@ void XEOS_Main( XEOS_InfoRef info )
     
     /* Ensures interrupts are disabled, as we are setting up the kernel */
     XEOS_HAL_CPU_DisableInterrupts();
+    XEOS_HAL_NMI_Disable();
     
     /* Clears the screen */
     XEOS_Video_SetFG( XEOS_Video_ColorWhite );
@@ -134,6 +135,7 @@ void XEOS_Main( XEOS_InfoRef info )
     
     /* (Re)enables the interrupts */
     XEOS_HAL_CPU_EnableInterrupts();
+    XEOS_HAL_NMI_Enable();
     
     {
         XEOS_Info_MemoryRef         memory;
