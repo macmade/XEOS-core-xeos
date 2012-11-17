@@ -81,7 +81,7 @@ XEOS_HAL_MEM_MemInfoEntryRef XEOS_HAL_MEM_MemInfoGetEntryAtIndex( XEOS_HAL_MEM_M
     }
     
     p  = ( char * )( info->base );
-    p += index * sizeof( struct __XEOS_HAL_MEM_MemInfo );
+    p += index * sizeof( struct __XEOS_HAL_MEM_MemInfoEntry );
     
     return ( XEOS_HAL_MEM_MemInfoEntryRef )p;
 }
