@@ -78,6 +78,15 @@ extern "C" {
 #include <stdarg.h>
 
 /*!
+ * @function        __XEOS_Video_ProcessFormatString
+ * @abstract        Processes a 'printf' formatted string
+ * @param           format              The format string
+ * @param           ap                  The arguments for the format
+ * @param           characterHandler    A handler function for each processed character
+ */
+void __XEOS_Video_ProcessFormatString( const char * format, va_list ap, void ( * characterHandler )( char ) );
+
+/*!
  * @var             __XEOS_Video_Attribute
  * @abstract        Current video color attributes
  */
