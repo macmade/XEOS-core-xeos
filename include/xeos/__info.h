@@ -81,12 +81,25 @@ extern "C" {
 #pragma pack( 1 )
 #endif
 
+/*!
+ * @struct          __XEOS_Info_Memory
+ * @abstract        Memory info object, from the bootloader
+ * @field           base            The address of the first entry structure
+ * @field           length          The size in bytes of the memory area containing the entry structures
+ */
 struct __XEOS_Info_Memory
 {
     uint32_t base;
     uint32_t length;
 };
 
+/*!
+ * @struct          __XEOS_Info_MemoryEntry
+ * @abstract        Memory entry info object, from the bootloader
+ * @field           address         Start address of the memory region
+ * @field           length          Length in bytes of the memory region
+ * @field           type            Type of the memory region
+ */
 struct __XEOS_Info_MemoryEntry
 {
     uint64_t address;
@@ -94,6 +107,11 @@ struct __XEOS_Info_MemoryEntry
     uint32_t type;
 };
 
+/*!
+ * @struct          __XEOS_Info
+ * @abstract        Info object, from the bootloader
+ * @field           memory          The memory info structure
+ */
 struct __XEOS_Info
 {
     struct __XEOS_Info_Memory memory;

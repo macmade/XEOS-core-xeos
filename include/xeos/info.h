@@ -77,11 +77,34 @@ extern "C" {
 
 #include <stdint.h>
 
+/*!
+ * @typedef         XEOS_InfoRef
+ * @abstract        Opaque type for the info object (passed by the bootloader)
+ */
 typedef struct __XEOS_Info * XEOS_InfoRef;
 
+/*!
+ * @typedef         XEOS_Info_MemoryRef
+ * @abstract        Opaque type for the memory info object
+ */
 typedef struct __XEOS_Info_Memory * XEOS_Info_MemoryRef;
+
+/*!
+ * @typedef         XEOS_Info_MemoryEntryRef
+ * @abstract        Opaque type for a memory entry info object
+ */
 typedef struct __XEOS_Info_MemoryEntry * XEOS_Info_MemoryEntryRef;
 
+/*!
+ * @typedef         XEOS_Info_MemoryEntryType
+ * @abstract        Type of a memory entry
+ * @constant        XEOS_Info_MemoryEntryTypeUnknown            Unknown entry type
+ * @constant        XEOS_Info_MemoryEntryTypeUsable             Usable (free) memory region
+ * @constant        XEOS_Info_MemoryEntryTypeReserved           Reserved (unusable) memory region
+ * @constant        XEOS_Info_MemoryEntryTypeACPIReclaimable    ACPI reclaimable memory region
+ * @constant        XEOS_Info_MemoryEntryTypeACPINVS            ACPI NVS memory regions
+ * @constant        XEOS_Info_MemoryEntryTypeBad                Bad memory region
+ */
 typedef enum
 {
     XEOS_Info_MemoryEntryTypeUnknown            = 0x00,
@@ -93,13 +116,53 @@ typedef enum
 }
 XEOS_Info_MemoryEntryType;
 
+/*!
+ * @function        XEOS_Info_GetMemory
+ * @abstract        Gets the memory info object
+ * @param           info        The info object
+ * @result          The memory info object
+ */
 XEOS_Info_MemoryRef XEOS_Info_GetMemory( XEOS_InfoRef info );
 
+/*!
+ * @function        XEOS_Info_MemoryGetNumberOfEntries
+ * @abstract        Gets the number of memory info entries
+ * @param           memory      The memory info object
+ * @result          The number of memory info entries
+ */
 unsigned int XEOS_Info_MemoryGetNumberOfEntries( XEOS_Info_MemoryRef memory );
+
+/*!
+ * @function        XEOS_Info_MemoryGetEntryAtIndex
+ * @abstract        Gets a specific memory entry info object
+ * @param           memory      The memory info object
+ * @param           index       The index of the memory info object
+ * @result          The memory entry info object
+ */
 XEOS_Info_MemoryEntryRef XEOS_Info_MemoryGetEntryAtIndex( XEOS_Info_MemoryRef memory, unsigned int index );
 
+/*!
+ * @function        XEOS_Info_MemoryEntryGetAddress
+ * @abstract        Gets the start address of a memory entry info entry
+ * @param           entry       The memory entry info object
+ * @result          The start address of the memory entry info object
+ */
 uint64_t XEOS_Info_MemoryEntryGetAddress( XEOS_Info_MemoryEntryRef entry );
+
+/*!
+ * @function        XEOS_Info_MemoryEntryGetAddress
+ * @abstract        Gets the length (in bytes) of a memory entry info entry
+ * @param           entry       The memory entry info object
+ * @result          The length (in bytes) of the memory entry info entry
+ */
 uint64_t XEOS_Info_MemoryEntryGetLength( XEOS_Info_MemoryEntryRef entry );
+
+/*!
+ * @function        XEOS_Info_MemoryEntryGetAddress
+ * @abstract        Gets the type of a memory entry info entry
+ * @param           entry       The memory entry info object
+ * @result          The type of the memory entry info object
+ */
 XEOS_Info_MemoryEntryType XEOS_Info_MemoryEntryGetType( XEOS_Info_MemoryEntryRef entry );
 
 #ifdef __cplusplus
