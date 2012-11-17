@@ -123,7 +123,7 @@ __umoddi3:
     push    ebx
     mov     ebx,        [ esp + 20 ]
     bsr     ecx,        ebx
-    jz      9
+    jz      .9
     
     ;---------------------------------------------------------------------------
     ; High word of b is known to be non-zero on this branch
