@@ -230,31 +230,6 @@ void XEOS_Video_Putc( unsigned char c, bool updateCursor );
  */
 void XEOS_Video_Scroll( unsigned int n );
 
-/*!
- * @function    XEOS_Video_StringReverse
- * @abstract    Reverses a string (in place)
- * @param       s           The string to reverse
- */
-void XEOS_Video_StringReverse( char s[] );
-
-/*!
- * @function    XEOS_Video_Itoa
- * @abstract    Converts an integer to its ASCII representation
- * @param       n           The unsigned integer
- * @param       s           The buffer for the ASCII representation
- * @param       radix       The radix to use for the conversion
- */
-void XEOS_Video_Itoa( int n, char s[], int radix );
-
-/*!
- * @function    XEOS_Video_Utoa
- * @abstract    Converts an unsigned integer to its ASCII representation
- * @param       n           The unsigned integer
- * @param       s           The buffer for the ASCII representation
- * @param       radix       The radix to use for the conversion
- */
-void XEOS_Video_Utoa( unsigned int n, char s[], int radix );
-
 #ifdef __cplusplus
 }
 #endif
