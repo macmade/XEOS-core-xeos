@@ -62,39 +62,43 @@
 /* $Id$ */
 
 /*!
- * @header          cmos.h
+ * @file            XEOS_HAL_CMOS_Read.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS_HAL_CMOS_H__
-#define __XEOS_HAL_CMOS_H__
-#pragma once
+#include "xeos/hal/cmos.h"
+#include "xeos/hal/cpu.h"
+#include "xeos/hal/io.h"
+#include <stdbool.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <stdint.h>
-
-/*!
- * @function        XEOS_HAL_CMOS_Read
- * @abstract        Reads data from CMOS
- * @param           bytes           The bytes buffer
- * @param           length          The number of bytes to read
- */
-void XEOS_HAL_CMOS_Read( uint8_t * bytes, uint8_t length );
-
-/*!
- * @function        XEOS_HAL_CMOS_Write
- * @abstract        Writes data from CMOS
- * @param           bytes           The bytes buffer
- * @param           length          The number of bytes to write
- */
-void XEOS_HAL_CMOS_Write( uint8_t * bytes, uint8_t length );
-
-#ifdef __cplusplus
+void XEOS_HAL_CMOS_Read( uint8_t * bytes, uint8_t length )
+{
+    uint8_t value;
+    uint8_t i;
+    bool    interrupts;
+    
+    interrupts = XEOS_HAL_CPU_InterruptsEnabled();
+    
+    if( interrupts == true )
+    {
+        XEOS_HAL_CPU_DisableInterrupts();
+    }
+    
+    for( i = 0; i < length; i++ )
+    {
+        value = 0;
+        
+        XEOS_HAL_IO_PortOut( 0x70, ( uint8_t )i );
+        XEOS_HAL_IO_Wait();
+        
+        value = XEOS_HAL_IO_PortIn( 0x71 );
+        
+        bytes[ i ] = value;
+    }
+    
+    if( interrupts == true )
+    {
+        XEOS_HAL_CPU_EnableInterrupts();
+    }
 }
-#endif
-
-#endif /* __XEOS_HAL_CMOS_H__ */
