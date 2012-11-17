@@ -84,9 +84,9 @@ __XEOS_Video_VPrintf_Flag_Sign;
 
 typedef enum
 {
-    __XEOS_Video_VPrintf_Flag_IntegerLength16       = 0x00,
-    __XEOS_Video_VPrintf_Flag_IntegerLength32       = 0x01,
-    __XEOS_Video_VPrintf_Flag_IntegerLength64       = 0x02
+    __XEOS_Video_VPrintf_Flag_IntegerLength16           = 0x00,
+    __XEOS_Video_VPrintf_Flag_IntegerLength32           = 0x01,
+    __XEOS_Video_VPrintf_Flag_IntegerLength64           = 0x02
 }
 __XEOS_Video_VPrintf_Flag_IntegerLength;
 
