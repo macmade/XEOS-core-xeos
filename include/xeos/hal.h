@@ -71,6 +71,8 @@
 #define __XEOS_HAL_H__
 #pragma once
 
+#include <xeos/hal/acpi.h>
+#include <xeos/hal/cmos.h>
 #include <xeos/hal/cpu.h>
 #include <xeos/hal/crtc.h>
 #include <xeos/hal/gdt.h>
@@ -79,6 +81,7 @@
 #include <xeos/hal/mem.h>
 #include <xeos/hal/pic.h>
 #include <xeos/hal/pit.h>
+#include <xeos/hal/rtc.h>
 #include <xeos/hal/smbios.h>
 
 #endif /* __XEOS_HAL_H__ */
