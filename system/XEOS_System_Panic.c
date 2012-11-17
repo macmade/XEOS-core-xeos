@@ -71,7 +71,7 @@
 #include "xeos/video.h"
 #include "xeos/hal.h"
 
-void XEOS_System_Panic( char * message )
+void XEOS_System_Panic( const char * message )
 {
     XEOS_HAL_CPU_DisableInterrupts();
     

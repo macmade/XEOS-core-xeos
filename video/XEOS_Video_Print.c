@@ -70,14 +70,14 @@
 #include "xeos/video.h"
 #include "xeos/__video.h"
 
-void XEOS_Video_Print( char * s )
+void XEOS_Video_Print( const char * s )
 {
     unsigned int x;
     unsigned int y;
     
     while( *( s ) != 0 )
     {
-        XEOS_Video_Putc( ( unsigned char )( *( s ) ), false );
+        XEOS_Video_Putc( ( *( s ) ), false );
         
         s++;
     }

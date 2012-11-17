@@ -80,14 +80,14 @@ extern "C" {
  * @abstract        Kernel panic
  * @param           message     The panic message
  */
-void XEOS_System_Panic( char * message );
+void XEOS_System_Panic( const char * message );
 
 /*!
  * @function        XEOS_System_Panicf
  * @abstract        Kernel panic
  * @param           format      The panic message format
  */
-void XEOS_System_Panicf( char * format, ... );
+void XEOS_System_Panicf( const char * format, ... );
 
 #ifdef __cplusplus
 }

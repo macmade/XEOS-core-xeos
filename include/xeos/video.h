@@ -184,28 +184,28 @@ unsigned int XEOS_Video_Y( void );
  * @abstract    Displays a message with the standard prompt
  * @param       s           The message
  */
-void XEOS_Video_Prompt( char * s );
+void XEOS_Video_Prompt( const char * s );
 
 /*!
  * @function    XEOS_Video_Promptf
  * @abstract    Displays a formatted message with the standard prompt
  * @param       format      The message format
  */
-void XEOS_Video_Promptf( char * format, ... );
+void XEOS_Video_Promptf( const char * format, ... );
 
 /*!
  * @function    XEOS_Video_Print
  * @abstract    Displays a message
  * @param       s           The message
  */
-void XEOS_Video_Print( char * s );
+void XEOS_Video_Print( const char * s );
 
 /*!
  * @function    XEOS_Video_Printf
  * @abstract    Displays a formatted message
  * @param       format      The message format
  */
-void XEOS_Video_Printf( char * format, ... );
+void XEOS_Video_Printf( const char * format, ... );
 
 /*!
  * @function    XEOS_Video_VPrintf
@@ -213,7 +213,7 @@ void XEOS_Video_Printf( char * format, ... );
  * @param       format      The message format
  * @param       arg         The arguments for the format
  */
-void XEOS_Video_VPrintf( char * format, va_list arg );
+void XEOS_Video_VPrintf( const char * format, va_list arg );
 
 /*!
  * @function    XEOS_Video_Putc
@@ -221,7 +221,7 @@ void XEOS_Video_VPrintf( char * format, va_list arg );
  * @param       c               The character to display
  * @param       updateCursor    If set, updates the hardware cursor
  */
-void XEOS_Video_Putc( unsigned char c, bool updateCursor );
+void XEOS_Video_Putc( char c, bool updateCursor );
 
 /*!
  * @function    XEOS_Video_Scroll

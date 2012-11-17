@@ -70,9 +70,9 @@
 #include "xeos/video.h"
 #include "xeos/__video.h"
 
-void XEOS_Video_Putc( unsigned char c, bool updateCursor )
+void XEOS_Video_Putc( char c, bool updateCursor )
 {
-    unsigned char * mem;
+    char * mem;
     
     if( c == 0 )
     {
@@ -100,7 +100,7 @@ void XEOS_Video_Putc( unsigned char c, bool updateCursor )
     }
     else
     {
-        mem      = ( unsigned char * )XEOS_VIDEO_MEM;
+        mem      = ( char * )XEOS_VIDEO_MEM;
         mem     += 2 * ( __XEOS_Video_X + ( __XEOS_Video_Y * XEOS_VIDEO_COLS ) );
         mem[ 0 ] = c;
         mem[ 1 ] = __XEOS_Video_Attribute;

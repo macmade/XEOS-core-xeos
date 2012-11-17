@@ -71,7 +71,7 @@
 #include "xeos/video.h"
 #include "xeos/hal.h"
 
-void XEOS_System_Panicf( char * format, ... )
+void XEOS_System_Panicf( const char * format, ... )
 {
     va_list args;
     

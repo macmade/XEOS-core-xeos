@@ -75,11 +75,13 @@
 extern "C" {
 #endif
 
+#include <stdarg.h>
+
 /*!
  * @var             __XEOS_Video_Attribute
  * @abstract        Current video color attributes
  */
-extern unsigned char __XEOS_Video_Attribute;
+extern char __XEOS_Video_Attribute;
 
 /*!
  * @var             __XEOS_Video_X

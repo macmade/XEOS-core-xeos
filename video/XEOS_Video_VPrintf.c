@@ -101,7 +101,7 @@ typedef enum
 }
 __XEOS_Video_VPrintf_Flag_IntegerType;
 
-void XEOS_Video_VPrintf( char * format, va_list ap )
+void XEOS_Video_VPrintf( const char * format, va_list ap )
 {
     int count;
     
@@ -111,7 +111,7 @@ void XEOS_Video_VPrintf( char * format, va_list ap )
     {
         if( *( format ) != '%' )
         {
-            XEOS_Video_Putc( ( unsigned char )*( format ), false );
+            XEOS_Video_Putc( *( format ), false );
             
             count++;
             format++;
@@ -122,7 +122,7 @@ void XEOS_Video_VPrintf( char * format, va_list ap )
         
         if( *( format ) == '%' )
         {
-            XEOS_Video_Putc( ( unsigned char )*( format ), false );
+            XEOS_Video_Putc( *( format ), false );
             
             count++;
             format++;
@@ -134,7 +134,7 @@ void XEOS_Video_VPrintf( char * format, va_list ap )
             size_t                                  len;
             int                                     minimumWidth;
             int                                     precision;
-            unsigned char                           pad;
+            char                                    pad;
             bool                                    sharp;
             bool                                    align;
             __XEOS_Video_VPrintf_Flag_Sign          sign;
@@ -292,9 +292,9 @@ void XEOS_Video_VPrintf( char * format, va_list ap )
                     case 'c':
                         
                         {
-                            unsigned char c;
+                            char c;
                             
-                            c = ( unsigned char )va_arg( ap, int );
+                            c = ( char )va_arg( ap, int );
                             
                             if( align == false )
                             {
@@ -352,7 +352,7 @@ void XEOS_Video_VPrintf( char * format, va_list ap )
                             
                             while( *( s ) != 0 )
                             {
-                                XEOS_Video_Putc( ( unsigned char )*( s++ ), false );
+                                XEOS_Video_Putc( *( s++ ), false );
                                 
                                 count++;
                             }
@@ -576,7 +576,7 @@ void XEOS_Video_VPrintf( char * format, va_list ap )
                                 
                                 while( *( s1 ) != 0 )
                                 {
-                                    XEOS_Video_Putc( ( unsigned char )*( s1 ), false );
+                                    XEOS_Video_Putc( *( s1 ), false );
                                     
                                     count++;
                                     s1++;

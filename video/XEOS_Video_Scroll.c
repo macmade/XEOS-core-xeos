@@ -72,8 +72,8 @@
 
 void XEOS_Video_Scroll( unsigned int n )
 {
-    unsigned char * mem;
-    unsigned int    i;
+    char       * mem;
+    unsigned int i;
     
     if( n >= XEOS_VIDEO_ROWS )
     {
@@ -82,7 +82,7 @@ void XEOS_Video_Scroll( unsigned int n )
         return;
     }
     
-    mem = ( unsigned char * )XEOS_VIDEO_MEM;
+    mem = ( char * )XEOS_VIDEO_MEM;
     
     for( i = 0; i < ( XEOS_VIDEO_COLS * ( XEOS_VIDEO_ROWS - n ) ) * 2; i++ )
     {

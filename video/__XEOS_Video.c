@@ -70,7 +70,7 @@
 #include "xeos/video.h"
 #include "xeos/__video.h"
 
-unsigned char __XEOS_Video_Attribute        = XEOS_Video_ColorBlack << 4 | XEOS_Video_ColorWhite;
+char          __XEOS_Video_Attribute        = XEOS_Video_ColorBlack << 4 | XEOS_Video_ColorWhite;
 unsigned int  __XEOS_Video_X                = 0x00;
 unsigned int  __XEOS_Video_Y                = 0x00;
 char        * __XEOS_Video_Prompt           = "[ XEOS ]> ";

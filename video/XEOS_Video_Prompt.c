@@ -70,7 +70,7 @@
 #include "xeos/video.h"
 #include "xeos/__video.h"
 
-void XEOS_Video_Prompt( char * s )
+void XEOS_Video_Prompt( const char * s )
 {
     XEOS_Video_Print( __XEOS_Video_Prompt );
     XEOS_Video_Print( s );
