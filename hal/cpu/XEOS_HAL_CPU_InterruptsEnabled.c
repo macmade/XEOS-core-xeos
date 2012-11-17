@@ -78,7 +78,7 @@ bool XEOS_HAL_CPU_InterruptsEnabled( void )
         "pushf\n"
         "popl %[f]\n"
         
-        : [ f ] "=g" ( f )
+        : [ f ] "=a" ( f )
         :
     );
     
