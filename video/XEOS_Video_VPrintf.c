@@ -424,13 +424,13 @@ void XEOS_Video_VPrintf( char * format, va_list ap )
                                 }
                             }
                             
-                            if( ( intLength & __XEOS_Video_VPrintf_Flag_IntegerLength64 ) != 0 )
+                            if( intLength == __XEOS_Video_VPrintf_Flag_IntegerLength64 )
                             {
-                                n = va_arg(ap, uint64_t );
+                                n = ( uint64_t )va_arg( ap, long long );
                             }
-                            else if( ( intLength & __XEOS_Video_VPrintf_Flag_IntegerLength16 ) != 0 )
+                            else if( intLength == __XEOS_Video_VPrintf_Flag_IntegerLength16 )
                             {
-                                n  = ( uint64_t )( ( short )va_arg( ap, int ) );
+                                n = ( uint64_t )( ( short )va_arg( ap, int ) );
                             }
                             else if( ( intType & __XEOS_Video_VPrintf_Flag_IntegerTypePointer ) != 0 )
                             {
@@ -483,7 +483,7 @@ void XEOS_Video_VPrintf( char * format, va_list ap )
                             {
                                 radix = 16;
                                 
-                                if( sharp == true && n != 0 )
+                                if( sharp == true )
                                 {
                                     XEOS_Video_Putc( '0', false );
                                     
