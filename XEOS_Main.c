@@ -74,6 +74,7 @@
 #include "xeos/info.h"
 #include <sys/syscall.h>
 #include <stdlib.h>
+#include <string.h>
 
 void XEOS_Main( XEOS_InfoRef info );
 void XEOS_Main( XEOS_InfoRef info )
