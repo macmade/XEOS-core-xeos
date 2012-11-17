@@ -95,7 +95,7 @@ extern  XEOS_Main
 ; 
 ; Input registers:
 ;       
-;       - EDI:      The address of the memory information structure
+;       - EDI:      The address of the information structure
 ; 
 ; Return registers:
 ;       

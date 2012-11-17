@@ -62,26 +62,21 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_HAL_MEM_MemInfoGetEntryAtIndex.c
+ * @file            XEOS_HAL_MEM_MemInfoEntryGetAddress.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#include "xeos/hal/mem.h"
-#include "xeos/hal/__mem.h"
+#include "xeos/info.h"
+#include "xeos/__info.h"
 #include <stdlib.h>
 
-XEOS_HAL_MEM_MemInfoEntryRef XEOS_HAL_MEM_MemInfoGetEntryAtIndex( XEOS_HAL_MEM_MemInfoRef info, unsigned int index )
+uint64_t XEOS_Info_MemoryEntryGetAddress( XEOS_Info_MemoryEntryRef entry )
 {
-    char * p;
-    
-    if( info == NULL || index >= XEOS_HAL_MEM_MemInfoGetNumberOfEntries( info ) )
+    if( entry == NULL )
     {
-        return NULL;
+        return 0;
     }
     
-    p  = ( char * )( info->base );
-    p += index * sizeof( struct __XEOS_HAL_MEM_MemInfoEntry );
-    
-    return ( XEOS_HAL_MEM_MemInfoEntryRef )p;
+    return entry->address;
 }

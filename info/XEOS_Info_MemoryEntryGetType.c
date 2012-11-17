@@ -62,21 +62,29 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_HAL_MEM_MemInfoEntryGetLength.c
+ * @file            XEOS_HAL_MEM_MemInfoEntryGetType.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#include "xeos/hal/mem.h"
-#include "xeos/hal/__mem.h"
+#include "xeos/info.h"
+#include "xeos/__info.h"
 #include <stdlib.h>
 
-uint64_t XEOS_HAL_MEM_MemInfoEntryGetLength( XEOS_HAL_MEM_MemInfoEntryRef entry )
+XEOS_Info_MemoryEntryType XEOS_Info_MemoryEntryGetType( XEOS_Info_MemoryEntryRef entry )
 {
     if( entry == NULL )
     {
-        return 0;
+        return XEOS_Info_MemoryEntryTypeUnknown;
     }
     
-    return entry->length;
+    switch( entry->type )
+    {
+        case XEOS_Info_MemoryEntryTypeUsable:           return entry->type;
+        case XEOS_Info_MemoryEntryTypeReserved:         return entry->type;
+        case XEOS_Info_MemoryEntryTypeACPIReclaimable:  return entry->type;
+        case XEOS_Info_MemoryEntryTypeACPINVS:          return entry->type;
+        case XEOS_Info_MemoryEntryTypeBad:              return entry->type;
+        default:                                        return XEOS_Info_MemoryEntryTypeUnknown;
+    }
 }

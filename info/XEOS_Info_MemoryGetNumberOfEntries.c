@@ -62,31 +62,21 @@
 /* $Id$ */
 
 /*!
- * @header          __paging.h
+ * @file            XEOS_HAL_MEM_MemInfoGetNumberOfEntries.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS_HAL___PAGING_H__
-#define __XEOS_HAL___PAGING_H__
-#pragma once
+#include "xeos/info.h"
+#include "xeos/__info.h"
+#include <stdlib.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#ifdef __clang__
-#pragma pack( 1 )
-#endif
-
-
-
-#ifdef __clang__
-#pragma pack()
-#endif
-
-#ifdef __cplusplus
+unsigned int XEOS_Info_MemoryGetNumberOfEntries( XEOS_Info_MemoryRef memory )
+{
+    if( memory == NULL )
+    {
+        return 0;
+    }
+    
+    return memory->length / sizeof( struct __XEOS_Info_MemoryEntry );
 }
-#endif
-
-#endif /* __XEOS_HAL___PAGING_H__ */

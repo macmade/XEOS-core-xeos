@@ -62,44 +62,21 @@
 /* $Id$ */
 
 /*!
- * @header          __mem.h
+ * @file            XEOS_HAL_MEM_MemInfoEntryGetLength.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS_HAL___MEM_H__
-#define __XEOS_HAL___MEM_H__
-#pragma once
+#include "xeos/info.h"
+#include "xeos/__info.h"
+#include <stdlib.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <xeos/hal/mem.h>
-
-#ifdef __clang__
-#pragma pack( 1 )
-#endif
-
-struct __XEOS_HAL_MEM_MemInfo
+uint64_t XEOS_Info_MemoryEntryGetLength( XEOS_Info_MemoryEntryRef entry )
 {
-    uint32_t base;
-    uint32_t length;
-};
-
-struct __XEOS_HAL_MEM_MemInfoEntry
-{
-    uint64_t address;
-    uint64_t length;
-    uint32_t type;
-};
-
-#ifdef __clang__
-#pragma pack()
-#endif
-
-#ifdef __cplusplus
+    if( entry == NULL )
+    {
+        return 0;
+    }
+    
+    return entry->length;
 }
-#endif
-
-#endif /* __XEOS_HAL___MEM_H__ */

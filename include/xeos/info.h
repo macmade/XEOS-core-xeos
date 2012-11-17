@@ -62,21 +62,48 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_HAL_MEM_MemInfoGetNumberOfEntries.c
+ * @header          info.h
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#include "xeos/hal/mem.h"
-#include "xeos/hal/__mem.h"
-#include <stdlib.h>
+#ifndef __XEOS_INFO_H__
+#define __XEOS_INFO_H__
+#pragma once
 
-unsigned int XEOS_HAL_MEM_MemInfoGetNumberOfEntries( XEOS_HAL_MEM_MemInfoRef info )
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <stdint.h>
+
+typedef struct __XEOS_Info * XEOS_InfoRef;
+
+typedef struct __XEOS_Info_Memory * XEOS_Info_MemoryRef;
+typedef struct __XEOS_Info_MemoryEntry * XEOS_Info_MemoryEntryRef;
+
+typedef enum
 {
-    if( info == NULL )
-    {
-        return 0;
-    }
-    
-    return info->length / sizeof( struct __XEOS_HAL_MEM_MemInfoEntry );
+    XEOS_Info_MemoryEntryTypeUnknown            = 0x00,
+    XEOS_Info_MemoryEntryTypeUsable             = 0x01,
+    XEOS_Info_MemoryEntryTypeReserved           = 0x02,
+    XEOS_Info_MemoryEntryTypeACPIReclaimable    = 0x03,
+    XEOS_Info_MemoryEntryTypeACPINVS            = 0x04,
+    XEOS_Info_MemoryEntryTypeBad                = 0x05
 }
+XEOS_Info_MemoryEntryType;
+
+XEOS_Info_MemoryRef XEOS_Info_GetMemory( XEOS_InfoRef info );
+
+unsigned int XEOS_Info_MemoryGetNumberOfEntries( XEOS_Info_MemoryRef memory );
+XEOS_Info_MemoryEntryRef XEOS_Info_MemoryGetEntryAtIndex( XEOS_Info_MemoryRef memory, unsigned int index );
+
+uint64_t XEOS_Info_MemoryEntryGetAddress( XEOS_Info_MemoryEntryRef entry );
+uint64_t XEOS_Info_MemoryEntryGetLength( XEOS_Info_MemoryEntryRef entry );
+XEOS_Info_MemoryEntryType XEOS_Info_MemoryEntryGetType( XEOS_Info_MemoryEntryRef entry );
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __XEOS_INFO_H__ */

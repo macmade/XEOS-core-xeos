@@ -62,29 +62,21 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_HAL_MEM_MemInfoEntryGetType.c
+ * @file            XEOS_HAL_MEM_MemInfoEntryGetAddress.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#include "xeos/hal/mem.h"
-#include "xeos/hal/__mem.h"
+#include "xeos/info.h"
+#include "xeos/__info.h"
 #include <stdlib.h>
 
-XEOS_HAL_MEM_MemInfoEntryType XEOS_HAL_MEM_MemInfoEntryGetType( XEOS_HAL_MEM_MemInfoEntryRef entry )
+XEOS_Info_MemoryRef XEOS_Info_GetMemory( XEOS_InfoRef info )
 {
-    if( entry == NULL )
+    if( info == NULL )
     {
-        return XEOS_HAL_MEM_MemInfoEntryTypeUnknown;
+        return 0;
     }
     
-    switch( entry->type )
-    {
-        case XEOS_HAL_MEM_MemInfoEntryTypeUsable:           return entry->type;
-        case XEOS_HAL_MEM_MemInfoEntryTypeReserved:         return entry->type;
-        case XEOS_HAL_MEM_MemInfoEntryTypeACPIReclaimable:  return entry->type;
-        case XEOS_HAL_MEM_MemInfoEntryTypeACPINVS:          return entry->type;
-        case XEOS_HAL_MEM_MemInfoEntryTypeBad:              return entry->type;
-        default:                                            return XEOS_HAL_MEM_MemInfoEntryTypeUnknown;
-    }
+    return &( info->memory );
 }
