@@ -77,8 +77,10 @@ void XEOS_HAL_CMOS_Write( uint8_t * bytes, uint8_t length )
     uint8_t i;
     bool    interrupts;
     
+    /* Checks if interrupts are currently disabled */
     interrupts = XEOS_HAL_CPU_InterruptsEnabled();
     
+    /* Interrupts needs to be disabled in order to read from CMOS */
     if( interrupts == true )
     {
         XEOS_HAL_CPU_DisableInterrupts();
@@ -86,11 +88,15 @@ void XEOS_HAL_CMOS_Write( uint8_t * bytes, uint8_t length )
     
     for( i = 0; i < length; i++ )
     {
+        /* Copy the address index to CMOS register */
         XEOS_HAL_IO_PortOut( 0x70, ( uint8_t )i );
         XEOS_HAL_IO_Wait();
+        
+        /* Writes to byte to CMOS */
         XEOS_HAL_IO_PortOut( 0x71, bytes[ i ] );
     }
     
+    /* Re-enables interrupts if necessary */
     if( interrupts == true )
     {
         XEOS_HAL_CPU_EnableInterrupts();

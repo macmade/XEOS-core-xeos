@@ -78,8 +78,10 @@ void XEOS_HAL_CMOS_Read( uint8_t * bytes, uint8_t length )
     uint8_t i;
     bool    interrupts;
     
+    /* Checks if interrupts are currently disabled */
     interrupts = XEOS_HAL_CPU_InterruptsEnabled();
     
+    /* Interrupts needs to be disabled in order to read from CMOS */
     if( interrupts == true )
     {
         XEOS_HAL_CPU_DisableInterrupts();
@@ -89,14 +91,16 @@ void XEOS_HAL_CMOS_Read( uint8_t * bytes, uint8_t length )
     {
         value = 0;
         
+        /* Copy the address index to CMOS register */
         XEOS_HAL_IO_PortOut( 0x70, ( uint8_t )i );
         XEOS_HAL_IO_Wait();
         
-        value = XEOS_HAL_IO_PortIn( 0x71 );
-        
-        bytes[ i ] = value;
+        /* Fetches the byte from CMOS and stores it */
+        value       = XEOS_HAL_IO_PortIn( 0x71 );
+        bytes[ i ]  = value;
     }
     
+    /* Re-enables interrupts if necessary */
     if( interrupts == true )
     {
         XEOS_HAL_CPU_EnableInterrupts();

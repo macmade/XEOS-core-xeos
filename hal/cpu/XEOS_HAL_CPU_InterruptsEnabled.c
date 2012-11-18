@@ -82,5 +82,6 @@ bool XEOS_HAL_CPU_InterruptsEnabled( void )
         :
     );
     
+    /* Interrupt flag (IF) is bit 9 */
     return ( bool )( ( f & ( 1 << 9 ) ) != 0 );
 }
