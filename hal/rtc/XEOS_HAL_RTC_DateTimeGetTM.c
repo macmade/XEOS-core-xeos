@@ -85,6 +85,7 @@ struct tm XEOS_HAL_RTC_DateTimeGetTM( XEOS_HAL_RTC_DateTimeRef time )
     uint8_t     century;
     uint16_t    fullYear;
     struct tm   t;
+    bool        leap;
     
     seconds     = XEOS_HAL_RTC_DateTimeGetSeconds( time );
     minutes     = XEOS_HAL_RTC_DateTimeGetMinutes( time );
@@ -110,6 +111,77 @@ struct tm XEOS_HAL_RTC_DateTimeGetTM( XEOS_HAL_RTC_DateTimeRef time )
     t.tm_mon     = ( month > 0 ) ? month - 1 : 0;
     t.tm_year    = ( fullYear > 1900 ) ? fullYear - 1900 : 0;
     t.tm_isdst   = 0;
+    
+    if( month == 1 )
+    {
+        t.tm_yday = dayOfMonth;
+    }
+    else if( month == 2 )
+    {
+        t.tm_yday = dayOfMonth + 31;
+    }
+    else
+    {
+        if( ( fullYear % 4 ) != 0 )
+        {
+            leap = false;
+        }
+        else if( ( fullYear % 100 ) != 0 )
+        {
+            leap = true;
+        }
+        else if( ( fullYear % 400 ) != 0 )
+        {
+            leap = false;
+        }
+        else
+        {
+            leap = true;
+        }
+        
+        tm.tm_yday = 31 + ( ( leap == true ) ? 29 : 28 );
+        
+        if( month == 3 )
+        {
+            tm.tm_yday += dayOfMonth;
+        }
+        else if( month == 4 )
+        {
+            t.tm_yday += dayOfMonth + 31;
+        }
+        else if( month == 5 )
+        {
+            t.tm_yday += dayOfMonth + 31 + 30;
+        }
+        else if( month == 6 )
+        {
+            t.tm_yday += dayOfMonth + 31 + 30 + 31;
+        }
+        else if( month == 7 )
+        {
+            t.tm_yday += dayOfMonth + 31 + 30 + 31 + 30;
+        }
+        else if( month == 8 )
+        {
+            t.tm_yday += dayOfMonth + 31 + 30 + 31 + 30 + 31;
+        }
+        else if( month == 9 )
+        {
+            t.tm_yday += dayOfMonth + 31 + 30 + 31 + 30 + 31 + 31;
+        }
+        else if( month == 10 )
+        {
+            t.tm_yday += dayOfMonth + 31 + 30 + 31 + 30 + 31 + 31 + 30;
+        }
+        else if( month == 11 )
+        {
+            t.tm_yday += dayOfMonth + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31;
+        }
+        else if( month == 12 )
+        {
+            t.tm_yday += dayOfMonth + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30;
+        }
+    }
     
     return t;
 }
