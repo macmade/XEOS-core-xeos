@@ -149,7 +149,7 @@ void XEOS_IRQ_RealTimeClock( XEOS_HAL_PIC_IRQ irq )
             year++;
         }
         
-        if( year == 99 )
+        if( year == 100 )
         {
             year = 0;
             
