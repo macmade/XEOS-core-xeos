@@ -62,25 +62,38 @@
 /* $Id$ */
 
 /*!
- * @header          rtc.h
+ * @file            XEOS_HAL_RTC_EnablePeriodicInterrupts.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS_HAL_RTC_H__
-#define __XEOS_HAL_RTC_H__
-#pragma once
+#include "xeos/hal/rtc.h"
+#include "xeos/hal/__rtc.h"
+#include "xeos/hal/cpu.h"
+#include "xeos/hal/io.h"
+#include <stdbool.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void XEOS_HAL_RTC_Update( void );
-void XEOS_HAL_RTC_EnablePeriodicInterrupts( void );
-void XEOS_HAL_RTC_DisablePeriodicInterrupts( void );
-
-#ifdef __cplusplus
+void XEOS_HAL_RTC_EnablePeriodicInterrupts( void )
+{
+    bool    interrupts;
+    uint8_t value;
+    
+    interrupts = XEOS_HAL_CPU_InterruptsEnabled();
+    
+    if( interrupts == true )
+    {
+        XEOS_HAL_CPU_DisableInterrupts();
+    }
+    
+    XEOS_HAL_IO_PortOut( 0x70, 0x8B );
+    
+    value = XEOS_HAL_IO_PortIn( 0x71 );
+    
+    XEOS_HAL_IO_PortOut( 0x70, 0x8B );
+    XEOS_HAL_IO_PortOut( 0x71, value | 0x40 );
+    
+    if( interrupts == true )
+    {
+        XEOS_HAL_CPU_EnableInterrupts();
+    }
 }
-#endif
-
-#endif /* __XEOS_HAL_RTC_H__ */

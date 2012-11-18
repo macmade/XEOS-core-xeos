@@ -62,25 +62,13 @@
 /* $Id$ */
 
 /*!
- * @header          rtc.h
+ * @file            XEOS_HAL_RTC_Update.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS_HAL_RTC_H__
-#define __XEOS_HAL_RTC_H__
-#pragma once
+#include "xeos/hal/rtc.h"
+#include "xeos/hal/__rtc.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void XEOS_HAL_RTC_Update( void );
-void XEOS_HAL_RTC_EnablePeriodicInterrupts( void );
-void XEOS_HAL_RTC_DisablePeriodicInterrupts( void );
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* __XEOS_HAL_RTC_H__ */
+void XEOS_HAL_RTC_Update( void )
+{}

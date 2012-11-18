@@ -62,25 +62,54 @@
 /* $Id$ */
 
 /*!
- * @header          rtc.h
+ * @header          __rtc.h
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS_HAL_RTC_H__
-#define __XEOS_HAL_RTC_H__
+#ifndef __XEOS_HAL___RTC_H__
+#define __XEOS_HAL___RTC_H__
 #pragma once
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void XEOS_HAL_RTC_Update( void );
-void XEOS_HAL_RTC_EnablePeriodicInterrupts( void );
-void XEOS_HAL_RTC_DisablePeriodicInterrupts( void );
+#include <stdint.h>
+
+struct __XEOS_HAL_RTC_DateTime
+{
+    uint8_t seconds;
+    uint8_t minutes;
+    uint8_t hours;
+    uint8_t weekday;
+    uint8_t dayOfMonth;
+    uint8_t month;
+    uint8_t year;
+    uint8_t century;
+};
+
+extern struct __XEOS_HAL_RTC_DateTime __XEOS_HAL_RTC_DateTimeValues;
+
+typedef enum
+{
+    __XEOS_HAL_RTC_RegisterSeconds      = 0x00,
+    __XEOS_HAL_RTC_RegisterMinutes      = 0x02,
+    __XEOS_HAL_RTC_RegisterHours        = 0x04,
+    __XEOS_HAL_RTC_RegisterWeekDay      = 0x06,
+    __XEOS_HAL_RTC_RegisterDayOfMonth   = 0x07,
+    __XEOS_HAL_RTC_RegisterMonth        = 0x08,
+    __XEOS_HAL_RTC_RegisterYear         = 0x09,
+    __XEOS_HAL_RTC_RegisterCentury      = 0x32,
+    __XEOS_HAL_RTC_RegisterStatusA      = 0x0A,
+    __XEOS_HAL_RTC_RegisterStatusB      = 0x0B
+}
+__XEOS_HAL_RTC_Register;
+
+uint8_t __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_Register r );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __XEOS_HAL_RTC_H__ */
+#endif /* __XEOS_HAL___RTC_H__ */
