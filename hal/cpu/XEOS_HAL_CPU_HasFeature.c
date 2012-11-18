@@ -95,8 +95,6 @@ bool XEOS_HAL_CPU_HasFeature( XEOS_HAL_CPUInfos_Feature feature )
         __XEOS_HAL_CPU_FeatureLow  = edx;
         __XEOS_HAL_CPU_FeatureHigh = ecx;
         __XEOS_HAL_CPU_HasFeatures = true;
-        
-        XEOS_System_Panicf( "%x %x", edx, ecx );
     }
     
     if( ( feature & 0x100 ) != 0 )
