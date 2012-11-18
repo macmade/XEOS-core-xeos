@@ -81,27 +81,118 @@ extern "C" {
 #pragma pack( 1 )
 #endif
 
+/*!
+ * @define      __XEOS_IRQ_MAX_HANDLERS
+ * @abstract    The maximum number of handlers for an IRQ line
+ */
 #define __XEOS_IRQ_MAX_HANDLERS     32
 
+/*!
+ * @function    __XEOS_IRQ_Init
+ * @abstract    Initialization of the IRQ chaining system
+ */
 void __XEOS_IRQ_Init( void );
 
+/*!
+ * @var         __XEOS_IRQ_Inited
+ * @abstract    Whether the the IRQ chaining system is initialized or not
+ */
 extern bool __XEOS_IRQ_Inited;
 
+/*!
+ * @var         __XEOS_IRQ_IRQ0Handlers
+ * @abstract    Handlers for IRQ line 0
+ */
 extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ0Handlers[];
+
+/*!
+ * @var         __XEOS_IRQ_IRQ0Handlers
+ * @abstract    Handlers for IRQ line 1
+ */
 extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ1Handlers[];
+
+/*!
+ * @var         __XEOS_IRQ_IRQ0Handlers
+ * @abstract    Handlers for IRQ line 2
+ */
 extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ2Handlers[];
+
+/*!
+ * @var         __XEOS_IRQ_IRQ0Handlers
+ * @abstract    Handlers for IRQ line 3
+ */
 extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ3Handlers[];
+
+/*!
+ * @var         __XEOS_IRQ_IRQ0Handlers
+ * @abstract    Handlers for IRQ line 4
+ */
 extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ4Handlers[];
+
+/*!
+ * @var         __XEOS_IRQ_IRQ0Handlers
+ * @abstract    Handlers for IRQ line 5
+ */
 extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ5Handlers[];
+
+/*!
+ * @var         __XEOS_IRQ_IRQ0Handlers
+ * @abstract    Handlers for IRQ line 6
+ */
 extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ6Handlers[];
+
+/*!
+ * @var         __XEOS_IRQ_IRQ0Handlers
+ * @abstract    Handlers for IRQ line 7
+ */
 extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ7Handlers[];
+
+/*!
+ * @var         __XEOS_IRQ_IRQ0Handlers
+ * @abstract    Handlers for IRQ line 8
+ */
 extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ8Handlers[];
+
+/*!
+ * @var         __XEOS_IRQ_IRQ0Handlers
+ * @abstract    Handlers for IRQ line 9
+ */
 extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ9Handlers[];
+
+/*!
+ * @var         __XEOS_IRQ_IRQ0Handlers
+ * @abstract    Handlers for IRQ line 10
+ */
 extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ10Handlers[];
+
+/*!
+ * @var         __XEOS_IRQ_IRQ0Handlers
+ * @abstract    Handlers for IRQ line 11
+ */
 extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ11Handlers[];
+
+/*!
+ * @var         __XEOS_IRQ_IRQ0Handlers
+ * @abstract    Handlers for IRQ line 12
+ */
 extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ12Handlers[];
+
+/*!
+ * @var         __XEOS_IRQ_IRQ0Handlers
+ * @abstract    Handlers for IRQ line 13
+ */
 extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ13Handlers[];
+
+/*!
+ * @var         __XEOS_IRQ_IRQ0Handlers
+ * @abstract    Handlers for IRQ line 14
+ */
 extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ14Handlers[];
+
+/*!
+ * @var         __XEOS_IRQ_IRQ0Handlers
+ * @abstract    Handlers for IRQ line 15
+ */
 extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ15Handlers[];
 
 #ifdef __clang__

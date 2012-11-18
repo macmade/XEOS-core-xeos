@@ -79,13 +79,52 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
+/*!
+ * @typedef         XEOS_IRQ_IRQHandler
+ * @abstract        Handler function for an IRQ
+ * @param           irq         The IRQ line
+ */
 typedef void ( * XEOS_IRQ_IRQHandler )( XEOS_HAL_PIC_IRQ irq );
 
+/*!
+ * @function        XEOS_IRQ_AddIRQHandler
+ * @abstract        Installs a handler function for an IRQ line
+ * @description     Note that the number of handlers for an IRQ line is limited.
+ *                  If the maximum number of handlers is reached, the handler
+ *                  won't be installed and the function will return false.
+ * @param           irq         The IRQ line
+ * @param           handler     The IRQ handler function
+ * @result          True if the handler was installed, otherwise false
+ */
 bool XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ irq, XEOS_IRQ_IRQHandler handler );
+
+/*!
+ * @function        XEOS_IRQ_RemoveIRQHandler
+ * @abstract        Removes a handler function for an IRQ line
+ * @param           irq         The IRQ line
+ * @param           handler     The IRQ handler function
+ */
 void XEOS_IRQ_RemoveIRQHandler( XEOS_HAL_PIC_IRQ irq, XEOS_IRQ_IRQHandler handler );
+
+/*!
+ * @function        XEOS_IRQ_ExecuteIRQHandlers
+ * @abstract        Executes all installed handlers for an IRQ line
+ * @param           irq         The IRQ line
+ */
 void XEOS_IRQ_ExecuteIRQHandlers( XEOS_HAL_PIC_IRQ irq );
 
+/*!
+ * @function        XEOS_IRQ_SystemTimer
+ * @abstract        IRQ handler for the system timer (IRQ0)
+ * @param           irq         The IRQ line
+ */
 void XEOS_IRQ_SystemTimer( XEOS_HAL_PIC_IRQ irq );
+
+/*!
+ * @function        XEOS_IRQ_RealTimeClock
+ * @abstract        IRQ handler for the real time clock (IRQ8)
+ * @param           irq         The IRQ line
+ */
 void XEOS_IRQ_RealTimeClock( XEOS_HAL_PIC_IRQ irq );
 
 #ifdef __cplusplus
