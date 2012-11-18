@@ -146,6 +146,15 @@ XEOS_HAL_RTC_DateTimeRef XEOS_HAL_RTC_DateTimeGetSystemTime( bool update )
             hours[ 0 ] = ( ( hours[ 0 ] & 0x7F ) + 12 ) % 24;
         }
         
+        __dateTime.seconds      = seconds   [ 0 ];
+        __dateTime.minutes      = minutes   [ 0 ];
+        __dateTime.weekday      = weekday   [ 0 ];
+        __dateTime.dayOfMonth   = dayOfMonth[ 0 ];
+        __dateTime.month        = month     [ 0 ];
+        __dateTime.year         = year      [ 0 ];
+        __dateTime.century      = century   [ 0 ];
+        __dateTime.hours        = hours     [ 0 ];
+        
         __inited = true;
     }
     
