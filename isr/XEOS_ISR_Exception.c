@@ -76,26 +76,26 @@ void XEOS_ISR_Exception( uint8_t isr )
     
     switch( isr )
     {
-        case 0x00:  format = "INT %x - Divide Error (#DE)";                                 break;
-        case 0x01:  format = "INT %x - Debug (#DB)";                                        break;
-        case 0x02:  format = "INT %x - NMI Interrupt";                                      break;
-        case 0x03:  format = "INT %x - Breakpoint (#BP)";                                   break;
-        case 0x04:  format = "INT %x - Overflow (#OF)";                                     break;
-        case 0x05:  format = "INT %x - BOUND Range Exceeded (#BR)";                         break;
-        case 0x06:  format = "INT %x - Invalid/Undefined Opcode (#UD)";                     break;
-        case 0x07:  format = "INT %x - Device Not Available (No Math Coprocessor) (#NM)";   break;
-        case 0x08:  format = "INT %x - Double Fault (#DF)";                                 break;
-        case 0x09:  format = "INT %x - Coprocessor Segment Overrun";                        break;
-        case 0x0A:  format = "INT %x - Invalid TSS (#TS)";                                  break;
-        case 0x0B:  format = "INT %x - Segment Not Present (#NP)";                          break;
-        case 0x0C:  format = "INT %x - Stack-Segment Fault (#SS)";                          break;
-        case 0x0D:  format = "INT %x - General Protection (#GP)";                           break;
-        case 0x0E:  format = "INT %x - Page Fault (#PF)";                                   break;
-        case 0x10:  format = "INT %x - x87 FPU Floating-Point Error (Math Fault) (#MF)";    break;
-        case 0x11:  format = "INT %x - Alignment Check (#AC)";                              break;
-        case 0x12:  format = "INT %x - Machine Check (#MC)";                                break;
-        case 0x13:  format = "INT %x - SIMD Floating-Point Exception (#XM)";                break;
-        default:    format = "INT %x - Invalid/Undefined Interrupt";                        break;
+        case 0x00:  format = "INT %02#X - Divide Error (#DE)";                                 break;
+        case 0x01:  format = "INT %02#X - Debug (#DB)";                                        break;
+        case 0x02:  format = "INT %02#X - NMI Interrupt";                                      break;
+        case 0x03:  format = "INT %02#X - Breakpoint (#BP)";                                   break;
+        case 0x04:  format = "INT %02#X - Overflow (#OF)";                                     break;
+        case 0x05:  format = "INT %02#X - BOUND Range Exceeded (#BR)";                         break;
+        case 0x06:  format = "INT %02#X - Invalid/Undefined Opcode (#UD)";                     break;
+        case 0x07:  format = "INT %02#X - Device Not Available (No Math Coprocessor) (#NM)";   break;
+        case 0x08:  format = "INT %02#X - Double Fault (#DF)";                                 break;
+        case 0x09:  format = "INT %02#X - Coprocessor Segment Overrun";                        break;
+        case 0x0A:  format = "INT %02#X - Invalid TSS (#TS)";                                  break;
+        case 0x0B:  format = "INT %02#X - Segment Not Present (#NP)";                          break;
+        case 0x0C:  format = "INT %02#X - Stack-Segment Fault (#SS)";                          break;
+        case 0x0D:  format = "INT %02#X - General Protection (#GP)";                           break;
+        case 0x0E:  format = "INT %02#X - Page Fault (#PF)";                                   break;
+        case 0x10:  format = "INT %02#X - x87 FPU Floating-Point Error (Math Fault) (#MF)";    break;
+        case 0x11:  format = "INT %02#X - Alignment Check (#AC)";                              break;
+        case 0x12:  format = "INT %02#X - Machine Check (#MC)";                                break;
+        case 0x13:  format = "INT %02#X - SIMD Floating-Point Exception (#XM)";                break;
+        default:    format = "INT %02#X - Invalid/Undefined Interrupt";                        break;
     }
     
     XEOS_System_Panicf( format, isr );
