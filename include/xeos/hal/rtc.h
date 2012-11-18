@@ -76,6 +76,7 @@ extern "C" {
 #endif
 
 #include <stdint.h>
+#include <stdbool.h>
 
 /*!
  * @typedef         XEOS_HAL_RTC_DateTimeRef
@@ -86,9 +87,10 @@ typedef struct __XEOS_HAL_RTC_DateTime * XEOS_HAL_RTC_DateTimeRef;
 /*!
  * @function        XEOS_HAL_RTC_DateTimeSetSystemTime
  * @abstract        Sets the RTC time (writes values back to CMOS)
+ * @param           update          If yes, updates the system clock by reading values from CMOS
  * @result          The RTC time object
  */
-XEOS_HAL_RTC_DateTimeRef XEOS_HAL_RTC_DateTimeGetSystemTime( void );
+XEOS_HAL_RTC_DateTimeRef XEOS_HAL_RTC_DateTimeGetSystemTime( bool update );
 
 /*!
  * @function        XEOS_HAL_RTC_DateTimeGetSeconds

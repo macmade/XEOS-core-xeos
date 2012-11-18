@@ -70,8 +70,21 @@
 #include "xeos/hal/rtc.h"
 #include "xeos/hal/__rtc.h"
 #include <stdlib.h>
+#include <string.h>
 
-XEOS_HAL_RTC_DateTimeRef XEOS_HAL_RTC_DateTimeGetSystemTime( void )
+static struct __XEOS_HAL_RTC_DateTime __dateTime;
+bool                                  __inited = false;
+
+XEOS_HAL_RTC_DateTimeRef XEOS_HAL_RTC_DateTimeGetSystemTime( bool update )
 {
-    return NULL;
+    if( update == true || __inited == false )
+    {
+        memset( &__dateTime, 0, sizeof( struct __XEOS_HAL_RTC_DateTime ) );
+        
+        
+        
+        __inited = true;
+    }
+    
+    return &__dateTime;
 }
