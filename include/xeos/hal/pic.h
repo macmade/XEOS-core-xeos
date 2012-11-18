@@ -188,6 +188,13 @@ uint8_t XEOS_HAL_PIC_ReadData( XEOS_HAL_PIC_Controller c );
  */
 void XEOS_HAL_PIC_SendData( XEOS_HAL_PIC_Controller c, uint8_t data );
 
+/*!
+ * @function        XEOS_HAL_PIC_SendEOI
+ * @abstract        Sends EOI (End Of Interrupt)
+ * @param           c               The PIC
+ */
+void XEOS_HAL_PIC_SendEOI( XEOS_HAL_PIC_Controller c );
+
 #ifdef __cplusplus
 }
 #endif
