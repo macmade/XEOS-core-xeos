@@ -78,6 +78,19 @@ extern "C" {
 #include <stdint.h>
 
 /*!
+ * @typedef         XEOS_HAL_CMOS_Register
+ * @abstract        CMOS register
+ * @constant        XEOS_HAL_CMOS_RegisterAddress   Address register
+ * @constant        XEOS_HAL_CMOS_RegisterData      Data register
+ */
+typedef enum
+{
+    XEOS_HAL_CMOS_RegisterAddress   = 0x70,
+    XEOS_HAL_CMOS_RegisterData      = 0x71
+}
+XEOS_HAL_CMOS_Register;
+
+/*!
  * @function        XEOS_HAL_CMOS_Read
  * @abstract        Reads data from CMOS
  * @param           bytes           The bytes buffer

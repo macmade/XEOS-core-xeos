@@ -92,11 +92,11 @@ void XEOS_HAL_CMOS_Read( uint8_t * bytes, uint8_t length )
         value = 0;
         
         /* Copy the address index to CMOS register */
-        XEOS_HAL_IO_PortOut( 0x70, ( uint8_t )i );
+        XEOS_HAL_IO_PortOut( XEOS_HAL_CMOS_RegisterAddress, ( uint8_t )i );
         XEOS_HAL_IO_Wait();
         
         /* Fetches the byte from CMOS and stores it */
-        value       = XEOS_HAL_IO_PortIn( 0x71 );
+        value       = XEOS_HAL_IO_PortIn( XEOS_HAL_CMOS_RegisterData );
         bytes[ i ]  = value;
     }
     

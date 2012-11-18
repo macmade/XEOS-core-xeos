@@ -69,8 +69,9 @@
 
 #include "xeos/hal/nmi.h"
 #include "xeos/hal/io.h"
+#include "xeos/hal/cmos.h"
 
 void XEOS_HAL_NMI_Disable( void )
 {
-    XEOS_HAL_IO_PortOut( 0x70, XEOS_HAL_IO_PortIn( 0x70 ) | 0x80 );
+    XEOS_HAL_IO_PortOut( XEOS_HAL_CMOS_RegisterAddress, XEOS_HAL_IO_PortIn( XEOS_HAL_CMOS_RegisterAddress ) | 0x80 );
 }

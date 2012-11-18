@@ -70,6 +70,7 @@
 #include "xeos/irq.h"
 #include "xeos/__irq.h"
 #include "xeos/hal/io.h"
+#include "xeos/hal/cmos.h"
 
 #include "xeos/video.h"
 
@@ -87,6 +88,6 @@ void XEOS_IRQ_RealTimeClock( XEOS_HAL_PIC_IRQ irq )
      * The Status Register C must be read after IRQ 8. Otherwise, the
      * interrupt won't happen again.
      */
-    XEOS_HAL_IO_PortOut( 0x70, 0x0C );
-    XEOS_HAL_IO_PortIn( 0x71 );
+    XEOS_HAL_IO_PortOut( XEOS_HAL_CMOS_RegisterAddress, 0x0C );
+    XEOS_HAL_IO_PortIn( XEOS_HAL_CMOS_RegisterData );
 }

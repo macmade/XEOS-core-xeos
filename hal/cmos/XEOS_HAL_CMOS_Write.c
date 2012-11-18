@@ -89,11 +89,11 @@ void XEOS_HAL_CMOS_Write( uint8_t * bytes, uint8_t length )
     for( i = 0; i < length; i++ )
     {
         /* Copy the address index to CMOS register */
-        XEOS_HAL_IO_PortOut( 0x70, ( uint8_t )i );
+        XEOS_HAL_IO_PortOut( XEOS_HAL_CMOS_RegisterAddress, ( uint8_t )i );
         XEOS_HAL_IO_Wait();
         
         /* Writes to byte to CMOS */
-        XEOS_HAL_IO_PortOut( 0x71, bytes[ i ] );
+        XEOS_HAL_IO_PortOut( XEOS_HAL_CMOS_RegisterData, bytes[ i ] );
     }
     
     /* Re-enables interrupts if necessary */
