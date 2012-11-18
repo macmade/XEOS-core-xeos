@@ -72,11 +72,11 @@
 
 void XEOS_Video_Clear( void )
 {
-    unsigned char * mem;
-    unsigned int    memSize;
-    unsigned int    i;
+    char       * mem;
+    unsigned int memSize;
+    unsigned int i;
     
-    mem     = ( unsigned char * )XEOS_VIDEO_MEM;
+    mem     = ( char * )XEOS_VIDEO_MEM;
     memSize = XEOS_VIDEO_COLS * XEOS_VIDEO_ROWS;
     i       = 0;
     

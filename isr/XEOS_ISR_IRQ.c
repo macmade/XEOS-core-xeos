@@ -73,26 +73,26 @@
 
 void XEOS_ISR_IRQ( uint8_t isr )
 {
-    XEOS_IRQ_IRQ irq;
+    XEOS_HAL_PIC_IRQ irq;
     
     switch( isr )
     {
-        case 0x20:  irq = XEOS_IRQ_IRQ0;    break;
-        case 0x21:  irq = XEOS_IRQ_IRQ1;    break;
-        case 0x22:  irq = XEOS_IRQ_IRQ2;    break;
-        case 0x23:  irq = XEOS_IRQ_IRQ3;    break;
-        case 0x24:  irq = XEOS_IRQ_IRQ4;    break;
-        case 0x25:  irq = XEOS_IRQ_IRQ5;    break;
-        case 0x26:  irq = XEOS_IRQ_IRQ6;    break;
-        case 0x27:  irq = XEOS_IRQ_IRQ7;    break;
-        case 0x28:  irq = XEOS_IRQ_IRQ8;    break;
-        case 0x29:  irq = XEOS_IRQ_IRQ9;    break;
-        case 0x2A:  irq = XEOS_IRQ_IRQ10;   break;
-        case 0x2B:  irq = XEOS_IRQ_IRQ11;   break;
-        case 0x2C:  irq = XEOS_IRQ_IRQ12;   break;
-        case 0x2D:  irq = XEOS_IRQ_IRQ13;   break;
-        case 0x2E:  irq = XEOS_IRQ_IRQ14;   break;
-        case 0x2F:  irq = XEOS_IRQ_IRQ15;   break;
+        case 0x20:  irq = XEOS_HAL_PIC_IRQ0;    break;
+        case 0x21:  irq = XEOS_HAL_PIC_IRQ1;    break;
+        case 0x22:  irq = XEOS_HAL_PIC_IRQ2;    break;
+        case 0x23:  irq = XEOS_HAL_PIC_IRQ3;    break;
+        case 0x24:  irq = XEOS_HAL_PIC_IRQ4;    break;
+        case 0x25:  irq = XEOS_HAL_PIC_IRQ5;    break;
+        case 0x26:  irq = XEOS_HAL_PIC_IRQ6;    break;
+        case 0x27:  irq = XEOS_HAL_PIC_IRQ7;    break;
+        case 0x28:  irq = XEOS_HAL_PIC_IRQ8;    break;
+        case 0x29:  irq = XEOS_HAL_PIC_IRQ9;    break;
+        case 0x2A:  irq = XEOS_HAL_PIC_IRQ10;   break;
+        case 0x2B:  irq = XEOS_HAL_PIC_IRQ11;   break;
+        case 0x2C:  irq = XEOS_HAL_PIC_IRQ12;   break;
+        case 0x2D:  irq = XEOS_HAL_PIC_IRQ13;   break;
+        case 0x2E:  irq = XEOS_HAL_PIC_IRQ14;   break;
+        case 0x2F:  irq = XEOS_HAL_PIC_IRQ15;   break;
         default:    return;
     }
     
