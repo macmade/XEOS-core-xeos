@@ -70,7 +70,7 @@
 #include "xeos/system.h"
 #include "xeos/__system.h"
 
-uint16_t XEOS_System_GetTimeMilliSeconds( void )
+double XEOS_System_GetTimeMilliSeconds( void )
 {
     return __XEOS_System_Milliseconds;
 }

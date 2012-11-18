@@ -62,33 +62,55 @@
 /* $Id$ */
 
 /*!
- * @header          __system.h
+ * @file            XEOS_HAL_RTC_EnablePeriodicInterrupts.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS___SYSTEM_H__
-#define __XEOS___SYSTEM_H__
-#pragma once
+#include "xeos/hal/rtc.h"
+#include "xeos/hal/__rtc.h"
+#include "xeos/hal/io.h"
+#include "xeos/hal/cmos.h"
+#include <time.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/*!
- * @var         __XEOS_System_Timestamp
- * @abstract    The number of seconds since January 1st 1970
- */
-extern uint64_t __XEOS_System_Timestamp;
-
-/*!
- * @var         __XEOS_System_Milliseconds
- * @abstract    The number of milliseconds
- */
-extern double __XEOS_System_Milliseconds;
-
-#ifdef __cplusplus
+struct tm XEOS_HAL_RTC_DateTimeGetTM( XEOS_HAL_RTC_DateTimeRef time )
+{
+    uint8_t     seconds;
+    uint8_t     minutes;
+    uint8_t     hours;
+    uint8_t     weekday;
+    uint8_t     dayOfMonth;
+    uint8_t     month;
+    uint8_t     year;
+    uint8_t     century;
+    uint16_t    fullYear;
+    struct tm   t;
+    
+    seconds     = XEOS_HAL_RTC_DateTimeGetSeconds( time );
+    minutes     = XEOS_HAL_RTC_DateTimeGetMinutes( time );
+    hours       = XEOS_HAL_RTC_DateTimeGetHours( time );
+    weekday     = XEOS_HAL_RTC_DateTimeGetDayOfMonth( time );
+    dayOfMonth  = XEOS_HAL_RTC_DateTimeGetDayOfMonth( time );
+    month       = XEOS_HAL_RTC_DateTimeGetMonth( time );
+    year        = XEOS_HAL_RTC_DateTimeGetYear( time );
+    century     = XEOS_HAL_RTC_DateTimeGetCentury( time );
+    
+    if( century == 0 )
+    {
+        century = 19;
+    }
+    
+    fullYear = ( century * 100 ) + year;
+    
+    t.tm_sec     = seconds;
+    t.tm_min     = minutes;
+    t.tm_hour    = hours;
+    t.tm_wday    = weekday;
+    t.tm_mday    = dayOfMonth;
+    t.tm_mon     = ( month > 0 ) ? month - 1 : 0;
+    t.tm_year    = ( fullYear > 1900 ) ? fullYear - 1900 : 0;
+    t.tm_isdst   = 0;
+    
+    return t;
 }
-#endif
 
-#endif /* __XEOS___SYSTEM_H__ */

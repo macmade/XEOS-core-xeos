@@ -103,7 +103,7 @@ uint64_t XEOS_System_GetTime( void );
  * @abstract        Gets the actual number of milliseconds
  * @result          The number of milliseconds
  */
-uint16_t XEOS_System_GetTimeMilliSeconds( void );
+double XEOS_System_GetTimeMilliSeconds( void );
 
 #ifdef __cplusplus
 }

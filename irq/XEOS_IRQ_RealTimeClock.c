@@ -72,98 +72,47 @@
 #include "xeos/hal/io.h"
 #include "xeos/hal/cmos.h"
 #include "xeos/hal/rtc.h"
+#include "xeos/__system.h"
+#include <time.h>
 
-#include "xeos/video.h"
-
-static int __count = 0;
+static int  __count  = 0;
+static bool __inited = false;
 
 void XEOS_IRQ_RealTimeClock( XEOS_HAL_PIC_IRQ irq )
 {
-    uint8_t                  seconds;
-    uint8_t                  minutes;
-    uint8_t                  hours;
-    uint8_t                  weekday;
-    uint8_t                  dayOfMonth;
-    uint8_t                  month;
-    uint8_t                  year;
-    uint8_t                  century;
-    XEOS_HAL_RTC_DateTimeRef dateTime;
-    
     ( void )irq;
     
-    __count++;
-    
-    if( __count == 1024 )
+    if( __inited == false )
     {
-        __count     = 0;
-        dateTime    = XEOS_HAL_RTC_DateTimeGetSystemTime( true );
-        seconds     = XEOS_HAL_RTC_DateTimeGetSeconds( dateTime );
-        minutes     = XEOS_HAL_RTC_DateTimeGetMinutes( dateTime );
-        hours       = XEOS_HAL_RTC_DateTimeGetHours( dateTime );
-        weekday     = XEOS_HAL_RTC_DateTimeGetWeekday( dateTime );
-        dayOfMonth  = XEOS_HAL_RTC_DateTimeGetDayOfMonth( dateTime );
-        month       = XEOS_HAL_RTC_DateTimeGetMonth( dateTime );
-        year        = XEOS_HAL_RTC_DateTimeGetYear( dateTime );
-        century     = XEOS_HAL_RTC_DateTimeGetCentury( dateTime );
-        
-        seconds++;
-        
-        if( seconds == 60 )
         {
-            seconds = 0;
+            XEOS_HAL_RTC_DateTimeRef dateTime;
+            struct tm                time;
             
-            minutes++;
-        }
-        
-        if( minutes == 60 )
-        {
-            minutes = 0;
+            __count     = 0;
+            __inited    = true;
             
-            hours++;
-        }
-        
-        if( hours == 24 )
-        {
-            hours = 0;
+            dateTime    = XEOS_HAL_RTC_DateTimeGetSystemTime();
+            time        = XEOS_HAL_RTC_DateTimeGetTM( dateTime );
             
-            weekday++;
-            dayOfMonth++;
+            __XEOS_System_Milliseconds = 0;
+            __XEOS_System_Timestamp    = ( uint64_t )mktime( &time );
         }
-        
-        if( weekday == 7 )
+    }
+    else
+    {
+        if( __count == 1024 )
         {
-            weekday = 0;
-        }
-        
-        if( dayOfMonth == 32 )
-        {
-            dayOfMonth = 0;
+            __count                     = 0;
+            __XEOS_System_Milliseconds  = 0;
             
-            month++;
+            __XEOS_System_Timestamp++;
         }
-        
-        if( month == 13 )
+        else
         {
-            month = 0;
+            __XEOS_System_Milliseconds = 1000 / ( 1024 / __count );
             
-            year++;
+            __count++;
         }
-        
-        if( year == 100 )
-        {
-            year = 0;
-            
-            century++;
-        }
-        
-        XEOS_HAL_RTC_DateTimeSetSeconds( dateTime, seconds );
-        XEOS_HAL_RTC_DateTimeSetMinutes( dateTime, minutes );
-        XEOS_HAL_RTC_DateTimeSetHours( dateTime, hours );
-        XEOS_HAL_RTC_DateTimeSetWeekday( dateTime, weekday );
-        XEOS_HAL_RTC_DateTimeSetDayOfMonth( dateTime, dayOfMonth );
-        XEOS_HAL_RTC_DateTimeSetMonth( dateTime, month );
-        XEOS_HAL_RTC_DateTimeSetYear( dateTime, year );
-        XEOS_HAL_RTC_DateTimeSetCentury( dateTime, century );
     }
     
     /*
