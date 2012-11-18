@@ -70,7 +70,11 @@
 #include "xeos/irq.h"
 #include "xeos/__irq.h"
 
+#include "xeos/video.h"
+
 void XEOS_IRQ_RealTimeClock( XEOS_IRQ_IRQ irq )
 {
     ( void )irq;
+    
+    XEOS_Video_Putc( '-', true );
 }

@@ -143,8 +143,11 @@ void XEOS_Main( XEOS_InfoRef info )
     /* Installs the new Interrupt Descriptor Table */
     XEOS_HAL_IDT_Reload();
     
-    /* INstalls the handler for IRQ0 (system timer) */
+    /* Installs the handler for IRQ0 (system timer) */
     XEOS_IRQ_AddIRQHandler( XEOS_IRQ_IRQ0, XEOS_IRQ_SystemTimer );
+    
+    /* Installs the handler for IRQ8 (real time clock) */
+    XEOS_IRQ_AddIRQHandler( XEOS_IRQ_IRQ8, XEOS_IRQ_RealTimeClock );
     
     /* (Re)enables the interrupts */
     XEOS_HAL_CPU_EnableInterrupts();
