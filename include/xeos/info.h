@@ -165,6 +165,76 @@ uint64_t XEOS_Info_MemoryEntryGetLength( XEOS_Info_MemoryEntryRef entry );
  */
 XEOS_Info_MemoryEntryType XEOS_Info_MemoryEntryGetType( XEOS_Info_MemoryEntryRef entry );
 
+/*!
+ * @function        XEOS_Info_GetKernelStartAddress
+ * @abstract        Gets the start address of the kernel
+ * @result          The start address of the kernel
+ */
+uintptr_t XEOS_Info_GetKernelStartAddress( void );
+
+/*!
+ * @function        XEOS_Info_GetKernelEndAddress
+ * @abstract        Gets the end address of the kernel
+ * @result          The end address of the kernel
+ */
+uintptr_t XEOS_Info_GetKernelEndAddress( void );
+
+/*!
+ * @function        XEOS_Info_GetKernelTextSectionStartAddress
+ * @abstract        Gets the start address of the .text kernel section
+ * @result          The start address of the .text kernel kernel
+ */
+uintptr_t XEOS_Info_GetKernelTextSectionStartAddress( void );
+
+/*!
+ * @function        XEOS_Info_GetKernelTextSectionEndAddress
+ * @abstract        Gets the end address of the .text kernel section
+ * @result          The end address of the .text kernel kernel
+ */
+uintptr_t XEOS_Info_GetKernelTextSectionEndAddress( void );
+
+/*!
+ * @function        XEOS_Info_GetKernelRODataSectionStartAddress
+ * @abstract        Gets the start address of the .rodata kernel section
+ * @result          The start address of the .rodata kernel kernel
+ */
+uintptr_t XEOS_Info_GetKernelRODataSectionStartAddress( void );
+
+/*!
+ * @function        XEOS_Info_GetKernelRODataSectionEndAddress
+ * @abstract        Gets the end address of the .rodata kernel section
+ * @result          The end address of the .rodata kernel kernel
+ */
+uintptr_t XEOS_Info_GetKernelRODataSectionEndAddress( void );
+
+/*!
+ * @function        XEOS_Info_GetKernelDataSectionStartAddress
+ * @abstract        Gets the start address of the .data kernel section
+ * @result          The start address of the .data kernel kernel
+ */
+uintptr_t XEOS_Info_GetKernelDataSectionStartAddress( void );
+
+/*!
+ * @function        XEOS_Info_GetKernelDataSectionEndAddress
+ * @abstract        Gets the end address of the .data kernel section
+ * @result          The end address of the .data kernel kernel
+ */
+uintptr_t XEOS_Info_GetKernelDataSectionEndAddress( void );
+
+/*!
+ * @function        XEOS_Info_GetKernelBSSSectionStartAddress
+ * @abstract        Gets the start address of the .bss kernel section
+ * @result          The start address of the .bss kernel kernel
+ */
+uintptr_t XEOS_Info_GetKernelBSSSectionStartAddress( void );
+
+/*!
+ * @function        XEOS_Info_GetKernelBSSSectionEndAddress
+ * @abstract        Gets the end address of the .bss kernel section
+ * @result          The end address of the .bss kernel kernel
+ */
+uintptr_t XEOS_Info_GetKernelBSSSectionEndAddress( void );
+
 #ifdef __cplusplus
 }
 #endif
