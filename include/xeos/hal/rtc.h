@@ -85,6 +85,13 @@ extern "C" {
 typedef struct __XEOS_HAL_RTC_DateTime * XEOS_HAL_RTC_DateTimeRef;
 
 /*!
+ * @function        XEOS_HAL_RTC_UpdateInProgress
+ * @abstract        Checks if a RTC update is in progress
+ * @result          True if a RTC update is in progress, otherwise false
+ */
+bool XEOS_HAL_RTC_UpdateInProgress( void );
+
+/*!
  * @function        XEOS_HAL_RTC_DateTimeSetSystemTime
  * @abstract        Sets the RTC time (writes values back to CMOS)
  * @param           update          If yes, updates the system clock by reading values from CMOS

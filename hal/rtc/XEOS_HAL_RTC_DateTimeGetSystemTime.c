@@ -77,11 +77,74 @@ bool                                  __inited = false;
 
 XEOS_HAL_RTC_DateTimeRef XEOS_HAL_RTC_DateTimeGetSystemTime( bool update )
 {
+    uint8_t seconds   [ 2 ];
+    uint8_t minutes   [ 2 ];
+    uint8_t hours     [ 2 ];
+    uint8_t weekday   [ 2 ];
+    uint8_t dayOfMonth[ 2 ];
+    uint8_t month     [ 2 ];
+    uint8_t year      [ 2 ];
+    uint8_t century   [ 2 ];
+    uint8_t statusB;
+    
     if( update == true || __inited == false )
     {
         memset( &__dateTime, 0, sizeof( struct __XEOS_HAL_RTC_DateTime ) );
         
+        while( XEOS_HAL_RTC_UpdateInProgress() == true );
         
+        seconds   [ 0 ] = __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_RegisterSeconds );
+        minutes   [ 0 ] = __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_RegisterMinutes );
+        hours     [ 0 ] = __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_RegisterHours );
+        weekday   [ 0 ] = __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_RegisterWeekDay );
+        dayOfMonth[ 0 ] = __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_RegisterDayOfMonth );
+        month     [ 0 ] = __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_RegisterMonth );
+        year      [ 0 ] = __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_RegisterYear );
+        century   [ 0 ] = __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_RegisterCentury );
+        
+        do
+        {
+            seconds   [ 1 ] = __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_RegisterSeconds );
+            minutes   [ 1 ] = __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_RegisterMinutes );
+            hours     [ 1 ] = __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_RegisterHours );
+            weekday   [ 1 ] = __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_RegisterWeekDay );
+            dayOfMonth[ 1 ] = __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_RegisterDayOfMonth );
+            month     [ 1 ] = __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_RegisterMonth );
+            year      [ 1 ] = __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_RegisterYear );
+            century   [ 1 ] = __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_RegisterCentury );
+        }
+        while
+        (
+                seconds   [ 0 ] != seconds   [ 1 ]
+            &&  minutes   [ 0 ] != minutes   [ 1 ]
+            &&  hours     [ 0 ] != hours     [ 1 ]
+            &&  weekday   [ 0 ] != weekday   [ 1 ]
+            &&  dayOfMonth[ 0 ] != dayOfMonth[ 1 ]
+            &&  month     [ 0 ] != month     [ 1 ]
+            &&  year      [ 0 ] != year      [ 1 ]
+            &&  century   [ 0 ] != century   [ 1 ]
+        );
+        
+        statusB = __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_RegisterStatusB );
+        
+        /* Convert BCD to binary values if necessary */
+        if( ( statusB & 0x04 ) == 0 )
+        {
+            seconds   [ 0 ] = ( seconds   [ 0 ] & 0x0F ) + ( ( seconds   [ 0 ] / 16 ) * 10 );
+            minutes   [ 0 ] = ( minutes   [ 0 ] & 0x0F ) + ( ( minutes   [ 0 ] / 16 ) * 10 );
+            weekday   [ 0 ] = ( weekday   [ 0 ] & 0x0F ) + ( ( weekday   [ 0 ] / 16 ) * 10 );
+            dayOfMonth[ 0 ] = ( dayOfMonth[ 0 ] & 0x0F ) + ( ( dayOfMonth[ 0 ] / 16 ) * 10 );
+            month     [ 0 ] = ( month     [ 0 ] & 0x0F ) + ( ( month     [ 0 ] / 16 ) * 10 );
+            year      [ 0 ] = ( year      [ 0 ] & 0x0F ) + ( ( year      [ 0 ] / 16 ) * 10 );
+            century   [ 0 ] = ( century   [ 0 ] & 0x0F ) + ( ( century   [ 0 ] / 16 ) * 10 );
+            hours     [ 0 ] = ( ( hours[ 0 ] & 0x0F ) + ( ( ( hours[ 0 ] & 0x70) / 16 ) * 10 ) ) | ( hours[ 0 ] & 0x80 );
+        }
+      
+        /* Convert 12 hour clock to 24 hour clock if necessary */
+        if( ( statusB & 0x02 ) == 0 && ( hours[ 0 ] & 0x80 ) != 0 )
+        {
+            hours[ 0 ] = ( ( hours[ 0 ] & 0x7F ) + 12 ) % 24;
+        }
         
         __inited = true;
     }
