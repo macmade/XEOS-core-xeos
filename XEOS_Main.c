@@ -165,6 +165,10 @@ void XEOS_Main( XEOS_InfoRef info )
     /* Enables periodic interrupts on the RTC */
     XEOS_HAL_RTC_EnablePeriodicInterrupts();
     
+    /* (Re)enables the interrupts */
+    XEOS_HAL_CPU_EnableInterrupts();
+    XEOS_HAL_NMI_Enable();
+    
     {
         XEOS_Info_MemoryRef         memory;
         XEOS_Info_MemoryEntryRef    entry;
@@ -204,9 +208,30 @@ void XEOS_Main( XEOS_InfoRef info )
         }
     }
     
-    /* (Re)enables the interrupts */
-    XEOS_HAL_CPU_EnableInterrupts();
-    XEOS_HAL_NMI_Enable();
+    /*
+    {
+        time_t t1;
+        time_t t2;
+        
+        t1 = XEOS_System_GetTime();
+        t2 = t1;
+        
+        while( 1 )
+        {
+            if( t1 != t2 )
+            {
+                t1 = t2;
+                
+                XEOS_Video_Clear();
+                XEOS_Video_Printf( "%Lu", t1 );
+            }
+            else
+            {
+                t2 = XEOS_System_GetTime();
+            }
+        }
+    }
+    */
     
     for( ; ; );
 }
