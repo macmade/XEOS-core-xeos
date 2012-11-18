@@ -62,84 +62,21 @@
 /* $Id$ */
 
 /*!
- * @header          __rtc.h
+ * @file            XEOS_HAL_RTC_EnablePeriodicInterrupts.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS_HAL___RTC_H__
-#define __XEOS_HAL___RTC_H__
-#pragma once
+#include "xeos/hal/rtc.h"
+#include "xeos/hal/__rtc.h"
+#include <stdlib.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <stdint.h>
-
-/*!
- * @struct          __XEOS_HAL_RTC_DateTime
- * @abstract        Date/Time RTC values
- * @field           seconds         The number of seconds
- * @field           minutes         The number of minutes
- * @field           hours           The number of hours
- * @field           weekday         The weekday
- * @field           dayOfMonth      The day of the month
- * @field           month           The month number
- * @field           year            The year number
- * @field           century         The century number
- */
-struct __XEOS_HAL_RTC_DateTime
+uint8_t XEOS_HAL_RTC_DateTimeGetYear( XEOS_HAL_RTC_DateTimeRef time )
 {
-    uint8_t seconds;
-    uint8_t minutes;
-    uint8_t hours;
-    uint8_t weekday;
-    uint8_t dayOfMonth;
-    uint8_t month;
-    uint8_t year;
-    uint8_t century;
-};
-
-/*!
- * @enum        __XEOS_HAL_RTC_Register
- * @abstract    RTC registers
- * @constant    __XEOS_HAL_RTC_RegisterSeconds      Seconds register
- * @constant    __XEOS_HAL_RTC_RegisterMinutes      Minutes register
- * @constant    __XEOS_HAL_RTC_RegisterHours        Hours register
- * @constant    __XEOS_HAL_RTC_RegisterWeekDay      Weekday register
- * @constant    __XEOS_HAL_RTC_RegisterDayOfMonth   Day of the month register
- * @constant    __XEOS_HAL_RTC_RegisterMonth        Month register
- * @constant    __XEOS_HAL_RTC_RegisterYear         Year register
- * @constant    __XEOS_HAL_RTC_RegisterCentury      Century register
- * @constant    __XEOS_HAL_RTC_RegisterStatusA      Status A register
- * @constant    __XEOS_HAL_RTC_RegisterStatusB      Status B register
- */
-typedef enum
-{
-    __XEOS_HAL_RTC_RegisterSeconds      = 0x00,
-    __XEOS_HAL_RTC_RegisterMinutes      = 0x02,
-    __XEOS_HAL_RTC_RegisterHours        = 0x04,
-    __XEOS_HAL_RTC_RegisterWeekDay      = 0x06,
-    __XEOS_HAL_RTC_RegisterDayOfMonth   = 0x07,
-    __XEOS_HAL_RTC_RegisterMonth        = 0x08,
-    __XEOS_HAL_RTC_RegisterYear         = 0x09,
-    __XEOS_HAL_RTC_RegisterCentury      = 0x32,
-    __XEOS_HAL_RTC_RegisterStatusA      = 0x0A,
-    __XEOS_HAL_RTC_RegisterStatusB      = 0x0B
+    if( time == NULL )
+    {
+        return 0;
+    }
+    
+    return time->year;
 }
-__XEOS_HAL_RTC_Register;
-
-/*!
- * @function        __XEOS_HAL_RTC_ReadRegister
- * @abstract        Reads the content of a RTC register
- * @param           r               The RTC register to read
- * @result          The content of the register
- */
-uint8_t __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_Register r );
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* __XEOS_HAL___RTC_H__ */

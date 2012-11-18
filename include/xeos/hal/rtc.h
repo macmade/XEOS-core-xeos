@@ -75,8 +75,159 @@
 extern "C" {
 #endif
 
-void XEOS_HAL_RTC_Update( void );
+#include <stdint.h>
+
+/*!
+ * @typedef         XEOS_HAL_RTC_DateTimeRef
+ * @abstract        Opaque type for the RTC time object
+ */
+typedef struct __XEOS_HAL_RTC_DateTime * XEOS_HAL_RTC_DateTimeRef;
+
+/*!
+ * @function        XEOS_HAL_RTC_DateTimeSetSystemTime
+ * @abstract        Sets the RTC time (writes values back to CMOS)
+ * @result          The RTC time object
+ */
+XEOS_HAL_RTC_DateTimeRef XEOS_HAL_RTC_DateTimeGetSystemTime( void );
+
+/*!
+ * @function        XEOS_HAL_RTC_DateTimeGetSeconds
+ * @abstract        Gets the number of seconds
+ * @param           time            The RTC time object
+ * @result          The number of seconds
+ */
+uint8_t XEOS_HAL_RTC_DateTimeGetSeconds( XEOS_HAL_RTC_DateTimeRef time );
+
+/*!
+ * @function        XEOS_HAL_RTC_DateTimeGetMinutes
+ * @abstract        Gets the number of minutes
+ * @param           time            The RTC time object
+ * @result          The number of minutes
+ */
+uint8_t XEOS_HAL_RTC_DateTimeGetMinutes( XEOS_HAL_RTC_DateTimeRef time );
+
+/*!
+ * @function        XEOS_HAL_RTC_DateTimeGetHours
+ * @abstract        Gets the number of hours
+ * @param           time            The RTC time object
+ * @result          The number of hours
+ */
+uint8_t XEOS_HAL_RTC_DateTimeGetHours( XEOS_HAL_RTC_DateTimeRef time );
+
+/*!
+ * @function        XEOS_HAL_RTC_DateTimeGetWeekday
+ * @abstract        Gets the weekday
+ * @param           time            The RTC time object
+ * @result          The weekday
+ */
+uint8_t XEOS_HAL_RTC_DateTimeGetWeekday( XEOS_HAL_RTC_DateTimeRef time );
+
+/*!
+ * @function        XEOS_HAL_RTC_DateTimeGetDayOfMonth
+ * @abstract        Gets the day of month
+ * @param           time            The RTC time object
+ * @result          The day of month
+ */
+uint8_t XEOS_HAL_RTC_DateTimeGetDayOfMonth( XEOS_HAL_RTC_DateTimeRef time );
+
+/*!
+ * @function        XEOS_HAL_RTC_DateTimeGetMonth
+ * @abstract        Gets the month number
+ * @param           time            The RTC time object
+ * @result          The month number
+ */
+uint8_t XEOS_HAL_RTC_DateTimeGetMonth( XEOS_HAL_RTC_DateTimeRef time );
+
+/*!
+ * @function        XEOS_HAL_RTC_DateTimeGetYear
+ * @abstract        Gets the year number
+ * @param           time            The RTC time object
+ * @result          The year number
+ */
+uint8_t XEOS_HAL_RTC_DateTimeGetYear( XEOS_HAL_RTC_DateTimeRef time );
+
+/*!
+ * @function        XEOS_HAL_RTC_DateTimeGetCentury
+ * @abstract        Gets the century number
+ * @param           time            The RTC time object
+ * @result          The century number
+ */
+uint8_t XEOS_HAL_RTC_DateTimeGetCentury( XEOS_HAL_RTC_DateTimeRef time );
+
+/*!
+ * @function        XEOS_HAL_RTC_DateTimeSetSeconds
+ * @abstract        Sets the number of seconds
+ * @param           time            The RTC time object
+ * @param           value           The number of seconds
+ */
+void XEOS_HAL_RTC_DateTimeSetSeconds( XEOS_HAL_RTC_DateTimeRef time, uint8_t value );
+
+/*!
+ * @function        XEOS_HAL_RTC_DateTimeSetMinutes
+ * @abstract        Sets the number of minutes
+ * @param           time            The RTC time object
+ * @param           value           The number of minutes
+ */
+void XEOS_HAL_RTC_DateTimeSetMinutes( XEOS_HAL_RTC_DateTimeRef time, uint8_t value );
+
+/*!
+ * @function        XEOS_HAL_RTC_DateTimeSetHours
+ * @abstract        Sets the number of hours
+ * @param           time            The RTC time object
+ * @param           value           The number of hours
+ */
+void XEOS_HAL_RTC_DateTimeSetHours( XEOS_HAL_RTC_DateTimeRef time, uint8_t value );
+
+/*!
+ * @function        XEOS_HAL_RTC_DateTimeSetWeekday
+ * @abstract        Sets the weekday
+ * @param           time            The RTC time object
+ * @param           value           The weekday
+ */
+void XEOS_HAL_RTC_DateTimeSetWeekday( XEOS_HAL_RTC_DateTimeRef time, uint8_t value );
+
+/*!
+ * @function        XEOS_HAL_RTC_DateTimeSetDayOfMonth
+ * @abstract        Sets the day of month
+ * @param           time            The RTC time object
+ * @param           value           The day of month
+ */
+void XEOS_HAL_RTC_DateTimeSetDayOfMonth( XEOS_HAL_RTC_DateTimeRef time, uint8_t value );
+
+/*!
+ * @function        XEOS_HAL_RTC_DateTimeSetMonth
+ * @abstract        Sets the month number
+ * @param           time            The RTC time object
+ * @param           value           The month number
+ */
+void XEOS_HAL_RTC_DateTimeSetMonth( XEOS_HAL_RTC_DateTimeRef time, uint8_t value );
+
+/*!
+ * @function        XEOS_HAL_RTC_DateTimeSetYear
+ * @abstract        Sets the year number
+ * @param           time            The RTC time object
+ * @param           value           The year number
+ */
+void XEOS_HAL_RTC_DateTimeSetYear( XEOS_HAL_RTC_DateTimeRef time, uint8_t value );
+
+/*!
+ * @function        XEOS_HAL_RTC_DateTimeSetCentury
+ * @abstract        Sets the century number
+ * @param           time            The RTC time object
+ * @param           value           The century number
+ */
+void XEOS_HAL_RTC_DateTimeSetCentury( XEOS_HAL_RTC_DateTimeRef time, uint8_t value );
+
+/*!
+ * @function        XEOS_HAL_RTC_EnablePeriodicInterrupts
+ * @abstract        Enables RTC periodic interrupts (IRQ8)
+ */
 void XEOS_HAL_RTC_EnablePeriodicInterrupts( void );
+
+/*!
+ * @function        XEOS_HAL_RTC_DisablePeriodicInterrupts
+ * @abstract        Disables RTC periodic interrupts (IRQ8)
+ */
 void XEOS_HAL_RTC_DisablePeriodicInterrupts( void );
 
 #ifdef __cplusplus
