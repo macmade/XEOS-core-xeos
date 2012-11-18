@@ -109,9 +109,9 @@ void XEOS_IRQ_RealTimeClock( XEOS_HAL_PIC_IRQ irq )
         }
         else
         {
-            __XEOS_System_Milliseconds = 1000 / ( 1024 / __count );
-            
             __count++;
+            
+            __XEOS_System_Milliseconds = ( ( double )__count / ( double )1024 ) * ( double )1000;
         }
     }
     
