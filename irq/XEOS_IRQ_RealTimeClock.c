@@ -71,14 +71,100 @@
 #include "xeos/__irq.h"
 #include "xeos/hal/io.h"
 #include "xeos/hal/cmos.h"
+#include "xeos/hal/rtc.h"
 
 #include "xeos/video.h"
 
+static int __count = 0;
+
 void XEOS_IRQ_RealTimeClock( XEOS_HAL_PIC_IRQ irq )
 {
+    uint8_t                  seconds;
+    uint8_t                  minutes;
+    uint8_t                  hours;
+    uint8_t                  weekday;
+    uint8_t                  dayOfMonth;
+    uint8_t                  month;
+    uint8_t                  year;
+    uint8_t                  century;
+    XEOS_HAL_RTC_DateTimeRef dateTime;
+    
     ( void )irq;
     
-    XEOS_Video_Putc( '-', true );
+    __count++;
+    
+    if( __count == 1024 )
+    {
+        __count     = 0;
+        dateTime    = XEOS_HAL_RTC_DateTimeGetSystemTime( true );
+        seconds     = XEOS_HAL_RTC_DateTimeGetSeconds( dateTime );
+        minutes     = XEOS_HAL_RTC_DateTimeGetMinutes( dateTime );
+        hours       = XEOS_HAL_RTC_DateTimeGetHours( dateTime );
+        weekday     = XEOS_HAL_RTC_DateTimeGetWeekday( dateTime );
+        dayOfMonth  = XEOS_HAL_RTC_DateTimeGetDayOfMonth( dateTime );
+        month       = XEOS_HAL_RTC_DateTimeGetMonth( dateTime );
+        year        = XEOS_HAL_RTC_DateTimeGetYear( dateTime );
+        century     = XEOS_HAL_RTC_DateTimeGetCentury( dateTime );
+        
+        seconds++;
+        
+        if( seconds == 60 )
+        {
+            seconds = 0;
+            
+            minutes++;
+        }
+        
+        if( minutes == 60 )
+        {
+            minutes = 0;
+            
+            hours++;
+        }
+        
+        if( hours == 24 )
+        {
+            hours = 0;
+            
+            weekday++;
+            dayOfMonth++;
+        }
+        
+        if( weekday == 7 )
+        {
+            weekday = 0;
+        }
+        
+        if( dayOfMonth == 32 )
+        {
+            dayOfMonth = 0;
+            
+            month++;
+        }
+        
+        if( month == 13 )
+        {
+            month = 0;
+            
+            year++;
+        }
+        
+        if( year == 99 )
+        {
+            year = 0;
+            
+            century++;
+        }
+        
+        XEOS_HAL_RTC_DateTimeSetSeconds( dateTime, seconds );
+        XEOS_HAL_RTC_DateTimeSetMinutes( dateTime, minutes );
+        XEOS_HAL_RTC_DateTimeSetHours( dateTime, hours );
+        XEOS_HAL_RTC_DateTimeSetWeekday( dateTime, weekday );
+        XEOS_HAL_RTC_DateTimeSetDayOfMonth( dateTime, dayOfMonth );
+        XEOS_HAL_RTC_DateTimeSetMonth( dateTime, month );
+        XEOS_HAL_RTC_DateTimeSetYear( dateTime, year );
+        XEOS_HAL_RTC_DateTimeSetCentury( dateTime, century );
+    }
     
     /*
      * When IRQ 8 is triggered, the Status Register C will contain a bitmask

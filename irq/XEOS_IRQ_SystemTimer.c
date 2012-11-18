@@ -75,6 +75,4 @@
 void XEOS_IRQ_SystemTimer( XEOS_HAL_PIC_IRQ irq )
 {
     ( void )irq;
-    
-    XEOS_Video_Putc( '.', true );
 }
