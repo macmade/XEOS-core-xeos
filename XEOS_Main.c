@@ -206,6 +206,17 @@ void XEOS_Main( XEOS_InfoRef info )
             
             XEOS_Video_Printf( " - %Lu bytes\n", length );
         }
+        
+        XEOS_Video_Printf
+        (
+            "\n"
+            "Kernel start:  %016#X\n"
+            "Kernel end:    %016#X\n"
+            "Kernel size:   %Lu bytes\n",
+            XEOS_Info_GetKernelStartAddress(),
+            XEOS_Info_GetKernelEndAddress(),
+            XEOS_Info_GetKernelEndAddress() - XEOS_Info_GetKernelStartAddress()
+        );
     }
     
     /*
