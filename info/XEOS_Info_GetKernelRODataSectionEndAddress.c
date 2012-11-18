@@ -72,5 +72,5 @@
 
 uintptr_t XEOS_Info_GetKernelRODataSectionEndAddress( void )
 {
-    return __XEOS_KERNEL_SECTION_RODATA_END;
+    return ( uintptr_t )&__XEOS_KERNEL_SECTION_RODATA_END;
 }

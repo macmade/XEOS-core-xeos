@@ -72,5 +72,5 @@
 
 uintptr_t XEOS_Info_GetKernelEndAddress( void )
 {
-    return __XEOS_KERNEL_END;
+    return ( uintptr_t )&__XEOS_KERNEL_END;
 }

@@ -72,5 +72,5 @@
 
 uintptr_t XEOS_Info_GetKernelTextSectionEndAddress( void )
 {
-    return __XEOS_KERNEL_SECTION_TEXT_END;
+    return ( uintptr_t )&__XEOS_KERNEL_SECTION_TEXT_END;
 }

@@ -72,5 +72,5 @@
 
 uintptr_t XEOS_Info_GetKernelRODataSectionStartAddress( void )
 {
-    return __XEOS_KERNEL_SECTION_RODATA_START;
+    return ( uintptr_t )&__XEOS_KERNEL_SECTION_RODATA_START;
 }

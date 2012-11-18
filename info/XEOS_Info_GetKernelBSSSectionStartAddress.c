@@ -72,5 +72,5 @@
 
 uintptr_t XEOS_Info_GetKernelBSSSectionStartAddress( void )
 {
-    return __XEOS_KERNEL_SECTION_BSS_START;
+    return ( uintptr_t )&__XEOS_KERNEL_SECTION_BSS_START;
 }

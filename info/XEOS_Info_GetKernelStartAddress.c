@@ -72,5 +72,5 @@
 
 uintptr_t XEOS_Info_GetKernelStartAddress( void )
 {
-    return __XEOS_KERNEL_START;
+    return ( uintptr_t )&__XEOS_KERNEL_START;
 }

@@ -72,5 +72,5 @@
 
 uintptr_t XEOS_Info_GetKernelTextSectionStartAddress( void )
 {
-    return __XEOS_KERNEL_SECTION_TEXT_START;
+    return ( uintptr_t )&__XEOS_KERNEL_SECTION_TEXT_START;
 }
