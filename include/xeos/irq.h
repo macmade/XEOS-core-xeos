@@ -75,38 +75,18 @@
 extern "C" {
 #endif
 
+#include <xeos/hal/pic.h>
 #include <stdint.h>
 #include <stdbool.h>
 
-typedef enum
-{
-    XEOS_IRQ_IRQ0   = 0x00,
-    XEOS_IRQ_IRQ1   = 0x01,
-    XEOS_IRQ_IRQ2   = 0x02,
-    XEOS_IRQ_IRQ3   = 0x03,
-    XEOS_IRQ_IRQ4   = 0x04,
-    XEOS_IRQ_IRQ5   = 0x05,
-    XEOS_IRQ_IRQ6   = 0x06,
-    XEOS_IRQ_IRQ7   = 0x07,
-    XEOS_IRQ_IRQ8   = 0x08,
-    XEOS_IRQ_IRQ9   = 0x09,
-    XEOS_IRQ_IRQ10  = 0x0A,
-    XEOS_IRQ_IRQ11  = 0x0B,
-    XEOS_IRQ_IRQ12  = 0x0C,
-    XEOS_IRQ_IRQ13  = 0x0D,
-    XEOS_IRQ_IRQ14  = 0x0E,
-    XEOS_IRQ_IRQ15  = 0x0F
-}
-XEOS_IRQ_IRQ;
+typedef void ( * XEOS_IRQ_IRQHandler )( XEOS_HAL_PIC_IRQ irq );
 
-typedef void ( * XEOS_IRQ_IRQHandler )( XEOS_IRQ_IRQ irq );
+bool XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ irq, XEOS_IRQ_IRQHandler handler );
+void XEOS_IRQ_RemoveIRQHandler( XEOS_HAL_PIC_IRQ irq, XEOS_IRQ_IRQHandler handler );
+void XEOS_IRQ_ExecuteIRQHandlers( XEOS_HAL_PIC_IRQ irq );
 
-bool XEOS_IRQ_AddIRQHandler( XEOS_IRQ_IRQ irq, XEOS_IRQ_IRQHandler handler );
-void XEOS_IRQ_RemoveIRQHandler( XEOS_IRQ_IRQ irq, XEOS_IRQ_IRQHandler handler );
-void XEOS_IRQ_ExecuteIRQHandlers( XEOS_IRQ_IRQ irq );
-
-void XEOS_IRQ_SystemTimer( XEOS_IRQ_IRQ irq );
-void XEOS_IRQ_RealTimeClock( XEOS_IRQ_IRQ irq );
+void XEOS_IRQ_SystemTimer( XEOS_HAL_PIC_IRQ irq );
+void XEOS_IRQ_RealTimeClock( XEOS_HAL_PIC_IRQ irq );
 
 #ifdef __cplusplus
 }

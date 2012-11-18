@@ -148,6 +148,47 @@ typedef enum
 XEOS_HAL_PIC_ICW4;
 
 /*!
+ * @enum        XEOS_HAL_PIC_IRQ
+ * @abstract    IRQ lines
+ * @constant    XEOS_HAL_PIC_IRQ0       IRQ line 0 (master PIC)
+ * @constant    XEOS_HAL_PIC_IRQ1       IRQ line 1 (master PIC)
+ * @constant    XEOS_HAL_PIC_IRQ2       IRQ line 2 (master PIC)
+ * @constant    XEOS_HAL_PIC_IRQ3       IRQ line 3 (master PIC)
+ * @constant    XEOS_HAL_PIC_IRQ4       IRQ line 4 (master PIC)
+ * @constant    XEOS_HAL_PIC_IRQ5       IRQ line 5 (master PIC)
+ * @constant    XEOS_HAL_PIC_IRQ6       IRQ line 6 (master PIC)
+ * @constant    XEOS_HAL_PIC_IRQ7       IRQ line 7 (master PIC)
+ * @constant    XEOS_HAL_PIC_IRQ8       IRQ line 8 (slave PIC)
+ * @constant    XEOS_HAL_PIC_IRQ9       IRQ line 9 (slave PIC)
+ * @constant    XEOS_HAL_PIC_IRQ10      IRQ line 10 (slave PIC)
+ * @constant    XEOS_HAL_PIC_IRQ11      IRQ line 11 (slave PIC)
+ * @constant    XEOS_HAL_PIC_IRQ12      IRQ line 12 (slave PIC)
+ * @constant    XEOS_HAL_PIC_IRQ13      IRQ line 13 (slave PIC)
+ * @constant    XEOS_HAL_PIC_IRQ14      IRQ line 14 (slave PIC)
+ * @constant    XEOS_HAL_PIC_IRQ15      IRQ line 15 (slave PIC)
+ */
+typedef enum
+{
+    XEOS_HAL_PIC_IRQ0   = 0x00,
+    XEOS_HAL_PIC_IRQ1   = 0x01,
+    XEOS_HAL_PIC_IRQ2   = 0x02,
+    XEOS_HAL_PIC_IRQ3   = 0x03,
+    XEOS_HAL_PIC_IRQ4   = 0x04,
+    XEOS_HAL_PIC_IRQ5   = 0x05,
+    XEOS_HAL_PIC_IRQ6   = 0x06,
+    XEOS_HAL_PIC_IRQ7   = 0x07,
+    XEOS_HAL_PIC_IRQ8   = 0x08,
+    XEOS_HAL_PIC_IRQ9   = 0x09,
+    XEOS_HAL_PIC_IRQ10  = 0x0A,
+    XEOS_HAL_PIC_IRQ11  = 0x0B,
+    XEOS_HAL_PIC_IRQ12  = 0x0C,
+    XEOS_HAL_PIC_IRQ13  = 0x0D,
+    XEOS_HAL_PIC_IRQ14  = 0x0E,
+    XEOS_HAL_PIC_IRQ15  = 0x0F
+}
+XEOS_HAL_PIC_IRQ;
+
+/*!
  * @function        XEOS_HAL_PIC_Remap
  * @abstract        Remaps the PIC (Programmable Interrupt Controller)
  * @param           masterBase      The base IRQ number for the master controller
@@ -194,6 +235,20 @@ void XEOS_HAL_PIC_SendData( XEOS_HAL_PIC_Controller c, uint8_t data );
  * @param           c               The PIC
  */
 void XEOS_HAL_PIC_SendEOI( XEOS_HAL_PIC_Controller c );
+
+/*!
+ * @function        XEOS_HAL_PIC_SendEOI
+ * @abstract        Masks an IRQ line
+ * @param           irq             The IRQ line to mask (0-15)
+ */
+void XEOS_HAL_PIC_MaskIRQLine( XEOS_HAL_PIC_IRQ irq );
+
+/*!
+ * @function        XEOS_HAL_PIC_SendEOI
+ * @abstract        Unmasks an IRQ line
+ * @param           irq             The IRQ line to unmask (0-15)
+ */
+void XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ irq );
 
 #ifdef __cplusplus
 }

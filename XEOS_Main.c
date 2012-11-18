@@ -144,10 +144,13 @@ void XEOS_Main( XEOS_InfoRef info )
     XEOS_HAL_IDT_Reload();
     
     /* Installs the handler for IRQ0 (system timer) */
-    XEOS_IRQ_AddIRQHandler( XEOS_IRQ_IRQ0, XEOS_IRQ_SystemTimer );
+    XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ0, XEOS_IRQ_SystemTimer );
+    
+    /* Makes sure IRQ8 (real time clock) is not masked */
+    XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ8 );
     
     /* Installs the handler for IRQ8 (real time clock) */
-    XEOS_IRQ_AddIRQHandler( XEOS_IRQ_IRQ8, XEOS_IRQ_RealTimeClock );
+    XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ8, XEOS_IRQ_RealTimeClock );
     
     /* (Re)enables the interrupts */
     XEOS_HAL_CPU_EnableInterrupts();

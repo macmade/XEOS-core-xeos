@@ -62,19 +62,53 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_IRQ_SystemTimer.c
+ * @file            XEOS_HAL_PIC_UnmaskIRQLine.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#include "xeos/irq.h"
-#include "xeos/__irq.h"
+#include "xeos/hal/pic.h"
+#include "xeos/hal/io.h"
 
-#include "xeos/video.h"
-
-void XEOS_IRQ_SystemTimer( XEOS_HAL_PIC_IRQ irq )
+void XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ irq )
 {
-    ( void )irq;
+    XEOS_HAL_PIC_Controller controller;
+    uint8_t                 line;
+    uint8_t                 value;
     
-    XEOS_Video_Putc( '.', true );
+    switch( irq )
+    {
+        case XEOS_HAL_PIC_IRQ0:
+        case XEOS_HAL_PIC_IRQ1:
+        case XEOS_HAL_PIC_IRQ2:
+        case XEOS_HAL_PIC_IRQ3:
+        case XEOS_HAL_PIC_IRQ4:
+        case XEOS_HAL_PIC_IRQ5:
+        case XEOS_HAL_PIC_IRQ6:
+        case XEOS_HAL_PIC_IRQ7:
+            
+            controller = XEOS_HAL_PIC_Controller1;
+            line       = ( uint8_t )irq;
+            
+            break;
+            
+        case XEOS_HAL_PIC_IRQ8:
+        case XEOS_HAL_PIC_IRQ9:
+        case XEOS_HAL_PIC_IRQ10:
+        case XEOS_HAL_PIC_IRQ11:
+        case XEOS_HAL_PIC_IRQ12:
+        case XEOS_HAL_PIC_IRQ13:
+        case XEOS_HAL_PIC_IRQ14:
+        case XEOS_HAL_PIC_IRQ15:
+            
+            controller = XEOS_HAL_PIC_Controller2;
+            line       = ( uint8_t )irq - 8;
+            
+            break;
+    }
+    
+    value = XEOS_HAL_IO_PortIn( XEOS_HAL_PIC_GetRegister( controller, XEOS_HAL_PIC_RegisterData ) );
+    value = value & ( uint8_t )~( 1 << line );
+    
+    XEOS_HAL_IO_PortOut( XEOS_HAL_PIC_GetRegister( controller, XEOS_HAL_PIC_RegisterData ), value ); 
 }

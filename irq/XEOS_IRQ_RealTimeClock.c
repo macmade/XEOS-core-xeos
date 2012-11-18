@@ -72,7 +72,7 @@
 
 #include "xeos/video.h"
 
-void XEOS_IRQ_RealTimeClock( XEOS_IRQ_IRQ irq )
+void XEOS_IRQ_RealTimeClock( XEOS_HAL_PIC_IRQ irq )
 {
     ( void )irq;
     
