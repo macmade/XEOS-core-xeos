@@ -71,6 +71,7 @@
 #include "xeos/hal/__rtc.h"
 #include "xeos/hal/cpu.h"
 #include "xeos/hal/io.h"
+#include "xeos/hal/cmos.h"
 #include <stdbool.h>
 
 void XEOS_HAL_RTC_EnablePeriodicInterrupts( void )
@@ -85,12 +86,12 @@ void XEOS_HAL_RTC_EnablePeriodicInterrupts( void )
         XEOS_HAL_CPU_DisableInterrupts();
     }
     
-    XEOS_HAL_IO_PortOut( 0x70, 0x0B );
+    XEOS_HAL_IO_PortOut( XEOS_HAL_CMOS_RegisterAddress, 0x0B );
     
-    value = XEOS_HAL_IO_PortIn( 0x71 );
+    value = XEOS_HAL_IO_PortIn( XEOS_HAL_CMOS_RegisterData );
     
-    XEOS_HAL_IO_PortOut( 0x70, 0x0B );
-    XEOS_HAL_IO_PortOut( 0x71, value | 0x40 );
+    XEOS_HAL_IO_PortOut( XEOS_HAL_CMOS_RegisterAddress, 0x0B );
+    XEOS_HAL_IO_PortOut( XEOS_HAL_CMOS_RegisterData, value | 0x40 );
     
     if( interrupts == true )
     {
