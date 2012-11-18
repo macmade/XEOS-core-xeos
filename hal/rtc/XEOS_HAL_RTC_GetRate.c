@@ -78,7 +78,7 @@ uint8_t XEOS_HAL_RTC_GetRate( void )
     
     XEOS_HAL_IO_PortOut( XEOS_HAL_CMOS_RegisterAddress, 0x0A );
     
-    value = XEOS_HAL_IO_PortOut( XEOS_HAL_CMOS_RegisterData );
+    value = XEOS_HAL_IO_PortIn( XEOS_HAL_CMOS_RegisterData );
     
     return value & 0x0F;
 }

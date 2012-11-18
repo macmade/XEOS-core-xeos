@@ -73,7 +73,7 @@
 #include "xeos/hal/cpu.h"
 #include "xeos/hal/cmos.h"
 
-void XEOS_HAL_RTC_SetRate( uint8_t value )
+void XEOS_HAL_RTC_SetRate( uint8_t rate )
 {
     bool    interrupts;
     uint8_t value;
@@ -89,7 +89,7 @@ void XEOS_HAL_RTC_SetRate( uint8_t value )
     
     XEOS_HAL_IO_PortOut( XEOS_HAL_CMOS_RegisterAddress, 0x0A );
     
-    value = XEOS_HAL_IO_PortOut( XEOS_HAL_CMOS_RegisterData );
+    value = XEOS_HAL_IO_PortIn( XEOS_HAL_CMOS_RegisterData );
     
     XEOS_HAL_IO_PortOut( XEOS_HAL_CMOS_RegisterAddress, 0x0A );
     XEOS_HAL_IO_PortOut( XEOS_HAL_CMOS_RegisterData, ( value & 0xF0 ) | rate );
