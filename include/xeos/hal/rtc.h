@@ -247,6 +247,20 @@ void XEOS_HAL_RTC_EnablePeriodicInterrupts( void );
  */
 void XEOS_HAL_RTC_DisablePeriodicInterrupts( void );
 
+/*!
+ * @function        XEOS_HAL_RTC_GetRate
+ * @abstract        Gets the RTC rate
+ * @result          The RTC rate divider
+ */
+uint8_t XEOS_HAL_RTC_GetRate( void );
+
+/*!
+ * @function        XEOS_HAL_RTC_SetRate
+ * @abstract        Sets the RTC rate
+ * @param           value           The RTC rate divider
+ */
+void XEOS_HAL_RTC_SetRate( uint8_t value );
+
 #ifdef __cplusplus
 }
 #endif

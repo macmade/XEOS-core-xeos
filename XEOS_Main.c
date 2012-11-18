@@ -152,6 +152,16 @@ void XEOS_Main( XEOS_InfoRef info )
     /* Installs the handler for IRQ8 (real time clock) */
     XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ8, XEOS_IRQ_RealTimeClock );
     
+    /*
+     * Ensures we get RTC interrupts at a frequency of 1024 hertz
+     * The RTC runs at 32'768 hertz. The frequency is computed as follow:
+     * 
+     * frequency =  32768 >> ( rate - 1 )
+     * 
+     * So for a frequency of 1024 hertz, the rate needs to be 6.
+     */
+    XEOS_HAL_RTC_SetRate( 6 );
+    
     /* Enables periodic interrupts on the RTC */
     XEOS_HAL_RTC_EnablePeriodicInterrupts();
     
