@@ -69,23 +69,27 @@
 
 #include "xeos/video.h"
 #include "xeos/__video.h"
+#include <stdint.h>
 
 void XEOS_Video_Clear( void )
 {
-    char       * mem;
+    uint16_t   * mem;
+    uint16_t     value;
     unsigned int memSize;
     unsigned int i;
     
-    mem     = ( char * )XEOS_VIDEO_MEM;
+    value   = ( uint16_t )( __XEOS_Video_Attribute << 8 ) | 0x20;
+    mem     = ( uint16_t * )XEOS_VIDEO_MEM;
     memSize = XEOS_VIDEO_COLS * XEOS_VIDEO_ROWS;
     i       = 0;
     
     for( i = 0; i < memSize; i++ )
     {
-        mem[ 0 ] = 0x20;
-        mem[ 1 ] = __XEOS_Video_Attribute;
-        mem     += 2;
+        mem[ i ] = value;
     }
     
-    XEOS_Video_MoveCursor( 0, 0 );
+    if( XEOS_Video_X() != 0 || XEOS_Video_Y() != 0 )
+    {
+        XEOS_Video_MoveCursor( 0, 0 );
+    }
 }
