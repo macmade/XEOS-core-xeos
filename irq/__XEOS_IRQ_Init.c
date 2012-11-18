@@ -62,21 +62,36 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_ISR_IRQ.c
+ * @file            __XEOS_IRQ_Init.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#include "xeos/isr.h"
-#include "xeos/hal/pic.h"
+#include "xeos/irq.h"
+#include "xeos/__irq.h"
+#include <string.h>
 
-void XEOS_ISR_IRQ( uint8_t isr )
+void __XEOS_IRQ_Init( void )
 {
-    if( isr >= 0x28 )
+    if( __XEOS_IRQ_Inited == false )
     {
-        XEOS_HAL_PIC_SendEOI( XEOS_HAL_PIC_Controller2 );
+        __XEOS_IRQ_Inited = true;
+        
+        memset( __XEOS_IRQ_IRQ0Handlers,  0, __XEOS_IRQ_MAX_HANDLERS * sizeof( XEOS_IRQ_IRQHandler ) );
+        memset( __XEOS_IRQ_IRQ1Handlers,  0, __XEOS_IRQ_MAX_HANDLERS * sizeof( XEOS_IRQ_IRQHandler ) );
+        memset( __XEOS_IRQ_IRQ2Handlers,  0, __XEOS_IRQ_MAX_HANDLERS * sizeof( XEOS_IRQ_IRQHandler ) );
+        memset( __XEOS_IRQ_IRQ3Handlers,  0, __XEOS_IRQ_MAX_HANDLERS * sizeof( XEOS_IRQ_IRQHandler ) );
+        memset( __XEOS_IRQ_IRQ4Handlers,  0, __XEOS_IRQ_MAX_HANDLERS * sizeof( XEOS_IRQ_IRQHandler ) );
+        memset( __XEOS_IRQ_IRQ5Handlers,  0, __XEOS_IRQ_MAX_HANDLERS * sizeof( XEOS_IRQ_IRQHandler ) );
+        memset( __XEOS_IRQ_IRQ6Handlers,  0, __XEOS_IRQ_MAX_HANDLERS * sizeof( XEOS_IRQ_IRQHandler ) );
+        memset( __XEOS_IRQ_IRQ7Handlers,  0, __XEOS_IRQ_MAX_HANDLERS * sizeof( XEOS_IRQ_IRQHandler ) );
+        memset( __XEOS_IRQ_IRQ8Handlers,  0, __XEOS_IRQ_MAX_HANDLERS * sizeof( XEOS_IRQ_IRQHandler ) );
+        memset( __XEOS_IRQ_IRQ9Handlers,  0, __XEOS_IRQ_MAX_HANDLERS * sizeof( XEOS_IRQ_IRQHandler ) );
+        memset( __XEOS_IRQ_IRQ10Handlers, 0, __XEOS_IRQ_MAX_HANDLERS * sizeof( XEOS_IRQ_IRQHandler ) );
+        memset( __XEOS_IRQ_IRQ11Handlers, 0, __XEOS_IRQ_MAX_HANDLERS * sizeof( XEOS_IRQ_IRQHandler ) );
+        memset( __XEOS_IRQ_IRQ12Handlers, 0, __XEOS_IRQ_MAX_HANDLERS * sizeof( XEOS_IRQ_IRQHandler ) );
+        memset( __XEOS_IRQ_IRQ13Handlers, 0, __XEOS_IRQ_MAX_HANDLERS * sizeof( XEOS_IRQ_IRQHandler ) );
+        memset( __XEOS_IRQ_IRQ14Handlers, 0, __XEOS_IRQ_MAX_HANDLERS * sizeof( XEOS_IRQ_IRQHandler ) );
+        memset( __XEOS_IRQ_IRQ15Handlers, 0, __XEOS_IRQ_MAX_HANDLERS * sizeof( XEOS_IRQ_IRQHandler ) );
     }
-    
-    XEOS_HAL_PIC_SendEOI( XEOS_HAL_PIC_Controller1 );
 }
-

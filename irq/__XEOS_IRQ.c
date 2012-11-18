@@ -62,21 +62,29 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_ISR_IRQ.c
+ * @file            __XEOS_IRQ.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#include "xeos/isr.h"
-#include "xeos/hal/pic.h"
+#include "xeos/irq.h"
+#include "xeos/__irq.h"
 
-void XEOS_ISR_IRQ( uint8_t isr )
-{
-    if( isr >= 0x28 )
-    {
-        XEOS_HAL_PIC_SendEOI( XEOS_HAL_PIC_Controller2 );
-    }
-    
-    XEOS_HAL_PIC_SendEOI( XEOS_HAL_PIC_Controller1 );
-}
+bool __XEOS_IRQ_Inited = false;
 
+XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ0Handlers[ __XEOS_IRQ_MAX_HANDLERS ];
+XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ1Handlers[ __XEOS_IRQ_MAX_HANDLERS ];
+XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ2Handlers[ __XEOS_IRQ_MAX_HANDLERS ];
+XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ3Handlers[ __XEOS_IRQ_MAX_HANDLERS ];
+XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ4Handlers[ __XEOS_IRQ_MAX_HANDLERS ];
+XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ5Handlers[ __XEOS_IRQ_MAX_HANDLERS ];
+XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ6Handlers[ __XEOS_IRQ_MAX_HANDLERS ];
+XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ7Handlers[ __XEOS_IRQ_MAX_HANDLERS ];
+XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ8Handlers[ __XEOS_IRQ_MAX_HANDLERS ];
+XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ9Handlers[ __XEOS_IRQ_MAX_HANDLERS ];
+XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ10Handlers[ __XEOS_IRQ_MAX_HANDLERS ];
+XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ11Handlers[ __XEOS_IRQ_MAX_HANDLERS ];
+XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ12Handlers[ __XEOS_IRQ_MAX_HANDLERS ];
+XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ13Handlers[ __XEOS_IRQ_MAX_HANDLERS ];
+XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ14Handlers[ __XEOS_IRQ_MAX_HANDLERS ];
+XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ15Handlers[ __XEOS_IRQ_MAX_HANDLERS ];

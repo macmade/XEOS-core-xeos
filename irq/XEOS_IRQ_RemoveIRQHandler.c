@@ -62,21 +62,47 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_ISR_IRQ.c
+ * @file            XEOS_IRQ_RemoveIRQHandler.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#include "xeos/isr.h"
-#include "xeos/hal/pic.h"
+#include "xeos/irq.h"
+#include "xeos/__irq.h"
+#include <stdlib.h>
 
-void XEOS_ISR_IRQ( uint8_t isr )
+void XEOS_IRQ_RemoveIRQHandler( XEOS_IRQ_IRQ irq, XEOS_IRQ_IRQHandler handler )
 {
-    if( isr >= 0x28 )
+    unsigned int          i;
+    XEOS_IRQ_IRQHandler * handlers;
+    
+    __XEOS_IRQ_Init();
+    
+    switch( irq )
     {
-        XEOS_HAL_PIC_SendEOI( XEOS_HAL_PIC_Controller2 );
+        case XEOS_IRQ_IRQ0:     handlers = __XEOS_IRQ_IRQ0Handlers;     break;
+        case XEOS_IRQ_IRQ1:     handlers = __XEOS_IRQ_IRQ1Handlers;     break;
+        case XEOS_IRQ_IRQ2:     handlers = __XEOS_IRQ_IRQ2Handlers;     break;
+        case XEOS_IRQ_IRQ3:     handlers = __XEOS_IRQ_IRQ3Handlers;     break;
+        case XEOS_IRQ_IRQ4:     handlers = __XEOS_IRQ_IRQ4Handlers;     break;
+        case XEOS_IRQ_IRQ5:     handlers = __XEOS_IRQ_IRQ5Handlers;     break;
+        case XEOS_IRQ_IRQ6:     handlers = __XEOS_IRQ_IRQ6Handlers;     break;
+        case XEOS_IRQ_IRQ7:     handlers = __XEOS_IRQ_IRQ7Handlers;     break;
+        case XEOS_IRQ_IRQ8:     handlers = __XEOS_IRQ_IRQ8Handlers;     break;
+        case XEOS_IRQ_IRQ9:     handlers = __XEOS_IRQ_IRQ9Handlers;     break;
+        case XEOS_IRQ_IRQ10:    handlers = __XEOS_IRQ_IRQ10Handlers;    break;
+        case XEOS_IRQ_IRQ11:    handlers = __XEOS_IRQ_IRQ11Handlers;    break;
+        case XEOS_IRQ_IRQ12:    handlers = __XEOS_IRQ_IRQ12Handlers;    break;
+        case XEOS_IRQ_IRQ13:    handlers = __XEOS_IRQ_IRQ13Handlers;    break;
+        case XEOS_IRQ_IRQ14:    handlers = __XEOS_IRQ_IRQ14Handlers;    break;
+        case XEOS_IRQ_IRQ15:    handlers = __XEOS_IRQ_IRQ15Handlers;    break;
     }
     
-    XEOS_HAL_PIC_SendEOI( XEOS_HAL_PIC_Controller1 );
+    for( i = 0; i < __XEOS_IRQ_MAX_HANDLERS; i++ )
+    {
+        if( handlers[ i ] == handler )
+        {
+            handlers[ i ] = NULL;
+        }
+    }
 }
-

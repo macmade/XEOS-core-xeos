@@ -62,21 +62,15 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_ISR_IRQ.c
+ * @file            XEOS_IRQ_RealTimeClock.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#include "xeos/isr.h"
-#include "xeos/hal/pic.h"
+#include "xeos/irq.h"
+#include "xeos/__irq.h"
 
-void XEOS_ISR_IRQ( uint8_t isr )
+void XEOS_IRQ_RealTimeClock( XEOS_IRQ_IRQ irq )
 {
-    if( isr >= 0x28 )
-    {
-        XEOS_HAL_PIC_SendEOI( XEOS_HAL_PIC_Controller2 );
-    }
-    
-    XEOS_HAL_PIC_SendEOI( XEOS_HAL_PIC_Controller1 );
+    ( void )irq;
 }
-

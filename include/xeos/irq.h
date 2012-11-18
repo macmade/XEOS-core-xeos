@@ -62,21 +62,54 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_ISR_IRQ.c
+ * @header          irq.h
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#include "xeos/isr.h"
-#include "xeos/hal/pic.h"
+#ifndef __XEOS_IRQ_H__
+#define __XEOS_IRQ_H__
+#pragma once
 
-void XEOS_ISR_IRQ( uint8_t isr )
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <stdint.h>
+#include <stdbool.h>
+
+typedef enum
 {
-    if( isr >= 0x28 )
-    {
-        XEOS_HAL_PIC_SendEOI( XEOS_HAL_PIC_Controller2 );
-    }
-    
-    XEOS_HAL_PIC_SendEOI( XEOS_HAL_PIC_Controller1 );
+    XEOS_IRQ_IRQ0   = 0x00,
+    XEOS_IRQ_IRQ1   = 0x01,
+    XEOS_IRQ_IRQ2   = 0x02,
+    XEOS_IRQ_IRQ3   = 0x03,
+    XEOS_IRQ_IRQ4   = 0x04,
+    XEOS_IRQ_IRQ5   = 0x05,
+    XEOS_IRQ_IRQ6   = 0x06,
+    XEOS_IRQ_IRQ7   = 0x07,
+    XEOS_IRQ_IRQ8   = 0x08,
+    XEOS_IRQ_IRQ9   = 0x09,
+    XEOS_IRQ_IRQ10  = 0x0A,
+    XEOS_IRQ_IRQ11  = 0x0B,
+    XEOS_IRQ_IRQ12  = 0x0C,
+    XEOS_IRQ_IRQ13  = 0x0D,
+    XEOS_IRQ_IRQ14  = 0x0E,
+    XEOS_IRQ_IRQ15  = 0x0F
 }
+XEOS_IRQ_IRQ;
 
+typedef void ( * XEOS_IRQ_IRQHandler )( uint8_t irq );
+
+bool XEOS_IRQ_AddIRQHandler( XEOS_IRQ_IRQ irq, XEOS_IRQ_IRQHandler handler );
+void XEOS_IRQ_RemoveIRQHandler( XEOS_IRQ_IRQ irq, XEOS_IRQ_IRQHandler handler );
+void XEOS_IRQ_ExecuteIRQHandlers( XEOS_IRQ_IRQ irq );
+
+void XEOS_IRQ_SystemTimer( XEOS_IRQ_IRQ irq );
+void XEOS_IRQ_RealTimeClock( XEOS_IRQ_IRQ irq );
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __XEOS_IRQ_H__ */

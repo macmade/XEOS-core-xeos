@@ -62,21 +62,54 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_ISR_IRQ.c
+ * @header          __irq.h
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#include "xeos/isr.h"
-#include "xeos/hal/pic.h"
+#ifndef __XEOS___IRQ_H__
+#define __XEOS___IRQ_H__
+#pragma once
 
-void XEOS_ISR_IRQ( uint8_t isr )
-{
-    if( isr >= 0x28 )
-    {
-        XEOS_HAL_PIC_SendEOI( XEOS_HAL_PIC_Controller2 );
-    }
-    
-    XEOS_HAL_PIC_SendEOI( XEOS_HAL_PIC_Controller1 );
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <xeos/irq.h>
+
+#ifdef __clang__
+#pragma pack( 1 )
+#endif
+
+#define __XEOS_IRQ_MAX_HANDLERS     32
+
+void __XEOS_IRQ_Init( void );
+
+extern bool __XEOS_IRQ_Inited;
+
+extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ0Handlers[];
+extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ1Handlers[];
+extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ2Handlers[];
+extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ3Handlers[];
+extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ4Handlers[];
+extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ5Handlers[];
+extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ6Handlers[];
+extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ7Handlers[];
+extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ8Handlers[];
+extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ9Handlers[];
+extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ10Handlers[];
+extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ11Handlers[];
+extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ12Handlers[];
+extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ13Handlers[];
+extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ14Handlers[];
+extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ15Handlers[];
+
+#ifdef __clang__
+#pragma pack()
+#endif
+
+#ifdef __cplusplus
 }
+#endif
 
+#endif /* __XEOS___IRQ_H__ */
