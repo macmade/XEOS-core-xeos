@@ -62,46 +62,15 @@
 /* $Id$ */
 
 /*!
- * @header          isr.h
+ * @file            XEOS_ISR_IRQ.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS_ISR_H__
-#define __XEOS_ISR_H__
-#pragma once
+#include "xeos/isr.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <stdint.h>
-#include <stdarg.h>
-
-/*!
- * @function        XEOS_ISR_Exception
- * @abstract        ISR handler for the x86 CPU exceptions
- * @param           isr         The ISR number
- */
-void XEOS_ISR_Exception( uint8_t isr );
-
-/*!
- * @function        XEOS_ISR_IRQ
- * @abstract        ISR handler for the IRQs
- * @param           isr         The ISR number
- */
-void XEOS_ISR_IRQ( uint8_t isr );
-
-/*!
- * @function        XEOS_ISR_SysCall
- * @abstract        ISR handler for system calls
- * @param           isr         The ISR number
- * @param           syscall     The system call number
- */
-void XEOS_ISR_SysCall( uint8_t isr, uint16_t syscall );
-
-#ifdef __cplusplus
+void XEOS_ISR_IRQ( uint8_t isr )
+{
+    ( void )isr;
 }
-#endif
 
-#endif /* __XEOS_ISR_H__ */

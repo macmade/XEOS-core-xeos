@@ -62,46 +62,42 @@
 /* $Id$ */
 
 /*!
- * @header          isr.h
+ * @file            XEOS_ISR_Exception.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS_ISR_H__
-#define __XEOS_ISR_H__
-#pragma once
+#include "xeos/isr.h"
+#include "xeos/system.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <stdint.h>
-#include <stdarg.h>
-
-/*!
- * @function        XEOS_ISR_Exception
- * @abstract        ISR handler for the x86 CPU exceptions
- * @param           isr         The ISR number
- */
-void XEOS_ISR_Exception( uint8_t isr );
-
-/*!
- * @function        XEOS_ISR_IRQ
- * @abstract        ISR handler for the IRQs
- * @param           isr         The ISR number
- */
-void XEOS_ISR_IRQ( uint8_t isr );
-
-/*!
- * @function        XEOS_ISR_SysCall
- * @abstract        ISR handler for system calls
- * @param           isr         The ISR number
- * @param           syscall     The system call number
- */
-void XEOS_ISR_SysCall( uint8_t isr, uint16_t syscall );
-
-#ifdef __cplusplus
+void XEOS_ISR_Exception( uint8_t isr )
+{
+    char * format;
+    
+    switch( isr )
+    {
+        case 0x00:  format = "INT %x - Divide Error (#DE)";                                 break;
+        case 0x01:  format = "INT %x - Debug (#DB)";                                        break;
+        case 0x02:  format = "INT %x - NMI Interrupt";                                      break;
+        case 0x03:  format = "INT %x - Breakpoint (#BP)";                                   break;
+        case 0x04:  format = "INT %x - Overflow (#OF)";                                     break;
+        case 0x05:  format = "INT %x - BOUND Range Exceeded (#BR)";                         break;
+        case 0x06:  format = "INT %x - Invalid/Undefined Opcode (#UD)";                     break;
+        case 0x07:  format = "INT %x - Device Not Available (No Math Coprocessor) (#NM)";   break;
+        case 0x08:  format = "INT %x - Double Fault (#DF)";                                 break;
+        case 0x09:  format = "INT %x - Coprocessor Segment Overrun";                        break;
+        case 0x0A:  format = "INT %x - Invalid TSS (#TS)";                                  break;
+        case 0x0B:  format = "INT %x - Segment Not Present (#NP)";                          break;
+        case 0x0C:  format = "INT %x - Stack-Segment Fault (#SS)";                          break;
+        case 0x0D:  format = "INT %x - General Protection (#GP)";                           break;
+        case 0x0E:  format = "INT %x - Page Fault (#PF)";                                   break;
+        case 0x10:  format = "INT %x - x87 FPU Floating-Point Error (Math Fault) (#MF)";    break;
+        case 0x11:  format = "INT %x - Alignment Check (#AC)";                              break;
+        case 0x12:  format = "INT %x - Machine Check (#MC)";                                break;
+        case 0x13:  format = "INT %x - SIMD Floating-Point Exception (#XM)";                break;
+        default:    format = "INT %x - Invalid/Undefined Interrupt";                        break;
+    }
+    
+    XEOS_System_Panicf( format, isr );
 }
-#endif
 
-#endif /* __XEOS_ISR_H__ */
