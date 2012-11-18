@@ -76,10 +76,12 @@ static bool __XEOS_HAL_CPU_HasBrandName = false;
 
 const char * XEOS_HAL_CPU_GetBrandName( void )
 {
-    uint32_t eax;
-    uint32_t ebx;
-    uint32_t ecx;
-    uint32_t edx;
+    uint32_t     eax;
+    uint32_t     ebx;
+    uint32_t     ecx;
+    uint32_t     edx;
+    unsigned int i;
+    unsigned int j;
     
     if( __XEOS_HAL_CPU_HasBrandName == false )
     {
@@ -105,6 +107,18 @@ const char * XEOS_HAL_CPU_GetBrandName( void )
         memcpy( &( __XEOS_HAL_CPU_BrandName[ 0x24 ] ), &ebx, 4 );
         memcpy( &( __XEOS_HAL_CPU_BrandName[ 0x28 ] ), &ecx, 4 );
         memcpy( &( __XEOS_HAL_CPU_BrandName[ 0x2C ] ), &edx, 4 );
+        
+        i = 0;
+        
+        while( __XEOS_HAL_CPU_BrandName[ i ] == ' ' )
+        {
+            i++;
+        }
+        
+        for( j = 0; j < strlen( __XEOS_HAL_CPU_BrandName ); j++ )
+        {
+            __XEOS_HAL_CPU_BrandName[ j ] = __XEOS_HAL_CPU_BrandName[ i + j ];
+        }
         
         __XEOS_HAL_CPU_HasBrandName = true;
     }
