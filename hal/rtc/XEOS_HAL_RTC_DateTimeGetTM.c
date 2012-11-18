@@ -139,11 +139,11 @@ struct tm XEOS_HAL_RTC_DateTimeGetTM( XEOS_HAL_RTC_DateTimeRef time )
             leap = true;
         }
         
-        tm.tm_yday = 31 + ( ( leap == true ) ? 29 : 28 );
+        t.tm_yday = 31 + ( ( leap == true ) ? 29 : 28 );
         
         if( month == 3 )
         {
-            tm.tm_yday += dayOfMonth;
+            t.tm_yday += dayOfMonth;
         }
         else if( month == 4 )
         {
