@@ -71,6 +71,8 @@
 #define __XEOS___SYSTEM_H__
 #pragma once
 
+#include <xeos/system.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -79,7 +81,7 @@ extern "C" {
  * @var         __XEOS_System_Timestamp
  * @abstract    The number of seconds since January 1st 1970
  */
-extern uint64_t __XEOS_System_Timestamp;
+extern time_t __XEOS_System_Timestamp;
 
 /*!
  * @var         __XEOS_System_Milliseconds

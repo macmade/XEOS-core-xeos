@@ -76,6 +76,7 @@ extern "C" {
 #endif
 
 #include <stdint.h>
+#include <time.h>
 
 /*!
  * @function        XEOS_System_Panic
@@ -96,7 +97,7 @@ void XEOS_System_Panicf( const char * format, ... );
  * @abstract        Gets the actual system time
  * @result          The number of seconds since January 1st 1970
  */
-uint64_t XEOS_System_GetTime( void );
+time_t XEOS_System_GetTime( void );
 
 /*!
  * @function        XEOS_System_GetTimeMilliSeconds

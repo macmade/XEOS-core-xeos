@@ -70,5 +70,5 @@
 #include "xeos/system.h"
 #include "xeos/__system.h"
 
-uint64_t __XEOS_System_Timestamp;
-double   __XEOS_System_Milliseconds;
+time_t __XEOS_System_Timestamp;
+double __XEOS_System_Milliseconds;

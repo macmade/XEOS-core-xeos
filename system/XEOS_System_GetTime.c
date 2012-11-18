@@ -70,7 +70,7 @@
 #include "xeos/system.h"
 #include "xeos/__system.h"
 
-uint64_t XEOS_System_GetTime( void )
+time_t XEOS_System_GetTime( void )
 {
     return __XEOS_System_Timestamp;
 }
