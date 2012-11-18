@@ -78,5 +78,5 @@ void XEOS_HAL_RTC_DateTimeSetMinutes( XEOS_HAL_RTC_DateTimeRef time, uint8_t val
         return;
     }
     
-    time->minutes = value;
+    time->minutes = ( value > 59 ) ? 0 : value;
 }

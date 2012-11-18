@@ -78,5 +78,5 @@ void XEOS_HAL_RTC_DateTimeSetMonth( XEOS_HAL_RTC_DateTimeRef time, uint8_t value
         return;
     }
     
-    time->month = value;
+    time->month = ( value > 12 ) ? 0 : value;
 }

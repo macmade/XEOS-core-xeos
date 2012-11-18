@@ -78,5 +78,5 @@ void XEOS_HAL_RTC_DateTimeSetDayOfMonth( XEOS_HAL_RTC_DateTimeRef time, uint8_t 
         return;
     }
     
-    time->dayOfMonth = value;
+    time->dayOfMonth = ( value > 31 ) ? 0 : value;
 }

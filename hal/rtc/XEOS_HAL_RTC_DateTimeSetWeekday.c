@@ -78,5 +78,5 @@ void XEOS_HAL_RTC_DateTimeSetWeekday( XEOS_HAL_RTC_DateTimeRef time, uint8_t val
         return;
     }
     
-    time->weekday = value;
+    time->weekday = ( value > 6 ) ? 0 : value;
 }

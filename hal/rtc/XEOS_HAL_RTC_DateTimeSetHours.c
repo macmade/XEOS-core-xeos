@@ -78,5 +78,5 @@ void XEOS_HAL_RTC_DateTimeSetHours( XEOS_HAL_RTC_DateTimeRef time, uint8_t value
         return;
     }
     
-    time->hours = value;
+    time->hours = ( value > 23 ) ? 0 : value;
 }
