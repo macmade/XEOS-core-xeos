@@ -152,9 +152,8 @@ void XEOS_Main( XEOS_InfoRef info )
     /* Installs the handler for IRQ8 (real time clock) */
     XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ8, XEOS_IRQ_RealTimeClock );
     
-    /* (Re)enables the interrupts */
-    XEOS_HAL_CPU_EnableInterrupts();
-    XEOS_HAL_NMI_Enable();
+    /* Enables periodic interrupts on the RTC */
+    XEOS_HAL_RTC_EnablePeriodicInterrupts();
     
     {
         XEOS_Info_MemoryRef         memory;
@@ -195,7 +194,9 @@ void XEOS_Main( XEOS_InfoRef info )
         }
     }
     
-    XEOS_HAL_RTC_EnablePeriodicInterrupts();
+    /* (Re)enables the interrupts */
+    XEOS_HAL_CPU_EnableInterrupts();
+    XEOS_HAL_NMI_Enable();
     
     for( ; ; );
 }
