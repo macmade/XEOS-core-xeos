@@ -190,8 +190,8 @@ void XEOS_Main( XEOS_InfoRef info )
                 XEOS_Video_Printf( "XEOS Kernel - 32 bits\n\n" );
                 #endif
                 
-                XEOS_Video_Printf( "CPU Vendor:  %s\n", XEOS_HAL_CPU_GetVendorID() );
-                XEOS_Video_Printf( "CPU Brand:   %s\n", XEOS_HAL_CPU_GetBrandName() );
+                XEOS_Video_Printf( "CPU vendor:  %s\n", XEOS_HAL_CPU_GetVendorID() );
+                XEOS_Video_Printf( "CPU brand:   %s\n", XEOS_HAL_CPU_GetBrandName() );
                 XEOS_Video_Printf( "System time: %Lu\n\n", t1 );
                 
                 {
