@@ -71,6 +71,7 @@
 #include "xeos/system.h"
 #include "xeos/hal.h"
 #include "xeos/isr.h"
+#include "xeos/irq.h"
 #include "xeos/info.h"
 #include <sys/syscall.h>
 #include <stdlib.h>
@@ -141,6 +142,9 @@ void XEOS_Main( XEOS_InfoRef info )
     
     /* Installs the new Interrupt Descriptor Table */
     XEOS_HAL_IDT_Reload();
+    
+    /* INstalls the handler for IRQ0 (system timer) */
+    XEOS_IRQ_AddIRQHandler( XEOS_IRQ_IRQ0, XEOS_IRQ_SystemTimer );
     
     /* (Re)enables the interrupts */
     XEOS_HAL_CPU_EnableInterrupts();

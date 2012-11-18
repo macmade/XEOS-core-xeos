@@ -99,7 +99,7 @@ typedef enum
 }
 XEOS_IRQ_IRQ;
 
-typedef void ( * XEOS_IRQ_IRQHandler )( uint8_t irq );
+typedef void ( * XEOS_IRQ_IRQHandler )( XEOS_IRQ_IRQ irq );
 
 bool XEOS_IRQ_AddIRQHandler( XEOS_IRQ_IRQ irq, XEOS_IRQ_IRQHandler handler );
 void XEOS_IRQ_RemoveIRQHandler( XEOS_IRQ_IRQ irq, XEOS_IRQ_IRQHandler handler );
