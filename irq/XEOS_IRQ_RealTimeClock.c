@@ -69,6 +69,7 @@
 
 #include "xeos/irq.h"
 #include "xeos/__irq.h"
+#include "xeos/hal/io.h"
 
 #include "xeos/video.h"
 
@@ -77,4 +78,15 @@ void XEOS_IRQ_RealTimeClock( XEOS_HAL_PIC_IRQ irq )
     ( void )irq;
     
     XEOS_Video_Putc( '-', true );
+    
+    /*
+     * When IRQ 8 is triggered, the Status Register C will contain a bitmask
+     * telling which kind of RTC interrupt just happened.
+     * It can be a periodic interrupt, an update ended interrupt, or an alarm
+     * interrupt.
+     * The Status Register C must be read after IRQ 8. Otherwise, the
+     * interrupt won't happen again.
+     */
+    XEOS_HAL_IO_PortOut( 0x70, 0x0C );
+    XEOS_HAL_IO_PortIn( 0x71 );
 }

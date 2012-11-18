@@ -116,7 +116,7 @@ void XEOS_Main( XEOS_InfoRef info )
     }
     
     /* Installs the IRQ handlers */
-    for( i = 0x20; i < 0x28; i++ )
+    for( i = 0x20; i < 0x2F; i++ )
     {
         XEOS_HAL_IDT_SetISREntry
         (
