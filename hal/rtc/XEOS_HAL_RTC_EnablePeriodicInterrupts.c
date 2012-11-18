@@ -85,11 +85,11 @@ void XEOS_HAL_RTC_EnablePeriodicInterrupts( void )
         XEOS_HAL_CPU_DisableInterrupts();
     }
     
-    XEOS_HAL_IO_PortOut( 0x70, 0x8B );
+    XEOS_HAL_IO_PortOut( 0x70, 0x0B );
     
     value = XEOS_HAL_IO_PortIn( 0x71 );
     
-    XEOS_HAL_IO_PortOut( 0x70, 0x8B );
+    XEOS_HAL_IO_PortOut( 0x70, 0x0B );
     XEOS_HAL_IO_PortOut( 0x71, value | 0x40 );
     
     if( interrupts == true )
