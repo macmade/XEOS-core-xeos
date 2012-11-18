@@ -170,62 +170,11 @@ void XEOS_Main( XEOS_InfoRef info )
     XEOS_HAL_NMI_Enable();
     
     {
-        XEOS_Info_MemoryRef         memory;
-        XEOS_Info_MemoryEntryRef    entry;
-        unsigned int                n;
-        uint64_t                    address;
-        uint64_t                    length;
-        XEOS_Info_MemoryEntryType   type;
-        
-        memory = XEOS_Info_GetMemory( info );
-        n      = XEOS_Info_MemoryGetNumberOfEntries( memory );
-        
-        for( i = 0; i < n; i++ )
-        {
-            entry   = XEOS_Info_MemoryGetEntryAtIndex( memory, i );
-            address = XEOS_Info_MemoryEntryGetAddress( entry );
-            length  = XEOS_Info_MemoryEntryGetLength( entry );
-            type    = XEOS_Info_MemoryEntryGetType( entry );
-            
-            if( length == 0 )
-            {
-                continue;
-            }
-            
-            XEOS_Video_Printf( "%016#LX -> %016#LX: ", address, ( address + length ) - 1 );
-            
-            switch( type )
-            {
-                case XEOS_Info_MemoryEntryTypeUnknown:          XEOS_Video_Print( "Unknown " ); break;
-                case XEOS_Info_MemoryEntryTypeUsable:           XEOS_Video_Print( "Usable  " ); break;
-                case XEOS_Info_MemoryEntryTypeReserved:         XEOS_Video_Print( "Reserved" ); break;
-                case XEOS_Info_MemoryEntryTypeACPIReclaimable:  XEOS_Video_Print( "ACPI    " ); break;
-                case XEOS_Info_MemoryEntryTypeACPINVS:          XEOS_Video_Print( "ACPI NVS" ); break;
-                case XEOS_Info_MemoryEntryTypeBad:              XEOS_Video_Print( "Bad     " ); break;
-            }
-            
-            XEOS_Video_Printf( " - %Lu bytes\n", length );
-        }
-        
-        XEOS_Video_Printf
-        (
-            "\n"
-            "Kernel start:  %016#X\n"
-            "Kernel end:    %016#X\n"
-            "Kernel size:   %Lu bytes\n",
-            XEOS_Info_GetKernelStartAddress(),
-            XEOS_Info_GetKernelEndAddress(),
-            XEOS_Info_GetKernelEndAddress() - XEOS_Info_GetKernelStartAddress()
-        );
-    }
-    
-    /*
-    {
         time_t t1;
         time_t t2;
         
         t1 = XEOS_System_GetTime();
-        t2 = t1;
+        t2 = 0;
         
         while( 1 )
         {
@@ -234,7 +183,61 @@ void XEOS_Main( XEOS_InfoRef info )
                 t1 = t2;
                 
                 XEOS_Video_Clear();
-                XEOS_Video_Printf( "%Lu", t1 );
+                XEOS_Video_Printf( "CPU Vendor:  %s\n", XEOS_HAL_CPU_GetVendorID() );
+                XEOS_Video_Printf( "CPU Brand:   %s\n", XEOS_HAL_CPU_GetBrandName() );
+                XEOS_Video_Printf( "System time: %Lu\n\n", t1 );
+                
+                {
+                    XEOS_Info_MemoryRef         memory;
+                    XEOS_Info_MemoryEntryRef    entry;
+                    unsigned int                n;
+                    uint64_t                    address;
+                    uint64_t                    length;
+                    XEOS_Info_MemoryEntryType   type;
+                    
+                    memory = XEOS_Info_GetMemory( info );
+                    n      = XEOS_Info_MemoryGetNumberOfEntries( memory );
+                    
+                    XEOS_Video_Printf( "Memory map:\n\n", t1 );
+                    
+                    for( i = 0; i < n; i++ )
+                    {
+                        entry   = XEOS_Info_MemoryGetEntryAtIndex( memory, i );
+                        address = XEOS_Info_MemoryEntryGetAddress( entry );
+                        length  = XEOS_Info_MemoryEntryGetLength( entry );
+                        type    = XEOS_Info_MemoryEntryGetType( entry );
+                        
+                        if( length == 0 )
+                        {
+                            continue;
+                        }
+                        
+                        XEOS_Video_Printf( "%016#LX -> %016#LX: ", address, ( address + length ) - 1 );
+                        
+                        switch( type )
+                        {
+                            case XEOS_Info_MemoryEntryTypeUnknown:          XEOS_Video_Print( "Unknown " ); break;
+                            case XEOS_Info_MemoryEntryTypeUsable:           XEOS_Video_Print( "Usable  " ); break;
+                            case XEOS_Info_MemoryEntryTypeReserved:         XEOS_Video_Print( "Reserved" ); break;
+                            case XEOS_Info_MemoryEntryTypeACPIReclaimable:  XEOS_Video_Print( "ACPI    " ); break;
+                            case XEOS_Info_MemoryEntryTypeACPINVS:          XEOS_Video_Print( "ACPI NVS" ); break;
+                            case XEOS_Info_MemoryEntryTypeBad:              XEOS_Video_Print( "Bad     " ); break;
+                        }
+                        
+                        XEOS_Video_Printf( " - %Lu bytes\n", length );
+                    }
+                    
+                    XEOS_Video_Printf
+                    (
+                        "\n"
+                        "Kernel start:  %016#X\n"
+                        "Kernel end:    %016#X\n"
+                        "Kernel size:   %Lu bytes\n",
+                        XEOS_Info_GetKernelStartAddress(),
+                        XEOS_Info_GetKernelEndAddress(),
+                        XEOS_Info_GetKernelEndAddress() - XEOS_Info_GetKernelStartAddress()
+                    );
+                }
             }
             else
             {
@@ -242,8 +245,7 @@ void XEOS_Main( XEOS_InfoRef info )
             }
         }
     }
-    */
     
-    for( ; ; );
+    //for( ; ; );
 }
 
