@@ -160,6 +160,18 @@ void XEOS_HAL_IDT_Reload( void );
 XEOS_HAL_IDT_ISREntryRef XEOS_HAL_IDT_GetISREntry( uint8_t isr );
 
 /*!
+ * @function        XEOS_HAL_IDT_SetISREntry
+ * @abstract        Gets an ISR entry
+ * @param           isr         The ISR number
+ * @param           selector    The code segment selector
+ * @param           type        The ISR entry type
+ * @param           level       The privilege level
+ * @param           present     The present flag
+ * @param           handler     The ISR function handler
+ */
+void XEOS_HAL_IDT_SetISREntry( uint8_t isr, uint16_t selector, XEOS_HAL_IDT_ISREntryType type, XEOS_HAL_IDT_ISREntryPrivilegeLevel level, bool present, XEOS_HAL_IDT_ISRHandler handler );
+
+/*!
  * @function        XEOS_HAL_IDT_ISREntrySetSelector
  * @abstract        Sets the code segment selector of an ISR entry
  * @param           entry       The ISR entry
