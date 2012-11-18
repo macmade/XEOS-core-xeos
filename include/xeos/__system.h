@@ -62,51 +62,33 @@
 /* $Id$ */
 
 /*!
- * @header          system.h
+ * @header          __system.h
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS_SYSTEM_H__
-#define __XEOS_SYSTEM_H__
+#ifndef __XEOS___SYSTEM_H__
+#define __XEOS___SYSTEM_H__
 #pragma once
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include <stdint.h>
+/*!
+ * @var         __XEOS_System_Timestamp
+ * @abstract    The number of seconds since January 1st 1970
+ */
+extern uint64_t __XEOS_System_Timestamp;
 
 /*!
- * @function        XEOS_System_Panic
- * @abstract        Kernel panic
- * @param           message     The panic message
+ * @var         __XEOS_System_Milliseconds
+ * @abstract    The number of milliseconds
  */
-void XEOS_System_Panic( const char * message );
-
-/*!
- * @function        XEOS_System_Panicf
- * @abstract        Kernel panic
- * @param           format      The panic message format
- */
-void XEOS_System_Panicf( const char * format, ... );
-
-/*!
- * @function        XEOS_System_GetTime
- * @abstract        Gets the actual system time
- * @result          The number of seconds since January 1st 1970
- */
-uint64_t XEOS_System_GetTime( void );
-
-/*!
- * @function        XEOS_System_GetTimeMilliSeconds
- * @abstract        Gets the actual number of milliseconds
- * @result          The number of milliseconds
- */
-uint16_t XEOS_System_GetTimeMilliSeconds( void );
+extern uint16_t __XEOS_System_Milliseconds;
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __XEOS_SYSTEM_H__ */
+#endif /* __XEOS___SYSTEM_H__ */
