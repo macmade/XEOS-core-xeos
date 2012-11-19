@@ -178,6 +178,7 @@ __asm__                                         \
     "\n"                                        \
     "push $0x" # _n_ "\n"                       \
     "call __XEOS_HAL_IDT_HandleISR\n"           \
+    "pop %eax\n"                                \
     "\n"                                        \
     "pop %ebp\n"                                \
     "pop %esp\n"                                \
