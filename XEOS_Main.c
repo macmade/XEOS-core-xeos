@@ -192,7 +192,7 @@ void XEOS_Main( XEOS_InfoRef info )
                 
                 XEOS_Video_Printf( "CPU vendor:  %s\n", XEOS_HAL_CPU_GetVendorID() );
                 XEOS_Video_Printf( "CPU brand:   %s\n", XEOS_HAL_CPU_GetBrandName() );
-                XEOS_Video_Printf( "System time: %Lu\n\n", t1 );
+                XEOS_Video_Printf( "System time: %lu\n\n", t1 );
                 
                 {
                     XEOS_Info_MemoryRef         memory;
