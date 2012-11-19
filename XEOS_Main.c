@@ -253,6 +253,15 @@ void XEOS_Main( XEOS_InfoRef info )
         }
     }
     
-    //for( ; ; );
+    /*
+    for( ; ; )
+    {
+        __asm__
+        (
+            "nop;nop;nop;nop;nop;\n"
+            "nop;nop;nop;nop;nop;\n"
+        );
+    }
+    */
 }
 
