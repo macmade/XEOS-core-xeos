@@ -244,6 +244,18 @@ void XEOS_Main( XEOS_InfoRef info )
                         XEOS_Info_GetKernelEndAddress(),
                         XEOS_Info_GetKernelEndAddress() - XEOS_Info_GetKernelStartAddress()
                     );
+                    
+                    /* So Clang thinks the while loop may terminate... */
+                    {
+                        volatile int zero;
+                        
+                        zero = 0;
+                        
+                        if( zero == 1 )
+                        {
+                            break;
+                        }
+                    }
                 }
             }
             else
@@ -253,7 +265,6 @@ void XEOS_Main( XEOS_InfoRef info )
         }
     }
     
-    /*
     for( ; ; )
     {
         __asm__
@@ -262,6 +273,5 @@ void XEOS_Main( XEOS_InfoRef info )
             "nop;nop;nop;nop;nop;\n"
         );
     }
-    */
 }
 
