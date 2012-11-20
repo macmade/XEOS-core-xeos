@@ -70,34 +70,89 @@
 #include "xeos/isr.h"
 #include "xeos/system.h"
 
-void XEOS_ISR_Exception( uint8_t isr )
+void XEOS_ISR_Exception( uint8_t isr, XEOS_HAL_CPU_Registers * registers )
 {
-    char * format;
+    char * exception;
     
     switch( isr )
     {
-        case 0x00:  format = "INT %02#X - Divide Error (#DE)";                                 break;
-        case 0x01:  format = "INT %02#X - Debug (#DB)";                                        break;
-        case 0x02:  format = "INT %02#X - NMI Interrupt";                                      break;
-        case 0x03:  format = "INT %02#X - Breakpoint (#BP)";                                   break;
-        case 0x04:  format = "INT %02#X - Overflow (#OF)";                                     break;
-        case 0x05:  format = "INT %02#X - BOUND Range Exceeded (#BR)";                         break;
-        case 0x06:  format = "INT %02#X - Invalid/Undefined Opcode (#UD)";                     break;
-        case 0x07:  format = "INT %02#X - Device Not Available (No Math Coprocessor) (#NM)";   break;
-        case 0x08:  format = "INT %02#X - Double Fault (#DF)";                                 break;
-        case 0x09:  format = "INT %02#X - Coprocessor Segment Overrun";                        break;
-        case 0x0A:  format = "INT %02#X - Invalid TSS (#TS)";                                  break;
-        case 0x0B:  format = "INT %02#X - Segment Not Present (#NP)";                          break;
-        case 0x0C:  format = "INT %02#X - Stack-Segment Fault (#SS)";                          break;
-        case 0x0D:  format = "INT %02#X - General Protection (#GP)";                           break;
-        case 0x0E:  format = "INT %02#X - Page Fault (#PF)";                                   break;
-        case 0x10:  format = "INT %02#X - x87 FPU Floating-Point Error (Math Fault) (#MF)";    break;
-        case 0x11:  format = "INT %02#X - Alignment Check (#AC)";                              break;
-        case 0x12:  format = "INT %02#X - Machine Check (#MC)";                                break;
-        case 0x13:  format = "INT %02#X - SIMD Floating-Point Exception (#XM)";                break;
-        default:    format = "INT %02#X - Invalid/Undefined Interrupt";                        break;
+        case 0x00:  exception = "CPU Exception - 0x00 / #DE: Divide-by-zero Error";             break;
+        case 0x01:  exception = "CPU Exception - 0x01 / #DB: Debug";                            break;
+        case 0x02:  exception = "CPU Exception - 0x02:       Non-maskable Interrupt";           break;
+        case 0x03:  exception = "CPU Exception - 0x03 / #BP: Breakpoint";                       break;
+        case 0x04:  exception = "CPU Exception - 0x04 / #OF: Overflow";                         break;
+        case 0x05:  exception = "CPU Exception - 0x05 / #BR: Bound Range Exceeded";             break;
+        case 0x06:  exception = "CPU Exception - 0x06 / #UD: Invalid Opcode";                   break;
+        case 0x07:  exception = "CPU Exception - 0x07 / #NM: Device Not Available";             break;
+        case 0x08:  exception = "CPU Exception - 0x08 / #DF: Double Fault";                     break;
+        case 0x09:  exception = "CPU Exception - 0x09:       Coprocessor Segment Overrun";      break;
+        case 0x0A:  exception = "CPU Exception - 0x0A / #TS: Invalid TSS";                      break;
+        case 0x0B:  exception = "CPU Exception - 0x0B / #NP: Segment Not Present";              break;
+        case 0x0C:  exception = "CPU Exception - 0x0C / #SS: Stack-Segment Fault";              break;
+        case 0x0D:  exception = "CPU Exception - 0x0D / #GP: General Protection Fault";         break;
+        case 0x0E:  exception = "CPU Exception - 0x0E / #PF: Page Fault";                       break;
+        case 0x10:  exception = "CPU Exception - 0x10 / #MF: x87 Floating-Point Exception";     break;
+        case 0x11:  exception = "CPU Exception - 0x11 / #AC: Alignment Check";                  break;
+        case 0x12:  exception = "CPU Exception - 0x12 / #MC: Machine Check";                    break;
+        case 0x13:  exception = "CPU Exception - 0x13 / #XM: SIMD Floating-Point Exception";    break;
+        case 0x1E:  exception = "CPU Exception - 0x1E / #SX: Security Exception";               break;
+        default:    exception = "CPU Exception - Unknown - No information available";           break;
     }
     
-    XEOS_System_Panicf( format, isr );
+    #ifdef __LP64__
+    
+    XEOS_System_Panicf
+    (
+        "%s\n"
+        "\n"
+        "x86-64 Registers:\n"
+        "\n"
+        "RAX: %016#LX RBX: %016#LX RCX: %016#LX\n"
+        "RDX: %016#LX RDI: %016#LX RSI: %016#LX\n"
+        "R8:  %016#LX R9:  %016#LX R10: %016#LX\n"
+        "R11: %016#LX R12: %016#LX R13: %016#LX\n"
+        "R14: %016#LX R15: %016#LX\n"
+        "RSP: %016#LX RBP: %016#LX\n",
+        exception,
+        registers->rax,
+        registers->rbx,
+        registers->rcx,
+        registers->rdx,
+        registers->rdi,
+        registers->rsi,
+        registers->r8,
+        registers->r9,
+        registers->r10,
+        registers->r11,
+        registers->r12,
+        registers->r13,
+        registers->r14,
+        registers->r15,
+        registers->rsp,
+        registers->rbp
+    );
+    
+    #else
+    
+    XEOS_System_Panicf
+    (
+        "%s\n"
+        "\n"
+        "i386 Registers:\n"
+        "\n"
+        "EAX: %08#X EBX: %08#X ECX: %08#X EDI: %08#X\n"
+        "ESI: %08#X ESP: %08#X EAX: %08#X EBP: %08#X\n",
+        exception,
+        registers->eax,
+        registers->ebx,
+        registers->ecx,
+        registers->edx,
+        registers->edi,
+        registers->esi,
+        registers->esp,
+        registers->ebp
+    );
+    
+    #endif
 }
 

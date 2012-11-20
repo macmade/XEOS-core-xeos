@@ -75,9 +75,8 @@
 extern "C" {
 #endif
 
-#include <xeos/hal/idt.h>
-#include <xeos/hal/gdt.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 /*!
  * @typedef         XEOS_HAL_CPUInfos_Feature
@@ -207,6 +206,90 @@ typedef enum
     XEOS_HAL_CPUInfos_FeatureHypervisor     = 0x11F
 }
 XEOS_HAL_CPUInfos_Feature;
+
+#ifdef __clang__
+#pragma pack( 1 )
+#endif
+
+#ifdef __LP64__
+
+/*!
+ * @typedef         XEOS_HAL_CPU_Registers
+ * @abstract        x86-64 registers
+ * @description     Structure representing the x86-64 registers. For i386, the
+ *                  same typedef is available, but with a different layout.
+ * @field           rax             RAX register
+ * @field           rbx             RBX register
+ * @field           rcx             RCX register
+ * @field           rdx             RDX register
+ * @field           rdi             RDI register
+ * @field           rsi             RSI register
+ * @field           r8              R8 register
+ * @field           r9              R9 register
+ * @field           r10             R10 register
+ * @field           r11             R11 register
+ * @field           r12             R12 register
+ * @field           r13             R13 register
+ * @field           r14             R14 register
+ * @field           r15             R15 register
+ * @field           rsp             R16 register
+ * @field           rbp             R17 register
+ */
+typedef struct
+{
+    uint64_t rax;
+    uint64_t rbx;
+    uint64_t rcx;
+    uint64_t rdx;
+    uint64_t rsi;
+    uint64_t rdi;
+    uint64_t r8;
+    uint64_t r9;
+    uint64_t r10;
+    uint64_t r11;
+    uint64_t r12;
+    uint64_t r13;
+    uint64_t r14;
+    uint64_t r15;
+    uint64_t rsp;
+    uint64_t rbp;
+}
+XEOS_HAL_CPU_Registers;
+
+#else
+
+/*!
+ * @typedef         XEOS_HAL_CPU_Registers
+ * @abstract        i386 registers
+ * @description     Structure representing the i386 registers. For x86-64, the
+ *                  same typedef is available, but with a different layout.
+ * @field           eax             EAX register
+ * @field           ebx             EBX register
+ * @field           ecx             ECX register
+ * @field           edx             EDX register
+ * @field           edi             EDI register
+ * @field           esi             ESI register
+ * @field           esp             E16 register
+ * @field           ebp             E17 register
+ */
+typedef struct
+{
+    uint32_t eax;
+    uint32_t ebx;
+    uint32_t ecx;
+    uint32_t edx;
+    uint32_t esi;
+    uint32_t edi;
+    uint32_t esp;
+    uint32_t ebp;
+}
+XEOS_HAL_CPU_Registers;
+
+#endif
+
+#ifdef __clang__
+#pragma pack()
+#endif
 
 /*!
  * @function        XEOS_HAL_CPU_CPUID

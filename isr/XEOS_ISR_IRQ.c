@@ -71,9 +71,11 @@
 #include "xeos/irq.h"
 #include "xeos/hal/pic.h"
 
-void XEOS_ISR_IRQ( uint8_t isr )
+void XEOS_ISR_IRQ( uint8_t isr, XEOS_HAL_CPU_Registers * registers )
 {
     XEOS_HAL_PIC_IRQ irq;
+    
+    ( void )registers;
     
     switch( isr )
     {

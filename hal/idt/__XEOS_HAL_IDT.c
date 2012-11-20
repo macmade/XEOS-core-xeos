@@ -87,8 +87,8 @@
 
 XEOS_HAL_IDT_ISRHandler __XEOS_HAL_IDT_ISRHandlers[ XEOS_HAL_IDT_MAX_DESCRIPTORS ];
 
-void __XEOS_HAL_IDT_HandleISR( uint8_t isr );
-void __XEOS_HAL_IDT_HandleISR( uint8_t isr )
+void __XEOS_HAL_IDT_HandleISR( uint8_t isr, XEOS_HAL_CPU_Registers * registers );
+void __XEOS_HAL_IDT_HandleISR( uint8_t isr, XEOS_HAL_CPU_Registers * registers )
 {
     XEOS_HAL_IDT_ISREntryRef entry;
     XEOS_HAL_IDT_ISRHandler  handler;
@@ -104,7 +104,7 @@ void __XEOS_HAL_IDT_HandleISR( uint8_t isr )
     
     if( handler != NULL )
     {
-       handler( isr );
+       handler( isr, registers );
     }
 }
 
@@ -117,42 +117,43 @@ __asm__                                         \
     ".global __XEOS_HAL_IDT_ISR_" # _n_ "\n"    \
     "__XEOS_HAL_IDT_ISR_" # _n_ ":\n"           \
     "\n"                                        \
-    "push %rax\n"                               \
-    "push %rbx\n"                               \
-    "push %rcx\n"                               \
-    "push %rdx\n"                               \
-    "push %rdi\n"                               \
-    "push %rsi\n"                               \
-    "push %r8\n"                                \
-    "push %r9\n"                                \
-    "push %r10\n"                               \
-    "push %r11\n"                               \
-    "push %r12\n"                               \
-    "push %r13\n"                               \
-    "push %r14\n"                               \
-    "push %r15\n"                               \
-    "push %rsp\n"                               \
     "push %rbp\n"                               \
+    "push %rsp\n"                               \
+    "push %r15\n"                               \
+    "push %r14\n"                               \
+    "push %r13\n"                               \
+    "push %r12\n"                               \
+    "push %r11\n"                               \
+    "push %r10\n"                               \
+    "push %r9\n"                                \
+    "push %r8\n"                                \
+    "push %rsi\n"                               \
+    "push %rdi\n"                               \
+    "push %rdx\n"                               \
+    "push %rcx\n"                               \
+    "push %rbx\n"                               \
+    "push %rax\n"                               \
     "\n"                                        \
     "movq $0x" # _n_ ", %rdi\n"                 \
+    "movq %rsp, %rsi\n"                         \
     "call __XEOS_HAL_IDT_HandleISR\n"           \
     "\n"                                        \
-    "pop %rbp\n"                                \
-    "pop %rsp\n"                                \
-    "pop %r15\n"                                \
-    "pop %r14\n"                                \
-    "pop %r13\n"                                \
-    "pop %r12\n"                                \
-    "pop %r11\n"                                \
-    "pop %r10\n"                                \
-    "pop %r9\n"                                 \
-    "pop %r8\n"                                 \
-    "pop %rsi\n"                                \
-    "pop %rdi\n"                                \
-    "pop %rdx\n"                                \
-    "pop %rcx\n"                                \
-    "pop %rbx\n"                                \
     "pop %rax\n"                                \
+    "pop %rbx\n"                                \
+    "pop %rcx\n"                                \
+    "pop %rdx\n"                                \
+    "pop %rdi\n"                                \
+    "pop %rsi\n"                                \
+    "pop %r8\n"                                 \
+    "pop %r9\n"                                 \
+    "pop %r10\n"                                \
+    "pop %r11\n"                                \
+    "pop %r12\n"                                \
+    "pop %r13\n"                                \
+    "pop %r14\n"                                \
+    "pop %r15\n"                                \
+    "pop %rsp\n"                                \
+    "pop %rbp\n"                                \
     "\n"                                        \
     "iretq\n"                                   \
 )
@@ -167,27 +168,29 @@ __asm__                                         \
     "\n"                                        \
     "__XEOS_HAL_IDT_ISR_" # _n_ ":\n"           \
     "\n"                                        \
-    "push %eax\n"                               \
-    "push %ebx\n"                               \
-    "push %ecx\n"                               \
-    "push %edx\n"                               \
-    "push %edi\n"                               \
-    "push %esi\n"                               \
-    "push %esp\n"                               \
     "push %ebp\n"                               \
+    "push %esp\n"                               \
+    "push %esi\n"                               \
+    "push %edi\n"                               \
+    "push %edx\n"                               \
+    "push %ecx\n"                               \
+    "push %ebx\n"                               \
+    "push %eax\n"                               \
     "\n"                                        \
+    "push %esp\n"                               \
     "push $0x" # _n_ "\n"                       \
     "call __XEOS_HAL_IDT_HandleISR\n"           \
     "pop %eax\n"                                \
-    "\n"                                        \
-    "pop %ebp\n"                                \
-    "pop %esp\n"                                \
-    "pop %esi\n"                                \
-    "pop %edi\n"                                \
-    "pop %edx\n"                                \
-    "pop %ecx\n"                                \
-    "pop %ebx\n"                                \
     "pop %eax\n"                                \
+    "\n"                                        \
+    "pop %eax\n"                                \
+    "pop %ebx\n"                                \
+    "pop %ecx\n"                                \
+    "pop %edx\n"                                \
+    "pop %edi\n"                                \
+    "pop %esi\n"                                \
+    "pop %esp\n"                                \
+    "pop %ebp\n"                                \
     "\n"                                        \
     "iretl\n"                                   \
 ) 

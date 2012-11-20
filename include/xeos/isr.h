@@ -75,6 +75,7 @@
 extern "C" {
 #endif
 
+#include <xeos/hal/cpu.h>
 #include <stdint.h>
 #include <stdarg.h>
 
@@ -82,23 +83,26 @@ extern "C" {
  * @function        XEOS_ISR_Exception
  * @abstract        ISR handler for the x86 CPU exceptions
  * @param           isr         The ISR number
+ * @param           registers   The processor registers
  */
-void XEOS_ISR_Exception( uint8_t isr );
+void XEOS_ISR_Exception( uint8_t isr, XEOS_HAL_CPU_Registers * registers );
 
 /*!
  * @function        XEOS_ISR_IRQ
  * @abstract        ISR handler for the IRQs
  * @param           isr         The ISR number
+ * @param           registers   The processor registers
  */
-void XEOS_ISR_IRQ( uint8_t isr );
+void XEOS_ISR_IRQ( uint8_t isr, XEOS_HAL_CPU_Registers * registers );
 
 /*!
  * @function        XEOS_ISR_SysCall
  * @abstract        ISR handler for system calls
  * @param           isr         The ISR number
+ * @param           registers   The processor registers
  * @param           syscall     The system call number
  */
-void XEOS_ISR_SysCall( uint8_t isr, uint16_t syscall );
+void XEOS_ISR_SysCall( uint8_t isr, XEOS_HAL_CPU_Registers * registers, uint16_t syscall );
 
 #ifdef __cplusplus
 }

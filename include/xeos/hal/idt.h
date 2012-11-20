@@ -75,6 +75,7 @@
 extern "C" {
 #endif
 
+#include <xeos/hal/cpu.h>
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -126,8 +127,9 @@ XEOS_HAL_IDT_ISREntryPrivilegeLevel;
  * @typedef         XEOS_HAL_IDT_ISRHandler
  * @abstract        Handler function for an ISR entry
  * @param           isr         The ISR number
+ * @param           registers   The processor registers
  */
-typedef void ( * XEOS_HAL_IDT_ISRHandler )( uint8_t isr );
+typedef void ( * XEOS_HAL_IDT_ISRHandler )( uint8_t isr, XEOS_HAL_CPU_Registers * registers );
 
 /*!
  * @typedef         XEOS_HAL_IDT_ISREntryRef

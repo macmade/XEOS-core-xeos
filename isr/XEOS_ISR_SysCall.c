@@ -70,8 +70,10 @@
 #include "xeos/isr.h"
 #include "xeos/system.h"
 
-void XEOS_ISR_SysCall( uint8_t isr, uint16_t syscall )
+void XEOS_ISR_SysCall( uint8_t isr, XEOS_HAL_CPU_Registers * registers, uint16_t syscall )
 {
+    ( void )registers;
+    
     XEOS_System_Panicf
     (
         "Interrupt #%x - System Call\n"
