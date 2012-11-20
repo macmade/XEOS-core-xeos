@@ -456,15 +456,21 @@ void __XEOS_Video_ProcessFormatString( const char * format, va_list ap, void ( *
                             }
                             else if( intLength == __XEOS_Video_VPrintf_Flag_IntegerLength16 )
                             {
-                                n = ( uint64_t )( ( short )va_arg( ap, int ) );
+                                n  = ( uint64_t )( ( short )va_arg( ap, int ) );
+                                n &= 0xFFFF;
                             }
                             else if( ( intType & __XEOS_Video_VPrintf_Flag_IntegerTypePointer ) != 0 )
                             {
                                 n = ( uint64_t )va_arg( ap, void * );
+                                
+                                #ifndef __LP64__
+                                n &= 0xFFFFFFFF;
+                                #endif
                             }
                             else
                             {
-                                n = ( uint64_t )va_arg( ap, int );
+                                n  = ( uint64_t )va_arg( ap, int );
+                                n &= 0xFFFFFFFF;
                             }
                             
                             if( ( sign & __XEOS_Video_VPrintf_Flag_SignNone ) == 0 )
