@@ -110,12 +110,6 @@ extern unsigned int __XEOS_Video_Y;
  */
 extern char * __XEOS_Video_Prompt;
 
-/*!
- * @var             __XEOS_Video_HexChars
- * @abstract        Hexadecimal characters, used for number to string conversion
- */
-extern char __XEOS_Video_HexChars[ 16 ];
-
 #ifdef __cplusplus
 }
 #endif
