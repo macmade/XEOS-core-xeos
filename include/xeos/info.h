@@ -125,6 +125,14 @@ XEOS_Info_MemoryEntryType;
 XEOS_Info_MemoryRef XEOS_Info_GetMemory( XEOS_InfoRef info );
 
 /*!
+ * @function        XEOS_Info_MemoryGetTotalBytes
+ * @abstract        Gets the number of memory bytes available on the system
+ * @param           memory      The memory info object
+ * @result          The number of memory bytes available on the system
+ */
+uint64_t XEOS_Info_MemoryGetTotalBytes( XEOS_Info_MemoryRef memory );
+
+/*!
  * @function        XEOS_Info_MemoryGetNumberOfEntries
  * @abstract        Gets the number of memory info entries
  * @param           memory      The memory info object
