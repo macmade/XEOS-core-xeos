@@ -387,39 +387,74 @@ uint64_t XEOS_HAL_CPU_RDMSR( uint32_t id );
 void XEOS_HAL_CPU_WRMSR( uint32_t id, uint64_t value );
 
 /*!
- * @function        XEOS_HAL_CPU_ReadCR0
+ * @function        XEOS_HAL_CPU_GetCR0
  * @abstract        Gets the content of the Control Register 0 (CR0)
  * @result          The content of CR0
  */
-uint32_t XEOS_HAL_CPU_ReadCR0( void );
+uint32_t XEOS_HAL_CPU_GetCR0( void );
 
 /*!
- * @function        XEOS_HAL_CPU_ReadCR1
+ * @function        XEOS_HAL_CPU_GetCR1
  * @abstract        Gets the content of the Control Register 1 (CR1)
  * @result          The content of CR1
  */
-uint32_t XEOS_HAL_CPU_ReadCR1( void );
+uint32_t XEOS_HAL_CPU_GetCR1( void );
 
 /*!
- * @function        XEOS_HAL_CPU_ReadCR2
+ * @function        XEOS_HAL_CPU_GetCR2
  * @abstract        Gets the content of the Control Register 2 (CR2)
  * @result          The content of CR2
  */
-uint32_t XEOS_HAL_CPU_ReadCR2( void );
+uint32_t XEOS_HAL_CPU_GetCR2( void );
 
 /*!
- * @function        XEOS_HAL_CPU_ReadCR3
+ * @function        XEOS_HAL_CPU_GetCR3
  * @abstract        Gets the content of the Control Register 3 (CR3)
  * @result          The content of CR3
  */
-uint32_t XEOS_HAL_CPU_ReadCR3( void );
+uint32_t XEOS_HAL_CPU_GetCR3( void );
 
 /*!
- * @function        XEOS_HAL_CPU_ReadCR4
+ * @function        XEOS_HAL_CPU_GetCR4
  * @abstract        Gets the content of the Control Register 4 (CR4)
  * @result          The content of CR4
  */
-uint32_t XEOS_HAL_CPU_ReadCR4( void );
+uint32_t XEOS_HAL_CPU_GetCR4( void );
+
+/*!
+ * @function        XEOS_HAL_CPU_SetCR0
+ * @abstract        Sets the content of the Control Register 0 (CR0)
+ * @param           value           The content of CR0
+ */
+void XEOS_HAL_CPU_SetCR0( uint32_t value );
+
+/*!
+ * @function        XEOS_HAL_CPU_SetCR1
+ * @abstract        Sets the content of the Control Register 1 (CR1)
+ * @param           value           The content of CR1
+ */
+void XEOS_HAL_CPU_SetCR1( uint32_t value );
+
+/*!
+ * @function        XEOS_HAL_CPU_SetCR2
+ * @abstract        Sets the content of the Control Register 2 (CR2)
+ * @param           value           The content of CR2
+ */
+void XEOS_HAL_CPU_SetCR2( uint32_t value );
+
+/*!
+ * @function        XEOS_HAL_CPU_SetCR3
+ * @abstract        Sets the content of the Control Register 3 (CR3)
+ * @param           value           The content of CR3
+ */
+void XEOS_HAL_CPU_SetCR3( uint32_t value );
+
+/*!
+ * @function        XEOS_HAL_CPU_SetCR4
+ * @abstract        Sets the content of the Control Register 4 (CR4)
+ * @param           value           The content of CR4
+ */
+void XEOS_HAL_CPU_SetCR4( uint32_t value );
 
 #ifdef __cplusplus
 }
