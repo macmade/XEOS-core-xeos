@@ -70,9 +70,13 @@
 #include "xeos/video.h"
 #include "xeos/__video.h"
 
-void XEOS_Video_Prompt( const char * s )
+int XEOS_Video_Prompt( const char * s )
 {
-    XEOS_Video_Print( __XEOS_Video_Prompt );
-    XEOS_Video_Print( s );
-    XEOS_Video_Print( "\n" );
+    int c;
+    
+    c  = XEOS_Video_Print( __XEOS_Video_Prompt );
+    c += XEOS_Video_Print( s );
+    c += XEOS_Video_Print( "\n" );
+    
+    return c;
 }

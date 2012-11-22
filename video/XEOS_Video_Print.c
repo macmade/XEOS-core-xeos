@@ -70,20 +70,26 @@
 #include "xeos/video.h"
 #include "xeos/__video.h"
 
-void XEOS_Video_Print( const char * s )
+int XEOS_Video_Print( const char * s )
 {
     unsigned int x;
     unsigned int y;
+    int          c;
+    
+    c = 0;
     
     while( *( s ) != 0 )
     {
         XEOS_Video_Putc( ( *( s ) ), false );
         
         s++;
+        c++;
     }
     
     x = XEOS_Video_X();
     y = XEOS_Video_Y();
     
     XEOS_Video_MoveCursor( x, y );
+    
+    return c;
 }

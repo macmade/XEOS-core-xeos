@@ -70,11 +70,16 @@
 #include "xeos/video.h"
 #include "xeos/__video.h"
 
-void XEOS_Video_Printf( const char * format, ... )
+int XEOS_Video_Printf( const char * format, ... )
 {
     va_list args;
+    int     c;
     
     va_start( args, format );
-    XEOS_Video_VPrintf( format, args );
+    
+    c = XEOS_Video_VPrintf( format, args );
+    
     va_end( args );
+    
+    return c;
 }

@@ -70,14 +70,19 @@
 #include "xeos/video.h"
 #include "xeos/__video.h"
 
-void XEOS_Video_Promptf( const char * format, ... )
+int XEOS_Video_Promptf( const char * format, ... )
 {
     va_list args;
+    int     c;
     
     va_start( args, format );
-    XEOS_Video_Print( __XEOS_Video_Prompt );
-    XEOS_Video_VPrintf( format, args );
-    XEOS_Video_Print( "\n" );
+    
+    c  = XEOS_Video_Print( __XEOS_Video_Prompt );
+    c += XEOS_Video_VPrintf( format, args );
+    c += XEOS_Video_Print( "\n" );
+    
     va_end( args );
+    
+    return c;
 }
 

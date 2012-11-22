@@ -83,8 +83,9 @@ extern "C" {
  * @param           format              The format string
  * @param           ap                  The arguments for the format
  * @param           characterHandler    A handler function for each processed character
+ * @result      The number of character printed
  */
-void __XEOS_Video_ProcessFormatString( const char * format, va_list ap, void ( * characterHandler )( char ) );
+int __XEOS_Video_ProcessFormatString( const char * format, va_list ap, void ( * characterHandler )( char ) );
 
 /*!
  * @var             __XEOS_Video_Attribute

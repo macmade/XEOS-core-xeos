@@ -101,7 +101,7 @@ typedef enum
 }
 __XEOS_Video_VPrintf_Flag_IntegerType;
 
-void __XEOS_Video_ProcessFormatString( const char * format, va_list ap, void ( * characterHandler )( char ) )
+int __XEOS_Video_ProcessFormatString( const char * format, va_list ap, void ( * characterHandler )( char ) )
 {
     int count;
     
@@ -655,4 +655,6 @@ void __XEOS_Video_ProcessFormatString( const char * format, va_list ap, void ( *
             while( end == false );
         }
     }
+    
+    return count;
 }

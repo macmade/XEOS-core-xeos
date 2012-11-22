@@ -76,15 +76,18 @@ static void __XEOS_Video_VPrintf_CharacterHandler( char c )
     XEOS_Video_Putc( c, false );
 }
 
-void XEOS_Video_VPrintf( const char * format, va_list ap )
+int XEOS_Video_VPrintf( const char * format, va_list ap )
 {
     unsigned int x;
     unsigned int y;
+    int          c;
     
-    __XEOS_Video_ProcessFormatString( format, ap, __XEOS_Video_VPrintf_CharacterHandler );
+    c = __XEOS_Video_ProcessFormatString( format, ap, __XEOS_Video_VPrintf_CharacterHandler );
     
     x = XEOS_Video_X();
     y = XEOS_Video_Y();
     
     XEOS_Video_MoveCursor( x, y );
+    
+    return c;
 }

@@ -183,37 +183,42 @@ unsigned int XEOS_Video_Y( void );
  * @function    XEOS_Video_Prompt
  * @abstract    Displays a message with the standard prompt
  * @param       s           The message
+ * @result      The number of character printed
  */
-void XEOS_Video_Prompt( const char * s );
+int XEOS_Video_Prompt( const char * s );
 
 /*!
  * @function    XEOS_Video_Promptf
  * @abstract    Displays a formatted message with the standard prompt
  * @param       format      The message format
+ * @result      The number of character printed
  */
-void XEOS_Video_Promptf( const char * format, ... );
+int XEOS_Video_Promptf( const char * format, ... );
 
 /*!
  * @function    XEOS_Video_Print
  * @abstract    Displays a message
  * @param       s           The message
+ * @result      The number of character printed
  */
-void XEOS_Video_Print( const char * s );
+int XEOS_Video_Print( const char * s );
 
 /*!
  * @function    XEOS_Video_Printf
  * @abstract    Displays a formatted message
  * @param       format      The message format
+ * @result      The number of character printed
  */
-void XEOS_Video_Printf( const char * format, ... );
+int XEOS_Video_Printf( const char * format, ... );
 
 /*!
  * @function    XEOS_Video_VPrintf
  * @abstract    Displays a formatted message
  * @param       format      The message format
  * @param       arg         The arguments for the format
+ * @result      The number of character printed
  */
-void XEOS_Video_VPrintf( const char * format, va_list arg );
+int XEOS_Video_VPrintf( const char * format, va_list arg );
 
 /*!
  * @function    XEOS_Video_Putc
