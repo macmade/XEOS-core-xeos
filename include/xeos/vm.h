@@ -75,45 +75,118 @@
 extern "C" {
 #endif
 
+#include <xeos/info.h>
 #include <stdint.h>
 #include <stdbool.h>
 
 typedef enum
 {
-    XEOS_VM_PTEntryPermissionsRead           = 0x00,
-    XEOS_VM_PTEntryPermissionsReadWrite      = 0x01
+    XEOS_VM_SystemMapTypeUnknown        = 0x00,
+    XEOS_VM_SystemMapType32             = 0x01,
+    XEOS_VM_SystemMapType32PAE          = 0x02,
+    XEOS_VM_SystemMapType64             = 0x03
 }
-XEOS_VM_PTEntryPermissions;
+XEOS_VM_SystemMapType;
 
 typedef enum
 {
-    XEOS_VM_PTEntryPrivilegeLevelSupervisor  = 0x00,
-    XEOS_VM_PTEntryPrivilegeLevelUser        = 0x01
+    XEOS_VM_PML4TEntryFlagPresent       = 1 << 0,
+    XEOS_VM_PML4TEntryFlagWriteable     = 1 << 1,
 }
-XEOS_VM_PTEntryPrivilegeLevel;
+XEOS_VM_PML4TEntryFlag;
 
-/*!
- * @typedef         XEOS_VM_PTEntryRef
- * @abstract        Opaque type for a page table entry
- */
-#ifdef __LP64__
-typedef uint64_t * XEOS_VM_PTEntryRef;
-#else
-typedef uint32_t * XEOS_VM_PTEntryRef;
-#endif
+typedef enum
+{
+    XEOS_VM_PDPTEntryFlagPresent        = 1 << 0,
+    XEOS_VM_PDPTEntryFlagWriteable      = 1 << 1,
+}
+XEOS_VM_PDPTEntryFlag;
 
-void XEOS_VM_PTEntrySetPresent( XEOS_VM_PTEntryRef entry, bool value );
-void XEOS_VM_PTEntrySetPermissions( XEOS_VM_PTEntryRef entry, XEOS_VM_PTEntryPermissions value );
-void XEOS_VM_PTEntrySetDisableCache( XEOS_VM_PTEntryRef entry, bool value );
-void XEOS_VM_PTEntrySetAccessed( XEOS_VM_PTEntryRef entry, bool value );
-void XEOS_VM_PTEntrySetGlobal( XEOS_VM_PTEntryRef entry, bool value );
-void XEOS_VM_PTEntrySetDirty( XEOS_VM_PTEntryRef entry, bool value );
-void XEOS_VM_PTEntrySetPresent( XEOS_VM_PTEntryRef entry, bool value );
-void XEOS_VM_PTEntrySetPermissions( XEOS_VM_PTEntryRef entry, XEOS_VM_PTEntryPermissions value );
-void XEOS_VM_PTEntrySetDisableCache( XEOS_VM_PTEntryRef entry, bool value );
-void XEOS_VM_PTEntrySetAccessed( XEOS_VM_PTEntryRef entry, bool value );
-void XEOS_VM_PTEntrySetGlobal( XEOS_VM_PTEntryRef entry, bool value );
-void XEOS_VM_PTEntrySetDirty( XEOS_VM_PTEntryRef entry, bool value );
+typedef enum
+{
+    XEOS_VM_PDTEntryFlagPresent         = 1 << 0,
+    XEOS_VM_PDTEntryFlagWriteable       = 1 << 1,
+    XEOS_VM_PDTEntryFlagUser            = 1 << 2,
+    XEOS_VM_PDTEntryFlagWriteThrough    = 1 << 3,
+    XEOS_VM_PDTEntryFlagCacheDisbled    = 1 << 4,
+    XEOS_VM_PDTEntryFlagAccessed        = 1 << 5,
+    XEOS_VM_PDTEntryFlagPageSize        = 1 << 6,
+    XEOS_VM_PDTEntryFlagGLobal          = 1 << 8,
+}
+XEOS_VM_PDTEntryFlag;
+
+typedef enum
+{
+    XEOS_VM_PTEntryFlagPresent          = 1 << 0,
+    XEOS_VM_PTEntryFlagWriteable        = 1 << 1,
+    XEOS_VM_PTEntryFlagUser             = 1 << 2,
+    XEOS_VM_PTEntryFlagWriteThrough     = 1 << 3,
+    XEOS_VM_PTEntryFlagCacheDisbled     = 1 << 4,
+    XEOS_VM_PTEntryFlagAccessed         = 1 << 5,
+    XEOS_VM_PTEntryFlagDirty            = 1 << 6,
+    XEOS_VM_PTEntryFlagGLobal           = 1 << 8,
+}
+XEOS_VM_PTEntryFlag;
+
+typedef struct __XEOS_VM_SystemMap  * XEOS_VM_SystemMapRef;
+
+typedef void                        * XEOS_VM_PML4TEntryRef;
+typedef XEOS_VM_PML4TEntryRef       * XEOS_VM_PML4TRef;
+typedef void                        * XEOS_VM_PDPTEntryRef;
+typedef XEOS_VM_PML4TEntryRef       * XEOS_VM_PDPTRef;
+typedef void                        * XEOS_VM_PDTEntryRef;
+typedef XEOS_VM_PML4TEntryRef       * XEOS_VM_PDTRef;
+typedef void                        * XEOS_VM_PTEntryRef;
+typedef XEOS_VM_PML4TEntryRef       * XEOS_VM_PTRef;
+
+XEOS_VM_SystemMapRef    XEOS_VM_SystemMap( void );
+XEOS_VM_SystemMapRef    XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHandler )( const char *, ... ) );
+uintptr_t               XEOS_VM_SystemMapGetAddress( XEOS_VM_SystemMapRef object );
+uint64_t                XEOS_VM_SystemMapGetLength( XEOS_VM_SystemMapRef object );
+XEOS_VM_SystemMapType   XEOS_VM_SystemMapGetType( XEOS_VM_SystemMapRef object );
+
+void                    XEOS_VM_EnablePaging( void );
+void                    XEOS_VM_DisablePaging( void );
+bool                    XEOS_VM_PagingEnabled( void );
+void                    XEOS_VM_EnablePAE( void );
+void                    XEOS_VM_DisablePAE( void );
+bool                    XEOS_VM_PAEEnabled( void );
+
+void                    XEOS_VM_PML4TClear( XEOS_VM_PML4TRef object );
+XEOS_VM_PML4TEntryRef   XEOS_VM_PML4TGetEntryAtIndex( XEOS_VM_PML4TRef object, unsigned int i );
+
+void                    XEOS_VM_PML4TEntryClear( XEOS_VM_PML4TEntryRef object );
+void                    XEOS_VM_PML4TEntrySetPDPT( XEOS_VM_PML4TEntryRef object, XEOS_VM_PDPTRef pdpt );
+void                    XEOS_VM_PML4TEntrySetFlag( XEOS_VM_PML4TEntryRef object, XEOS_VM_PML4TEntryFlag flag, bool value );
+XEOS_VM_PDPTRef         XEOS_VM_PML4TEntryGetPDPT( XEOS_VM_PML4TEntryRef object );
+bool                    XEOS_VM_PML4TEntryGetFlag( XEOS_VM_PML4TEntryRef object, XEOS_VM_PML4TEntryFlag flag );
+
+void                    XEOS_VM_PDPTClear( XEOS_VM_PDPTRef object );
+XEOS_VM_PDPTEntryRef    XEOS_VM_PDPTGetEntryAtIndex( XEOS_VM_PDPTRef object, unsigned int i );
+
+void                    XEOS_VM_PDPTEntryClear( XEOS_VM_PDPTEntryRef object );
+void                    XEOS_VM_PDPTEntrySetPDT( XEOS_VM_PDPTEntryRef object, XEOS_VM_PDTRef pdt );
+void                    XEOS_VM_PDPTEntrySetFlag( XEOS_VM_PDPTEntryRef object, XEOS_VM_PDPTEntryFlag flag, bool value );
+XEOS_VM_PDTRef          XEOS_VM_PDPTEntryGetPDT( XEOS_VM_PDPTEntryRef object );
+bool                    XEOS_VM_PDPTEntryGetFlag( XEOS_VM_PDPTEntryRef object, XEOS_VM_PDPTEntryFlag flag );
+
+void                    XEOS_VM_PDTClear( XEOS_VM_PDTRef object );
+XEOS_VM_PDTEntryRef     XEOS_VM_PDTGetEntryAtIndex( XEOS_VM_PDTRef object, unsigned int i );
+
+void                    XEOS_VM_PDTEntryClear( XEOS_VM_PDTEntryRef object );
+void                    XEOS_VM_PDTEntrySetPT( XEOS_VM_PTEntryRef object, XEOS_VM_PTRef pt );
+void                    XEOS_VM_PDTEntrySetFlag( XEOS_VM_PTEntryRef object, XEOS_VM_PDTEntryFlag flag, bool value );
+XEOS_VM_PTRef           XEOS_VM_PDTEntryGetPT( XEOS_VM_PTEntryRef object );
+bool                    XEOS_VM_PDTEntryGetFlag( XEOS_VM_PTEntryRef object, XEOS_VM_PDTEntryFlag flag );
+
+void                    XEOS_VM_PTClear( XEOS_VM_PTRef object );
+XEOS_VM_PTEntryRef      XEOS_VM_PTGetEntryAtIndex( XEOS_VM_PTRef object, unsigned int i );
+
+void                    XEOS_VM_PTEntryClear( XEOS_VM_PTEntryRef object );
+void                    XEOS_VM_PTEntrySetAddress( XEOS_VM_PTEntryRef object, uint64_t address );
+void                    XEOS_VM_PTEntrySetFlag( XEOS_VM_PTEntryRef object, XEOS_VM_PTEntryFlag flag, bool value );
+uint64_t                XEOS_VM_PTEntryGetAddress( XEOS_VM_PTEntryRef object );
+bool                    XEOS_VM_PTEntryGetFlag( XEOS_VM_PTEntryRef object, XEOS_VM_PTEntryFlag flag );
 
 #ifdef __cplusplus
 }
