@@ -76,6 +76,7 @@ extern "C" {
 #endif
 
 #include <xeos/hal/pic.h>
+#include <xeos/hal/cpu.h>
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -83,8 +84,9 @@ extern "C" {
  * @typedef         XEOS_IRQ_IRQHandler
  * @abstract        Handler function for an IRQ
  * @param           irq         The IRQ line
+ * @param           registers   The processor registers
  */
-typedef void ( * XEOS_IRQ_IRQHandler )( XEOS_HAL_PIC_IRQ irq );
+typedef void ( * XEOS_IRQ_IRQHandler )( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * registers );
 
 /*!
  * @function        XEOS_IRQ_AddIRQHandler
@@ -110,22 +112,25 @@ void XEOS_IRQ_RemoveIRQHandler( XEOS_HAL_PIC_IRQ irq, XEOS_IRQ_IRQHandler handle
  * @function        XEOS_IRQ_ExecuteIRQHandlers
  * @abstract        Executes all installed handlers for an IRQ line
  * @param           irq         The IRQ line
+ * @param           registers   The processor registers
  */
-void XEOS_IRQ_ExecuteIRQHandlers( XEOS_HAL_PIC_IRQ irq );
+void XEOS_IRQ_ExecuteIRQHandlers( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * registers );
 
 /*!
  * @function        XEOS_IRQ_SystemTimer
  * @abstract        IRQ handler for the system timer (IRQ0)
  * @param           irq         The IRQ line
+ * @param           registers   The processor registers
  */
-void XEOS_IRQ_SystemTimer( XEOS_HAL_PIC_IRQ irq );
+void XEOS_IRQ_SystemTimer( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * registers );
 
 /*!
  * @function        XEOS_IRQ_RealTimeClock
  * @abstract        IRQ handler for the real time clock (IRQ8)
  * @param           irq         The IRQ line
+ * @param           registers   The processor registers
  */
-void XEOS_IRQ_RealTimeClock( XEOS_HAL_PIC_IRQ irq );
+void XEOS_IRQ_RealTimeClock( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * registers );
 
 #ifdef __cplusplus
 }

@@ -71,7 +71,7 @@
 #include "xeos/__irq.h"
 #include <stdlib.h>
 
-void XEOS_IRQ_ExecuteIRQHandlers( XEOS_HAL_PIC_IRQ irq )
+void XEOS_IRQ_ExecuteIRQHandlers( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * registers )
 {
     unsigned int          i;
     XEOS_IRQ_IRQHandler * handlers;
@@ -102,7 +102,7 @@ void XEOS_IRQ_ExecuteIRQHandlers( XEOS_HAL_PIC_IRQ irq )
     {
         if( handlers[ i ] != NULL )
         {
-            handlers[ i ]( irq );
+            handlers[ i ]( irq, registers );
         }
     }
 }

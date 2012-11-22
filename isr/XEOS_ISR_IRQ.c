@@ -75,8 +75,6 @@ void XEOS_ISR_IRQ( uint8_t isr, XEOS_HAL_CPU_Registers * registers )
 {
     XEOS_HAL_PIC_IRQ irq;
     
-    ( void )registers;
-    
     switch( isr )
     {
         case 0x20:  irq = XEOS_HAL_PIC_IRQ0;    break;
@@ -98,7 +96,7 @@ void XEOS_ISR_IRQ( uint8_t isr, XEOS_HAL_CPU_Registers * registers )
         default:    return;
     }
     
-    XEOS_IRQ_ExecuteIRQHandlers( irq );
+    XEOS_IRQ_ExecuteIRQHandlers( irq, registers );
     
     if( isr >= 0x28 )
     {

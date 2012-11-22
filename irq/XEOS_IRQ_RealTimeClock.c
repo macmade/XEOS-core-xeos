@@ -80,9 +80,10 @@
 static int  __count  = 0;
 static bool __inited = false;
 
-void XEOS_IRQ_RealTimeClock( XEOS_HAL_PIC_IRQ irq )
+void XEOS_IRQ_RealTimeClock( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * registers )
 {
     ( void )irq;
+    ( void )registers;
     
     if( __inited == false )
     {
