@@ -145,13 +145,6 @@ uintptr_t               XEOS_VM_SystemMapGetAddress( XEOS_VM_SystemMapRef object
 uint64_t                XEOS_VM_SystemMapGetLength( XEOS_VM_SystemMapRef object );
 XEOS_VM_SystemMapType   XEOS_VM_SystemMapGetType( XEOS_VM_SystemMapRef object );
 
-void                    XEOS_VM_EnablePaging( void );
-void                    XEOS_VM_DisablePaging( void );
-bool                    XEOS_VM_PagingEnabled( void );
-void                    XEOS_VM_EnablePAE( void );
-void                    XEOS_VM_DisablePAE( void );
-bool                    XEOS_VM_PAEEnabled( void );
-
 void                    XEOS_VM_PML4TClear( XEOS_VM_PML4TRef object );
 XEOS_VM_PML4TEntryRef   XEOS_VM_PML4TGetEntryAtIndex( XEOS_VM_PML4TRef object, unsigned int i );
 

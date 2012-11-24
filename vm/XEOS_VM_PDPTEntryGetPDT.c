@@ -68,6 +68,7 @@
  */
 
 #include "xeos/vm.h"
+#include "xeos/hal/cpu.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -84,7 +85,7 @@ XEOS_VM_PDTRef XEOS_VM_PDPTEntryGetPDT( XEOS_VM_PDPTEntryRef object )
     
     #else
     
-    if( XEOS_VM_PAEEnabled() == true )
+    if( XEOS_HAL_CPU_PAEEnabled() == true )
     {
         return ( XEOS_VM_PDTRef )( *( ( uint64_t * )object ) & ( uint64_t )( UINT64_MAX - 0xFFF ) );
     }

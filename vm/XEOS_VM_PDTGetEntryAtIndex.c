@@ -68,6 +68,7 @@
  */
 
 #include "xeos/vm.h"
+#include "xeos/hal/cpu.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -83,7 +84,7 @@ XEOS_VM_PDTEntryRef XEOS_VM_PDTGetEntryAtIndex( XEOS_VM_PDTRef object, unsigned 
         return NULL;
     }
     
-    if( XEOS_VM_PAEEnabled() == true )
+    if( XEOS_HAL_CPU_PAEEnabled() == true )
     {
         if( i >= 512 )
         {

@@ -457,6 +457,44 @@ void XEOS_HAL_CPU_SetCR3( uint32_t value );
  */
 void XEOS_HAL_CPU_SetCR4( uint32_t value );
 
+/*!
+ * @function        XEOS_HAL_CPU_EnablePaging
+ * @abstract        Enables paging
+ */
+void XEOS_HAL_CPU_EnablePaging( void );
+
+/*!
+ * @function        XEOS_HAL_CPU_DisablePaging
+ * @abstract        Disables paging
+ */
+void XEOS_HAL_CPU_DisablePaging( void );
+
+/*!
+ * @function        XEOS_HAL_CPU_PagingEnabled
+ * @abstract        Checks if paging is enabled
+ * @result          True if paging is enabled, otherwise false
+ */
+bool XEOS_HAL_CPU_PagingEnabled( void );
+
+/*!
+ * @function        XEOS_HAL_CPU_EnablePAE
+ * @abstract        Enables PAE (Physical Address Extension)
+ */
+void XEOS_HAL_CPU_EnablePAE( void );
+
+/*!
+ * @function        XEOS_HAL_CPU_DisablePAE
+ * @abstract        Disables PAE (Physical Address Extension)
+ */
+void XEOS_HAL_CPU_DisablePAE( void );
+
+/*!
+ * @function        XEOS_HAL_CPU_PAEEnabled
+ * @abstract        Checks if PAE (Physical Address Extension)
+ * @result          True if PAE is enabled, otherwise false
+ */
+bool XEOS_HAL_CPU_PAEEnabled( void );
+
 #ifdef __cplusplus
 }
 #endif

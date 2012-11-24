@@ -101,7 +101,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
     
     #ifndef __LP64__
     
-    XEOS_VM_DisablePaging();
+    XEOS_HAL_CPU_DisablePaging();
     
     #endif
     
@@ -111,7 +111,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
     
     #else
     
-    if( XEOS_VM_PAEEnabled() == true )
+    if( XEOS_HAL_CPU_PAEEnabled() == true )
     {
         type = XEOS_VM_SystemMapType32PAE;
     }
@@ -129,7 +129,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
     {
         type = XEOS_VM_SystemMapType32;
         
-        XEOS_VM_DisablePAE();
+        XEOS_HAL_CPU_DisablePAE();
     }
     
     ptEntriesCount  = totalMemoryBytes / 0x1000;
@@ -566,7 +566,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
     
     #ifndef __LP64__
     
-    XEOS_VM_EnablePaging();
+    XEOS_HAL_CPU_EnablePaging();
     
     #endif
     

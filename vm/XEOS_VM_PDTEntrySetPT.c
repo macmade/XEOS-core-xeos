@@ -68,6 +68,7 @@
  */
 
 #include "xeos/vm.h"
+#include "xeos/hal/cpu.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -90,7 +91,7 @@ void XEOS_VM_PDTEntrySetPT( XEOS_VM_PTEntryRef object, XEOS_VM_PTRef pt )
     
     #else
     
-    if( XEOS_VM_PAEEnabled() == true )
+    if( XEOS_HAL_CPU_PAEEnabled() == true )
     {
         *( ( uint64_t * )object ) &= 0xFFF;
         *( ( uint64_t * )object ) |= ( uintptr_t )pt;

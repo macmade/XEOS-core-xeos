@@ -68,6 +68,7 @@
  */
 
 #include "xeos/vm.h"
+#include "xeos/hal/cpu.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -84,7 +85,7 @@ uint64_t XEOS_VM_PTEntryGetAddress( XEOS_VM_PTEntryRef object )
     
     #else
     
-    if( XEOS_VM_PAEEnabled() == true )
+    if( XEOS_HAL_CPU_PAEEnabled() == true )
     {
         return *( ( uint64_t * )object ) & ( uint64_t )( UINT64_MAX - 0xFFF );
     }

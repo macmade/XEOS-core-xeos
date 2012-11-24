@@ -62,37 +62,19 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_VM_PTEntryClear.c
+ * @file            XEOS_HAL_CPU_PagingEnabled.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#include "xeos/vm.h"
 #include "xeos/hal/cpu.h"
-#include <stdlib.h>
-#include <string.h>
 
-void XEOS_VM_PTEntryClear( XEOS_VM_PTEntryRef object )
+bool XEOS_HAL_CPU_PagingEnabled( void )
 {
-    if( object == NULL )
-    {
-        return;
-    }
+    uint64_t cr0;
     
-    #ifdef __LP64__
+    cr0  = ( uint64_t )XEOS_HAL_CPU_GetCR0();
+    cr0 &= 0x00000000FFFFFFFF;
     
-    *( ( uint64_t * )object ) = 0;
-    
-    #else
-    
-    if( XEOS_HAL_CPU_PAEEnabled() == true )
-    {
-        *( ( uint64_t * )object ) = 0;
-    }
-    else
-    {
-        *( ( uint32_t * )object ) = 0;
-    }
-    
-    #endif
+    return ( ( cr0 & ( ( uint64_t )1 << 31 ) ) != 0 ) ? true : false;
 }

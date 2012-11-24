@@ -68,6 +68,7 @@
  */
 
 #include "xeos/vm.h"
+#include "xeos/hal/cpu.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -85,7 +86,7 @@ void XEOS_VM_PML4TEntrySetFlag( XEOS_VM_PML4TEntryRef object, XEOS_VM_PML4TEntry
     
     #else
     
-    if( XEOS_VM_PAEEnabled() == true )
+    if( XEOS_HAL_CPU_PAEEnabled() == true )
     {
         *( ( uint64_t * )object ) &= UINT64_MAX - flag;
         *( ( uint64_t * )object ) |= ( value == true ) ? flag : 0;

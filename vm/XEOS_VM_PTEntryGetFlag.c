@@ -68,6 +68,7 @@
  */
 
 #include "xeos/vm.h"
+#include "xeos/hal/cpu.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -84,7 +85,7 @@ bool XEOS_VM_PTEntryGetFlag( XEOS_VM_PTEntryRef object, XEOS_VM_PTEntryFlag flag
     
     #else
     
-    if( XEOS_VM_PAEEnabled() == true )
+    if( XEOS_HAL_CPU_PAEEnabled() == true )
     {
         return ( ( *( ( uint64_t * )object ) & flag ) != 0 ) ? true : false;
     }

@@ -62,37 +62,20 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_VM_PTEntryClear.c
+ * @file            XEOS_HAL_CPU_DisablePAE.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#include "xeos/vm.h"
 #include "xeos/hal/cpu.h"
-#include <stdlib.h>
-#include <string.h>
 
-void XEOS_VM_PTEntryClear( XEOS_VM_PTEntryRef object )
+void XEOS_HAL_CPU_DisablePAE( void )
 {
-    if( object == NULL )
-    {
-        return;
-    }
+    uint64_t cr4;
     
-    #ifdef __LP64__
+    cr4  = ( uint64_t )XEOS_HAL_CPU_GetCR4();
+    cr4 &= 0x00000000FFFFFFFF;
+    cr4 &= ~( ( uint64_t )1 << 5 );
     
-    *( ( uint64_t * )object ) = 0;
-    
-    #else
-    
-    if( XEOS_HAL_CPU_PAEEnabled() == true )
-    {
-        *( ( uint64_t * )object ) = 0;
-    }
-    else
-    {
-        *( ( uint32_t * )object ) = 0;
-    }
-    
-    #endif
+    XEOS_HAL_CPU_SetCR4( ( uint32_t )cr4 );
 }
