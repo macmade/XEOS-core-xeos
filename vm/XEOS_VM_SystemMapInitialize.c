@@ -349,6 +349,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
             void                  * p;
             uint64_t                address;
             uint64_t                j;
+            unsigned int            k;
             
             p           = __XEOS_VM_SystemMap.base;
             address     = 0;
@@ -378,7 +379,24 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                         {
                             XEOS_VM_PTEntrySetAddress( ptEntry, address );
                             XEOS_VM_PTEntrySetFlag( ptEntry, XEOS_VM_PTEntryFlagPresent, true );
-                            XEOS_VM_PTEntrySetFlag( ptEntry, XEOS_VM_PTEntryFlagWriteable, true );
+                            
+                            for( k = 0; k < XEOS_Info_MemoryGetNumberOfEntries( memory ); k++ )
+                            {
+                                memoryEntry     = XEOS_Info_MemoryGetEntryAtIndex( memory, k );
+                                memoryLength    = XEOS_Info_MemoryEntryGetLength( memoryEntry );
+                                memoryStart     = XEOS_Info_MemoryEntryGetAddress( memoryEntry );
+                                memoryType      = XEOS_Info_MemoryEntryGetType( memoryEntry );
+                                
+                                if( address >= memoryStart && ( address - memoryStart ) <= memoryLength )
+                                {
+                                    if( memoryType == XEOS_Info_MemoryEntryTypeUsable )
+                                    {
+                                        XEOS_VM_PTEntrySetFlag( ptEntry, XEOS_VM_PTEntryFlagWriteable, true );
+                                    }
+                                    
+                                    break;
+                                }
+                            }
                         }
                         
                         address += 0x1000;
