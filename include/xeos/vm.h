@@ -129,15 +129,14 @@ typedef enum
 XEOS_VM_PTEntryFlag;
 
 typedef struct __XEOS_VM_SystemMap  * XEOS_VM_SystemMapRef;
-
 typedef void                        * XEOS_VM_PML4TEntryRef;
-typedef XEOS_VM_PML4TEntryRef       * XEOS_VM_PML4TRef;
+typedef void                        * XEOS_VM_PML4TRef;
 typedef void                        * XEOS_VM_PDPTEntryRef;
-typedef XEOS_VM_PML4TEntryRef       * XEOS_VM_PDPTRef;
+typedef void                        * XEOS_VM_PDPTRef;
 typedef void                        * XEOS_VM_PDTEntryRef;
-typedef XEOS_VM_PML4TEntryRef       * XEOS_VM_PDTRef;
+typedef void                        * XEOS_VM_PDTRef;
 typedef void                        * XEOS_VM_PTEntryRef;
-typedef XEOS_VM_PML4TEntryRef       * XEOS_VM_PTRef;
+typedef void                        * XEOS_VM_PTRef;
 
 XEOS_VM_SystemMapRef    XEOS_VM_SystemMap( void );
 XEOS_VM_SystemMapRef    XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHandler )( const char *, ... ) );
