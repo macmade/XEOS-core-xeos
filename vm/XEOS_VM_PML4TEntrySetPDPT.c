@@ -78,11 +78,6 @@ void XEOS_VM_PML4TEntrySetPDPT( XEOS_VM_PML4TEntryRef object, XEOS_VM_PDPTRef pd
         return;
     }
     
-    if( ( ( uintptr_t )object & 0xFFF ) != 0 )
-    {
-        return;
-    }
-    
     if( ( ( uintptr_t )pdpt & 0xFFF ) != 0 )
     {
         return;

@@ -78,11 +78,6 @@ XEOS_VM_PDTRef XEOS_VM_PDPTEntryGetPDT( XEOS_VM_PDPTEntryRef object )
         return NULL;
     }
     
-    if( ( ( uintptr_t )object & 0xFFF ) != 0 )
-    {
-        return NULL;
-    }
-    
     #ifdef __LP64__
     
     return ( XEOS_VM_PDTRef )( *( ( uint64_t * )object ) & ( uint64_t )( UINT64_MAX - 0xFFF ) );

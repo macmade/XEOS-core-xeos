@@ -78,11 +78,6 @@ void XEOS_VM_PTEntryClear( XEOS_VM_PTEntryRef object )
         return;
     }
     
-    if( ( ( uintptr_t )object & 0xFFF ) != 0 )
-    {
-        return;
-    }
-    
     #ifdef __LP64__
     
     *( ( uint64_t * )object ) = 0;

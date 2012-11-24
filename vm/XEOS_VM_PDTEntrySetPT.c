@@ -78,11 +78,6 @@ void XEOS_VM_PDTEntrySetPT( XEOS_VM_PTEntryRef object, XEOS_VM_PTRef pt )
         return;
     }
     
-    if( ( ( uintptr_t )object & 0xFFF ) != 0 )
-    {
-        return;
-    }
-    
     if( ( ( uintptr_t )pt & 0xFFF ) != 0 )
     {
         return;

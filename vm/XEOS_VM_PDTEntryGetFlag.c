@@ -78,24 +78,19 @@ bool XEOS_VM_PDTEntryGetFlag( XEOS_VM_PDTEntryRef object, XEOS_VM_PDTEntryFlag f
         return false;
     }
     
-    if( ( ( uintptr_t )object & 0xFFF ) != 0 )
-    {
-        return false;
-    }
-    
     #ifdef __LP64__
     
-    return ( ( *( ( uint64_t * )object ) & ( 1 << flag ) ) != 0 ) ? true : false;
+    return ( ( *( ( uint64_t * )object ) & flag ) != 0 ) ? true : false;
     
     #else
     
     if( XEOS_VM_PAEEnabled() == true )
     {
-        return ( ( *( ( uint64_t * )object ) & ( 1 << flag ) ) != 0 ) ? true : false;
+        return ( ( *( ( uint64_t * )object ) & flag ) != 0 ) ? true : false;
     }
     else
     {
-        return ( ( *( ( uint32_t * )object ) & ( 1 << flag ) ) != 0 ) ? true : false;
+        return ( ( *( ( uint32_t * )object ) & flag ) != 0 ) ? true : false;
     }
     
     #endif

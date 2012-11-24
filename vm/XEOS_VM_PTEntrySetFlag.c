@@ -78,27 +78,22 @@ void XEOS_VM_PTEntrySetFlag( XEOS_VM_PTEntryRef object, XEOS_VM_PTEntryFlag flag
         return;
     }
     
-    if( ( ( uintptr_t )object & 0xFFF ) != 0 )
-    {
-        return;
-    }
-    
     #ifdef __LP64__
     
-    *( ( uint64_t * )object ) &= UINT64_MAX - ( 1 << flag );
-    *( ( uint64_t * )object ) |= ( value == true ) ? ( 1 << flag ) : 0;
+    *( ( uint64_t * )object ) &= UINT64_MAX - flag;
+    *( ( uint64_t * )object ) |= ( value == true ) ? flag : 0;
     
     #else
     
     if( XEOS_VM_PAEEnabled() == true )
     {
-        *( ( uint64_t * )object ) &= UINT64_MAX - ( 1 << flag );
-        *( ( uint64_t * )object ) |= ( value == true ) ? ( 1 << flag ) : 0;
+        *( ( uint64_t * )object ) &= UINT64_MAX - flag;
+        *( ( uint64_t * )object ) |= ( value == true ) ? flag : 0;
     }
     else
     {
-        *( ( uint32_t * )object ) &= UINT32_MAX - ( 1 << flag );
-        *( ( uint32_t * )object ) |= ( value == true ) ? ( 1 << flag ) : 0;
+        *( ( uint32_t * )object ) &= UINT32_MAX - flag;
+        *( ( uint32_t * )object ) |= ( value == true ) ? flag : 0;
     }
     
     #endif

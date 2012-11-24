@@ -78,11 +78,6 @@ void XEOS_VM_PDPTEntrySetPDT( XEOS_VM_PDPTEntryRef object, XEOS_VM_PDTRef pdt )
         return;
     }
     
-    if( ( ( uintptr_t )object & 0xFFF ) != 0 )
-    {
-        return;
-    }
-    
     if( ( ( uintptr_t )pdt & 0xFFF ) != 0 )
     {
         return;

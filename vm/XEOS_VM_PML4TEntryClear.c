@@ -78,10 +78,5 @@ void XEOS_VM_PML4TEntryClear( XEOS_VM_PML4TEntryRef object )
         return;
     }
     
-    if( ( ( uintptr_t )object & 0xFFF ) != 0 )
-    {
-        return;
-    }
-    
     *( ( uint64_t * )object ) = 0;
 }

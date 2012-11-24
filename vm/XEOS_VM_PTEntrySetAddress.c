@@ -78,11 +78,6 @@ void XEOS_VM_PTEntrySetAddress( XEOS_VM_PTEntryRef object, uint64_t address )
         return;
     }
     
-    if( ( ( uintptr_t )object & 0xFFF ) != 0 )
-    {
-        return;
-    }
-    
     if( ( address & 0xFFF ) != 0 )
     {
         return;

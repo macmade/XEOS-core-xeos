@@ -78,11 +78,6 @@ uint64_t XEOS_VM_PTEntryGetAddress( XEOS_VM_PTEntryRef object )
         return 0;
     }
     
-    if( ( ( uintptr_t )object & 0xFFF ) != 0 )
-    {
-        return 0;
-    }
-    
     #ifdef __LP64__
     
     return *( ( uint64_t * )object ) & ( uint64_t )( UINT64_MAX - 0xFFF );

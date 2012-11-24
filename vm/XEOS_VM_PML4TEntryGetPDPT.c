@@ -78,11 +78,6 @@ XEOS_VM_PDPTRef XEOS_VM_PML4TEntryGetPDPT( XEOS_VM_PML4TEntryRef object )
         return NULL;
     }
     
-    if( ( ( uintptr_t )object & 0xFFF ) != 0 )
-    {
-        return NULL;
-    }
-    
     #ifdef __LP64__
     
     return ( XEOS_VM_PDPTRef )( *( ( uint64_t * )object ) & ( uint64_t )( UINT64_MAX - 0xFFF ) );
