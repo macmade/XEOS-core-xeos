@@ -84,9 +84,10 @@ __XEOS_Video_VPrintf_Flag_Sign;
 
 typedef enum
 {
-    __XEOS_Video_VPrintf_Flag_IntegerLength16           = 0x00,
-    __XEOS_Video_VPrintf_Flag_IntegerLength32           = 0x01,
-    __XEOS_Video_VPrintf_Flag_IntegerLength64           = 0x02
+    __XEOS_Video_VPrintf_Flag_IntegerLengthNormal       = 0x00,
+    __XEOS_Video_VPrintf_Flag_IntegerLength16           = 0x01,
+    __XEOS_Video_VPrintf_Flag_IntegerLength32           = 0x02,
+    __XEOS_Video_VPrintf_Flag_IntegerLength64           = 0x03
 }
 __XEOS_Video_VPrintf_Flag_IntegerLength;
 
@@ -156,7 +157,7 @@ int __XEOS_Video_ProcessFormatString( const char * format, va_list ap, void ( * 
             sharp           = false;
             align           = false;
             sign            = __XEOS_Video_VPrintf_Flag_SignNormal;
-            intLength       = __XEOS_Video_VPrintf_Flag_IntegerLength32;
+            intLength       = __XEOS_Video_VPrintf_Flag_IntegerLengthNormal;
             intType         = __XEOS_Video_VPrintf_Flag_IntegerTypeNormal;
             
             do
@@ -279,21 +280,24 @@ int __XEOS_Video_ProcessFormatString( const char * format, va_list ap, void ( * 
                         
                     case 'l':
                         
-                        #ifdef __LP64__
-                        intLength = __XEOS_Video_VPrintf_Flag_IntegerLength64;
-                        #else
-                        intLength = __XEOS_Video_VPrintf_Flag_IntegerLength32;
-                        #endif
+                        if( intLength == __XEOS_Video_VPrintf_Flag_IntegerLength32 || intLength == __XEOS_Video_VPrintf_Flag_IntegerLength64 )
+                        {
+                            intLength = __XEOS_Video_VPrintf_Flag_IntegerLength64;
+                        }
+                        else
+                        {
+                            #ifdef __LP64__
+                            intLength = __XEOS_Video_VPrintf_Flag_IntegerLength64;
+                            #else
+                            intLength = __XEOS_Video_VPrintf_Flag_IntegerLength32;
+                            #endif
+                        }
                         
                         format++;
                         
                         break;
                         
                     case 'L':
-                        
-                        intLength = __XEOS_Video_VPrintf_Flag_IntegerLength64;
-                        
-                        format++;
                         
                         break;
                         

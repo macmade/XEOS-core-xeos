@@ -199,7 +199,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                 continue;
             }
             
-            outputHandler( "%016#LX -> %016#LX: ", memoryStart, ( memoryStart + memoryLength ) - 1 );
+            outputHandler( "%016#llX -> %016#llX: ", memoryStart, ( memoryStart + memoryLength ) - 1 );
             
             switch( memoryType )
             {
@@ -211,11 +211,11 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                 case XEOS_Info_MemoryEntryTypeBad:              outputHandler( "Bad     " ); break;
             }
             
-            outputHandler( " - %Lu B", memoryLength );
+            outputHandler( " - %llu B", memoryLength );
             
             if( memoryLength >= 0x100000 )
             {
-                outputHandler( " (%Lu MB)\n", ( ( memoryLength / 1024 ) / 1024 ) );
+                outputHandler( " (%llu MB)\n", ( ( memoryLength / 1024 ) / 1024 ) );
             }
             else
             {
@@ -224,28 +224,28 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
         }
         
         outputHandler( "Memory map type:            %s\n", ( type == XEOS_VM_SystemMapType32 ) ? "i386" : ( ( type == XEOS_VM_SystemMapType32PAE ) ? "i386 PAE" : "x86-64" ) );
-        outputHandler( "Total memory:               %Lu B", totalMemoryBytes );
+        outputHandler( "Total memory:               %llu B", totalMemoryBytes );
         
         if( totalMemoryBytes >= 0x100000 )
         {
-            outputHandler( " (%Lu MB)\n", ( ( totalMemoryBytes / 0x400 ) / 0x400 ) );
+            outputHandler( " (%llu MB)\n", ( ( totalMemoryBytes / 0x400 ) / 0x400 ) );
         }
         else
         {
             outputHandler( "\n" );
         }
         
-        outputHandler( "PTE:                        %Lu\n", ptEntriesCount );
-        outputHandler( "PTE/PT:                     %Lu\n", ptEntriesPerPT );
-        outputHandler( "PT:                         %Lu\n", ptCount );
-        outputHandler( "PDT:                        %Lu\n", pdtCount );
-        outputHandler( "PDPT:                       %Lu\n", pdptCount );
-        outputHandler( "PML4T:                      %Lu\n", pml4tCount );
-        outputHandler( "System map memory use:      %Lu B", mapMemory );
+        outputHandler( "PTE:                        %llu\n", ptEntriesCount );
+        outputHandler( "PTE/PT:                     %llu\n", ptEntriesPerPT );
+        outputHandler( "PT:                         %llu\n", ptCount );
+        outputHandler( "PDT:                        %llu\n", pdtCount );
+        outputHandler( "PDPT:                       %llu\n", pdptCount );
+        outputHandler( "PML4T:                      %llu\n", pml4tCount );
+        outputHandler( "System map memory use:      %llu B", mapMemory );
         
         if( mapMemory >= 0x100000 )
         {
-            outputHandler( " (%Lu MB)\n", ( ( mapMemory / 0x400 ) / 0x400 ) );
+            outputHandler( " (%llu MB)\n", ( ( mapMemory / 0x400 ) / 0x400 ) );
         }
         else
         {
@@ -320,8 +320,8 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
         {
             outputHandler
             (
-                "Kernel area:                %016#LX -> %016#LX\n"
-                "System map area:            %016#LX -> %016#LX\n",
+                "Kernel area:                %016#llX -> %016#llX\n"
+                "System map area:            %016#llX -> %016#llX\n",
                 kernelStart,
                 kernelEnd,
                 systemMapAddress,
@@ -393,7 +393,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
             if( outputHandler != NULL )
             {
                 outputHandler( "%016#lX -> %016#lX\n", pt, ( uint64_t )p - 1 );
-                outputHandler( "Physical addresses mapped:  %016#LX -> %016#LX\n", ( uint64_t )0, address - ( uint64_t )1 );
+                outputHandler( "Physical addresses mapped:  %016#llX -> %016#llX\n", ( uint64_t )0, address - ( uint64_t )1 );
                 
                 if( type == XEOS_VM_SystemMapType32 )
                 {
