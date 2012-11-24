@@ -75,6 +75,8 @@
 extern "C" {
 #endif
 
+#include <xeos/macros.h>
+
 #define __XEOS_NULL                     ( ( void * )0 )
 #define __XEOS_FLT_EVAL_METHOD__        1
 

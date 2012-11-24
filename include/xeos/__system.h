@@ -71,11 +71,12 @@
 #define __XEOS___SYSTEM_H__
 #pragma once
 
-#include <xeos/system.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <xeos/macros.h>
+#include <xeos/system.h>
 
 /*!
  * @var         __XEOS_System_Timestamp

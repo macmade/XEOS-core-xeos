@@ -75,6 +75,7 @@
 extern "C" {
 #endif
 
+#include <xeos/macros.h>
 #include <xeos/info.h>
 #include <stdint.h>
 #include <stdbool.h>
