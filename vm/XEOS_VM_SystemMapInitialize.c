@@ -255,7 +255,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
     
     kernelStart      = ( uint64_t )XEOS_Info_GetKernelStartAddress();
     kernelEnd        = ( uint64_t )XEOS_Info_GetKernelEndAddress();
-    kernelEnd       &= UINTPTR_MAX - 0x0FFF;
+    kernelEnd       &= UINT64_MAX - 0x0FFF;
     kernelEnd       += 0x1000;
     kernelEnd       -= 1;
     systemMapAddress = 0;
@@ -320,7 +320,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
         {
             outputHandler
             (
-                "Kernel area:                %016#X -> %016#X\n"
+                "Kernel area:                %016#LX -> %016#LX\n"
                 "System map area:            %016#LX -> %016#LX\n",
                 kernelStart,
                 kernelEnd,
@@ -347,7 +347,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
             XEOS_VM_PML4TRef        pml4t;
             XEOS_VM_PML4TEntryRef   pml4tEntry;
             void                  * p;
-            uintptr_t               address;
+            uint64_t                address;
             uint64_t                j;
             
             p           = __XEOS_VM_SystemMap.base;
@@ -392,8 +392,8 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
             
             if( outputHandler != NULL )
             {
-                outputHandler( "%016#LX -> %016#LX\n", pt, ( uint64_t )p - 1 );
-                outputHandler( "Physical addresses mapped:  %016#LX -> %016#LX\n", 0, address - 1 );
+                outputHandler( "%016#lX -> %016#lX\n", pt, ( uint64_t )p - 1 );
+                outputHandler( "Physical addresses mapped:  %016#LX -> %016#LX\n", ( uint64_t )0, address - ( uint64_t )1 );
                 
                 if( type == XEOS_VM_SystemMapType32 )
                 {
@@ -437,14 +437,14 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
             
             if( outputHandler != NULL )
             {
-                outputHandler( "%016#LX -> %016#LX\n", pdt, ( uint64_t )p - 1 );
+                outputHandler( "%016#lX -> %016#lX\n", pdt, ( uint64_t )p - 1 );
             }
             
             if( type == XEOS_VM_SystemMapType32 )
             {  
                 if( outputHandler != NULL )
                 {
-                    outputHandler( "Updating CR3 with PDT:      %016#LX", pdt );
+                    outputHandler( "Updating CR3 with PDT:      %016#lX\n", pdt );
                 }
                 
                 XEOS_HAL_CPU_SetCR3( ( uint32_t )pdt );
@@ -499,14 +499,14 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                 
                 if( outputHandler != NULL )
                 {
-                    outputHandler( "%016#LX -> %016#LX\n", pdpt, ( uintptr_t )p - 1 );
+                    outputHandler( "%016#lX -> %016#lX\n", pdpt, ( uintptr_t )p - 1 );
                 }
                 
                 if( type == XEOS_VM_SystemMapType32PAE )
                 {
                     if( outputHandler != NULL )
                     {
-                        outputHandler( "Updating CR3 with PDPT:     %016#LX\n", pdpt );
+                        outputHandler( "Updating CR3 with PDPT:     %016#lX\n", pdpt );
                     }
                     
                     XEOS_HAL_CPU_SetCR3( ( uint32_t )pdpt );
@@ -550,12 +550,12 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                     
                     if( outputHandler != NULL )
                     {
-                        outputHandler( "%016#LX -> %016#LX\n", pml4t, ( uintptr_t )p - 1 );
+                        outputHandler( "%016#lX -> %016#lX\n", pml4t, ( uintptr_t )p - 1 );
                     }
                     
                     if( outputHandler != NULL )
                     {
-                        outputHandler( "Updating CR3 with PML4T:    %016#LX\n", pml4t );
+                        outputHandler( "Updating CR3 with PML4T:    %016#lX\n", pml4t );
                     }
                     
                     XEOS_HAL_CPU_SetCR3( ( uint32_t )pml4t );
