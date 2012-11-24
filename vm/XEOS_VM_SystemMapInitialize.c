@@ -85,12 +85,19 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
     uint64_t                    ptEntriesPerPT;
     uint64_t                    mapMemory;
     XEOS_Info_MemoryEntryRef    memoryEntry;
+    XEOS_Info_MemoryEntryType   memoryType;
     uint64_t                    i;
     uint64_t                    memoryLength;
     uint64_t                    memoryStart;
     uint64_t                    memoryEnd;
     uint64_t                    systemMapAddress;
+    uint64_t                    kernelStart;
     uint64_t                    kernelEnd;
+    
+    if( __XEOS_VM_SystemMap.base != NULL )
+    {
+        return &__XEOS_VM_SystemMap;
+    }
     
     #ifndef __LP64__
     
@@ -125,28 +132,11 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
         XEOS_VM_DisablePAE();
     }
     
-    if( outputHandler != NULL )
-    {
-        outputHandler
-        (
-            "Memory map type:     %s\n",
-            ( type == XEOS_VM_SystemMapType32 ) ? "i386" : ( ( type == XEOS_VM_SystemMapType32PAE ) ? "i386 PAE" : "x86-64" )
-        );
-    }
-    
     ptEntriesCount  = totalMemoryBytes / 0x1000;
     ptEntriesCount += ( ( totalMemoryBytes % 0x1000 ) == 0 ) ? 0 : 1;
     ptEntriesPerPT  = ( type == XEOS_VM_SystemMapType32 ) ? 0x400 : 0x200;
     ptCount         = ptEntriesCount / ptEntriesPerPT;
     ptCount        += ( ( ptEntriesCount % ptEntriesPerPT ) == 0 ) ? 0 : 1;
-    
-    if( outputHandler != NULL )
-    {
-        outputHandler( "Total memory:        %Lu (%Lu MB)\n", totalMemoryBytes, ( ( totalMemoryBytes / 0x400 ) / 0x400 ) );
-        outputHandler( "PTE:                 %Lu\n", ptEntriesCount );
-        outputHandler( "PTE/PT:              %Lu\n", ptEntriesPerPT );
-        outputHandler( "PT:                  %Lu\n", ptCount );
-    }
     
     pdtCount    = 0;
     pdptCount   = 0;
@@ -158,9 +148,16 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
     }
     else
     {
-        pdtCount  = ptCount / 0x200;
-        pdtCount  = ( pdtCount == 0 ) ? 1 : pdtCount;
-        pdtCount += ( ( pdtCount % 0x200 ) == 0 ) ? 0 : 1;
+        if( ptCount > 0x200 )
+        {
+            pdtCount  = ptCount / 0x200;
+            pdtCount  = ( pdtCount == 0 ) ? 1 : pdtCount;
+            pdtCount += ( ( ptCount % 0x200 ) == 0 ) ? 0 : 1;
+        }
+        else
+        {
+            pdtCount = 1;
+        }
         
         if( type == XEOS_VM_SystemMapType32PAE )
         {
@@ -168,18 +165,19 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
         }
         else
         {
-            pdptCount  = pdtCount / 0x200;
-            pdptCount  = ( pdptCount == 0 ) ? 1 : pdptCount;
-            pdptCount += ( ( pdptCount % 0x200 ) == 0 ) ? 0 : 1;
+            if( pdtCount > 0x200 )
+            {
+                pdptCount  = pdtCount / 0x200;
+                pdptCount  = ( pdptCount == 0 ) ? 1 : pdptCount;
+                pdptCount += ( ( pdtCount % 0x200 ) == 0 ) ? 0 : 1;
+            }
+            else
+            {
+                pdptCount = 1;
+            }
+            
             pml4tCount = 1;
         }
-    }
-    
-    if( outputHandler != NULL )
-    {
-        outputHandler( "PDT:                 %Lu\n", pdtCount );
-        outputHandler( "PDPT:                %Lu\n", pdptCount );
-        outputHandler( "PML4T:               %Lu\n", pml4tCount );
     }
     
     mapMemory  = ptCount    * 0x1000;
@@ -189,46 +187,146 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
     
     if( outputHandler != NULL )
     {
-        outputHandler( "PML4T:               %Lu\n", pml4tCount );
-        outputHandler( "Map memory:          %Lu (%Lu MB)\n", mapMemory, ( ( mapMemory / 1024 ) / 1024 ) );
+        for( i = 0; i < XEOS_Info_MemoryGetNumberOfEntries( memory ); i++ )
+        {
+            memoryEntry     = XEOS_Info_MemoryGetEntryAtIndex( memory, ( unsigned int )i );
+            memoryStart     = XEOS_Info_MemoryEntryGetAddress( memoryEntry );
+            memoryLength    = XEOS_Info_MemoryEntryGetLength( memoryEntry );
+            memoryType      = XEOS_Info_MemoryEntryGetType( memoryEntry );
+            
+            if( memoryLength == 0 )
+            {
+                continue;
+            }
+            
+            outputHandler( "%016#LX -> %016#LX: ", memoryStart, ( memoryStart + memoryLength ) - 1 );
+            
+            switch( memoryType )
+            {
+                case XEOS_Info_MemoryEntryTypeUnknown:          outputHandler( "Unknown " ); break;
+                case XEOS_Info_MemoryEntryTypeUsable:           outputHandler( "Usable  " ); break;
+                case XEOS_Info_MemoryEntryTypeReserved:         outputHandler( "Reserved" ); break;
+                case XEOS_Info_MemoryEntryTypeACPIReclaimable:  outputHandler( "ACPI    " ); break;
+                case XEOS_Info_MemoryEntryTypeACPINVS:          outputHandler( "ACPI NVS" ); break;
+                case XEOS_Info_MemoryEntryTypeBad:              outputHandler( "Bad     " ); break;
+            }
+            
+            outputHandler( " - %Lu B", memoryLength );
+            
+            if( memoryLength >= 0x100000 )
+            {
+                outputHandler( " (%Lu MB)\n", ( ( memoryLength / 1024 ) / 1024 ) );
+            }
+            else
+            {
+                outputHandler( "\n" );
+            }
+        }
+        
+        outputHandler( "Memory map type:            %s\n", ( type == XEOS_VM_SystemMapType32 ) ? "i386" : ( ( type == XEOS_VM_SystemMapType32PAE ) ? "i386 PAE" : "x86-64" ) );
+        outputHandler( "Total memory:               %Lu B", totalMemoryBytes );
+        
+        if( totalMemoryBytes >= 0x100000 )
+        {
+            outputHandler( " (%Lu MB)\n", ( ( totalMemoryBytes / 0x400 ) / 0x400 ) );
+        }
+        else
+        {
+            outputHandler( "\n" );
+        }
+        
+        outputHandler( "PTE:                        %Lu\n", ptEntriesCount );
+        outputHandler( "PTE/PT:                     %Lu\n", ptEntriesPerPT );
+        outputHandler( "PT:                         %Lu\n", ptCount );
+        outputHandler( "PDT:                        %Lu\n", pdtCount );
+        outputHandler( "PDPT:                       %Lu\n", pdptCount );
+        outputHandler( "PML4T:                      %Lu\n", pml4tCount );
+        outputHandler( "System map memory use:      %Lu B", mapMemory );
+        
+        if( mapMemory >= 0x100000 )
+        {
+            outputHandler( " (%Lu MB)\n", ( ( mapMemory / 0x400 ) / 0x400 ) );
+        }
+        else
+        {
+            outputHandler( "\n" );
+        }
     }
     
+    kernelStart      = ( uint64_t )XEOS_Info_GetKernelStartAddress();
     kernelEnd        = ( uint64_t )XEOS_Info_GetKernelEndAddress();
     kernelEnd       &= UINTPTR_MAX - 0x0FFF;
     kernelEnd       += 0x1000;
+    kernelEnd       -= 1;
     systemMapAddress = 0;
     
+    /* Process each memory region to find room for the system map */
     for( i = 0; i < XEOS_Info_MemoryGetNumberOfEntries( memory ); i++ )
     {
+        /* Gets informations about the current memory region */
         memoryEntry     = XEOS_Info_MemoryGetEntryAtIndex( memory, ( unsigned int )i );
         memoryLength    = XEOS_Info_MemoryEntryGetLength( memoryEntry );
         memoryStart     = XEOS_Info_MemoryEntryGetAddress( memoryEntry );
         memoryEnd       = ( memoryStart + memoryLength ) - 1;
+        memoryType      = XEOS_Info_MemoryEntryGetType( memoryEntry );
         
-        if( memoryStart < kernelEnd || memoryEnd < kernelEnd )
+        /* Only consider usable memory */
+        if( memoryType != XEOS_Info_MemoryEntryTypeUsable )
         {
             continue;
         }
         
-        if( mapMemory <= memoryEnd - kernelEnd )
+        /* Makes sure the memory area address is aligned on 4 KB */
+        if( ( memoryStart & 0xFFF ) != 0 )
+        {
+            memoryStart &= UINTPTR_MAX - 0x0FFF;
+            memoryStart += 0x1000;
+        }
+        
+        /* Not enough memory for the system map */
+        if( memoryLength < mapMemory )
+        {
+            continue;
+        }
+        
+        /*
+         * The second stage bootloader only maps the first 12 MB of memory
+         * (0x300000000), so the system map needs to be contained in those
+         * 12 first MB, otherwise we'll just page fault trying to write the
+         * page tables in a still un-mapped memory area.
+         */
+        if( memoryStart >= 0x300000000 || ( memoryStart + mapMemory ) >= 0x300000000 )
+        {
+            break;
+        }
+        
+        /* Found a suitable place */
+        if( memoryStart > kernelEnd )
+        {
+            systemMapAddress = memoryStart;
+            break;
+        }
+        
+        /* Found a suitable place */
+        if( memoryEnd > kernelEnd && ( memoryEnd - kernelEnd ) >= mapMemory )
         {
             systemMapAddress = kernelEnd;
-            
-            break;
         }
     }
     
-    /*
-     * The second stage bootloader only maps the first 12 MB of memory
-     * (0x300000000), so the system map needs to be contained in those
-     * 12 first MB, otherwise we'll just page fault trying to write the
-     * page tables in a still un-mapped memory area.
-     */
-    if( systemMapAddress > 0 && ( systemMapAddress - mapMemory ) < 0x300000000 )
+    if( systemMapAddress > 0 )
     {
         if( outputHandler != NULL )
         {
-            outputHandler( "System map address:  %016#LX\n", systemMapAddress );
+            outputHandler
+            (
+                "Kernel area:                %016#X -> %016#X\n"
+                "System map area:            %016#LX -> %016#LX\n",
+                kernelStart,
+                kernelEnd,
+                systemMapAddress,
+                ( systemMapAddress + mapMemory ) - 1
+            );
         }
         
         __XEOS_VM_SystemMap.base        = ( void * )systemMapAddress;
@@ -252,8 +350,17 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
             uintptr_t               address;
             uint64_t                j;
             
-            p       = __XEOS_VM_SystemMap.base;
-            address = 0;
+            p           = __XEOS_VM_SystemMap.base;
+            address     = 0;
+            ptEntry     = NULL;
+            pdtEntry    = NULL;
+            pdptEntry   = NULL;
+            pml4tEntry  = NULL;
+            
+            if( outputHandler != NULL )
+            {
+                outputHandler( "Initializing PTs:           " );
+            }
             
             if( ptCount > 0 )
             {
@@ -281,12 +388,22 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                 }
             }
             
+            pt = __XEOS_VM_SystemMap.base;
+            
             if( outputHandler != NULL )
             {
-                outputHandler( "Last mapped address: %016#LX\n", address );
+                outputHandler( "%016#LX -> %016#LX\n", pt, ( uint64_t )p - 1 );
+                outputHandler( "Physical addresses mapped:  %016#LX -> %016#LX\n", 0, address - 1 );
+                
+                if( type == XEOS_VM_SystemMapType32 )
+                {
+                    outputHandler( "Initializing PDT:           " );
+                }
+                else
+                {
+                    outputHandler( "Initializing PDTs:          " );
+                }
             }
-            
-            pt = __XEOS_VM_SystemMap.base;
             
             if( pdtCount > 0 )
             {
@@ -298,6 +415,11 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                     
                     for( j = 0; j < ptEntriesPerPT; j++ )
                     {
+                        if( ( ( i * ptEntriesPerPT ) + j ) >= ptCount )
+                        {
+                            break;
+                        }
+                        
                         pdtEntry = XEOS_VM_PDTGetEntryAtIndex( pdt, ( unsigned int )j );
                         
                         XEOS_VM_PDTEntrySetPT( pdtEntry, pt );
@@ -313,12 +435,34 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
             
             pdt = ( XEOS_VM_PDPTRef )pt;
             
-            if( type == XEOS_VM_SystemMapType32 )
+            if( outputHandler != NULL )
             {
+                outputHandler( "%016#LX -> %016#LX\n", pdt, ( uint64_t )p - 1 );
+            }
+            
+            if( type == XEOS_VM_SystemMapType32 )
+            {  
+                if( outputHandler != NULL )
+                {
+                    outputHandler( "Updating CR3 with PDT:      %016#LX", pdt );
+                }
+                
                 XEOS_HAL_CPU_SetCR3( ( uint32_t )pdt );
             }
             else
             {
+                if( outputHandler != NULL )
+                {
+                    if( type == XEOS_VM_SystemMapType32PAE )
+                    {
+                        outputHandler( "Initializing PDPT:          " );
+                    }
+                    else
+                    {
+                        outputHandler( "Initializing PDPTs:         " );
+                    }
+                }
+                
                 if( pdptCount > 0 )
                 {
                     for( i = 0; i < pdptCount; i++ )
@@ -329,6 +473,11 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                         
                         for( j = 0; j < ptEntriesPerPT; j++ )
                         {
+                            if( ( ( i * ptEntriesPerPT ) + j ) >= pdtCount )
+                            {
+                                break;
+                            }
+                            
                             pdptEntry = XEOS_VM_PDPTGetEntryAtIndex( pdpt, ( unsigned int )j );
                             
                             XEOS_VM_PDPTEntrySetPDT( pdptEntry, pdt );
@@ -339,7 +488,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                                 XEOS_VM_PDPTEntrySetFlag( pdptEntry, XEOS_VM_PDPTEntryFlagWriteable, true );
                             }
                             
-                            pdt = ( void * )( ( char * )pt + 0x1000 );
+                            pdt = ( void * )( ( char * )pdt + 0x1000 );
                         }
                         
                         p = ( ( char * )p + 0x1000 );
@@ -348,12 +497,27 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                 
                 pdpt = ( XEOS_VM_PDPTRef )pdt;
                 
+                if( outputHandler != NULL )
+                {
+                    outputHandler( "%016#LX -> %016#LX\n", pdpt, ( uintptr_t )p - 1 );
+                }
+                
                 if( type == XEOS_VM_SystemMapType32PAE )
                 {
+                    if( outputHandler != NULL )
+                    {
+                        outputHandler( "Updating CR3 with PDPT:     %016#LX\n", pdpt );
+                    }
+                    
                     XEOS_HAL_CPU_SetCR3( ( uint32_t )pdpt );
                 }
                 else
                 {
+                    if( outputHandler != NULL )
+                    {
+                        outputHandler( "Initializing PML4T:         " );
+                    }
+                    
                     if( pml4tCount > 0 )
                     {
                         for( i = 0; i < pml4tCount; i++ )
@@ -364,13 +528,18 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                             
                             for( j = 0; j < ptEntriesPerPT; j++ )
                             {
+                                if( ( ( i * ptEntriesPerPT ) + j ) >= pdptCount )
+                                {
+                                    break;
+                                }
+                                
                                 pml4tEntry = XEOS_VM_PML4TGetEntryAtIndex( pml4t, ( unsigned int )j );
                                 
                                 XEOS_VM_PML4TEntrySetPDPT( pml4tEntry, pdpt );
                                 XEOS_VM_PML4TEntrySetFlag( pml4tEntry, XEOS_VM_PML4TEntryFlagPresent, true );
                                 XEOS_VM_PML4TEntrySetFlag( pml4tEntry, XEOS_VM_PML4TEntryFlagWriteable, true );
                                 
-                                pdpt = ( void * )( ( char * )pt + 0x1000 );
+                                pdpt = ( void * )( ( char * )pdpt + 0x1000 );
                             }
                             
                             p = ( ( char * )p + 0x1000 );
@@ -378,6 +547,16 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                     }
                     
                     pml4t = ( XEOS_VM_PDPTRef )pdpt;
+                    
+                    if( outputHandler != NULL )
+                    {
+                        outputHandler( "%016#LX -> %016#LX\n", pml4t, ( uintptr_t )p - 1 );
+                    }
+                    
+                    if( outputHandler != NULL )
+                    {
+                        outputHandler( "Updating CR3 with PML4T:    %016#LX\n", pml4t );
+                    }
                     
                     XEOS_HAL_CPU_SetCR3( ( uint32_t )pml4t );
                 }

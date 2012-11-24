@@ -69,6 +69,7 @@
 
 #include "xeos/video.h"
 #include "xeos/system.h"
+#include "xeos/vm.h"
 #include "xeos/hal.h"
 #include "xeos/isr.h"
 #include "xeos/irq.h"
@@ -80,7 +81,8 @@
 void XEOS_Main( XEOS_InfoRef info ) __attribute__( ( noreturn ) );
 void XEOS_Main( XEOS_InfoRef info )
 {
-    unsigned int i;
+    unsigned int         i;
+    XEOS_VM_SystemMapRef systemMap;
     
     /* Ensures interrupts are disabled, as we are setting up the kernel */
     XEOS_HAL_CPU_DisableInterrupts();
@@ -169,101 +171,22 @@ void XEOS_Main( XEOS_InfoRef info )
     XEOS_HAL_CPU_EnableInterrupts();
     XEOS_HAL_NMI_Enable();
     
+    /* Makes sur the system time is initialized */
+    while( XEOS_System_GetTime() == 0 )
     {
-        time_t t1;
-        time_t t2;
-        
-        t1 = XEOS_System_GetTime();
-        t2 = 0;
-        
-        while( 1 )
-        {
-            if( t1 != t2 )
-            {
-                t1 = t2;
-                
-                XEOS_Video_Clear();
-                
-                #ifdef __LP64__
-                XEOS_Video_Printf( "XEOS Kernel - 64 bits\n\n" );
-                #else
-                XEOS_Video_Printf( "XEOS Kernel - 32 bits\n\n" );
-                #endif
-                
-                XEOS_Video_Printf( "CPU vendor:  %s\n", XEOS_HAL_CPU_GetVendorID() );
-                XEOS_Video_Printf( "CPU brand:   %s\n", XEOS_HAL_CPU_GetBrandName() );
-                XEOS_Video_Printf( "System time: %lu\n\n", t1 );
-                
-                {
-                    XEOS_Info_MemoryRef         memory;
-                    XEOS_Info_MemoryEntryRef    entry;
-                    unsigned int                n;
-                    uint64_t                    address;
-                    uint64_t                    length;
-                    XEOS_Info_MemoryEntryType   type;
-                    
-                    memory = XEOS_Info_GetMemory( info );
-                    n      = XEOS_Info_MemoryGetNumberOfEntries( memory );
-                    
-                    XEOS_Video_Printf( "Memory map:\n\n", t1 );
-                    
-                    for( i = 0; i < n; i++ )
-                    {
-                        entry   = XEOS_Info_MemoryGetEntryAtIndex( memory, i );
-                        address = XEOS_Info_MemoryEntryGetAddress( entry );
-                        length  = XEOS_Info_MemoryEntryGetLength( entry );
-                        type    = XEOS_Info_MemoryEntryGetType( entry );
-                        
-                        if( length == 0 )
-                        {
-                            continue;
-                        }
-                        
-                        XEOS_Video_Printf( "%016#LX -> %016#LX: ", address, ( address + length ) - 1 );
-                        
-                        switch( type )
-                        {
-                            case XEOS_Info_MemoryEntryTypeUnknown:          XEOS_Video_Print( "Unknown " ); break;
-                            case XEOS_Info_MemoryEntryTypeUsable:           XEOS_Video_Print( "Usable  " ); break;
-                            case XEOS_Info_MemoryEntryTypeReserved:         XEOS_Video_Print( "Reserved" ); break;
-                            case XEOS_Info_MemoryEntryTypeACPIReclaimable:  XEOS_Video_Print( "ACPI    " ); break;
-                            case XEOS_Info_MemoryEntryTypeACPINVS:          XEOS_Video_Print( "ACPI NVS" ); break;
-                            case XEOS_Info_MemoryEntryTypeBad:              XEOS_Video_Print( "Bad     " ); break;
-                        }
-                        
-                        XEOS_Video_Printf( " - %Lu bytes\n", length );
-                    }
-                    
-                    XEOS_Video_Printf
-                    (
-                        "\n"
-                        "Kernel start:  %016#X\n"
-                        "Kernel end:    %016#X\n"
-                        "Kernel size:   %Lu bytes\n",
-                        XEOS_Info_GetKernelStartAddress(),
-                        XEOS_Info_GetKernelEndAddress(),
-                        XEOS_Info_GetKernelEndAddress() - XEOS_Info_GetKernelStartAddress()
-                    );
-                    
-                    /* So Clang thinks the while loop may terminate... */
-                    {
-                        volatile int zero;
-                        
-                        zero = 0;
-                        
-                        if( zero == 1 )
-                        {
-                            break;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                t2 = XEOS_System_GetTime();
-            }
-        }
+        __asm__
+        (
+            "nop;nop;nop;nop;nop;\n"
+            "nop;nop;nop;nop;nop;\n"
+        );
     }
+    
+    XEOS_Video_Printf( "CPU vendor:  %s\n", XEOS_HAL_CPU_GetVendorID() );
+    XEOS_Video_Printf( "CPU brand:   %s\n", XEOS_HAL_CPU_GetBrandName() );
+    XEOS_Video_Printf( "System time: %lu\n", XEOS_System_GetTime() );
+    
+    /* Initializes the system map */
+    systemMap = XEOS_VM_SystemMapInitialize( XEOS_Info_GetMemory( info ), XEOS_Video_Printf );
     
     for( ; ; )
     {
