@@ -310,7 +310,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
         /* Found a suitable place */
         if( memoryEnd > kernelEnd && ( memoryEnd - kernelEnd ) >= mapMemory )
         {
-            systemMapAddress = kernelEnd;
+            systemMapAddress = kernelEnd + 1;
         }
     }
     
