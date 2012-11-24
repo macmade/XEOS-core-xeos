@@ -194,7 +194,7 @@ int XEOS_Video_Prompt( const char * s );
  * @param       format      The message format
  * @result      The number of character printed
  */
-int XEOS_Video_Promptf( const char * format, ... );
+int XEOS_Video_Promptf( const char * format, ... ) XEOS_FORMAT_ATTRIBUTE( printf, 1, 2 );
 
 /*!
  * @function    XEOS_Video_Print
@@ -210,7 +210,7 @@ int XEOS_Video_Print( const char * s );
  * @param       format      The message format
  * @result      The number of character printed
  */
-int XEOS_Video_Printf( const char * format, ... );
+int XEOS_Video_Printf( const char * format, ... ) XEOS_FORMAT_ATTRIBUTE( printf, 1, 2 );
 
 /*!
  * @function    XEOS_Video_VPrintf

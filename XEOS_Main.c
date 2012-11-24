@@ -78,7 +78,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void XEOS_Main( XEOS_InfoRef info ) __attribute__( ( noreturn ) );
+void XEOS_Main( XEOS_InfoRef info ) XEOS_NORETURN_ATTRIBUTE;
 void XEOS_Main( XEOS_InfoRef info )
 {
     unsigned int         i;
