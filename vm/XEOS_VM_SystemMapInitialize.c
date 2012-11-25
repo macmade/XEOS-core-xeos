@@ -202,7 +202,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
     
     /* Prints computed values */
     if( outputHandler != NULL )
-    { */
+    {
         for( i = 0; i < XEOS_Info_MemoryGetNumberOfEntries( memory ); i++ )
         {
             memoryEntry     = XEOS_Info_MemoryGetEntryAtIndex( memory, ( unsigned int )i );
