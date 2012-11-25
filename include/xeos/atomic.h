@@ -71,6 +71,8 @@
 #define __XEOS_ATOMIC_H__
 #pragma once
 
+#include <stdint.h>
+
 typedef int32_t XEOS_Atomic_SpinLock;
 
 int32_t XEOS_Atomic_Add32( int32_t amount, volatile int32_t * value );
