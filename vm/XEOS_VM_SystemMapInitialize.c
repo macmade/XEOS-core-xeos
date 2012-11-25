@@ -94,6 +94,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
     uint64_t                    kernelStart;
     uint64_t                    kernelEnd;
     
+    /* Do not allows the system map to be initialized more than once */
     if( __XEOS_VM_SystemMap.base != NULL )
     {
         return &__XEOS_VM_SystemMap;
@@ -101,16 +102,22 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
     
     #ifndef __LP64__
     
+    /*
+     * Disables paging on i386, as we are seeting up things
+     * (not allowed on x86-64)
+     */
     XEOS_HAL_CPU_DisablePaging();
     
     #endif
     
     #ifdef __LP64__
     
+    /* x86-64 only has one paging mode (4 level paging) */
     type = XEOS_VM_SystemMapType64;
     
     #else
     
+    /* For 32 bits, paging layout depends on PAE status */
     if( XEOS_HAL_CPU_PAEEnabled() == true )
     {
         type = XEOS_VM_SystemMapType32PAE;
@@ -122,6 +129,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
     
     #endif
     
+    /* Gets the total amount of physical memory */
     totalMemoryBytes = XEOS_Info_MemoryGetTotalBytes( memory );
     
     /* For i386, no need for PAE if memory is lower than 4GB */
@@ -132,22 +140,25 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
         XEOS_HAL_CPU_DisablePAE();
     }
     
+    /* Computes the number of required page tables/page table entries */
     ptEntriesCount  = totalMemoryBytes / 0x1000;
     ptEntriesCount += ( ( totalMemoryBytes % 0x1000 ) == 0 ) ? 0 : 1;
     ptEntriesPerPT  = ( type == XEOS_VM_SystemMapType32 ) ? 0x400 : 0x200;
     ptCount         = ptEntriesCount / ptEntriesPerPT;
     ptCount        += ( ( ptEntriesCount % ptEntriesPerPT ) == 0 ) ? 0 : 1;
     
-    pdtCount    = 0;
-    pdptCount   = 0;
-    pml4tCount  = 0;
+    pdtCount        = 0;
+    pdptCount       = 0;
+    pml4tCount      = 0;
     
+    /* For i386 without PAE, only one page directory table */
     if( type == XEOS_VM_SystemMapType32 )
     {
         pdtCount = 1;
     }
     else
     {
+        /* Computes the number of required page directory tables */
         if( ptCount > 0x200 )
         {
             pdtCount  = ptCount / 0x200;
@@ -159,12 +170,14 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
             pdtCount = 1;
         }
         
+        /* For i386 PAE, only one page directory pointer table */
         if( type == XEOS_VM_SystemMapType32PAE )
         {
             pdptCount = 1;
         }
         else
         {
+            /* Computes the number of required page directory pointer tables */
             if( pdtCount > 0x200 )
             {
                 pdptCount  = pdtCount / 0x200;
@@ -176,17 +189,20 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                 pdptCount = 1;
             }
             
+            /* Only one page-map level-4 table (x86-64) */
             pml4tCount = 1;
         }
     }
     
+    /* Computes the required amount of memory to map all the available memory */
     mapMemory  = ptCount    * 0x1000;
     mapMemory += pdtCount   * 0x1000;
     mapMemory += pdptCount  * 0x1000;
     mapMemory += pml4tCount * 0x1000;
     
+    /* Prints computed values */
     if( outputHandler != NULL )
-    {
+    { */
         for( i = 0; i < XEOS_Info_MemoryGetNumberOfEntries( memory ); i++ )
         {
             memoryEntry     = XEOS_Info_MemoryGetEntryAtIndex( memory, ( unsigned int )i );
@@ -253,6 +269,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
         }
     }
     
+    /* Kernel location */
     kernelStart      = ( uint64_t )XEOS_Info_GetKernelStartAddress();
     kernelEnd        = ( uint64_t )XEOS_Info_GetKernelEndAddress();
     kernelEnd       &= UINT64_MAX - 0x0FFF;
@@ -314,6 +331,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
         }
     }
     
+    /* Identity-maps the available memory if possible */
     if( systemMapAddress > 0 )
     {
         if( outputHandler != NULL )
@@ -329,6 +347,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
             );
         }
         
+        /* Stores the system map infos */
         __XEOS_VM_SystemMap.base        = ( void * )systemMapAddress;
         __XEOS_VM_SystemMap.length      = mapMemory;
         __XEOS_VM_SystemMap.type        = type;
@@ -363,49 +382,69 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                 outputHandler( "Initializing PTs:           " );
             }
             
+            /* Initializes the page tables */
             if( ptCount > 0 )
             {
+                /* Process each page table */
                 for( i = 0; i < ptCount; i++ )
                 {
+                    /* Address of the current page table */
                     pt = p;
                     
+                    /* Clears the current page table */
                     XEOS_VM_PTClear( pt );
                     
+                    /* Process each entry in the page table */
                     for( j = 0; j < ptEntriesPerPT; j++ )
                     {
+                        /* Gets the page table entry */
                         ptEntry = XEOS_VM_PTGetEntryAtIndex( pt, ( unsigned int )j );
                         
-                        if( address < totalMemoryBytes )
+                        /* Only map entries matching a physical memory address */
+                        if( address >= totalMemoryBytes )
                         {
-                            XEOS_VM_PTEntrySetAddress( ptEntry, address );
-                            XEOS_VM_PTEntrySetFlag( ptEntry, XEOS_VM_PTEntryFlagPresent, true );
-                            
-                            for( k = 0; k < XEOS_Info_MemoryGetNumberOfEntries( memory ); k++ )
-                            {
-                                memoryEntry     = XEOS_Info_MemoryGetEntryAtIndex( memory, k );
-                                memoryLength    = XEOS_Info_MemoryEntryGetLength( memoryEntry );
-                                memoryStart     = XEOS_Info_MemoryEntryGetAddress( memoryEntry );
-                                memoryType      = XEOS_Info_MemoryEntryGetType( memoryEntry );
-                                
-                                if( address >= memoryStart && ( address - memoryStart ) <= memoryLength )
-                                {
-                                    if( memoryType == XEOS_Info_MemoryEntryTypeUsable )
-                                    {
-                                        XEOS_VM_PTEntrySetFlag( ptEntry, XEOS_VM_PTEntryFlagWriteable, true );
-                                    }
-                                    
-                                    break;
-                                }
-                            }
+                            continue;
                         }
                         
+                        /* Sets the physical memory address */
+                        XEOS_VM_PTEntrySetAddress( ptEntry, address );
+                        
+                        /* Address in present in physical memory */
+                        XEOS_VM_PTEntrySetFlag( ptEntry, XEOS_VM_PTEntryFlagPresent, true );
+                        
+                        /* Process each memory area */
+                        for( k = 0; k < XEOS_Info_MemoryGetNumberOfEntries( memory ); k++ )
+                        {
+                            memoryEntry     = XEOS_Info_MemoryGetEntryAtIndex( memory, k );
+                            memoryLength    = XEOS_Info_MemoryEntryGetLength( memoryEntry );
+                            memoryStart     = XEOS_Info_MemoryEntryGetAddress( memoryEntry );
+                            memoryType      = XEOS_Info_MemoryEntryGetType( memoryEntry );
+                            
+                            /* Checks if the current page belongs to the current memory area */
+                            if( address < memoryStart || ( address - memoryStart ) > memoryLength )
+                            {
+                                continue;
+                            }
+                            
+                            /* If the memory area is usable, marks the page table entry as writeable */
+                            if( memoryType == XEOS_Info_MemoryEntryTypeUsable )
+                            {
+                                XEOS_VM_PTEntrySetFlag( ptEntry, XEOS_VM_PTEntryFlagWriteable, true );
+                            }
+                            
+                            break;
+                        }
+                        
+                        /* Next 4 KB aligned physical memory address */
                         address += 0x1000;
                     }
                     
+                    /* Next 4KB aligned page table */
                     p = ( ( char * )p + 0x1000 );
                 }
             }
             
+            /* Address of the first page table */
             pt = __XEOS_VM_SystemMap.base;
             
             if( outputHandler != NULL )
@@ -423,34 +462,47 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                 }
             }
             
+            /* Initializes the page directory tables */
             if( pdtCount > 0 )
             {
+                /* Process each page directory table */
                 for( i = 0; i < pdtCount; i++ )
                 {
+                    /* Address of the current page directory table */
                     pdt = p;
                     
+                    /* Clears the current page directory table */
                     XEOS_VM_PDTClear( pdt );
                     
+                    /* Process each entry in the page directory table */
                     for( j = 0; j < ptEntriesPerPT; j++ )
                     {
+                        /* Only initializes entries with a valid page table */
                         if( ( ( i * ptEntriesPerPT ) + j ) >= ptCount )
                         {
                             break;
                         }
                         
+                        /* Gets the page directory table entry */
                         pdtEntry = XEOS_VM_PDTGetEntryAtIndex( pdt, ( unsigned int )j );
                         
+                        /* Sets the page table address */
                         XEOS_VM_PDTEntrySetPT( pdtEntry, pt );
+                        
+                        /* Entry is present and writeable */
                         XEOS_VM_PDTEntrySetFlag( pdtEntry, XEOS_VM_PDTEntryFlagPresent, true );
                         XEOS_VM_PDTEntrySetFlag( pdtEntry, XEOS_VM_PDTEntryFlagWriteable, true );
                         
+                        /* Next 4 KB aligned entry */
                         pt = ( void * )( ( char * )pt + 0x1000 );
                     }
                     
+                    /* Next 4KB aligned page directory table */
                     p = ( ( char * )p + 0x1000 );
                 }
             }
             
+            /* Address of the first page directory table */
             pdt = ( XEOS_VM_PDPTRef )pt;
             
             if( outputHandler != NULL )
@@ -458,6 +510,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                 outputHandler( "%016#lX -> %016#lX\n", pdt, ( uint64_t )p - 1 );
             }
             
+            /* For i386 (without PAE), we're actually done */
             if( type == XEOS_VM_SystemMapType32 )
             {  
                 if( outputHandler != NULL )
@@ -465,6 +518,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                     outputHandler( "Updating CR3 with PDT:      %016#lX\n", pdt );
                 }
                 
+                /* Updates CR3 with the page directory table address */
                 XEOS_HAL_CPU_SetCR3( ( uint32_t )pdt );
             }
             else
@@ -481,38 +535,52 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                     }
                 }
                 
+                /* Initializes the page directory pointer tables */
                 if( pdptCount > 0 )
                 {
+                    /* Process each page directory pointer table */
                     for( i = 0; i < pdptCount; i++ )
                     {
+                        /* Address of the current page directory pointer table */
                         pdpt = p;
                         
+                        /* Clears the current page directory pointer table */
                         XEOS_VM_PDPTClear( pdpt );
                         
+                        /* Process each entry in the page directory pointer table */
                         for( j = 0; j < ptEntriesPerPT; j++ )
                         {
+                            /* Only initializes entries with a valid page directory table */
                             if( ( ( i * ptEntriesPerPT ) + j ) >= pdtCount )
                             {
                                 break;
                             }
                             
+                            /* Gets the page directory pointer table entry */
                             pdptEntry = XEOS_VM_PDPTGetEntryAtIndex( pdpt, ( unsigned int )j );
                             
+                            /* Sets the page directory table address */
                             XEOS_VM_PDPTEntrySetPDT( pdptEntry, pdt );
+                            
+                            /* ENtry is present */
                             XEOS_VM_PDPTEntrySetFlag( pdptEntry, XEOS_VM_PDPTEntryFlagPresent, true );
                             
+                            /* For x86-64, marks the entry as writeable */
                             if( type == XEOS_VM_SystemMapType64 )
                             {
                                 XEOS_VM_PDPTEntrySetFlag( pdptEntry, XEOS_VM_PDPTEntryFlagWriteable, true );
                             }
                             
+                            /* Next 4 KB aligned entry */
                             pdt = ( void * )( ( char * )pdt + 0x1000 );
                         }
                         
+                        /* Next 4KB aligned page directory pointer table */
                         p = ( ( char * )p + 0x1000 );
                     }
                 }
                 
+                /* Address of the first page directory pointer table */
                 pdpt = ( XEOS_VM_PDPTRef )pdt;
                 
                 if( outputHandler != NULL )
@@ -520,6 +588,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                     outputHandler( "%016#lX -> %016#lX\n", pdpt, ( uintptr_t )p - 1 );
                 }
                 
+                /* For i386 (PAE), we're actually done */
                 if( type == XEOS_VM_SystemMapType32PAE )
                 {
                     if( outputHandler != NULL )
@@ -527,6 +596,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                         outputHandler( "Updating CR3 with PDPT:     %016#lX\n", pdpt );
                     }
                     
+                    /* Updates CR3 with the page directory pointer table address */
                     XEOS_HAL_CPU_SetCR3( ( uint32_t )pdpt );
                 }
                 else
@@ -536,34 +606,47 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                         outputHandler( "Initializing PML4T:         " );
                     }
                     
+                    /* Initializes the page-map level-4 tables */
                     if( pml4tCount > 0 )
                     {
+                        /* Process each page-map level-4 table */
                         for( i = 0; i < pml4tCount; i++ )
                         {
+                            /* Address of the current page-map level-4 table */
                             pml4t = p;
                             
+                            /* Clears the current page-map level-4 table */
                             XEOS_VM_PML4TClear( pml4t );
                             
+                            /* Process each entry in the page-map level-4 table */
                             for( j = 0; j < ptEntriesPerPT; j++ )
                             {
+                                /* Only initializes entries with a valid page directory pointer table */
                                 if( ( ( i * ptEntriesPerPT ) + j ) >= pdptCount )
                                 {
                                     break;
                                 }
                                 
+                                /* Gets the page-map level-4 table entry */
                                 pml4tEntry = XEOS_VM_PML4TGetEntryAtIndex( pml4t, ( unsigned int )j );
                                 
+                                /* Sets the page directory pointer table address */
                                 XEOS_VM_PML4TEntrySetPDPT( pml4tEntry, pdpt );
+                                
+                                /* Entry is present and writeable */
                                 XEOS_VM_PML4TEntrySetFlag( pml4tEntry, XEOS_VM_PML4TEntryFlagPresent, true );
                                 XEOS_VM_PML4TEntrySetFlag( pml4tEntry, XEOS_VM_PML4TEntryFlagWriteable, true );
                                 
+                                /* Next 4 KB aligned entry */
                                 pdpt = ( void * )( ( char * )pdpt + 0x1000 );
                             }
                             
+                            /* Next 4KB aligned page-map level-4 table */
                             p = ( ( char * )p + 0x1000 );
                         }
                     }
                     
+                    /* Address of the first page-map level-4 table */
                     pml4t = ( XEOS_VM_PDPTRef )pdpt;
                     
                     if( outputHandler != NULL )
@@ -576,6 +659,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                         outputHandler( "Updating CR3 with PML4T:    %016#lX\n", pml4t );
                     }
                     
+                    /* Updates CR3 with the page-map level-4 table address */
                     XEOS_HAL_CPU_SetCR3( ( uint32_t )pml4t );
                 }
             }
@@ -584,6 +668,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
     
     #ifndef __LP64__
     
+    /* For i386, re-enables pagingC */
     XEOS_HAL_CPU_EnablePaging();
     
     #endif
