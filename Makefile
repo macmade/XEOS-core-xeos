@@ -90,6 +90,7 @@ DIR_SRC_SYSTEM      := $(PATH_SRC_CORE_KERNEL)system/
 DIR_SRC_VIDEO       := $(PATH_SRC_CORE_KERNEL)video/
 DIR_SRC_INFO        := $(PATH_SRC_CORE_KERNEL)info/
 DIR_SRC_VM          := $(PATH_SRC_CORE_KERNEL)vm/
+DIR_SRC_PROC        := $(PATH_SRC_CORE_KERNEL)proc/
 DIR_SRC_INC         := $(PATH_SRC_CORE_KERNEL)include/
 
 #-------------------------------------------------------------------------------
@@ -136,6 +137,7 @@ vpath %$(EXT_C)         $(DIR_SRC_SYSTEM)
 vpath %$(EXT_C)         $(DIR_SRC_VIDEO)
 vpath %$(EXT_C)         $(DIR_SRC_INFO)
 vpath %$(EXT_C)         $(DIR_SRC_VM)
+vpath %$(EXT_C)         $(DIR_SRC_PROC)
 vpath %$(EXT_H)         $(DIR_SRC_INC)
 
 #-------------------------------------------------------------------------------
@@ -173,6 +175,7 @@ _FILES_C_SYSTEM                 = $(foreach dir,$(DIR_SRC_SYSTEM),$(wildcard $(D
 _FILES_C_VIDEO                  = $(foreach dir,$(DIR_SRC_VIDEO),$(wildcard $(DIR_SRC_VIDEO)*$(EXT_C)))
 _FILES_C_INFO                   = $(foreach dir,$(DIR_SRC_INFO),$(wildcard $(DIR_SRC_INFO)*$(EXT_C)))
 _FILES_C_VM                     = $(foreach dir,$(DIR_SRC_VM),$(wildcard $(DIR_SRC_VM)*$(EXT_C)))
+_FILES_C_PROC                   = $(foreach dir,$(DIR_SRC_PROC),$(wildcard $(DIR_SRC_PROC)*$(EXT_C)))
 
 # Gets only the file name of the code files
 _FILES_ASM_REL_32               = $(notdir $(_FILES_ASM_32))
@@ -198,6 +201,7 @@ _FILES_C_REL_SYSTEM             = $(notdir $(_FILES_C_SYSTEM))
 _FILES_C_REL_VIDEO              = $(notdir $(_FILES_C_VIDEO))
 _FILES_C_REL_INFO               = $(notdir $(_FILES_C_INFO))
 _FILES_C_REL_VM                 = $(notdir $(_FILES_C_VM))
+_FILES_C_REL_PROC               = $(notdir $(_FILES_C_PROC))
 
 # Replace the code extension by the object one
 _FILES_ASM_OBJ_32               = $(subst $(EXT_ASM_32),$(EXT_ASM_32)$(EXT_OBJ),$(_FILES_ASM_REL_32))
@@ -223,6 +227,7 @@ _FILES_C_OBJ_SYSTEM             = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C
 _FILES_C_OBJ_VIDEO              = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_VIDEO))
 _FILES_C_OBJ_INFO               = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_INFO))
 _FILES_C_OBJ_VM                 = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_VM))
+_FILES_C_OBJ_PROC               = $(subst $(EXT_C),$(EXT_C)$(EXT_OBJ),$(_FILES_C_REL_PROC))
 
 # Prefix all binary files with the build directory
 _FILES_ASM_OBJ_BUILD_32         = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_ASM_OBJ_32))
@@ -248,6 +253,7 @@ _FILES_C_OBJ_BUILD_SYSTEM       = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$
 _FILES_C_OBJ_BUILD_VIDEO        = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_VIDEO))
 _FILES_C_OBJ_BUILD_INFO         = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_INFO))
 _FILES_C_OBJ_BUILD_VM           = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_VM))
+_FILES_C_OBJ_BUILD_PROC         = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_C_OBJ_PROC))
 
 #-------------------------------------------------------------------------------
 # Built-in targets
@@ -264,7 +270,7 @@ _FILES_C_OBJ_BUILD_VM           = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$
 #-------------------------------------------------------------------------------
 
 # Build the full project
-all: $(_FILES_ASM_OBJ_BUILD_32) $(_FILES_ASM_OBJ_BUILD_64) $(_FILES_ASM_OBJ_BUILD_32_RT) $(_FILES_ASM_OBJ_BUILD_64_RT) $(_FILES_C_OBJ_BUILD) $(_FILES_C_OBJ_BUILD_HAL) $(_FILES_C_OBJ_BUILD_HAL_CPU) $(_FILES_C_OBJ_BUILD_HAL_IO) $(_FILES_C_OBJ_BUILD_HAL_RTC) $(_FILES_C_OBJ_BUILD_HAL_CMOS) $(_FILES_C_OBJ_BUILD_HAL_ACPI) $(_FILES_C_OBJ_BUILD_HAL_IDT) $(_FILES_C_OBJ_BUILD_HAL_NMI) $(_FILES_C_OBJ_BUILD_HAL_GDT) $(_FILES_C_OBJ_BUILD_HAL_PIC) $(_FILES_C_OBJ_BUILD_HAL_PIT) $(_FILES_C_OBJ_BUILD_HAL_SMBIOS) $(_FILES_C_OBJ_BUILD_ISR) $(_FILES_C_OBJ_BUILD_IRQ) $(_FILES_C_OBJ_BUILD_SYSTEM) $(_FILES_C_OBJ_BUILD_VIDEO) $(_FILES_C_OBJ_BUILD_INFO) $(_FILES_C_OBJ_BUILD_VM)
+all: $(_FILES_ASM_OBJ_BUILD_32) $(_FILES_ASM_OBJ_BUILD_64) $(_FILES_ASM_OBJ_BUILD_32_RT) $(_FILES_ASM_OBJ_BUILD_64_RT) $(_FILES_C_OBJ_BUILD) $(_FILES_C_OBJ_BUILD_HAL) $(_FILES_C_OBJ_BUILD_HAL_CPU) $(_FILES_C_OBJ_BUILD_HAL_IO) $(_FILES_C_OBJ_BUILD_HAL_RTC) $(_FILES_C_OBJ_BUILD_HAL_CMOS) $(_FILES_C_OBJ_BUILD_HAL_ACPI) $(_FILES_C_OBJ_BUILD_HAL_IDT) $(_FILES_C_OBJ_BUILD_HAL_NMI) $(_FILES_C_OBJ_BUILD_HAL_GDT) $(_FILES_C_OBJ_BUILD_HAL_PIC) $(_FILES_C_OBJ_BUILD_HAL_PIT) $(_FILES_C_OBJ_BUILD_HAL_SMBIOS) $(_FILES_C_OBJ_BUILD_ISR) $(_FILES_C_OBJ_BUILD_IRQ) $(_FILES_C_OBJ_BUILD_SYSTEM) $(_FILES_C_OBJ_BUILD_VIDEO) $(_FILES_C_OBJ_BUILD_INFO) $(_FILES_C_OBJ_BUILD_VM) $(_FILES_C_OBJ_BUILD_PROC)
 	
 	@:
 
