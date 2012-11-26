@@ -81,8 +81,7 @@
 void XEOS_Main( XEOS_InfoRef info ) XEOS_NORETURN_ATTRIBUTE;
 void XEOS_Main( XEOS_InfoRef info )
 {
-    unsigned int         i;
-    XEOS_VM_SystemMapRef systemMap;
+    unsigned int i;
     
     /* Ensures interrupts are disabled, as we are setting up the kernel */
     XEOS_HAL_CPU_DisableInterrupts();
@@ -160,7 +159,9 @@ void XEOS_Main( XEOS_InfoRef info )
      * 
      * frequency =  32768 >> ( rate - 1 )
      * 
-     * So for a frequency of 1024 hertz, the rate needs to be 6.
+     * So for a frequency of 1024 hertz, the rate needs to be 6:
+     * 
+     * 32768 >> 5 = 1024
      */
     XEOS_HAL_RTC_SetRate( 6 );
     
@@ -186,7 +187,7 @@ void XEOS_Main( XEOS_InfoRef info )
     XEOS_Video_Printf( "System time: %lu\n", XEOS_System_GetTime() );
     
     /* Initializes the system map */
-    systemMap = XEOS_VM_SystemMapInitialize( XEOS_Info_GetMemory( info ), XEOS_Video_Printf );
+    XEOS_VM_SystemMapInitialize( XEOS_Info_GetMemory( info ), XEOS_Video_Printf );
     
     for( ; ; )
     {
