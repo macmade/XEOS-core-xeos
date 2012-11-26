@@ -62,7 +62,7 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_VM_SystemMap.c
+ * @file            XEOS_VM_MemoryMapSetCR3.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
@@ -72,7 +72,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-XEOS_VM_MemoryMapRef XEOS_VM_SystemMap( void )
+void XEOS_VM_MemoryMapSetCR3( XEOS_VM_MemoryMapRef object, uint32_t cr3 )
 {
-    return &__XEOS_VM_SystemMap;
+    object->cr3 = cr3;
 }

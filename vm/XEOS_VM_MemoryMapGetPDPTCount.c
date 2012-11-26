@@ -62,7 +62,7 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_VM_SystemMap.c
+ * @file            XEOS_VM_MemoryMapGetPDPTCount.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
@@ -72,7 +72,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-XEOS_VM_SystemMapType XEOS_VM_SystemMapGetType( XEOS_VM_SystemMapRef object )
+uint64_t XEOS_VM_MemoryMapGetPDPTCount( XEOS_VM_MemoryMapRef object )
 {
-    return object->type;
+    return object->pdptCount;
 }

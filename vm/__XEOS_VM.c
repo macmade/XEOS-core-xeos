@@ -70,4 +70,4 @@
 #include "xeos/vm.h"
 #include "xeos/__vm.h"
 
-struct __XEOS_VM_SystemMap __XEOS_VM_SystemMap = { 0, 0, 0, 0, 0, 0, 0, { 0, 0, 0, 0 } };
+struct __XEOS_VM_MemoryMap __XEOS_VM_SystemMap = { 0, 0, 0, 0, 0, 0, 0, 0 };

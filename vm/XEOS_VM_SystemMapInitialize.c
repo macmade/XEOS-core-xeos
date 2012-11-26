@@ -73,9 +73,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHandler )( const char *, ... ) )
+void XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHandler )( const char *, ... ) )
 {
-    XEOS_VM_SystemMapType       type;
+    XEOS_VM_MemoryMapType       type;
     uint64_t                    totalMemoryBytes;
     uint64_t                    ptEntriesCount;
     uint64_t                    ptCount;
@@ -93,11 +93,14 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
     uint64_t                    systemMapAddress;
     uint64_t                    kernelStart;
     uint64_t                    kernelEnd;
+    XEOS_VM_MemoryMapRef        systemMap;
+    
+    systemMap = XEOS_VM_SystemMap();
     
     /* Do not allows the system map to be initialized more than once */
-    if( __XEOS_VM_SystemMap.base != NULL )
+    if( XEOS_VM_MemoryMapGetAddress( systemMap ) != NULL )
     {
-        return &__XEOS_VM_SystemMap;
+        return;
     }
     
     #ifndef __LP64__
@@ -113,18 +116,18 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
     #ifdef __LP64__
     
     /* x86-64 only has one paging mode (4 level paging) */
-    type = XEOS_VM_SystemMapType64;
+    type = XEOS_VM_MemoryMapType64;
     
     #else
     
     /* For 32 bits, paging layout depends on PAE status */
     if( XEOS_HAL_CPU_PAEEnabled() == true )
     {
-        type = XEOS_VM_SystemMapType32PAE;
+        type = XEOS_VM_MemoryMapType32PAE;
     }
     else
     {
-        type = XEOS_VM_SystemMapType32;
+        type = XEOS_VM_MemoryMapType32;
     }
     
     #endif
@@ -133,9 +136,9 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
     totalMemoryBytes = XEOS_Info_MemoryGetTotalBytes( memory );
     
     /* For i386, no need for PAE if memory is lower than 4GB */
-    if( type == XEOS_VM_SystemMapType32PAE && totalMemoryBytes < 0x100000000 )
+    if( type == XEOS_VM_MemoryMapType32PAE && totalMemoryBytes < 0x100000000 )
     {
-        type = XEOS_VM_SystemMapType32;
+        type = XEOS_VM_MemoryMapType32;
         
         XEOS_HAL_CPU_DisablePAE();
     }
@@ -143,7 +146,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
     /* Computes the number of required page tables/page table entries */
     ptEntriesCount  = totalMemoryBytes / 0x1000;
     ptEntriesCount += ( ( totalMemoryBytes % 0x1000 ) == 0 ) ? 0 : 1;
-    ptEntriesPerPT  = ( type == XEOS_VM_SystemMapType32 ) ? 0x400 : 0x200;
+    ptEntriesPerPT  = ( type == XEOS_VM_MemoryMapType32 ) ? 0x400 : 0x200;
     ptCount         = ptEntriesCount / ptEntriesPerPT;
     ptCount        += ( ( ptEntriesCount % ptEntriesPerPT ) == 0 ) ? 0 : 1;
     
@@ -152,7 +155,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
     pml4tCount      = 0;
     
     /* For i386 without PAE, only one page directory table */
-    if( type == XEOS_VM_SystemMapType32 )
+    if( type == XEOS_VM_MemoryMapType32 )
     {
         pdtCount = 1;
     }
@@ -171,7 +174,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
         }
         
         /* For i386 PAE, only one page directory pointer table */
-        if( type == XEOS_VM_SystemMapType32PAE )
+        if( type == XEOS_VM_MemoryMapType32PAE )
         {
             pdptCount = 1;
         }
@@ -239,7 +242,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
             }
         }
         
-        outputHandler( "Memory map type:            %s\n", ( type == XEOS_VM_SystemMapType32 ) ? "i386" : ( ( type == XEOS_VM_SystemMapType32PAE ) ? "i386 PAE" : "x86-64" ) );
+        outputHandler( "Memory map type:            %s\n", ( type == XEOS_VM_MemoryMapType32 ) ? "i386" : ( ( type == XEOS_VM_MemoryMapType32PAE ) ? "i386 PAE" : "x86-64" ) );
         outputHandler( "Total memory:               %llu B", totalMemoryBytes );
         
         if( totalMemoryBytes >= 0x100000 )
@@ -348,13 +351,13 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
         }
         
         /* Stores the system map infos */
-        __XEOS_VM_SystemMap.base        = ( void * )systemMapAddress;
-        __XEOS_VM_SystemMap.length      = mapMemory;
-        __XEOS_VM_SystemMap.type        = type;
-        __XEOS_VM_SystemMap.ptCount     = ptCount;
-        __XEOS_VM_SystemMap.pdtCount    = pdtCount;
-        __XEOS_VM_SystemMap.pdptCount   = pdptCount;
-        __XEOS_VM_SystemMap.pml4tCount  = pml4tCount;
+        XEOS_VM_MemoryMapSetAddress( systemMap, ( void * )systemMapAddress );
+        XEOS_VM_MemoryMapSetLength( systemMap, mapMemory );
+        XEOS_VM_MemoryMapSetType( systemMap, type );
+        XEOS_VM_MemoryMapSetPTCount( systemMap, ptCount );
+        XEOS_VM_MemoryMapSetPDTCount( systemMap, pdtCount );
+        XEOS_VM_MemoryMapSetPDPTCount( systemMap, pdptCount );
+        XEOS_VM_MemoryMapSetPML4TCount( systemMap, pml4tCount );
         
         {
             XEOS_VM_PTRef           pt;
@@ -370,7 +373,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
             uint64_t                j;
             unsigned int            k;
             
-            p           = __XEOS_VM_SystemMap.base;
+            p           = XEOS_VM_MemoryMapGetAddress( systemMap );
             address     = 0;
             ptEntry     = NULL;
             pdtEntry    = NULL;
@@ -445,14 +448,14 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
             }
             
             /* Address of the first page table */
-            pt = __XEOS_VM_SystemMap.base;
+            pt = XEOS_VM_MemoryMapGetAddress( systemMap );
             
             if( outputHandler != NULL )
             {
                 outputHandler( "%016#lX -> %016#lX\n", pt, ( uint64_t )p - 1 );
                 outputHandler( "Physical addresses mapped:  %016#llX -> %016#llX\n", ( uint64_t )0, address - ( uint64_t )1 );
                 
-                if( type == XEOS_VM_SystemMapType32 )
+                if( type == XEOS_VM_MemoryMapType32 )
                 {
                     outputHandler( "Initializing PDT:           " );
                 }
@@ -511,7 +514,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
             }
             
             /* For i386 (without PAE), we're actually done */
-            if( type == XEOS_VM_SystemMapType32 )
+            if( type == XEOS_VM_MemoryMapType32 )
             {  
                 if( outputHandler != NULL )
                 {
@@ -520,12 +523,13 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                 
                 /* Updates CR3 with the page directory table address */
                 XEOS_HAL_CPU_SetCR3( ( uint32_t )pdt );
+                XEOS_VM_MemoryMapSetCR3( systemMap, ( uint32_t )pdt );
             }
             else
             {
                 if( outputHandler != NULL )
                 {
-                    if( type == XEOS_VM_SystemMapType32PAE )
+                    if( type == XEOS_VM_MemoryMapType32PAE )
                     {
                         outputHandler( "Initializing PDPT:          " );
                     }
@@ -566,7 +570,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                             XEOS_VM_PDPTEntrySetFlag( pdptEntry, XEOS_VM_PDPTEntryFlagPresent, true );
                             
                             /* For x86-64, marks the entry as writeable */
-                            if( type == XEOS_VM_SystemMapType64 )
+                            if( type == XEOS_VM_MemoryMapType64 )
                             {
                                 XEOS_VM_PDPTEntrySetFlag( pdptEntry, XEOS_VM_PDPTEntryFlagWriteable, true );
                             }
@@ -589,7 +593,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                 }
                 
                 /* For i386 (PAE), we're actually done */
-                if( type == XEOS_VM_SystemMapType32PAE )
+                if( type == XEOS_VM_MemoryMapType32PAE )
                 {
                     if( outputHandler != NULL )
                     {
@@ -598,6 +602,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                     
                     /* Updates CR3 with the page directory pointer table address */
                     XEOS_HAL_CPU_SetCR3( ( uint32_t )pdpt );
+                    XEOS_VM_MemoryMapSetCR3( systemMap, ( uint32_t )pdpt );
                 }
                 else
                 {
@@ -661,6 +666,7 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
                     
                     /* Updates CR3 with the page-map level-4 table address */
                     XEOS_HAL_CPU_SetCR3( ( uint32_t )pml4t );
+                    XEOS_VM_MemoryMapSetCR3( systemMap, ( uint32_t )pml4t );
                 }
             }
         }
@@ -672,6 +678,4 @@ XEOS_VM_SystemMapRef XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, in
     XEOS_HAL_CPU_EnablePaging();
     
     #endif
-    
-    return &__XEOS_VM_SystemMap;
 }

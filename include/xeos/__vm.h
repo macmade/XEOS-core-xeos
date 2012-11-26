@@ -78,7 +78,7 @@ extern "C" {
 #include <xeos/macros.h>
 #include <xeos/vm.h>
 
-struct __XEOS_VM_SystemMap
+struct __XEOS_VM_MemoryMap
 {
     uint64_t              ptCount;
     uint64_t              pdtCount;
@@ -86,11 +86,11 @@ struct __XEOS_VM_SystemMap
     uint64_t              pml4tCount;
     uint64_t              length;
     void                * base;
-    XEOS_VM_SystemMapType type;
-    char                  __pad[ 4 ];
+    XEOS_VM_MemoryMapType type;
+    uint32_t              cr3;
 };
 
-extern struct __XEOS_VM_SystemMap __XEOS_VM_SystemMap;
+extern struct __XEOS_VM_MemoryMap __XEOS_VM_SystemMap;
 
 #ifdef __cplusplus
 }

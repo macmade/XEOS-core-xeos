@@ -62,7 +62,7 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_VM_SystemMap.c
+ * @file            XEOS_VM_MemoryMapSetLength.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
@@ -72,7 +72,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-XEOS_VM_MemoryMapRef XEOS_VM_SystemMap( void )
+void XEOS_VM_MemoryMapSetLength( XEOS_VM_MemoryMapRef object, uint64_t length )
 {
-    return &__XEOS_VM_SystemMap;
+    object->length = length;
 }

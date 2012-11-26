@@ -62,7 +62,7 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_VM_SystemMap.c
+ * @file            XEOS_VM_MemoryMapGetType.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
@@ -72,7 +72,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-uint64_t XEOS_VM_SystemMapGetLength( XEOS_VM_SystemMapRef object )
+XEOS_VM_MemoryMapType XEOS_VM_MemoryMapGetType( XEOS_VM_MemoryMapRef object )
 {
-    return object->length;
+    return object->type;
 }

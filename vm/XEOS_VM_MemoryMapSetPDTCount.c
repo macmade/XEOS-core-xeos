@@ -62,7 +62,7 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_VM_SystemMap.c
+ * @file            XEOS_VM_MemoryMapSetPDTCount.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
@@ -72,7 +72,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-uintptr_t XEOS_VM_SystemMapGetAddress( XEOS_VM_SystemMapRef object )
+void XEOS_VM_MemoryMapSetPDTCount( XEOS_VM_MemoryMapRef object, uint64_t count )
 {
-    return ( uintptr_t )( object->base );
+    object->pdtCount = count;
 }

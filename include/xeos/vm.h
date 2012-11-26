@@ -82,12 +82,12 @@ extern "C" {
 
 typedef enum
 {
-    XEOS_VM_SystemMapTypeUnknown        = 0x00,
-    XEOS_VM_SystemMapType32             = 0x01,
-    XEOS_VM_SystemMapType32PAE          = 0x02,
-    XEOS_VM_SystemMapType64             = 0x03
+    XEOS_VM_MemoryMapTypeUnknown        = 0x00,
+    XEOS_VM_MemoryMapType32             = 0x01,
+    XEOS_VM_MemoryMapType32PAE          = 0x02,
+    XEOS_VM_MemoryMapType64             = 0x03
 }
-XEOS_VM_SystemMapType;
+XEOS_VM_MemoryMapType;
 
 typedef enum
 {
@@ -129,7 +129,7 @@ typedef enum
 }
 XEOS_VM_PTEntryFlag;
 
-typedef struct __XEOS_VM_SystemMap  * XEOS_VM_SystemMapRef;
+typedef struct __XEOS_VM_MemoryMap  * XEOS_VM_MemoryMapRef;
 typedef void                        * XEOS_VM_PML4TEntryRef;
 typedef void                        * XEOS_VM_PML4TRef;
 typedef void                        * XEOS_VM_PDPTEntryRef;
@@ -139,11 +139,25 @@ typedef void                        * XEOS_VM_PDTRef;
 typedef void                        * XEOS_VM_PTEntryRef;
 typedef void                        * XEOS_VM_PTRef;
 
-XEOS_VM_SystemMapRef    XEOS_VM_SystemMap( void );
-XEOS_VM_SystemMapRef    XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHandler )( const char *, ... ) );
-uintptr_t               XEOS_VM_SystemMapGetAddress( XEOS_VM_SystemMapRef object );
-uint64_t                XEOS_VM_SystemMapGetLength( XEOS_VM_SystemMapRef object );
-XEOS_VM_SystemMapType   XEOS_VM_SystemMapGetType( XEOS_VM_SystemMapRef object );
+XEOS_VM_MemoryMapRef    XEOS_VM_SystemMap( void );
+void                    XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHandler )( const char *, ... ) );
+
+void *                  XEOS_VM_MemoryMapGetAddress( XEOS_VM_MemoryMapRef object );
+uint64_t                XEOS_VM_MemoryMapGetLength( XEOS_VM_MemoryMapRef object );
+XEOS_VM_MemoryMapType   XEOS_VM_MemoryMapGetType( XEOS_VM_MemoryMapRef object );
+uint32_t                XEOS_VM_MemoryMapGetCR3( XEOS_VM_MemoryMapRef object );
+uint64_t                XEOS_VM_MemoryMapGetPTCount( XEOS_VM_MemoryMapRef object );
+uint64_t                XEOS_VM_MemoryMapGetPDTCount( XEOS_VM_MemoryMapRef object );
+uint64_t                XEOS_VM_MemoryMapGetPDPTCount( XEOS_VM_MemoryMapRef object );
+uint64_t                XEOS_VM_MemoryMapGetPML4TCount( XEOS_VM_MemoryMapRef object );
+void                    XEOS_VM_MemoryMapSetAddress( XEOS_VM_MemoryMapRef object, void * address );
+void                    XEOS_VM_MemoryMapSetLength( XEOS_VM_MemoryMapRef object, uint64_t length );
+void                    XEOS_VM_MemoryMapSetType( XEOS_VM_MemoryMapRef object, XEOS_VM_MemoryMapType type );
+void                    XEOS_VM_MemoryMapSetCR3( XEOS_VM_MemoryMapRef object, uint32_t cr3 );
+void                    XEOS_VM_MemoryMapSetPTCount( XEOS_VM_MemoryMapRef object, uint64_t count );
+void                    XEOS_VM_MemoryMapSetPDTCount( XEOS_VM_MemoryMapRef object, uint64_t count );
+void                    XEOS_VM_MemoryMapSetPDPTCount( XEOS_VM_MemoryMapRef object, uint64_t count );
+void                    XEOS_VM_MemoryMapSetPML4TCount( XEOS_VM_MemoryMapRef object, uint64_t count );
 
 void                    XEOS_VM_PML4TClear( XEOS_VM_PML4TRef object );
 XEOS_VM_PML4TEntryRef   XEOS_VM_PML4TGetEntryAtIndex( XEOS_VM_PML4TRef object, unsigned int i );
