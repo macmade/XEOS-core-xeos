@@ -202,8 +202,7 @@ void XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHand
     mapMemory += pdtCount   * 0x1000;
     mapMemory += pdptCount  * 0x1000;
     mapMemory += pml4tCount * 0x1000;
-    
-    /* Prints computed values */
+    C
     if( outputHandler != NULL )
     {
         for( i = 0; i < XEOS_Info_MemoryGetNumberOfEntries( memory ); i++ )
