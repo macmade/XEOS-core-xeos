@@ -73,7 +73,10 @@
 
 XEOS_Mem_ZoneRef XEOS_Mem_ZoneGetNext( XEOS_Mem_ZoneRef object )
 {
-    ( void )object;
+    if( object == NULL )
+    {
+        return NULL;
+    }
     
-    return NULL;
+    return object->next;
 }

@@ -73,7 +73,10 @@
 
 XEOS_Mem_ZoneType XEOS_Mem_ZoneGetType( XEOS_Mem_ZoneRef object )
 {
-    ( void )object;
+    if( object == NULL )
+    {
+        return XEOS_Mem_ZoneTypeUnknown;
+    }
     
-    return XEOS_Mem_ZoneTypeUnknown;
+    return object->type;
 }

@@ -73,6 +73,10 @@
 
 void XEOS_Mem_ZoneSetPageCount( XEOS_Mem_ZoneRef object, uint64_t count )
 {
-    ( void )object;
-    ( void )count;
+    if( object == NULL )
+    {
+        return;
+    }
+    
+    object->pageCount = count;
 }

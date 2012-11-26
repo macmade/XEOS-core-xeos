@@ -73,7 +73,10 @@
 
 bool XEOS_Mem_PageGetFree( XEOS_Mem_PageRef object )
 {
-    ( void )object;
+    if( object == NULL )
+    {
+        return false;
+    }
     
-    return false;
+    return ( ( *( object ) & 0x01 ) != 0 ) ? true : false;
 }

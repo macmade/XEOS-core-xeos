@@ -73,7 +73,10 @@
 
 uint64_t XEOS_Mem_ZoneGetFreePageIndex( XEOS_Mem_ZoneRef object )
 {
-    ( void )object;
+    if( object == NULL )
+    {
+        return 0;
+    }
     
-    return 0;
+    return object->freePageIndex;
 }

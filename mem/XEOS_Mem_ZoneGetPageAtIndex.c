@@ -71,9 +71,17 @@
 #include "xeos/__mem.h"
 #include <stdlib.h>
 
-XEOS_Mem_PageRef XEOS_Mem_ZoneGetPageAtIndex( XEOS_Mem_ZoneRef object )
+XEOS_Mem_PageRef XEOS_Mem_ZoneGetPageAtIndex( XEOS_Mem_ZoneRef object, uint64_t index )
 {
-    ( void )object;
+    if( object == NULL )
+    {
+        return NULL;
+    }
     
-    return NULL;
+    if( index >= object->pageCount )
+    {
+        return NULL;
+    }
+    
+    return &( object->pages[ index ] );
 }

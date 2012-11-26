@@ -73,6 +73,10 @@
 
 void XEOS_Mem_ZoneSetAddress( XEOS_Mem_ZoneRef object, void * address )
 {
-    ( void )object;
-    ( void )address;
+    if( object == NULL )
+    {
+        return;
+    }
+    
+    object->base = address;
 }

@@ -73,7 +73,10 @@
 
 XEOS_Mem_ZoneRef XEOS_Mem_GetZoneAtIndex( unsigned int index )
 {
-    ( void )index;
+    if( index >= __XEOS_Mem_ZoneCount )
+    {
+        return NULL;
+    }
     
-    return NULL;
+    return __XEOS_Mem_Zones + index;
 }

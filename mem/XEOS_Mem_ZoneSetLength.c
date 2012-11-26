@@ -73,6 +73,10 @@
 
 void XEOS_Mem_ZoneSetLength( XEOS_Mem_ZoneRef object, uint64_t length )
 {
-    ( void )object;
-    ( void )length;
+    if( object == NULL )
+    {
+        return;
+    }
+    
+    object->length = length;
 }

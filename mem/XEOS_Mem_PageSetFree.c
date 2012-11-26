@@ -73,6 +73,15 @@
 
 void XEOS_Mem_PageSetFree( XEOS_Mem_PageRef object, bool free )
 {
-    ( void )object;
-    ( void )free;
+    if( object == NULL )
+    {
+        return;
+    }
+    
+    *( object ) = UINT8_MAX - 1;
+    
+    if( free == true )
+    {
+        *( object ) |= 0x01;
+    }
 }

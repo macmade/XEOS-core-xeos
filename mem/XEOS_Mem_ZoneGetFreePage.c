@@ -73,7 +73,15 @@
 
 XEOS_Mem_PageRef XEOS_Mem_ZoneGetFreePage( XEOS_Mem_ZoneRef object )
 {
-    ( void )object;
+    if( object == NULL )
+    {
+        return NULL;
+    }
     
-    return NULL;
+    if( object->freePageIndex >= object->pageCount )
+    {
+        return NULL;
+    }
+    
+    return &( object->pages[ object->freePageIndex ] );
 }

@@ -73,6 +73,10 @@
 
 void XEOS_Mem_ZoneSetType( XEOS_Mem_ZoneRef object, XEOS_Mem_ZoneType type )
 {
-    ( void )object;
-    ( void )type;
+    if( object == NULL )
+    {
+        return;
+    }
+    
+    object->type = type;
 }

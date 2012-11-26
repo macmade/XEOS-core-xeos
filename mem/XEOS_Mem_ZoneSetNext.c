@@ -73,6 +73,10 @@
 
 void XEOS_Mem_ZoneSetNext( XEOS_Mem_ZoneRef object, XEOS_Mem_ZoneRef next )
 {
-    ( void )object;
-    ( void )next;
+    if( object == NULL )
+    {
+        return;
+    }
+    
+    object->next = next;
 }

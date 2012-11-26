@@ -73,7 +73,24 @@
 
 XEOS_Mem_ZoneRef XEOS_Mem_PageGetZone( XEOS_Mem_PageRef object )
 {
-    ( void )object;
+    XEOS_Mem_ZoneRef zone;
+    
+    if( object == NULL )
+    {
+        return NULL;
+    }
+    
+    zone = __XEOS_Mem_Zones;
+    
+    while( zone != NULL )
+    {
+        if( ( void * )object > ( void * )zone && ( void * )object < ( void * )( zone->next ) )
+        {
+            return zone;
+        }
+        
+        zone = zone->next;
+    }
     
     return NULL;
 }
