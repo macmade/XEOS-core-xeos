@@ -470,6 +470,9 @@ int __XEOS_Video_ProcessFormatString( const char * format, va_list ap, void ( * 
                                 #ifndef __LP64__
                                 n &= 0xFFFFFFFF;
                                 #endif
+                                
+                                intType = __XEOS_Video_VPrintf_Flag_IntegerTypeHexadecimal | __XEOS_Video_VPrintf_Flag_IntegerTypeUppercase;
+                                sharp   = true;
                             }
                             else
                             {
