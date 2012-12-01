@@ -69,6 +69,7 @@
 
 #include "xeos/video.h"
 #include "xeos/system.h"
+#include "xeos/mem.h"
 #include "xeos/vm.h"
 #include "xeos/hal.h"
 #include "xeos/isr.h"
@@ -186,8 +187,13 @@ void XEOS_Main( XEOS_InfoRef info )
     XEOS_Video_Printf( "CPU brand:   %s\n", XEOS_HAL_CPU_GetBrandName() );
     XEOS_Video_Printf( "System time: %lu\n", XEOS_System_GetTime() );
     
+    /* Initializes the physical memory system */
+    XEOS_Mem_Initialize( XEOS_Info_GetMemory( info ), XEOS_Video_Printf );
+    
     /* Initializes the system map */
     XEOS_VM_SystemMapInitialize( XEOS_Info_GetMemory( info ), XEOS_Video_Printf );
+    
+    XEOS_Video_Printf( "Allocated page: %p", XEOS_Mem_AllocPage() );
     
     for( ; ; )
     {

@@ -69,9 +69,11 @@
 
 #include "xeos/vm.h"
 #include "xeos/__vm.h"
+#include "xeos/mem.h"
 #include "xeos/hal/cpu.h"
 #include <stdlib.h>
 #include <string.h>
+#include <xeos/__mem.h>
 
 void XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHandler )( const char *, ... ) )
 {
@@ -91,11 +93,18 @@ void XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHand
     uint64_t                    memoryStart;
     uint64_t                    memoryEnd;
     uint64_t                    systemMapAddress;
-    uint64_t                    kernelStart;
-    uint64_t                    kernelEnd;
+    uint64_t                    reservedMemoryEnd;
     XEOS_VM_MemoryMapRef        systemMap;
+    XEOS_Mem_ZoneRef            zone;
+    XEOS_Mem_ZoneRef            lastZone;
     
     systemMap = XEOS_VM_SystemMap();
+    zone      = XEOS_Mem_GetZoneAtIndex( 0 );
+    
+    if( zone == NULL )
+    {
+        return;
+    }
     
     /* Do not allows the system map to be initialized more than once */
     if( XEOS_VM_MemoryMapGetAddress( systemMap ) != NULL )
@@ -205,42 +214,6 @@ void XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHand
     
     if( outputHandler != NULL )
     {
-        for( i = 0; i < XEOS_Info_MemoryGetNumberOfEntries( memory ); i++ )
-        {
-            memoryEntry     = XEOS_Info_MemoryGetEntryAtIndex( memory, ( unsigned int )i );
-            memoryStart     = XEOS_Info_MemoryEntryGetAddress( memoryEntry );
-            memoryLength    = XEOS_Info_MemoryEntryGetLength( memoryEntry );
-            memoryType      = XEOS_Info_MemoryEntryGetType( memoryEntry );
-            
-            if( memoryLength == 0 )
-            {
-                continue;
-            }
-            
-            outputHandler( "%016#llX -> %016#llX: ", memoryStart, ( memoryStart + memoryLength ) - 1 );
-            
-            switch( memoryType )
-            {
-                case XEOS_Info_MemoryEntryTypeUnknown:          outputHandler( "Unknown " ); break;
-                case XEOS_Info_MemoryEntryTypeUsable:           outputHandler( "Usable  " ); break;
-                case XEOS_Info_MemoryEntryTypeReserved:         outputHandler( "Reserved" ); break;
-                case XEOS_Info_MemoryEntryTypeACPIReclaimable:  outputHandler( "ACPI    " ); break;
-                case XEOS_Info_MemoryEntryTypeACPINVS:          outputHandler( "ACPI NVS" ); break;
-                case XEOS_Info_MemoryEntryTypeBad:              outputHandler( "Bad     " ); break;
-            }
-            
-            outputHandler( " - %llu B", memoryLength );
-            
-            if( memoryLength >= 0x100000 )
-            {
-                outputHandler( " (%llu MB)\n", ( ( memoryLength / 1024 ) / 1024 ) );
-            }
-            else
-            {
-                outputHandler( "\n" );
-            }
-        }
-        
         outputHandler( "Memory map type:            %s\n", ( type == XEOS_VM_MemoryMapType32 ) ? "i386" : ( ( type == XEOS_VM_MemoryMapType32PAE ) ? "i386 PAE" : "x86-64" ) );
         outputHandler( "Total memory:               %llu B", totalMemoryBytes );
         
@@ -271,13 +244,22 @@ void XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHand
         }
     }
     
-    /* Kernel location */
-    kernelStart      = ( uint64_t )XEOS_Info_GetKernelStartAddress();
-    kernelEnd        = ( uint64_t )XEOS_Info_GetKernelEndAddress();
-    kernelEnd       &= UINT64_MAX - 0x0FFF;
-    kernelEnd       += 0x1000;
-    kernelEnd       -= 1;
-    systemMapAddress = 0;
+    systemMapAddress  = 0;
+    reservedMemoryEnd = 0;
+    lastZone          = NULL;
+    
+    while( zone != NULL )
+    {
+        reservedMemoryEnd  = ( uint64_t )zone;
+        lastZone           = zone;
+        zone               = XEOS_Mem_ZoneGetNext( zone );
+    }
+    
+    reservedMemoryEnd += sizeof( struct __XEOS_Mem_Zone );
+    reservedMemoryEnd += XEOS_Mem_ZoneGetPageCount( lastZone );
+    reservedMemoryEnd &= UINT64_MAX - 0x0FFF;
+    reservedMemoryEnd += 0x1000;
+    reservedMemoryEnd -= 1;
     
     /* Process each memory region to find room for the system map */
     for( i = 0; i < XEOS_Info_MemoryGetNumberOfEntries( memory ); i++ )
@@ -320,16 +302,16 @@ void XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHand
         }
         
         /* Found a suitable place */
-        if( memoryStart > kernelEnd )
+        if( memoryStart > reservedMemoryEnd )
         {
             systemMapAddress = memoryStart;
             break;
         }
         
         /* Found a suitable place */
-        if( memoryEnd > kernelEnd && ( memoryEnd - kernelEnd ) >= mapMemory )
+        if( memoryEnd > reservedMemoryEnd && ( memoryEnd - reservedMemoryEnd ) >= mapMemory )
         {
-            systemMapAddress = kernelEnd + 1;
+            systemMapAddress = reservedMemoryEnd + 1;
         }
     }
     
@@ -340,10 +322,10 @@ void XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHand
         {
             outputHandler
             (
-                "Kernel area:                %016#llX -> %016#llX\n"
+                "Reserved area:              %016#llX -> %016#llX\n"
                 "System map area:            %016#llX -> %016#llX\n",
-                kernelStart,
-                kernelEnd,
+                0,
+                reservedMemoryEnd,
                 systemMapAddress,
                 ( systemMapAddress + mapMemory ) - 1
             );

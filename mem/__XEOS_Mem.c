@@ -69,6 +69,7 @@
 
 #include "xeos/mem.h"
 #include "xeos/__mem.h"
+#include <stdlib.h>
 
-struct __XEOS_Mem_Zone * __XEOS_Mem_Zones;
-unsigned int             __XEOS_Mem_ZoneCount = 0;
+struct __XEOS_Mem_Zone * __XEOS_Mem_Zones       = NULL;
+unsigned int             __XEOS_Mem_ZoneCount   = 0;

@@ -70,8 +70,191 @@
 #include "xeos/mem.h"
 #include "xeos/__mem.h"
 #include <stdlib.h>
+#include <string.h>
 
-void XEOS_Mem_Initialize( XEOS_Info_MemoryRef memory )
+void XEOS_Mem_Initialize( XEOS_Info_MemoryRef memory, int ( * outputHandler )( const char *, ... ) )
 {
-    ( void )memory;
+    uint64_t                    totalMemoryBytes;
+    uint64_t                    zonesMemory;
+    uint64_t                    kernelStart;
+    uint64_t                    kernelEnd;
+    uint64_t                    zonesAddress;
+    uint64_t                    pageAddress;
+    XEOS_Info_MemoryEntryRef    memoryEntry;
+    XEOS_Info_MemoryEntryType   memoryType;
+    uint64_t                    memoryLength;
+    uint64_t                    memoryStart;
+    uint64_t                    memoryEnd;
+    uint64_t                    i;
+    uint64_t                    j;
+    XEOS_Mem_ZoneRef            zone;
+    XEOS_Mem_ZoneRef            previousZone;
+    uint8_t                   * pages;
+    bool                        hasFreePage;
+    
+    /* Gets the total amount of physical memory */
+    totalMemoryBytes = XEOS_Info_MemoryGetTotalBytes( memory );
+    
+    /* Memory needed to store memory zones informations */
+    zonesMemory  = XEOS_Info_MemoryGetNumberOfEntries( memory ) * sizeof( struct __XEOS_Mem_Zone );
+    zonesMemory += ( uint64_t )( totalMemoryBytes / 0x1000 );
+    
+    /* Kernel location */
+    kernelStart      = ( uint64_t )XEOS_Info_GetKernelStartAddress();
+    kernelEnd        = ( uint64_t )XEOS_Info_GetKernelEndAddress();
+    kernelEnd       &= UINT64_MAX - 0x0FFF;
+    kernelEnd       += 0x1000;
+    kernelEnd       -= 1;
+    zonesAddress     = 0;
+    
+    /* Process each memory region to find room for the memory zones */
+    for( i = 0; i < XEOS_Info_MemoryGetNumberOfEntries( memory ); i++ )
+    {
+        /* Gets informations about the current memory region */
+        memoryEntry     = XEOS_Info_MemoryGetEntryAtIndex( memory, ( unsigned int )i );
+        memoryLength    = XEOS_Info_MemoryEntryGetLength( memoryEntry );
+        memoryStart     = XEOS_Info_MemoryEntryGetAddress( memoryEntry );
+        memoryEnd       = ( memoryStart + memoryLength ) - 1;
+        memoryType      = XEOS_Info_MemoryEntryGetType( memoryEntry );
+        
+        if( outputHandler != NULL )
+        {
+            if( memoryLength == 0 )
+            {
+                continue;
+            }
+            
+            outputHandler( "%016#llX -> %016#llX: ", memoryStart, ( memoryStart + memoryLength ) - 1 );
+            
+            switch( memoryType )
+            {
+                case XEOS_Info_MemoryEntryTypeUnknown:          outputHandler( "Unknown " ); break;
+                case XEOS_Info_MemoryEntryTypeUsable:           outputHandler( "Usable  " ); break;
+                case XEOS_Info_MemoryEntryTypeReserved:         outputHandler( "Reserved" ); break;
+                case XEOS_Info_MemoryEntryTypeACPIReclaimable:  outputHandler( "ACPI    " ); break;
+                case XEOS_Info_MemoryEntryTypeACPINVS:          outputHandler( "ACPI NVS" ); break;
+                case XEOS_Info_MemoryEntryTypeBad:              outputHandler( "Bad     " ); break;
+            }
+            
+            outputHandler( " - %llu B", memoryLength );
+            
+            if( memoryLength >= 0x100000 )
+            {
+                outputHandler( " (%llu MB)\n", ( ( memoryLength / 1024 ) / 1024 ) );
+            }
+            else
+            {
+                outputHandler( "\n" );
+            }
+        }
+        
+        /* Only consider usable memory */
+        if( memoryType != XEOS_Info_MemoryEntryTypeUsable )
+        {
+            continue;
+        }
+        
+        /* Makes sure the memory area address is aligned on 4 KB */
+        if( ( memoryStart & 0xFFF ) != 0 )
+        {
+            memoryStart &= UINTPTR_MAX - 0x0FFF;
+            memoryStart += 0x1000;
+        }
+        
+        /* Not enough memory for the system map */
+        if( memoryLength < zonesMemory )
+        {
+            continue;
+        }
+        
+        /*
+         * The second stage bootloader only maps the first 12 MB of memory
+         * (0x300000000), so the system map needs to be contained in those
+         * 12 first MB, otherwise we'll just page fault trying to write the
+         * page tables in a still un-mapped memory area.
+         */
+        if( memoryStart >= 0x300000000 || ( memoryStart + zonesMemory ) >= 0x300000000 )
+        {
+            break;
+        }
+        
+        /* Found a suitable place */
+        if( memoryStart > kernelEnd )
+        {
+            zonesAddress = memoryStart;
+            break;
+        }
+        
+        /* Found a suitable place */
+        if( memoryEnd > kernelEnd && ( memoryEnd - kernelEnd ) >= zonesMemory )
+        {
+            zonesAddress = kernelEnd + 1;
+        }
+    }
+    
+    /* Checks if we have an address in which to store the memory zones */
+    if( zonesAddress > 0 )
+    {
+        /* Clears the memory area */
+        memset( ( void * )zonesAddress, 0, ( size_t )zonesMemory );
+        
+        zone                    = NULL;
+        previousZone            = NULL;
+        pageAddress             = 0;
+        __XEOS_Mem_Zones        = ( struct __XEOS_Mem_Zone * )zonesAddress;
+        __XEOS_Mem_ZoneCount    = 0;
+        
+        /* Process each memory region */
+        for( i = 0; i < XEOS_Info_MemoryGetNumberOfEntries( memory ); i++ )
+        {
+            /* Gets informations about the current memory region */
+            memoryEntry     = XEOS_Info_MemoryGetEntryAtIndex( memory, ( unsigned int )i );
+            memoryLength    = XEOS_Info_MemoryEntryGetLength( memoryEntry );
+            memoryStart     = XEOS_Info_MemoryEntryGetAddress( memoryEntry );
+            memoryEnd       = ( memoryStart + memoryLength ) - 1;
+            memoryType      = XEOS_Info_MemoryEntryGetType( memoryEntry );
+            
+            zone = ( XEOS_Mem_ZoneRef )zonesAddress;
+            
+            __XEOS_Mem_ZoneCount++;
+            
+            if( previousZone != NULL )
+            {
+                XEOS_Mem_ZoneSetNext( previousZone, zone );
+            }
+            
+            XEOS_Mem_ZoneSetAddress( zone, ( void * )memoryStart );
+            XEOS_Mem_ZoneSetType( zone, ( XEOS_Mem_ZoneType )memoryType );
+            XEOS_Mem_ZoneSetLength( zone, memoryLength );
+            
+            if( memoryLength > 0x1000 )
+            {
+                XEOS_Mem_ZoneSetPageCount( zone, memoryLength / 0x1000 );
+                
+                hasFreePage = false;
+                pages       = XEOS_Mem_ZoneGetPages( zone );
+                
+                for( j = 0; j < XEOS_Mem_ZoneGetPageCount( zone ); j++ )
+                {
+                    if( memoryType == XEOS_Info_MemoryEntryTypeUsable && pageAddress >= ( zonesAddress + zonesMemory ) )
+                    {
+                        pages[ i ] |= 0x01;
+                        
+                        if( hasFreePage == false )
+                        {
+                            hasFreePage = true;
+                        }
+                        
+                        XEOS_Mem_ZoneSetFreePageCount( zone, XEOS_Mem_ZoneGetFreePageCount( zone ) + 1 );
+                    }
+                    
+                    pageAddress += 0x1000;
+                }
+            }
+            
+            previousZone  = zone;
+            zonesAddress += sizeof( struct __XEOS_Mem_Zone );
+            zonesAddress += XEOS_Mem_ZoneGetPageCount( zone );
+        }
+    }
 }

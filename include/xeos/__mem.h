@@ -86,7 +86,7 @@ struct __XEOS_Mem_Zone
     uint64_t                 length;
     struct __XEOS_Mem_Zone * next;
     uint64_t                 pageCount;
-    uint64_t                 freePageIndex;
+    uint64_t                 freePageCount;
     uint8_t                  pages[];
 };
 

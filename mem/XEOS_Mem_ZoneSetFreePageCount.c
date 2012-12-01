@@ -62,71 +62,21 @@
 /* $Id$ */
 
 /*!
- * @header          proc.h
+ * @file            XEOS_Mem_ZoneSetFreePageCount.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS_PROC_H__
-#define __XEOS_PROC_H__
-#pragma once
+#include "xeos/mem.h"
+#include "xeos/__mem.h"
+#include <stdlib.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <xeos/macros.h>
-#include <xeos/info.h>
-#include <stdbool.h>
-
-/*!
- * @typedef         XEOS_Mem_ZoneType
- * @abstract        Type of a memory entry
- * @constant        XEOS_Mem_ZoneTypeUnknown            Unknown entry type
- * @constant        XEOS_Mem_ZoneTypeUsable             Usable (free) memory region
- * @constant        XEOS_Mem_ZoneTypeReserved           Reserved (unusable) memory region
- * @constant        XEOS_Mem_ZoneTypeACPIReclaimable    ACPI reclaimable memory region
- * @constant        XEOS_Mem_ZoneTypeACPINVS            ACPI NVS memory regions
- * @constant        XEOS_Mem_ZoneTypeBad                Bad memory region
- */
-typedef enum
+void XEOS_Mem_ZoneSetFreePageCount( XEOS_Mem_ZoneRef object, uint64_t count )
 {
-    XEOS_Mem_ZoneTypeUnknown            = XEOS_Info_MemoryEntryTypeUnknown,
-    XEOS_Mem_ZoneTypeUsable             = XEOS_Info_MemoryEntryTypeUsable,
-    XEOS_Mem_ZoneTypeReserved           = XEOS_Info_MemoryEntryTypeReserved,
-    XEOS_Mem_ZoneTypeACPIReclaimable    = XEOS_Info_MemoryEntryTypeACPIReclaimable,
-    XEOS_Mem_ZoneTypeACPINVS            = XEOS_Info_MemoryEntryTypeACPINVS,
-    XEOS_Mem_ZoneTypeBad                = XEOS_Info_MemoryEntryTypeBad
+    if( object == NULL )
+    {
+        return;
+    }
+    
+    object->freePageCount = count;
 }
-XEOS_Mem_ZoneType;
-
-typedef struct __XEOS_Mem_Zone    * XEOS_Mem_ZoneRef;
-
-void                XEOS_Mem_Initialize( XEOS_Info_MemoryRef memory, int ( * outputHandler )( const char *, ... ) );
-XEOS_Mem_ZoneRef    XEOS_Mem_GetZoneAtIndex( unsigned int index );
-unsigned int        XEOS_Mem_GetNumberOfZones( void );
-
-void              * XEOS_Mem_AllocPage( void );
-void              * XEOS_Mem_AllocPages( unsigned int n );
-void                XEOS_Mem_FreePage( void * address );
-void                XEOS_Mem_FreePages( void * address, unsigned int n );
-
-XEOS_Mem_ZoneType   XEOS_Mem_ZoneGetType( XEOS_Mem_ZoneRef object );
-void              * XEOS_Mem_ZoneGetAddress( XEOS_Mem_ZoneRef object );
-uint64_t            XEOS_Mem_ZoneGetLength( XEOS_Mem_ZoneRef object );
-XEOS_Mem_ZoneRef    XEOS_Mem_ZoneGetNext( XEOS_Mem_ZoneRef object );
-uint64_t            XEOS_Mem_ZoneGetPageCount( XEOS_Mem_ZoneRef object );
-uint64_t            XEOS_Mem_ZoneGetFreePageCount( XEOS_Mem_ZoneRef object );
-uint8_t           * XEOS_Mem_ZoneGetPages( XEOS_Mem_ZoneRef object );
-void                XEOS_Mem_ZoneSetType( XEOS_Mem_ZoneRef object, XEOS_Mem_ZoneType type );
-void                XEOS_Mem_ZoneSetAddress( XEOS_Mem_ZoneRef object, void * address );
-void                XEOS_Mem_ZoneSetLength( XEOS_Mem_ZoneRef object, uint64_t length );
-void                XEOS_Mem_ZoneSetNext( XEOS_Mem_ZoneRef object, XEOS_Mem_ZoneRef next );
-void                XEOS_Mem_ZoneSetPageCount( XEOS_Mem_ZoneRef object, uint64_t count );
-void                XEOS_Mem_ZoneSetFreePageCount( XEOS_Mem_ZoneRef object, uint64_t count );
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* __XEOS_PROC_H__ */
