@@ -72,48 +72,37 @@
 #include <stdlib.h>
 #include <sys/atomic.h>
 
-void * XEOS_Mem_AllocPage( void )
+void XEOS_Mem_FreePage( void * address )
 {
-    XEOS_Mem_ZoneRef    zone;
-    uint8_t           * pages;
-    uint64_t            i;
-    void              * address;
+    XEOS_Mem_ZoneRef zone;
+    uint64_t         page;
+    uint64_t         base;
+    uint64_t         pageIndex;
     
     zone = XEOS_Mem_GetZoneAtIndex( 0 );
+    page = ( uint64_t )address;
+    
+    if( ( page & 0xFFF ) != 0 )
+    {
+        return;
+    }
     
     while( zone != NULL )
     {
-        if( zone->type != XEOS_Mem_ZoneTypeUsable )
+        base = ( uint64_t )( zone->base );
+        
+        if( page > base + zone->length )
         {
             zone = zone->next;
             
             continue;
         }
         
-        if( zone->freePageCount == 0 )
-        {
-            zone = zone->next;
-            
-            continue;
-        }
+        pageIndex                = ( page - base ) / 0x1000;
+        zone->pages[ pageIndex ] = 0x01;
         
-        address = zone->base;
-        pages   = zone->pages;
+        System_Atomic_Increment64( ( volatile int64_t * )&( zone->freePageCount ) );
         
-        for( i = 0; i < zone->pageCount; i++ )
-        {
-            if( pages[ i ] == 1 && System_Atomic_CompareAndSwap8( 1, 0, ( volatile int8_t * )( &pages[ i ] ) ) )
-            {
-                System_Atomic_Decrement64( ( volatile int64_t * )&( zone->freePageCount ) );
-                
-                return address;
-            }
-            
-            address = ( void * )( ( uintptr_t )address + 0x1000 );
-        }
-        
-        zone = zone->next;
+        break;
     }
-    
-    return NULL;
 }

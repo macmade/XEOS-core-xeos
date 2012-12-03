@@ -118,12 +118,6 @@ XEOS_Mem_ZoneRef    XEOS_Mem_ZoneGetNext( XEOS_Mem_ZoneRef object );
 uint64_t            XEOS_Mem_ZoneGetPageCount( XEOS_Mem_ZoneRef object );
 uint64_t            XEOS_Mem_ZoneGetFreePageCount( XEOS_Mem_ZoneRef object );
 uint8_t           * XEOS_Mem_ZoneGetPages( XEOS_Mem_ZoneRef object );
-void                XEOS_Mem_ZoneSetType( XEOS_Mem_ZoneRef object, XEOS_Mem_ZoneType type );
-void                XEOS_Mem_ZoneSetAddress( XEOS_Mem_ZoneRef object, void * address );
-void                XEOS_Mem_ZoneSetLength( XEOS_Mem_ZoneRef object, uint64_t length );
-void                XEOS_Mem_ZoneSetNext( XEOS_Mem_ZoneRef object, XEOS_Mem_ZoneRef next );
-void                XEOS_Mem_ZoneSetPageCount( XEOS_Mem_ZoneRef object, uint64_t count );
-void                XEOS_Mem_ZoneSetFreePageCount( XEOS_Mem_ZoneRef object, uint64_t count );
 
 #ifdef __cplusplus
 }

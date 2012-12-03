@@ -193,8 +193,6 @@ void XEOS_Main( XEOS_InfoRef info )
     /* Initializes the system map */
     XEOS_VM_SystemMapInitialize( XEOS_Info_GetMemory( info ), XEOS_Video_Printf );
     
-    XEOS_Video_Printf( "Allocated page: %p", XEOS_Mem_AllocPage() );
-    
     for( ; ; )
     {
         __asm__

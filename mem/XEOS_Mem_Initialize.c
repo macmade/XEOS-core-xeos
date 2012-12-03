@@ -90,7 +90,6 @@ void XEOS_Mem_Initialize( XEOS_Info_MemoryRef memory, int ( * outputHandler )( c
     XEOS_Mem_ZoneRef            zone;
     XEOS_Mem_ZoneRef            previousZone;
     uint8_t                   * pages;
-    bool                        hasFreePage;
     
     /* Gets the total amount of physical memory */
     totalMemoryBytes = XEOS_Info_MemoryGetTotalBytes( memory );
@@ -220,32 +219,26 @@ void XEOS_Mem_Initialize( XEOS_Info_MemoryRef memory, int ( * outputHandler )( c
             
             if( previousZone != NULL )
             {
-                XEOS_Mem_ZoneSetNext( previousZone, zone );
+                previousZone->next = zone;
             }
             
-            XEOS_Mem_ZoneSetAddress( zone, ( void * )memoryStart );
-            XEOS_Mem_ZoneSetType( zone, ( XEOS_Mem_ZoneType )memoryType );
-            XEOS_Mem_ZoneSetLength( zone, memoryLength );
+            zone->base    = ( void * )memoryStart;
+            zone->type    = ( XEOS_Mem_ZoneType )memoryType;
+            zone->length  = memoryLength;
+            pageAddress   = ( uint64_t )( zone->base );
             
             if( memoryLength > 0x1000 )
             {
-                XEOS_Mem_ZoneSetPageCount( zone, memoryLength / 0x1000 );
-                
-                hasFreePage = false;
-                pages       = XEOS_Mem_ZoneGetPages( zone );
+                zone->pageCount = memoryLength / 0x1000;
+                pages           = zone->pages;
                 
                 for( j = 0; j < XEOS_Mem_ZoneGetPageCount( zone ); j++ )
                 {
                     if( memoryType == XEOS_Info_MemoryEntryTypeUsable && pageAddress >= ( zonesAddress + zonesMemory ) )
                     {
-                        pages[ i ] |= 0x01;
+                        pages[ j ] = 0x01;
                         
-                        if( hasFreePage == false )
-                        {
-                            hasFreePage = true;
-                        }
-                        
-                        XEOS_Mem_ZoneSetFreePageCount( zone, XEOS_Mem_ZoneGetFreePageCount( zone ) + 1 );
+                        zone->freePageCount++;
                     }
                     
                     pageAddress += 0x1000;
@@ -254,7 +247,7 @@ void XEOS_Mem_Initialize( XEOS_Info_MemoryRef memory, int ( * outputHandler )( c
             
             previousZone  = zone;
             zonesAddress += sizeof( struct __XEOS_Mem_Zone );
-            zonesAddress += XEOS_Mem_ZoneGetPageCount( zone );
+            zonesAddress += zone->pageCount;
         }
     }
 }

@@ -72,14 +72,19 @@
 #include <stdlib.h>
 #include <sys/atomic.h>
 
-void * XEOS_Mem_AllocPage( void )
+void * XEOS_Mem_AllocPages( unsigned int n )
 {
     XEOS_Mem_ZoneRef    zone;
     uint8_t           * pages;
     uint64_t            i;
+    unsigned int        j;
+    unsigned int        k;
     void              * address;
+    bool                hasPages;
     
     zone = XEOS_Mem_GetZoneAtIndex( 0 );
+    
+    ( void )n;
     
     while( zone != NULL )
     {
@@ -102,11 +107,37 @@ void * XEOS_Mem_AllocPage( void )
         
         for( i = 0; i < zone->pageCount; i++ )
         {
-            if( pages[ i ] == 1 && System_Atomic_CompareAndSwap8( 1, 0, ( volatile int8_t * )( &pages[ i ] ) ) )
+            if( pages[ i ] == 1 )
             {
-                System_Atomic_Decrement64( ( volatile int64_t * )&( zone->freePageCount ) );
+                hasPages = false;
                 
-                return address;
+                for( j = 0; j < n; j++ )
+                {
+                    if( System_Atomic_CompareAndSwap8( 1, 0, ( volatile int8_t * )( &pages[ i + j ] ) ) == false )
+                    {
+                        hasPages = false;
+                        
+                        for( k = 0; k < j; k++ )
+                        {
+                            zone->pages[ i + k ] = 0x01;
+                            
+                            System_Atomic_Increment64( ( volatile int64_t * )&( zone->freePageCount ) );
+                        }
+                        
+                        break;
+                    }
+                    else
+                    {
+                        System_Atomic_Decrement64( ( volatile int64_t * )&( zone->freePageCount ) );
+                        
+                        hasPages = true;
+                    }
+                }
+                
+                if( hasPages == true )
+                {
+                    return address;
+                }
             }
             
             address = ( void * )( ( uintptr_t )address + 0x1000 );
