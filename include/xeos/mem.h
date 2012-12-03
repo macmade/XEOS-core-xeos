@@ -119,6 +119,8 @@ uint64_t            XEOS_Mem_ZoneGetPageCount( XEOS_Mem_ZoneRef object );
 uint64_t            XEOS_Mem_ZoneGetFreePageCount( XEOS_Mem_ZoneRef object );
 uint8_t           * XEOS_Mem_ZoneGetPages( XEOS_Mem_ZoneRef object );
 
+uint64_t            XEOS_Mem_GetTotalBytes( void );
+
 #ifdef __cplusplus
 }
 #endif

@@ -62,7 +62,7 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_Mem_AllocPages.c
+ * @file            XEOS_Mem_GetTotalBytes.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
@@ -70,81 +70,21 @@
 #include "xeos/mem.h"
 #include "xeos/__mem.h"
 #include <stdlib.h>
-#include <sys/atomic.h>
 
-void * XEOS_Mem_AllocPages( unsigned int n )
+uint64_t XEOS_Mem_GetTotalBytes( void )
 {
-    XEOS_Mem_ZoneRef    zone;
-    uint8_t           * pages;
-    uint64_t            i;
-    unsigned int        j;
-    unsigned int        k;
-    void              * address;
-    bool                hasPages;
+    XEOS_Mem_ZoneRef zone;
+    uint64_t         bytes;
+    
+    bytes = 0;
     
     zone = XEOS_Mem_GetZoneAtIndex( 0 );
     
-    ( void )n;
-    
     while( zone != NULL )
     {
-        if( zone->type != XEOS_Mem_ZoneTypeUsable )
-        {
-            zone = zone->next;
-            
-            continue;
-        }
-        
-        if( zone->freePageCount == 0 )
-        {
-            zone = zone->next;
-            
-            continue;
-        }
-        
-        address = zone->base;
-        pages   = zone->pages;
-        
-        for( i = 0; i < zone->pageCount; i++ )
-        {
-            if( pages[ i ] == 1 )
-            {
-                hasPages = false;
-                
-                for( j = 0; j < n; j++ )
-                {
-                    if( System_Atomic_CompareAndSwap8( 1, 0, ( volatile int8_t * )( &pages[ i + j ] ) ) == false )
-                    {
-                        hasPages = false;
-                        
-                        for( k = 0; k < j; k++ )
-                        {
-                            zone->pages[ i + k ] = 0x01;
-                            
-                            System_Atomic_Increment64( ( volatile int64_t * )&( zone->freePageCount ) );
-                        }
-                        
-                        break;
-                    }
-                    else
-                    {
-                        System_Atomic_Decrement64( ( volatile int64_t * )&( zone->freePageCount ) );
-                        
-                        hasPages = true;
-                    }
-                }
-                
-                if( hasPages == true )
-                {
-                    return address;
-                }
-            }
-            
-            address = ( void * )( ( uintptr_t )address + 0x1000 );
-        }
-        
-        zone = zone->next;
+        bytes += zone->length;
+        zone   = zone->next;
     }
     
-    return NULL;
+    return bytes;
 }

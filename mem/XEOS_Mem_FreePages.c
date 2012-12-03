@@ -62,7 +62,7 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_Mem_AllocPage.c
+ * @file            XEOS_Mem_FreePages.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
