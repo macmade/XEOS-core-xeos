@@ -75,7 +75,7 @@
 #include <string.h>
 #include <xeos/__mem.h>
 
-void XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHandler )( const char *, ... ) )
+void XEOS_VM_SystemMapInitialize( int ( * outputHandler )( const char *, ... ) )
 {
     XEOS_VM_MemoryMapType       type;
     uint64_t                    totalMemoryBytes;
@@ -86,25 +86,17 @@ void XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHand
     uint64_t                    pml4tCount;
     uint64_t                    ptEntriesPerPT;
     uint64_t                    mapMemory;
-    XEOS_Info_MemoryEntryRef    memoryEntry;
-    XEOS_Info_MemoryEntryType   memoryType;
     uint64_t                    i;
-    uint64_t                    memoryLength;
-    uint64_t                    memoryStart;
-    uint64_t                    memoryEnd;
+    XEOS_Mem_ZoneType           zoneType;
+    uint64_t                    zoneLength;
+    void                      * zoneAddress;
+    uint64_t                    zoneStart;
+    void                      * systemMapMemory;
     uint64_t                    systemMapAddress;
-    uint64_t                    reservedMemoryEnd;
     XEOS_VM_MemoryMapRef        systemMap;
     XEOS_Mem_ZoneRef            zone;
-    XEOS_Mem_ZoneRef            lastZone;
     
     systemMap = XEOS_VM_SystemMap();
-    zone      = XEOS_Mem_GetZoneAtIndex( 0 );
-    
-    if( zone == NULL )
-    {
-        return;
-    }
     
     /* Do not allows the system map to be initialized more than once */
     if( XEOS_VM_MemoryMapGetAddress( systemMap ) != NULL )
@@ -142,7 +134,7 @@ void XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHand
     #endif
     
     /* Gets the total amount of physical memory */
-    totalMemoryBytes = XEOS_Info_MemoryGetTotalBytes( memory );
+    totalMemoryBytes = XEOS_Mem_GetTotalBytes();
     
     /* For i386, no need for PAE if memory is lower than 4GB */
     if( type == XEOS_VM_MemoryMapType32PAE && totalMemoryBytes < 0x100000000 )
@@ -158,7 +150,6 @@ void XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHand
     ptEntriesPerPT  = ( type == XEOS_VM_MemoryMapType32 ) ? 0x400 : 0x200;
     ptCount         = ptEntriesCount / ptEntriesPerPT;
     ptCount        += ( ( ptEntriesCount % ptEntriesPerPT ) == 0 ) ? 0 : 1;
-    
     pdtCount        = 0;
     pdptCount       = 0;
     pml4tCount      = 0;
@@ -244,76 +235,8 @@ void XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHand
         }
     }
     
-    systemMapAddress  = 0;
-    reservedMemoryEnd = 0;
-    lastZone          = NULL;
-    
-    while( zone != NULL )
-    {
-        reservedMemoryEnd  = ( uint64_t )zone;
-        lastZone           = zone;
-        zone               = XEOS_Mem_ZoneGetNext( zone );
-    }
-    
-    reservedMemoryEnd += sizeof( struct __XEOS_Mem_Zone );
-    reservedMemoryEnd += XEOS_Mem_ZoneGetPageCount( lastZone );
-    reservedMemoryEnd &= UINT64_MAX - 0x0FFF;
-    reservedMemoryEnd += 0x1000;
-    reservedMemoryEnd -= 1;
-    
-    /* Process each memory region to find room for the system map */
-    for( i = 0; i < XEOS_Info_MemoryGetNumberOfEntries( memory ); i++ )
-    {
-        /* Gets informations about the current memory region */
-        memoryEntry     = XEOS_Info_MemoryGetEntryAtIndex( memory, ( unsigned int )i );
-        memoryLength    = XEOS_Info_MemoryEntryGetLength( memoryEntry );
-        memoryStart     = XEOS_Info_MemoryEntryGetAddress( memoryEntry );
-        memoryEnd       = ( memoryStart + memoryLength ) - 1;
-        memoryType      = XEOS_Info_MemoryEntryGetType( memoryEntry );
-        
-        /* Only consider usable memory */
-        if( memoryType != XEOS_Info_MemoryEntryTypeUsable )
-        {
-            continue;
-        }
-        
-        /* Makes sure the memory area address is aligned on 4 KB */
-        if( ( memoryStart & 0xFFF ) != 0 )
-        {
-            memoryStart &= UINTPTR_MAX - 0x0FFF;
-            memoryStart += 0x1000;
-        }
-        
-        /* Not enough memory for the system map */
-        if( memoryLength < mapMemory )
-        {
-            continue;
-        }
-        
-        /*
-         * The second stage bootloader only maps the first 12 MB of memory
-         * (0x300000000), so the system map needs to be contained in those
-         * 12 first MB, otherwise we'll just page fault trying to write the
-         * page tables in a still un-mapped memory area.
-         */
-        if( memoryStart >= 0x300000000 || ( memoryStart + mapMemory ) >= 0x300000000 )
-        {
-            break;
-        }
-        
-        /* Found a suitable place */
-        if( memoryStart > reservedMemoryEnd )
-        {
-            systemMapAddress = memoryStart;
-            break;
-        }
-        
-        /* Found a suitable place */
-        if( memoryEnd > reservedMemoryEnd && ( memoryEnd - reservedMemoryEnd ) >= mapMemory )
-        {
-            systemMapAddress = reservedMemoryEnd + 1;
-        }
-    }
+    systemMapMemory  = XEOS_Mem_AllocPages( ( unsigned int )( mapMemory / 0x1000 ) );
+    systemMapAddress = ( uint64_t )systemMapMemory;
     
     /* Identity-maps the available memory if possible */
     if( systemMapAddress > 0 )
@@ -322,10 +245,7 @@ void XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHand
         {
             outputHandler
             (
-                "Reserved area:              %016#llX -> %016#llX\n"
                 "System map area:            %016#llX -> %016#llX\n",
-                0,
-                reservedMemoryEnd,
                 systemMapAddress,
                 ( systemMapAddress + mapMemory ) - 1
             );
@@ -352,7 +272,6 @@ void XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHand
             void                  * p;
             uint64_t                address;
             uint64_t                j;
-            unsigned int            k;
             
             p           = XEOS_VM_MemoryMapGetAddress( systemMap );
             address     = 0;
@@ -393,30 +312,53 @@ void XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHand
                         /* Sets the physical memory address */
                         XEOS_VM_PTEntrySetAddress( ptEntry, address );
                         
-                        /* Address in present in physical memory */
-                        XEOS_VM_PTEntrySetFlag( ptEntry, XEOS_VM_PTEntryFlagPresent, true );
+                        zone = XEOS_Mem_GetZoneAtIndex( 0 );
                         
-                        /* Process each memory area */
-                        for( k = 0; k < XEOS_Info_MemoryGetNumberOfEntries( memory ); k++ )
                         {
-                            memoryEntry     = XEOS_Info_MemoryGetEntryAtIndex( memory, k );
-                            memoryLength    = XEOS_Info_MemoryEntryGetLength( memoryEntry );
-                            memoryStart     = XEOS_Info_MemoryEntryGetAddress( memoryEntry );
-                            memoryType      = XEOS_Info_MemoryEntryGetType( memoryEntry );
+                            bool addressFound;
                             
-                            /* Checks if the current page belongs to the current memory area */
-                            if( address < memoryStart || ( address - memoryStart ) > memoryLength )
+                            addressFound = false;
+                            
+                            while( zone != NULL )
                             {
-                                continue;
+                                zoneLength  = XEOS_Mem_ZoneGetLength( zone );
+                                zoneAddress = XEOS_Mem_ZoneGetAddress( zone );
+                                zoneStart   = ( uint64_t )zoneAddress;
+                                zoneType    = XEOS_Mem_ZoneGetType( zone );
+                                
+                                if( address >= zoneStart && ( address - zoneStart ) < zoneLength )
+                                {
+                                    addressFound = true;
+                                    
+                                    if( zoneType == XEOS_Mem_ZoneTypeUsable )
+                                    {
+                                        XEOS_VM_PTEntrySetFlag( ptEntry, XEOS_VM_PTEntryFlagWriteable, true );
+                                    }
+                                    
+                                    if( address < systemMapAddress + mapMemory )
+                                    {
+                                        XEOS_VM_PTEntrySetFlag( ptEntry, XEOS_VM_PTEntryFlagPresent, true );
+                                    }
+                                }
+                                
+                                zone = XEOS_Mem_ZoneGetNext( zone );
                             }
                             
-                            /* If the memory area is usable, marks the page table entry as writeable */
-                            if( memoryType == XEOS_Info_MemoryEntryTypeUsable )
+                            if( addressFound == false )
                             {
-                                XEOS_VM_PTEntrySetFlag( ptEntry, XEOS_VM_PTEntryFlagWriteable, true );
+                                /*
+                                 * We may have some holes in the memory layout reported
+                                 * by the BIOS.
+                                 * If so, we need to set the address as present, even
+                                 * if we don't have any info about it, and even if it mean
+                                 * we'll surely never access it directly.
+                                 * The reason of such a memory hole is certainly because the
+                                 * memory address is bound to some kind of hardware device.
+                                 * Not setting the address as present may cause crashes, so
+                                 * let's assume hardware devices know what they are doing...
+                                 */
+                                XEOS_VM_PTEntrySetFlag( ptEntry, XEOS_VM_PTEntryFlagPresent, true );
                             }
-                            
-                            break;
                         }
                         
                         /* Next 4 KB aligned physical memory address */

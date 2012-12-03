@@ -140,7 +140,7 @@ typedef void                        * XEOS_VM_PTEntryRef;
 typedef void                        * XEOS_VM_PTRef;
 
 XEOS_VM_MemoryMapRef    XEOS_VM_SystemMap( void );
-void                    XEOS_VM_SystemMapInitialize( XEOS_Info_MemoryRef memory, int ( * outputHandler )( const char *, ... ) );
+void                    XEOS_VM_SystemMapInitialize( int ( * outputHandler )( const char *, ... ) );
 
 void *                  XEOS_VM_MemoryMapGetAddress( XEOS_VM_MemoryMapRef object );
 uint64_t                XEOS_VM_MemoryMapGetLength( XEOS_VM_MemoryMapRef object );

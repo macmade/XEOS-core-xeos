@@ -191,7 +191,7 @@ void XEOS_Main( XEOS_InfoRef info )
     XEOS_Mem_Initialize( XEOS_Info_GetMemory( info ), XEOS_Video_Printf );
     
     /* Initializes the system map */
-    XEOS_VM_SystemMapInitialize( XEOS_Info_GetMemory( info ), XEOS_Video_Printf );
+    XEOS_VM_SystemMapInitialize( XEOS_Video_Printf );
     
     for( ; ; )
     {
