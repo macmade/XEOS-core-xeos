@@ -202,6 +202,14 @@ void XEOS_Main( XEOS_InfoRef info )
     /* Initializes the system map */
     XEOS_VM_SystemMapInitialize( XEOS_Video_Printf );
     
+    /* Only translated scan-code set 2 is supported */
+    /*
+    if( XEOS_HAL_Keyboard_GetScanCodeSet() != XEOS_HAL_Keyboard_ScanCodeSet2 )
+    {
+        
+    }
+    */
+    
     for( ; ; )
     {
         __asm__
