@@ -83,5 +83,6 @@
 #include <xeos/hal/pit.h>
 #include <xeos/hal/rtc.h>
 #include <xeos/hal/smbios.h>
+#include <xeos/hal/keyboard.h>
 
 #endif /* __XEOS_HAL_H__ */

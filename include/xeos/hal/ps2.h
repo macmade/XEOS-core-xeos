@@ -62,13 +62,13 @@
 /* $Id$ */
 
 /*!
- * @header          keboard.h
+ * @header          ps2.h
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS_HAL_KEYBOARD_H__
-#define __XEOS_HAL_KEYBOARD_H__
+#ifndef __XEOS_HAL_PS2_H__
+#define __XEOS_HAL_PS2_H__
 #pragma once
 
 #ifdef __cplusplus
@@ -77,66 +77,70 @@ extern "C" {
 
 #include <xeos/macros.h>
 #include <stdint.h>
+#include <stdbool.h>
 
-typedef enum
-{
-    XEOS_HAL_Keyboard_CommandSetLED                 = 0xED,
-    XEOS_HAL_Keyboard_CommandEcho                   = 0xEE,
-    XEOS_HAL_Keyboard_CommandScanCode               = 0xF0,
-    XEOS_HAL_Keyboard_CommandSetRateAndDelay        = 0xF3,
-    XEOS_HAL_Keyboard_CommandEnableScan             = 0xF4,
-    XEOS_HAL_Keyboard_CommandDisableScan            = 0xF5,
-    XEOS_HAL_Keyboard_CommandSetDefaultParameters   = 0xF6,
-    XEOS_HAL_Keyboard_CommandResendLastByte         = 0xFE,
-    XEOS_HAL_Keyboard_CommandReset                  = 0xFF
-}
-XEOS_HAL_Keyboard_Command;
+/*!
+ * @function        XEOS_HAL_PS2_SendCommand
+ * @abstract        Writes a commands to the PS2 controller
+ * @param           command     The command to send
+ */
+void XEOS_HAL_PS2_SendCommand( uint8_t command );
 
-typedef enum
-{
-    XEOS_HAL_Keyboard_ResponseACK                   = 0xFA,
-    XEOS_HAL_Keyboard_ResponseResend                = 0xFE,
-    XEOS_HAL_Keyboard_ResponseEcho                  = 0xEE,
-    XEOS_HAL_Keyboard_ResponseSelfTestPassed        = 0xAA,
-    XEOS_HAL_Keyboard_ResponseSelfTestFailed        = 0xFD
-}
-XEOS_HAL_Keyboard_Response;
+/*!
+ * @function        XEOS_HAL_PS2_GetStatus
+ * @abstract        Reads the PS2 status register
+ * @result          The content of the PS2 status register
+ */
+uint8_t XEOS_HAL_PS2_GetStatus( void );
 
-typedef enum
-{
-    XEOS_HAL_Keyboard_LEDStateScrollLock            = 0x01,
-    XEOS_HAL_Keyboard_LEDStateNumLock               = 0x02,
-    XEOS_HAL_Keyboard_LEDStateCapsLock              = 0x04
-}
-XEOS_HAL_Keyboard_LEDState;
+/*!
+ * @function        XEOS_HAL_PS2_ReadData
+ * @abstract        Reads data from the PS2 controller
+ * @abstract        Always check that the output buffer is full before
+ *                  reading data.
+ * @result          The content of the PS2 data register
+ */
+uint8_t XEOS_HAL_PS2_ReadData( void );
 
-typedef enum
-{
-    XEOS_HAL_Keyboard_ScanCodeSetUnknown            = 0x00,
-    XEOS_HAL_Keyboard_ScanCodeSet1                  = 0x43,
-    XEOS_HAL_Keyboard_ScanCodeSet2                  = 0x41,
-    XEOS_HAL_Keyboard_ScanCodeSet3                  = 0x3F
-}
-XEOS_HAL_Keyboard_ScanCodeSet;
+/*!
+ * @function        XEOS_HAL_PS2_WriteData
+ * @abstract        Writes data to the PS2 controller
+ * @abstract        Always check that the input buffer is empty before
+ *                  writing data.
+ * @param           data        The data to write
+ */
+void XEOS_HAL_PS2_WriteData( uint8_t data );
 
-// IRQ1 needs to be disabled or masked
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_SendCommand( XEOS_HAL_Keyboard_Command command );
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_SendCommandWithData( XEOS_HAL_Keyboard_Command command, uint8_t data );
-uint8_t                         XEOS_HAL_Keyboard_ReadData( void );
+/*!
+ * @function        XEOS_HAL_PS2_OutputBufferEmpty
+ * @abstract        Checks if the PS2 output buffer is empty
+ * @result          True if the output buffer is empty, otherwise false
+ */
+bool XEOS_HAL_PS2_OutputBufferEmpty( void );
 
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_SetLED( XEOS_HAL_Keyboard_LEDState state );
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_Echo( void );
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_SetScanCodeSet( XEOS_HAL_Keyboard_ScanCodeSet set );
-XEOS_HAL_Keyboard_ScanCodeSet   XEOS_HAL_Keyboard_GetScanCodeSet( void );
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_SetRateAndDelay( uint8_t value );
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_EnableScan( void );
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_DisableScan( void );
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_SetDefaultParameters( void );
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_ResendLastByte( void );
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_Reset( void );
+/*!
+ * @function        XEOS_HAL_PS2_InputBufferEmpty
+ * @abstract        Checks if the PS2 input buffer is empty
+ * @result          True if the input buffer is empty, otherwise false
+ */
+bool XEOS_HAL_PS2_InputBufferEmpty( void );
+
+/*!
+ * @function        XEOS_HAL_PS2_TimeoutError
+ * @abstract        Checks for a PS2 timeout error
+ * @result          True for a PS2 timeout error, otherwise false
+ */
+bool XEOS_HAL_PS2_TimeoutError( void );
+
+/*!
+ * @function        XEOS_HAL_PS2_ParityError
+ * @abstract        Checks for a PS2 parity error
+ * @result          True for a PS2 parity error, otherwise false
+ */
+bool XEOS_HAL_PS2_ParityError( void );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __XEOS_HAL_KEYBOARD_H__ */
+#endif /* __XEOS_HAL_PS2_H__ */
