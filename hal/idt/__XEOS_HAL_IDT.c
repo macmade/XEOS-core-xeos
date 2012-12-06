@@ -127,8 +127,8 @@ __asm__                                         \
     "push %r10\n"                               \
     "push %r9\n"                                \
     "push %r8\n"                                \
-    "push %rsi\n"                               \
     "push %rdi\n"                               \
+    "push %rsi\n"                               \
     "push %rdx\n"                               \
     "push %rcx\n"                               \
     "push %rbx\n"                               \
@@ -142,8 +142,8 @@ __asm__                                         \
     "pop %rbx\n"                                \
     "pop %rcx\n"                                \
     "pop %rdx\n"                                \
-    "pop %rdi\n"                                \
     "pop %rsi\n"                                \
+    "pop %rdi\n"                                \
     "pop %r8\n"                                 \
     "pop %r9\n"                                 \
     "pop %r10\n"                                \
