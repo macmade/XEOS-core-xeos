@@ -62,78 +62,18 @@
 /* $Id$ */
 
 /*!
- * @header          keboard.h
+ * @file            XEOS_HAL_Keyboard_SendCommandWithData.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS_HAL_KEYBOARD_H__
-#define __XEOS_HAL_KEYBOARD_H__
-#pragma once
+#include "xeos/hal/keyboard.h"
+#include "xeos/hal/io.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <xeos/macros.h>
-#include <stdint.h>
-
-typedef enum
+XEOS_HAL_Keyboard_Response XEOS_HAL_Keyboard_SendCommandWithData( XEOS_HAL_Keyboard_Command command, uint8_t data )
 {
-    XEOS_HAL_Keyboard_CommandSetLED                 = 0xED,
-    XEOS_HAL_Keyboard_CommandEcho                   = 0xEE,
-    XEOS_HAL_Keyboard_CommandScanCode               = 0xF0,
-    XEOS_HAL_Keyboard_CommandSetRateAndDelay        = 0xF3,
-    XEOS_HAL_Keyboard_CommandEnableScan             = 0xF4,
-    XEOS_HAL_Keyboard_CommandDisableScan            = 0xF5,
-    XEOS_HAL_Keyboard_CommandSetDefaultParameters   = 0xF6,
-    XEOS_HAL_Keyboard_CommandResendLastByte         = 0xFE,
-    XEOS_HAL_Keyboard_CommandReset                  = 0xFF
+    ( void )command;
+    ( void )data;
+    
+    return XEOS_HAL_Keyboard_ResponseACK;
 }
-XEOS_HAL_Keyboard_Command;
-
-typedef enum
-{
-    XEOS_HAL_Keyboard_ResponseACK                   = 0xFA,
-    XEOS_HAL_Keyboard_ResponseResend                = 0xFE,
-    XEOS_HAL_Keyboard_ResponseEcho                  = 0xEE,
-    XEOS_HAL_Keyboard_ResponseSelfTestPassed        = 0xAA,
-    XEOS_HAL_Keyboard_ResponseSelfTestFailed        = 0xFD
-}
-XEOS_HAL_Keyboard_Response;
-
-typedef enum
-{
-    XEOS_HAL_Keyboard_LEDStateScrollLock            = 0x01,
-    XEOS_HAL_Keyboard_LEDStateNumLock               = 0x02,
-    XEOS_HAL_Keyboard_LEDStateCapsLock              = 0x04
-}
-XEOS_HAL_Keyboard_LEDState;
-
-typedef enum
-{
-    XEOS_HAL_Keyboard_ScanCodeSetUnknown            = INT32_MAX,
-    XEOS_HAL_Keyboard_ScanCodeSet1                  = 0x01,
-    XEOS_HAL_Keyboard_ScanCodeSet2                  = 0x02,
-    XEOS_HAL_Keyboard_ScanCodeSet3                  = 0x03
-}
-XEOS_HAL_Keyboard_ScanCodeSet;
-
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_SendCommand( XEOS_HAL_Keyboard_Command command );
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_SendCommandWithData( XEOS_HAL_Keyboard_Command command, uint8_t data );
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_SetLED( XEOS_HAL_Keyboard_LEDState state );
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_Echo( void );
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_SetScanCodeSet( XEOS_HAL_Keyboard_ScanCodeSet set );
-XEOS_HAL_Keyboard_ScanCodeSet   XEOS_HAL_Keyboard_GetScanCodeSet( void );
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_SetRateAndDelay( uint8_t value );
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_EnableScan( void );
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_DisableScan( void );
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_SetDefaultParameters( void );
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_ResendLastByte( void );
-XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_Reset( void );
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* __XEOS_HAL_KEYBOARD_H__ */
