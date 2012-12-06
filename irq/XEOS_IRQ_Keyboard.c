@@ -62,87 +62,34 @@
 /* $Id$ */
 
 /*!
- * @header          irq.h
+ * @file            XEOS_IRQ_Keyboard.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
 
-#ifndef __XEOS_IRQ_H__
-#define __XEOS_IRQ_H__
-#pragma once
+#include "xeos/irq.h"
+#include "xeos/__irq.h"
+#include "xeos/hal/io.h"
+#include "xeos/video.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <xeos/macros.h>
-#include <xeos/hal/pic.h>
-#include <xeos/hal/cpu.h>
-#include <stdint.h>
-#include <stdbool.h>
-
-/*!
- * @typedef         XEOS_IRQ_IRQHandler
- * @abstract        Handler function for an IRQ
- * @param           irq         The IRQ line
- * @param           registers   The processor registers
- */
-typedef void ( * XEOS_IRQ_IRQHandler )( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * registers );
-
-/*!
- * @function        XEOS_IRQ_AddIRQHandler
- * @abstract        Installs a handler function for an IRQ line
- * @description     Note that the number of handlers for an IRQ line is limited.
- *                  If the maximum number of handlers is reached, the handler
- *                  won't be installed and the function will return false.
- * @param           irq         The IRQ line
- * @param           handler     The IRQ handler function
- * @result          True if the handler was installed, otherwise false
- */
-bool XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ irq, XEOS_IRQ_IRQHandler handler );
-
-/*!
- * @function        XEOS_IRQ_RemoveIRQHandler
- * @abstract        Removes a handler function for an IRQ line
- * @param           irq         The IRQ line
- * @param           handler     The IRQ handler function
- */
-void XEOS_IRQ_RemoveIRQHandler( XEOS_HAL_PIC_IRQ irq, XEOS_IRQ_IRQHandler handler );
-
-/*!
- * @function        XEOS_IRQ_ExecuteIRQHandlers
- * @abstract        Executes all installed handlers for an IRQ line
- * @param           irq         The IRQ line
- * @param           registers   The processor registers
- */
-void XEOS_IRQ_ExecuteIRQHandlers( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * registers );
-
-/*!
- * @function        XEOS_IRQ_SystemTimer
- * @abstract        IRQ handler for the system timer (IRQ0)
- * @param           irq         The IRQ line
- * @param           registers   The processor registers
- */
-void XEOS_IRQ_SystemTimer( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * registers );
-
-/*!
- * @function        XEOS_IRQ_RealTimeClock
- * @abstract        IRQ handler for the real time clock (IRQ8)
- * @param           irq         The IRQ line
- * @param           registers   The processor registers
- */
-void XEOS_IRQ_RealTimeClock( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * registers );
-
-/*!
- * @function        XEOS_IRQ_Keyboard
- * @abstract        IRQ handler for the keyboard (IRQ1)
- * @param           irq         The IRQ line
- * @param           registers   The processor registers
- */
-void XEOS_IRQ_Keyboard( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * registers );
-
-#ifdef __cplusplus
+void XEOS_IRQ_Keyboard( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * registers )
+{
+    uint8_t code;
+    
+    ( void )irq;
+    ( void )registers;
+    
+    while( ( XEOS_HAL_IO_PortIn( 0x64 ) & 1 ) != 0 )
+    {
+        code = XEOS_HAL_IO_PortIn( 0x60 );
+        
+        if( ( code & 0x80 ) == 0 )
+        {
+            XEOS_Video_Printf( "Got key event (press):   %#02X\n", code );
+        }
+        else
+        {
+            XEOS_Video_Printf( "Got key event (release): %#02X\n", code );
+        }
+    }
 }
-#endif
-
-#endif /* __XEOS_IRQ_H__ */
