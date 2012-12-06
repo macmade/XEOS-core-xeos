@@ -80,7 +80,6 @@ extern "C" {
 #include <xeos/vm.h>
 #include <xeos/hal/cpu.h>
 
-
 struct __XEOS_Proc_Context
 {
     XEOS_HAL_CPU_Registers  registers;
