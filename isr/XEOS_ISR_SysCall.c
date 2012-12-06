@@ -69,18 +69,78 @@
 
 #include "xeos/isr.h"
 #include "xeos/system.h"
+#include "xeos/syscall.h"
+#include <sys/syscall.h>
 
-void XEOS_ISR_SysCall( uint8_t isr, XEOS_HAL_CPU_Registers * registers, uint16_t syscall )
+void XEOS_ISR_SysCall( uint8_t isr, XEOS_HAL_CPU_Registers * registers )
 {
-    ( void )registers;
+    uint16_t sys;
+    uint64_t ret;
     
-    XEOS_System_Panicf
-    (
-        "Interrupt #%x - System Call\n"
-        "\n"
-        "    Number: %i\n",
-        isr,
-        syscall
-    );
+    #ifdef __LP64__
+    
+    uint64_t   arg1;
+    uint64_t   arg2;
+    uint64_t   arg3;
+    uint64_t   arg4;
+    uint64_t   arg5;
+    uint64_t   arg6;
+    uint64_t * rsp;
+    
+    #else
+    
+    uint32_t   arg1;
+    uint32_t   arg2;
+    uint32_t   arg3;
+    uint32_t   arg4;
+    uint32_t   arg5;
+    uint32_t   arg6;
+    uint32_t * esp;
+    
+    #endif
+    
+    ( void )isr;
+    
+    ret = 0;
+    
+    #ifdef __LP64__
+    
+    rsp     = ( uint64_t * )( registers->rsp );
+    sys     = ( uint16_t )registers->rdi;
+    arg1    = registers->rsi;
+    arg2    = registers->rdx;
+    arg3    = registers->rcx;
+    arg4    = registers->r8;
+    arg5    = registers->r9;
+    arg6    = *( rsp + 8 );
+    
+    #else
+    
+    esp     = ( uint32_t * )( registers->esp );
+    sys     = ( uint16_t )*( esp + 5 );
+    arg1    = *( esp + 6 );
+    arg2    = *( esp + 7 );
+    arg3    = *( esp + 8 );
+    arg4    = *( esp + 9 );
+    arg5    = *( esp + 10 );
+    arg6    = *( esp + 11 );
+    
+    #endif
+    
+    switch( sys )
+    {
+        case SYS_munmap:    ret = XEOS_SysCall_munmap( ( void * )arg1, ( size_t )arg2 );                                                        break;
+        case SYS_mmap:      ret = XEOS_SysCall_mmap( ( void * )arg1, ( size_t )arg2, ( int )arg3, ( int )arg4, ( int )arg5, ( off_t )arg6 );    break;
+    }
+    
+    #ifdef __LP64__
+    
+    registers->rax = ret;
+    
+    #else
+    
+    registers->eax = ( uint32_t )ret;
+    
+    #endif
 }
 

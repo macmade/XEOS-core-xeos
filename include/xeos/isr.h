@@ -101,9 +101,8 @@ void XEOS_ISR_IRQ( uint8_t isr, XEOS_HAL_CPU_Registers * registers );
  * @abstract        ISR handler for system calls
  * @param           isr         The ISR number
  * @param           registers   The processor registers
- * @param           syscall     The system call number
  */
-void XEOS_ISR_SysCall( uint8_t isr, XEOS_HAL_CPU_Registers * registers, uint16_t syscall );
+void XEOS_ISR_SysCall( uint8_t isr, XEOS_HAL_CPU_Registers * registers );
 
 #ifdef __cplusplus
 }
