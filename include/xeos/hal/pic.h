@@ -77,6 +77,7 @@ extern "C" {
 
 #include <xeos/macros.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 /*!
  * @enum        XEOS_HAL_PIC_Controller
@@ -238,18 +239,26 @@ void XEOS_HAL_PIC_SendData( XEOS_HAL_PIC_Controller c, uint8_t data );
 void XEOS_HAL_PIC_SendEOI( XEOS_HAL_PIC_Controller c );
 
 /*!
- * @function        XEOS_HAL_PIC_SendEOI
+ * @function        XEOS_HAL_PIC_MaskIRQLine
  * @abstract        Masks an IRQ line
  * @param           irq             The IRQ line to mask (0-15)
  */
 void XEOS_HAL_PIC_MaskIRQLine( XEOS_HAL_PIC_IRQ irq );
 
 /*!
- * @function        XEOS_HAL_PIC_SendEOI
+ * @function        XEOS_HAL_PIC_UnmaskIRQLine
  * @abstract        Unmasks an IRQ line
  * @param           irq             The IRQ line to unmask (0-15)
  */
 void XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ irq );
+
+/*!
+ * @function        XEOS_HAL_PIC_IRQLineMasked
+ * @abstract        Checks if an IRQ line is masked
+ * @param           irq             The IRQ line to unmask (0-15)
+ * @result          True if the IRQ line is masked, otherwise false
+ */
+bool XEOS_HAL_PIC_IRQLineMasked( XEOS_HAL_PIC_IRQ irq );
 
 #ifdef __cplusplus
 }

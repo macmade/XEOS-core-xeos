@@ -145,23 +145,15 @@ void XEOS_Main( XEOS_InfoRef info )
     /* Installs the new Interrupt Descriptor Table */
     XEOS_HAL_IDT_Reload();
     
-    /* Makes sure IRQ0 (system timer) is not masked */
-    XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ0 );
-    
-    /* Makes sure IRQ8 (real time clock) is not masked */
-    XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ8 );
-    
-    /* Makes sure IRQ1 (keyboard) is not masked */
-    XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ1 );
-    
-    /* Installs the handler for IRQ0 (system timer) */
+    /* Installs IRQs handlers */
     XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ0, XEOS_IRQ_SystemTimer );
-    
-    /* Installs the handler for IRQ8 (real time clock) */
+    XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ1, XEOS_IRQ_Keyboard );
     XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ8, XEOS_IRQ_RealTimeClock );
     
-    /* Installs the handler for IRQ1 (keyboard) */
-    XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ1, XEOS_IRQ_Keyboard );
+    /* Makes sure used IRQ lines are not masked */
+    XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ0 );
+    XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ1 );
+    XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ8 );
     
     /*
      * Ensures we get RTC interrupts at a frequency of 1024 hertz
@@ -203,12 +195,10 @@ void XEOS_Main( XEOS_InfoRef info )
     XEOS_VM_SystemMapInitialize( XEOS_Video_Printf );
     
     /* Only translated scan-code set 2 is supported */
-    /*
     if( XEOS_HAL_Keyboard_GetScanCodeSet() != XEOS_HAL_Keyboard_ScanCodeSet2 )
     {
-        
+        /* Error... */
     }
-    */
     
     for( ; ; )
     {

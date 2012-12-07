@@ -69,10 +69,18 @@
 
 #include "xeos/hal/keyboard.h"
 #include "xeos/hal/io.h"
+#include "xeos/hal/ps2.h"
 
 XEOS_HAL_Keyboard_Response XEOS_HAL_Keyboard_SendCommand( XEOS_HAL_Keyboard_Command command )
 {
-    ( void )command;
+    uint8_t ret;
     
-    return XEOS_HAL_Keyboard_ResponseACK;
+    /* Makes sure we can write data to the PS2 controller */
+    while( XEOS_HAL_PS2_InputBufferEmpty() == false );
+    
+    XEOS_HAL_PS2_WriteData( command );
+    
+    ret = XEOS_HAL_Keyboard_ReadData();
+    
+    return ( XEOS_HAL_Keyboard_Response )ret;
 }

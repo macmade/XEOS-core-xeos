@@ -69,10 +69,27 @@
 
 #include "xeos/hal/keyboard.h"
 #include "xeos/hal/io.h"
+#include "xeos/hal/ps2.h"
+#include "xeos/hal/pic.h"
 
 XEOS_HAL_Keyboard_Response XEOS_HAL_Keyboard_SetScanCodeSet( XEOS_HAL_Keyboard_ScanCodeSet set )
 {
-    ( void )set;
+    bool                        irqMasked;
+    XEOS_HAL_Keyboard_Response  response;
     
-    return XEOS_HAL_Keyboard_ResponseACK;
+    irqMasked = XEOS_HAL_PIC_IRQLineMasked( XEOS_HAL_PIC_IRQ1 );
+    
+    if( irqMasked == false )
+    {
+        XEOS_HAL_PIC_MaskIRQLine( XEOS_HAL_PIC_IRQ1 );
+    }
+    
+    response = XEOS_HAL_Keyboard_SendCommandWithData( XEOS_HAL_Keyboard_CommandScanCode, ( uint8_t )set );
+    
+    if( irqMasked == false )
+    {
+        XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ1 );
+    }
+    
+    return response;
 }

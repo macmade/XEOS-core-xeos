@@ -69,11 +69,18 @@
 
 #include "xeos/hal/keyboard.h"
 #include "xeos/hal/io.h"
+#include "xeos/hal/ps2.h"
 
 XEOS_HAL_Keyboard_Response XEOS_HAL_Keyboard_SendCommandWithData( XEOS_HAL_Keyboard_Command command, uint8_t data )
 {
-    ( void )command;
-    ( void )data;
+    XEOS_HAL_Keyboard_Response ret;
     
-    return XEOS_HAL_Keyboard_ResponseACK;
+    ret = XEOS_HAL_Keyboard_SendCommand( command );
+    
+    if( ret != XEOS_HAL_Keyboard_ResponseACK )
+    {
+        return ret;
+    }
+    
+    return XEOS_HAL_Keyboard_SendCommand( data );
 }

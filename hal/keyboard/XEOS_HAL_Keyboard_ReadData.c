@@ -69,8 +69,12 @@
 
 #include "xeos/hal/keyboard.h"
 #include "xeos/hal/io.h"
+#include "xeos/hal/ps2.h"
 
 uint8_t XEOS_HAL_Keyboard_ReadData( void )
 {
-    return 0;
+    /* Makes sure data is available from the PS2 controller */
+    while( XEOS_HAL_PS2_OutputBufferEmpty() == true );
+    
+    return XEOS_HAL_PS2_ReadData();
 }

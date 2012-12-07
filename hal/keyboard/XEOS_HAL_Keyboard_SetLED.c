@@ -69,10 +69,27 @@
 
 #include "xeos/hal/keyboard.h"
 #include "xeos/hal/io.h"
+#include "xeos/hal/ps2.h"
+#include "xeos/hal/pic.h"
 
 XEOS_HAL_Keyboard_Response XEOS_HAL_Keyboard_SetLED( XEOS_HAL_Keyboard_LEDState state )
 {
-    ( void )state;
+    bool                        irqMasked;
+    XEOS_HAL_Keyboard_Response  response;
     
-    return XEOS_HAL_Keyboard_ResponseACK;
+    irqMasked = XEOS_HAL_PIC_IRQLineMasked( XEOS_HAL_PIC_IRQ1 );
+    
+    if( irqMasked == false )
+    {
+        XEOS_HAL_PIC_MaskIRQLine( XEOS_HAL_PIC_IRQ1 );
+    }
+    
+    response = XEOS_HAL_Keyboard_SendCommandWithData( XEOS_HAL_Keyboard_CommandSetLED, ( uint8_t )state );
+    
+    if( irqMasked == false )
+    {
+        XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ1 );
+    }
+    
+    return response;
 }
