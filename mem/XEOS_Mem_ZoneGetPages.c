@@ -62,7 +62,7 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_Mem_ZoneGetPageAtIndex.c
+ * @file            XEOS_Mem_ZoneGetPages.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
  */
