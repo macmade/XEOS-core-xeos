@@ -1,7 +1,7 @@
 /*******************************************************************************
  * XEOS - X86 Experimental Operating System
  * 
- * Copyright (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
+ * Copyright (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  * All rights reserved.
  * 
  * XEOS Software License - Version 1.0 - December 21, 2012
@@ -64,7 +64,7 @@
 /*!
  * @header          cpu.h
  * @author          Jean-David Gadina
- * @copyright       (c) 2010-2012, Jean-David Gadina <macmade@eosgarden.com>
+ * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
 #ifndef __XEOS_HAL_CPU_H__
