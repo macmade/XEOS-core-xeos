@@ -217,24 +217,24 @@ XEOS_HAL_CPUInfos_Feature;
 /*!
  * @typedef         XEOS_HAL_CPU_Registers
  * @abstract        x86-64 registers
- * @description     Structure representing the x86-64 registers. For i386, the
+ * @discussion      Structure representing the x86-64 registers. For i386, the
  *                  same typedef is available, but with a different layout.
- * @field           rax             RAX register
- * @field           rbx             RBX register
- * @field           rcx             RCX register
- * @field           rdx             RDX register
- * @field           rdi             RDI register
- * @field           rsi             RSI register
- * @field           r8              R8 register
- * @field           r9              R9 register
- * @field           r10             R10 register
- * @field           r11             R11 register
- * @field           r12             R12 register
- * @field           r13             R13 register
- * @field           r14             R14 register
- * @field           r15             R15 register
- * @field           rsp             R16 register
- * @field           rbp             R17 register
+ * @var             rax             RAX register
+ * @var             rbx             RBX register
+ * @var             rcx             RCX register
+ * @var             rdx             RDX register
+ * @var             rdi             RDI register
+ * @var             rsi             RSI register
+ * @var             r8              R8 register
+ * @var             r9              R9 register
+ * @var             r10             R10 register
+ * @var             r11             R11 register
+ * @var             r12             R12 register
+ * @var             r13             R13 register
+ * @var             r14             R14 register
+ * @var             r15             R15 register
+ * @var             rsp             R16 register
+ * @var             rbp             R17 register
  */
 typedef struct
 {
@@ -262,16 +262,16 @@ XEOS_HAL_CPU_Registers;
 /*!
  * @typedef         XEOS_HAL_CPU_Registers
  * @abstract        i386 registers
- * @description     Structure representing the i386 registers. For x86-64, the
+ * @discussion      Structure representing the i386 registers. For x86-64, the
  *                  same typedef is available, but with a different layout.
- * @field           eax             EAX register
- * @field           ebx             EBX register
- * @field           ecx             ECX register
- * @field           edx             EDX register
- * @field           edi             EDI register
- * @field           esi             ESI register
- * @field           esp             E16 register
- * @field           ebp             E17 register
+ * @var             eax             EAX register
+ * @var             ebx             EBX register
+ * @var             ecx             ECX register
+ * @var             edx             EDX register
+ * @var             edi             EDI register
+ * @var             esi             ESI register
+ * @var             esp             E16 register
+ * @var             ebp             E17 register
  */
 typedef struct
 {

@@ -81,14 +81,14 @@ extern "C" {
 /*!
  * @struct          __XEOS_HAL_RTC_DateTime
  * @abstract        Date/Time RTC values
- * @field           seconds         The number of seconds
- * @field           minutes         The number of minutes
- * @field           hours           The number of hours
- * @field           weekday         The weekday
- * @field           dayOfMonth      The day of the month
- * @field           month           The month number
- * @field           year            The year number
- * @field           century         The century number
+ * @var             seconds         The number of seconds
+ * @var             minutes         The number of minutes
+ * @var             hours           The number of hours
+ * @var             weekday         The weekday
+ * @var             dayOfMonth      The day of the month
+ * @var             month           The month number
+ * @var             year            The year number
+ * @var             century         The century number
  */
 struct __XEOS_HAL_RTC_DateTime
 {

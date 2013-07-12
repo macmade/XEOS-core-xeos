@@ -92,7 +92,7 @@ typedef void ( * XEOS_IRQ_IRQHandler )( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Regis
 /*!
  * @function        XEOS_IRQ_AddIRQHandler
  * @abstract        Installs a handler function for an IRQ line
- * @description     Note that the number of handlers for an IRQ line is limited.
+ * @discussion      Note that the number of handlers for an IRQ line is limited.
  *                  If the maximum number of handlers is reached, the handler
  *                  won't be installed and the function will return false.
  * @param           irq         The IRQ line

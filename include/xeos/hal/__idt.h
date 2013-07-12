@@ -85,11 +85,11 @@ extern "C" {
 /*!
  * @struct          __XEOS_HAL_IDT_ISREntry32
  * @abstract        32 bits ISR entry
- * @field           baseLow         ISR address (bits 0-15)
- * @field           selector        Code segment selector
- * @field           __reserved_0    Unused
- * @field           flags           ISR entry flags
- * @field           baseHigh        ISR address (bits 16-31)
+ * @var             baseLow         ISR address (bits 0-15)
+ * @var             selector        Code segment selector
+ * @var             __reserved_0    Unused
+ * @var             flags           ISR entry flags
+ * @var             baseHigh        ISR address (bits 16-31)
  */
 struct __XEOS_HAL_IDT_ISREntry32
 {
@@ -103,8 +103,8 @@ struct __XEOS_HAL_IDT_ISREntry32
 /*!
  * @struct          __XEOS_HAL_IDT_Pointer32
  * @abstract        32 bits IDT pointer
- * @field           limit           IDT size
- * @field           base            IDT address
+ * @var             limit           IDT size
+ * @var             base            IDT address
  */
 struct __XEOS_HAL_IDT_Pointer32
 {
@@ -115,13 +115,13 @@ struct __XEOS_HAL_IDT_Pointer32
 /*!
  * @struct          __XEOS_HAL_IDT_ISREntry64
  * @abstract        64 bits ISR entry
- * @field           baseLow         ISR address (bits 0-15)
- * @field           selector        Code segment selector
- * @field           __reserved_0    Unused
- * @field           flags           ISR entry flags
- * @field           baseMiddle      ISR address (bits 16-31)
- * @field           baseHigh        ISR address (bits 32-63)
- * @field           __reserved_1    Unused
+ * @var             baseLow         ISR address (bits 0-15)
+ * @var             selector        Code segment selector
+ * @var             __reserved_0    Unused
+ * @var             flags           ISR entry flags
+ * @var             baseMiddle      ISR address (bits 16-31)
+ * @var             baseHigh        ISR address (bits 32-63)
+ * @var             __reserved_1    Unused
  */
 struct __XEOS_HAL_IDT_ISREntry64
 {
@@ -137,8 +137,8 @@ struct __XEOS_HAL_IDT_ISREntry64
 /*!
  * @struct          __XEOS_HAL_IDT_Pointer64
  * @abstract        64 bits IDT pointer
- * @field           limit           IDT size
- * @field           base            IDT address
+ * @var             limit           IDT size
+ * @var             base            IDT address
  */
 struct __XEOS_HAL_IDT_Pointer64
 {
