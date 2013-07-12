@@ -80,7 +80,7 @@ XEOS_Info_MemoryEntryRef XEOS_Info_MemoryGetEntryAtIndex( XEOS_Info_MemoryRef me
         return NULL;
     }
     
-    p  = ( char * )( memory->base );
+    p  = ( char * )( ( uintptr_t )( memory->base ) );
     p += index * sizeof( struct __XEOS_Info_MemoryEntry );
     
     return ( XEOS_Info_MemoryEntryRef )p;
