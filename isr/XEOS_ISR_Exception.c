@@ -107,12 +107,12 @@ void XEOS_ISR_Exception( uint8_t isr, XEOS_HAL_CPU_Registers * registers )
         "\n"
         "x86-64 Registers:\n"
         "\n"
-        "RAX: %016#LX RBX: %016#LX RCX: %016#LX\n"
-        "RDX: %016#LX RDI: %016#LX RSI: %016#LX\n"
-        "R8:  %016#LX R9:  %016#LX R10: %016#LX\n"
-        "R11: %016#LX R12: %016#LX R13: %016#LX\n"
-        "R14: %016#LX R15: %016#LX\n"
-        "RSP: %016#LX RBP: %016#LX\n",
+        "RAX: %016#lX RBX: %016#lX RCX: %016#lX\n"
+        "RDX: %016#lX RDI: %016#lX RSI: %016#lX\n"
+        "R8:  %016#lX R9:  %016#lX R10: %016#lX\n"
+        "R11: %016#lX R12: %016#lX R13: %016#lX\n"
+        "R14: %016#lX R15: %016#lX\n"
+        "RSP: %016#lX RBP: %016#lX\n",
         exception,
         registers->rax,
         registers->rbx,
