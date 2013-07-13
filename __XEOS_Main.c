@@ -298,7 +298,7 @@ void __XEOS_Main_PromptSuccess( const char * successMessage )
 
 void __XEOS_Main_PromptFailure( const char * failureMessage )
 {
-    failureMessage = ( failureMessage == NULL ) ? "NO" : failureMessage;
+    failureMessage = ( failureMessage == NULL ) ? "FAIL" : failureMessage;
     
     __XEOS_Main_PromptWithStatus( NULL, failureMessage, XEOS_Video_ColorRedLight );
     
