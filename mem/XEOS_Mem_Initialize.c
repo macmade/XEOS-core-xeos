@@ -137,11 +137,11 @@ void XEOS_Mem_Initialize( XEOS_Info_MemoryRef memory, int ( * outputHandler )( c
             
             if( memoryLength >= 0x100000 )
             {
-                outputHandler( "%7llu MB\n", ( ( memoryLength / 1024 ) / 1024 ) );
+                outputHandler( "%9llu MB\n", ( ( memoryLength / 1024 ) / 1024 ) );
             }
             else
             {
-                outputHandler( "%7llu B\n", memoryLength );
+                outputHandler( "%9llu B\n", memoryLength );
             }
         }
         
