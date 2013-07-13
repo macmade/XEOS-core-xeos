@@ -102,11 +102,13 @@ void XEOS_Main( XEOS_InfoRef info )
     XEOS_Video_Clear();
     
     __XEOS_Main_PrintCopyright();
+    XEOS_Video_SetStickyLines( 6 );
+    
     __XEOS_Main_PromptWithStatus( "Entering the kernel:", "XEOS-0.2.0", XEOS_Video_ColorGreenLight );
-    __XEOS_Main_Prompt( "Initializing the IDT:" );
     
     /* Initializes the Interrupt Descriptor Table */
     {
+        __XEOS_Main_Prompt( "Initializing the IDT:" );
         XEOS_HAL_IDT_Init();
         __XEOS_Main_PromptSuccess( NULL );
     }
