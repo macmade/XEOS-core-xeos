@@ -258,7 +258,7 @@ void XEOS_Main( XEOS_InfoRef info )
         }
         
         __XEOS_Main_PromptSuccess( NULL );
-        __XEOS_Main_PrintInfoLine( "System time: %lu", XEOS_System_GetTime() );
+        __XEOS_Main_PrintInfoLine( "System time:  %lu", XEOS_System_GetTime() );
     }
     
     {
@@ -272,8 +272,8 @@ void XEOS_Main( XEOS_InfoRef info )
         
         __XEOS_Main_PromptSuccess( NULL );
         
-        __XEOS_Main_PrintInfoLine( "CPU vendor: %s", cpuVendorID );
-        __XEOS_Main_PrintInfoLine( "CPU brand:  %s", cpuBrandName );
+        __XEOS_Main_PrintInfoLine( "CPU vendor:   %s", cpuVendorID );
+        __XEOS_Main_PrintInfoLine( "CPU brand:    %s", cpuBrandName );
     }
     
     ( void )info;
