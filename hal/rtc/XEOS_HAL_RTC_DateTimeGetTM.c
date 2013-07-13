@@ -73,7 +73,7 @@
 #include "xeos/hal/cmos.h"
 #include <time.h>
 
-struct tm XEOS_HAL_RTC_DateTimeGetTM( XEOS_HAL_RTC_DateTimeRef time )
+void XEOS_HAL_RTC_DateTimeGetTM( XEOS_HAL_RTC_DateTimeRef time, struct tm * t )
 {
     uint8_t     seconds;
     uint8_t     minutes;
@@ -84,7 +84,6 @@ struct tm XEOS_HAL_RTC_DateTimeGetTM( XEOS_HAL_RTC_DateTimeRef time )
     uint8_t     year;
     uint8_t     century;
     uint16_t    fullYear;
-    struct tm   t;
     bool        leap;
     
     seconds     = XEOS_HAL_RTC_DateTimeGetSeconds( time );
@@ -103,22 +102,22 @@ struct tm XEOS_HAL_RTC_DateTimeGetTM( XEOS_HAL_RTC_DateTimeRef time )
     
     fullYear = ( century * 100 ) + year;
     
-    t.tm_sec     = seconds;
-    t.tm_min     = minutes;
-    t.tm_hour    = hours;
-    t.tm_wday    = weekday;
-    t.tm_mday    = dayOfMonth;
-    t.tm_mon     = ( month > 0 ) ? month - 1 : 0;
-    t.tm_year    = ( fullYear > 1900 ) ? fullYear - 1900 : 0;
-    t.tm_isdst   = 0;
+    t->tm_sec     = seconds;
+    t->tm_min     = minutes;
+    t->tm_hour    = hours;
+    t->tm_wday    = weekday;
+    t->tm_mday    = dayOfMonth;
+    t->tm_mon     = ( month > 0 ) ? month - 1 : 0;
+    t->tm_year    = ( fullYear > 1900 ) ? fullYear - 1900 : 0;
+    t->tm_isdst   = 0;
     
     if( month == 1 )
     {
-        t.tm_yday = dayOfMonth;
+        t->tm_yday = dayOfMonth;
     }
     else if( month == 2 )
     {
-        t.tm_yday = dayOfMonth + 31;
+        t->tm_yday = dayOfMonth + 31;
     }
     else
     {
@@ -139,50 +138,48 @@ struct tm XEOS_HAL_RTC_DateTimeGetTM( XEOS_HAL_RTC_DateTimeRef time )
             leap = true;
         }
         
-        t.tm_yday = 31 + ( ( leap == true ) ? 29 : 28 );
+        t->tm_yday = 31 + ( ( leap == true ) ? 29 : 28 );
         
         if( month == 3 )
         {
-            t.tm_yday += dayOfMonth;
+            t->tm_yday += dayOfMonth;
         }
         else if( month == 4 )
         {
-            t.tm_yday += dayOfMonth + 31;
+            t->tm_yday += dayOfMonth + 31;
         }
         else if( month == 5 )
         {
-            t.tm_yday += dayOfMonth + 31 + 30;
+            t->tm_yday += dayOfMonth + 31 + 30;
         }
         else if( month == 6 )
         {
-            t.tm_yday += dayOfMonth + 31 + 30 + 31;
+            t->tm_yday += dayOfMonth + 31 + 30 + 31;
         }
         else if( month == 7 )
         {
-            t.tm_yday += dayOfMonth + 31 + 30 + 31 + 30;
+            t->tm_yday += dayOfMonth + 31 + 30 + 31 + 30;
         }
         else if( month == 8 )
         {
-            t.tm_yday += dayOfMonth + 31 + 30 + 31 + 30 + 31;
+            t->tm_yday += dayOfMonth + 31 + 30 + 31 + 30 + 31;
         }
         else if( month == 9 )
         {
-            t.tm_yday += dayOfMonth + 31 + 30 + 31 + 30 + 31 + 31;
+            t->tm_yday += dayOfMonth + 31 + 30 + 31 + 30 + 31 + 31;
         }
         else if( month == 10 )
         {
-            t.tm_yday += dayOfMonth + 31 + 30 + 31 + 30 + 31 + 31 + 30;
+            t->tm_yday += dayOfMonth + 31 + 30 + 31 + 30 + 31 + 31 + 30;
         }
         else if( month == 11 )
         {
-            t.tm_yday += dayOfMonth + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31;
+            t->tm_yday += dayOfMonth + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31;
         }
         else if( month == 12 )
         {
-            t.tm_yday += dayOfMonth + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30;
+            t->tm_yday += dayOfMonth + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30;
         }
     }
-    
-    return t;
 }
 

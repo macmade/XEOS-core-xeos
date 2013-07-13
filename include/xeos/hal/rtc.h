@@ -104,9 +104,9 @@ XEOS_HAL_RTC_DateTimeRef XEOS_HAL_RTC_DateTimeGetSystemTime( void );
  * @function        XEOS_HAL_RTC_DateTimeGetTM
  * @abstract        Converts RTC time to a tm struct (time.h)
  * @param           time            The RTC time object
- * @result          The tm struct
+ * @param           t               A pointer to a valid tm structure that will be filled
  */
-struct tm XEOS_HAL_RTC_DateTimeGetTM( XEOS_HAL_RTC_DateTimeRef time );
+void XEOS_HAL_RTC_DateTimeGetTM( XEOS_HAL_RTC_DateTimeRef time, struct tm * t );
 
 /*!
  * @function        XEOS_HAL_RTC_DateTimeGetSeconds

@@ -95,7 +95,8 @@ void XEOS_IRQ_RealTimeClock( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * regi
             __inited    = true;
             
             dateTime    = XEOS_HAL_RTC_DateTimeGetSystemTime();
-            time        = XEOS_HAL_RTC_DateTimeGetTM( dateTime );
+            
+            XEOS_HAL_RTC_DateTimeGetTM( dateTime, &time );
             
             __XEOS_System_Milliseconds = 0;
             __XEOS_System_Timestamp    = mktime( &time );
