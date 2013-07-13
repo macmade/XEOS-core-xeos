@@ -85,11 +85,11 @@ void XEOS_IRQ_Keyboard( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * registers
         
         if( ( code & 0x80 ) == 0 )
         {
-            XEOS_Video_Printf( "Got key event (press):   %#02X\n", code );
+            XEOS_Video_Promptf( "IRQ #%i: received key event %#02X - press", irq, code );
         }
         else
         {
-            XEOS_Video_Printf( "Got key event (release): %#02X\n", code );
+            XEOS_Video_Promptf( "IRQ #%i: received key event %#02X - release", irq, code );
         }
     }
 }
