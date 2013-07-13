@@ -62,7 +62,7 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_Video_Promptf.c
+ * @file            XEOS_Video_PrintPrompt.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
@@ -70,19 +70,15 @@
 #include "xeos/video.h"
 #include "xeos/__video.h"
 
-int XEOS_Video_Promptf( const char * format, ... )
+int XEOS_Video_PrintPrompt( void )
 {
-    va_list args;
-    int     c;
+    XEOS_Video_SetFG( XEOS_Video_ColorWhite );
+    XEOS_Video_Print( __XEOS_Video_PromptPart1 );
+    XEOS_Video_SetFG( XEOS_Video_ColorGrayLight );
+    XEOS_Video_Print( __XEOS_Video_PromptPart2 );
+    XEOS_Video_SetFG( XEOS_Video_ColorWhite );
+    XEOS_Video_Print( __XEOS_Video_PromptPart3 );
     
-    va_start( args, format );
-    
-    c  = XEOS_Video_PrintPrompt();
-    c += XEOS_Video_VPrintf( format, args );
-    c += XEOS_Video_Print( "\n" );
-    
-    va_end( args );
-    
-    return c;
+    return ( int )XEOS_Video_GetPromptLength();
 }
 

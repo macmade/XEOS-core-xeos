@@ -78,6 +78,7 @@ extern "C" {
 #include <xeos/macros.h>
 #include <stdarg.h>
 #include <stdbool.h>
+#include <string.h>
 
 /*!
  * @define      XEOS_VIDEO_MEM
@@ -179,6 +180,20 @@ unsigned int XEOS_Video_X( void );
  * @result      The Y position
  */
 unsigned int XEOS_Video_Y( void );
+
+/*!
+ * @function    XEOS_Video_GetPromptLength
+ * @abstract    Gets the standard prompt length
+ * @result      The length of the standard prompt string
+ */
+size_t XEOS_Video_GetPromptLength( void );
+
+/*!
+ * @function    XEOS_Video_PrintPrompt
+ * @abstract    Prints the standard prompt
+ * @result      The number of character printed
+ */
+int XEOS_Video_PrintPrompt( void );
 
 /*!
  * @function    XEOS_Video_Prompt

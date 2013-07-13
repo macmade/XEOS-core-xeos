@@ -107,10 +107,22 @@ extern unsigned int __XEOS_Video_X;
 extern unsigned int __XEOS_Video_Y;
 
 /*!
- * @var             __XEOS_Video_Prompt
- * @abstract        Prompt string
+ * @var             __XEOS_Video_PromptPart1
+ * @abstract        Prompt string (part 1)
  */
-extern char * __XEOS_Video_Prompt;
+extern char * __XEOS_Video_PromptPart1;
+
+/*!
+ * @var             __XEOS_Video_PromptPart2
+ * @abstract        Prompt string (part 2)
+ */
+extern char * __XEOS_Video_PromptPart2;
+
+/*!
+ * @var             __XEOS_Video_PromptPart3
+ * @abstract        Prompt string (part 3)
+ */
+extern char * __XEOS_Video_PromptPart3;
 
 #ifdef __cplusplus
 }

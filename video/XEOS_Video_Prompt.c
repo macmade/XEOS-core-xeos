@@ -74,7 +74,7 @@ int XEOS_Video_Prompt( const char * s )
 {
     int c;
     
-    c  = XEOS_Video_Print( __XEOS_Video_Prompt );
+    c  = XEOS_Video_PrintPrompt();
     c += XEOS_Video_Print( s );
     c += XEOS_Video_Print( "\n" );
     
