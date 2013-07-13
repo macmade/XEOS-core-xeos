@@ -251,6 +251,13 @@ void XEOS_Video_Putc( char c, bool updateCursor );
  */
 void XEOS_Video_Scroll( unsigned int n );
 
+/*!
+ * @function    XEOS_Video_SetStickyLines
+ * @abstract    Scrolls the number of sticky lines (that won't scroll)
+ * @param       lines       The number of lines
+ */
+void XEOS_Video_SetStickyLines( unsigned int lines );
+
 #ifdef __cplusplus
 }
 #endif

@@ -77,12 +77,28 @@ void XEOS_Video_Scroll( unsigned int n )
     
     if( n >= XEOS_VIDEO_ROWS )
     {
-        XEOS_Video_Clear();
+        if( __XEOS_Video_StickyLines == 0 )
+        {
+            XEOS_Video_Clear();
+        }
+        else
+        {
+            mem = ( char * )XEOS_VIDEO_MEM;
+            
+            for( i = __XEOS_Video_StickyLines * XEOS_VIDEO_COLS * 2; i < XEOS_VIDEO_COLS * XEOS_VIDEO_ROWS * 2; i += 2 )
+            {
+                mem[ i ]     = ' ';
+                mem[ i + 1 ] = __XEOS_Video_Attribute;
+            }
+            
+            XEOS_Video_MoveCursor( 0, __XEOS_Video_StickyLines );
+        }
         
         return;
     }
     
-    mem = ( char * )XEOS_VIDEO_MEM;
+    mem  = ( char * )XEOS_VIDEO_MEM;
+    mem += __XEOS_Video_StickyLines * XEOS_VIDEO_COLS * 2;
     
     for( i = 0; i < ( XEOS_VIDEO_COLS * ( XEOS_VIDEO_ROWS - n ) ) * 2; i++ )
     {

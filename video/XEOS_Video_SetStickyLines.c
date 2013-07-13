@@ -62,7 +62,7 @@
 /* $Id$ */
 
 /*!
- * @file            __XEOS_Video.c
+ * @file            XEOS_Video_SetStickyLines.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
@@ -70,10 +70,10 @@
 #include "xeos/video.h"
 #include "xeos/__video.h"
 
-char          __XEOS_Video_Attribute        = XEOS_Video_ColorBlack << 4 | XEOS_Video_ColorWhite;
-unsigned int  __XEOS_Video_X                = 0x00;
-unsigned int  __XEOS_Video_Y                = 0x00;
-char        * __XEOS_Video_PromptPart1      = "[ ";
-char        * __XEOS_Video_PromptPart2      = "XEOS";
-char        * __XEOS_Video_PromptPart3      = " ]> ";
-unsigned int  __XEOS_Video_StickyLines      = 0;
+void XEOS_Video_SetStickyLines( unsigned int lines )
+{
+    if( lines < XEOS_VIDEO_ROWS )
+    {
+        __XEOS_Video_StickyLines = lines;
+    }
+}

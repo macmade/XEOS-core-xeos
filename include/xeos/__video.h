@@ -124,6 +124,12 @@ extern char * __XEOS_Video_PromptPart2;
  */
 extern char * __XEOS_Video_PromptPart3;
 
+/*!
+ * @var             __XEOS_Video_StickyLines
+ * @abstract        The number of sticky lines (that won't scroll)
+ */
+extern unsigned int __XEOS_Video_StickyLines;
+
 #ifdef __cplusplus
 }
 #endif
