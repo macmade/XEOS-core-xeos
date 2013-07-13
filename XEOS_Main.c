@@ -82,7 +82,7 @@
 
 void __XEOS_Main_PrintCopyright( void );
 void __XEOS_Main_PromptWithStatus( const char * message, const char * status, XEOS_Video_Color statusColor );
-void __XEOS_Main_PrintInfoLine( const char * format, ... );
+void __XEOS_Main_PrintInfoLine( const char * format, ... ) XEOS_FORMAT_ATTRIBUTE( printf, 1, 2 );
 void __XEOS_Main_Prompt( const char * message );
 void __XEOS_Main_PromptSuccess( const char * successMessage );
 void __XEOS_Main_PromptFailure( const char * failureMessage );
@@ -258,7 +258,7 @@ void XEOS_Main( XEOS_InfoRef info )
         }
         
         __XEOS_Main_PromptSuccess( NULL );
-        __XEOS_Main_PrintInfoLine( "System time: %u", XEOS_System_GetTime() );
+        __XEOS_Main_PrintInfoLine( "System time: %lu", XEOS_System_GetTime() );
     }
     
     {
