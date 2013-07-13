@@ -78,6 +78,7 @@
 #include <sys/syscall.h>
 #include <stdlib.h>
 #include <string.h>
+#include <acpi/acpica.h>
 
 void XEOS_Main( XEOS_InfoRef info ) XEOS_NORETURN_ATTRIBUTE;
 void XEOS_Main( XEOS_InfoRef info )
@@ -198,6 +199,60 @@ void XEOS_Main( XEOS_InfoRef info )
     if( XEOS_HAL_Keyboard_GetScanCodeSet() != XEOS_HAL_Keyboard_ScanCodeSet2 )
     {
         /* Error... */
+    }
+    
+    {
+        ACPI_STATUS Status;
+        
+        /* Initialize the ACPICA subsystem */
+        Status = AcpiInitializeSubsystem ();
+        
+        if( ACPI_FAILURE( Status ) )
+        {
+            /* Error... */
+        }
+        else
+        {
+            /* Initialize the ACPICA Table Manager and get all ACPI tables */
+            Status = AcpiInitializeTables( NULL, 16, false );
+            
+            if( ACPI_FAILURE( Status ) )
+            {
+                /* Error... */
+            }
+            else
+            {
+                /* Create the ACPI namespace from ACPI tables */
+                Status = AcpiLoadTables();
+                
+                if( ACPI_FAILURE( Status ) )
+                {
+                    /* Error... */
+                }
+                else
+                {
+                    /* Note: local handlers should be installed here */
+                    
+                    /* Initialize the ACPI hardware */
+                    Status = AcpiEnableSubsystem( ACPI_FULL_INITIALIZATION );
+                    
+                    if( ACPI_FAILURE( Status ) )
+                    {
+                        /* Error... */
+                    }
+                    else
+                    {
+                        /* Complete the ACPI namespace object initialization */
+                        Status = AcpiInitializeObjects( ACPI_FULL_INITIALIZATION );
+                        
+                        if( ACPI_FAILURE( Status ) )
+                        {
+                            /* Error... */
+                        }
+                    }
+                }
+            }
+        }
     }
     
     for( ; ; )
