@@ -62,7 +62,7 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_HAL_RTC_EnablePeriodicInterrupts.c
+ * @file            __XEOS_HAL_RTC_ReadRegister.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
