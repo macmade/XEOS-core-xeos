@@ -301,55 +301,47 @@ void XEOS_Main( XEOS_InfoRef info )
             __XEOS_Main_PromptFailure( NULL );
             __XEOS_Main_FatalError();
         }
+        
+        /* Initialize the ACPICA Table Manager and get all ACPI tables */
+        status = AcpiInitializeTables( NULL, 16, false );
+        
+        if( ACPI_FAILURE( status ) )
+        {
+            __XEOS_Main_PromptFailure( NULL );
+            __XEOS_Main_FatalError();
+        }
+        
+        /* Create the ACPI namespace from ACPI tables */
+        status = AcpiLoadTables();
+        
+        if( ACPI_FAILURE( status ) )
+        {
+            __XEOS_Main_PromptFailure( NULL );
+            __XEOS_Main_FatalError();
+        }
+        
+        /* Note: local handlers should be installed here */
+        
+        /* Initialize the ACPI hardware */
+        status = AcpiEnableSubsystem( ACPI_FULL_INITIALIZATION );
+        
+        if( ACPI_FAILURE( status ) )
+        {
+            __XEOS_Main_PromptFailure( NULL );
+            __XEOS_Main_FatalError();
+        }
+        
+        /* Complete the ACPI namespace object initialization */
+        status = AcpiInitializeObjects( ACPI_FULL_INITIALIZATION );
+        
+        if( ACPI_FAILURE( status ) )
+        {
+            __XEOS_Main_PromptFailure( NULL );
+            __XEOS_Main_FatalError();
+        }
         else
         {
-            /* Initialize the ACPICA Table Manager and get all ACPI tables */
-            status = AcpiInitializeTables( NULL, 16, false );
-            
-            if( ACPI_FAILURE( status ) )
-            {
-                __XEOS_Main_PromptFailure( NULL );
-                __XEOS_Main_FatalError();
-            }
-            else
-            {
-                /* Create the ACPI namespace from ACPI tables */
-                status = AcpiLoadTables();
-                
-                if( ACPI_FAILURE( status ) )
-                {
-                    __XEOS_Main_PromptFailure( NULL );
-                    __XEOS_Main_FatalError();
-                }
-                else
-                {
-                    /* Note: local handlers should be installed here */
-                    
-                    /* Initialize the ACPI hardware */
-                    status = AcpiEnableSubsystem( ACPI_FULL_INITIALIZATION );
-                    
-                    if( ACPI_FAILURE( status ) )
-                    {
-                        __XEOS_Main_PromptFailure( NULL );
-                        __XEOS_Main_FatalError();
-                    }
-                    else
-                    {
-                        /* Complete the ACPI namespace object initialization */
-                        status = AcpiInitializeObjects( ACPI_FULL_INITIALIZATION );
-                        
-                        if( ACPI_FAILURE( status ) )
-                        {
-                            __XEOS_Main_PromptFailure( NULL );
-                            __XEOS_Main_FatalError();
-                        }
-                        else
-                        {
-                            __XEOS_Main_PromptSuccess( NULL );
-                        }
-                    }
-                }
-            }
+            __XEOS_Main_PromptSuccess( NULL );
         }
     }
     
