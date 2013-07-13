@@ -255,6 +255,7 @@ void XEOS_Main( XEOS_InfoRef info )
         __XEOS_Main_PrintInfoLine( "System time:  %lu", XEOS_System_GetTime() );
     }
     
+    /* Gets CPU informations */
     {
         const char * cpuVendorID;
         const char * cpuBrandName;
@@ -269,8 +270,6 @@ void XEOS_Main( XEOS_InfoRef info )
         __XEOS_Main_PrintInfoLine( "CPU vendor:   %s", cpuVendorID );
         __XEOS_Main_PrintInfoLine( "CPU brand:    %s", cpuBrandName );
     }
-    
-    ( void )info;
     
     /* Initializes the physical memory system */
     {
