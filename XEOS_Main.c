@@ -286,7 +286,7 @@ void XEOS_Main( XEOS_InfoRef info )
         __XEOS_Main_PromptSuccess( NULL );
     }
     
-        /* Initialize the ACPICA subsystem */
+    /* Initialize the ACPICA subsystem */
     {
         ACPI_STATUS status;
         
