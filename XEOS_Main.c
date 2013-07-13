@@ -67,6 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
+#include "XEOS_Main.h"
+#include "__XEOS_Main.h"
 #include "xeos/video.h"
 #include "xeos/system.h"
 #include "xeos/mem.h"
@@ -74,23 +76,12 @@
 #include "xeos/hal.h"
 #include "xeos/isr.h"
 #include "xeos/irq.h"
-#include "xeos/info.h"
 #include <sys/syscall.h>
 #include <stdlib.h>
 #include <string.h>
 #include <acpi/acpi.h>
 #include <acpi/acpica.h>
 
-void __XEOS_Main_PrintCopyright( void );
-void __XEOS_Main_PromptWithStatus( const char * message, const char * status, XEOS_Video_Color statusColor );
-void __XEOS_Main_PrintInfoLine( const char * format, ... ) XEOS_FORMAT_ATTRIBUTE( printf, 1, 2 );
-int  __XEOS_Main_PrintExternalInfoLine( const char * s, ... ) XEOS_FORMAT_ATTRIBUTE( printf, 1, 2 );
-int  __XEOS_Main_VPrintExternalInfoLine( const char * s, va_list args );
-void __XEOS_Main_Prompt( const char * message );
-void __XEOS_Main_PromptSuccess( const char * successMessage );
-void __XEOS_Main_PromptFailure( const char * failureMessage );
-
-void XEOS_Main( XEOS_InfoRef info ) XEOS_NORETURN_ATTRIBUTE;
 void XEOS_Main( XEOS_InfoRef info )
 {
     unsigned int i;

@@ -62,23 +62,15 @@
 /* $Id$ */
 
 /*!
- * @file            XEOS_Main.c
+ * @file            __XEOS_Main.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
+#include "__XEOS_Main.h"
 #include "xeos/video.h"
 #include <stdlib.h>
 #include <string.h>
-
-void __XEOS_Main_PrintCopyright( void );
-void __XEOS_Main_PromptWithStatus( const char * message, const char * status, XEOS_Video_Color statusColor );
-void __XEOS_Main_PrintInfoLine( const char * format, ... ) XEOS_FORMAT_ATTRIBUTE( printf, 1, 2 );
-int  __XEOS_Main_PrintExternalInfoLine( const char * s, ... ) XEOS_FORMAT_ATTRIBUTE( printf, 1, 2 );
-int  __XEOS_Main_VPrintExternalInfoLine( const char * s, va_list args );
-void __XEOS_Main_Prompt( const char * message );
-void __XEOS_Main_PromptSuccess( const char * successMessage );
-void __XEOS_Main_PromptFailure( const char * failureMessage );
 
 static bool         __externalInfoLine      = false;
 static const char * __lastPromptMessage     = NULL;
