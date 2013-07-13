@@ -205,8 +205,8 @@ void XEOS_VM_SystemMapInitialize( int ( * outputHandler )( const char *, ... ) )
     
     if( outputHandler != NULL )
     {
-        outputHandler( "Memory map type:            %s\n", ( type == XEOS_VM_MemoryMapType32 ) ? "i386" : ( ( type == XEOS_VM_MemoryMapType32PAE ) ? "i386 PAE" : "x86-64" ) );
-        outputHandler( "Total memory:               %llu B", totalMemoryBytes );
+        outputHandler( "Memory map type:         %s\n", ( type == XEOS_VM_MemoryMapType32 ) ? "i386" : ( ( type == XEOS_VM_MemoryMapType32PAE ) ? "i386 PAE" : "x86-64" ) );
+        outputHandler( "Total memory:            %llu B", totalMemoryBytes );
         
         if( totalMemoryBytes >= 0x100000 )
         {
@@ -217,13 +217,9 @@ void XEOS_VM_SystemMapInitialize( int ( * outputHandler )( const char *, ... ) )
             outputHandler( "\n" );
         }
         
-        outputHandler( "PTE:                        %llu\n", ptEntriesCount );
-        outputHandler( "PTE/PT:                     %llu\n", ptEntriesPerPT );
-        outputHandler( "PT:                         %llu\n", ptCount );
-        outputHandler( "PDT:                        %llu\n", pdtCount );
-        outputHandler( "PDPT:                       %llu\n", pdptCount );
-        outputHandler( "PML4T:                      %llu\n", pml4tCount );
-        outputHandler( "System map memory use:      %llu B", mapMemory );
+        outputHandler( "PTE/PT/PDT/PDPT/PML4T:   %llu/%llu/%llu/%llu/%llu\n", ptEntriesCount, ptCount, pdtCount, pdptCount, pml4tCount );
+        outputHandler( "PTE per PT:              %llu\n", ptEntriesPerPT );
+        outputHandler( "System map memory use:   %llu B", mapMemory );
         
         if( mapMemory >= 0x100000 )
         {
@@ -245,7 +241,7 @@ void XEOS_VM_SystemMapInitialize( int ( * outputHandler )( const char *, ... ) )
         {
             outputHandler
             (
-                "System map area:            %016#llX -> %016#llX\n",
+                "System map area:         %016#llX -> %016#llX\n",
                 systemMapAddress,
                 ( systemMapAddress + mapMemory ) - 1
             );
@@ -282,7 +278,7 @@ void XEOS_VM_SystemMapInitialize( int ( * outputHandler )( const char *, ... ) )
             
             if( outputHandler != NULL )
             {
-                outputHandler( "Initializing PTs:           " );
+                outputHandler( "Initializing PTs:        " );
             }
             
             /* Initializes the page tables */
@@ -376,15 +372,15 @@ void XEOS_VM_SystemMapInitialize( int ( * outputHandler )( const char *, ... ) )
             if( outputHandler != NULL )
             {
                 outputHandler( "%016#lX -> %016#lX\n", pt, ( uint64_t )p - 1 );
-                outputHandler( "Physical addresses mapped:  %016#llX -> %016#llX\n", ( uint64_t )0, address - ( uint64_t )1 );
+                outputHandler( "Addresses mapped:        %016#llX -> %016#llX\n", ( uint64_t )0, address - ( uint64_t )1 );
                 
                 if( type == XEOS_VM_MemoryMapType32 )
                 {
-                    outputHandler( "Initializing PDT:           " );
+                    outputHandler( "Initializing PDT:        " );
                 }
                 else
                 {
-                    outputHandler( "Initializing PDTs:          " );
+                    outputHandler( "Initializing PDTs:       " );
                 }
             }
             
@@ -441,7 +437,7 @@ void XEOS_VM_SystemMapInitialize( int ( * outputHandler )( const char *, ... ) )
             {  
                 if( outputHandler != NULL )
                 {
-                    outputHandler( "Updating CR3 with PDT:      %016#lX\n", pdt );
+                    outputHandler( "Updating CR3 with PDT:   %016#lX\n", pdt );
                 }
                 
                 /* Updates CR3 with the page directory table address */
@@ -454,11 +450,11 @@ void XEOS_VM_SystemMapInitialize( int ( * outputHandler )( const char *, ... ) )
                 {
                     if( type == XEOS_VM_MemoryMapType32PAE )
                     {
-                        outputHandler( "Initializing PDPT:          " );
+                        outputHandler( "Initializing PDPT:       " );
                     }
                     else
                     {
-                        outputHandler( "Initializing PDPTs:         " );
+                        outputHandler( "Initializing PDPTs:      " );
                     }
                 }
                 
@@ -520,7 +516,7 @@ void XEOS_VM_SystemMapInitialize( int ( * outputHandler )( const char *, ... ) )
                 {
                     if( outputHandler != NULL )
                     {
-                        outputHandler( "Updating CR3 with PDPT:     %016#lX\n", pdpt );
+                        outputHandler( "Updating CR3 with PDPT:  %016#lX\n", pdpt );
                     }
                     
                     /* Updates CR3 with the page directory pointer table address */
@@ -531,7 +527,7 @@ void XEOS_VM_SystemMapInitialize( int ( * outputHandler )( const char *, ... ) )
                 {
                     if( outputHandler != NULL )
                     {
-                        outputHandler( "Initializing PML4T:         " );
+                        outputHandler( "Initializing PML4T:      " );
                     }
                     
                     /* Initializes the page-map level-4 tables */
@@ -584,7 +580,7 @@ void XEOS_VM_SystemMapInitialize( int ( * outputHandler )( const char *, ... ) )
                     
                     if( outputHandler != NULL )
                     {
-                        outputHandler( "Updating CR3 with PML4T:    %016#lX\n", pml4t );
+                        outputHandler( "Updating CR3 with PML4T: %016#lX\n", pml4t );
                     }
                     
                     /* Updates CR3 with the page-map level-4 table address */

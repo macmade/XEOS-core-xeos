@@ -74,10 +74,12 @@
 void __XEOS_Main_PrintCopyright( void );
 void __XEOS_Main_PromptWithStatus( const char * message, const char * status, XEOS_Video_Color statusColor );
 void __XEOS_Main_PrintInfoLine( const char * format, ... ) XEOS_FORMAT_ATTRIBUTE( printf, 1, 2 );
+int  __XEOS_Main_PrintExternalInfoLine( const char * s, ... ) XEOS_FORMAT_ATTRIBUTE( printf, 1, 2 );
 void __XEOS_Main_Prompt( const char * message );
 void __XEOS_Main_PromptSuccess( const char * successMessage );
 void __XEOS_Main_PromptFailure( const char * failureMessage );
 
+static bool         __externalInfoLine      = false;
 static const char * __lastPromptMessage     = NULL;
 static const char * __copyrightNL           = "\n";
 static const char * __copyrightPipe         = "\xBA";
@@ -224,6 +226,44 @@ void __XEOS_Main_PrintInfoLine( const char * format, ... )
     XEOS_Video_SetFG( XEOS_Video_ColorWhite );
     XEOS_Video_Print( "\n" );
     va_end( args );
+}
+
+int __XEOS_Main_PrintExternalInfoLine( const char * s, ... )
+{
+    int     n;
+    size_t  i;
+    va_list args;
+    
+    n = 0;
+    
+    if( __externalInfoLine == false )
+    {
+        if( XEOS_Video_X() != 0 )
+        {
+            XEOS_Video_Print( "\n" );
+            n++;
+        }
+        
+        for( i = 0; i < XEOS_Video_GetPromptLength() + 2; i++ )
+        {
+            XEOS_Video_Print( " " );
+            n++;
+        }
+    
+        XEOS_Video_Print( "\x1A " );
+        
+        n += 2;
+    }
+    
+    XEOS_Video_SetFG( XEOS_Video_ColorGrayLight );
+    va_start( args, s );
+    n += XEOS_Video_VPrintf( s, args );
+    va_end( args );
+    XEOS_Video_SetFG( XEOS_Video_ColorWhite );
+    
+    __externalInfoLine = ( strchr( s, '\n' ) == NULL ) ? true : false;
+    
+    return n;
 }
 
 void __XEOS_Main_Prompt( const char * message )

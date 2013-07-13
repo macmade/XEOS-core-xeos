@@ -83,6 +83,7 @@
 void __XEOS_Main_PrintCopyright( void );
 void __XEOS_Main_PromptWithStatus( const char * message, const char * status, XEOS_Video_Color statusColor );
 void __XEOS_Main_PrintInfoLine( const char * format, ... ) XEOS_FORMAT_ATTRIBUTE( printf, 1, 2 );
+int  __XEOS_Main_PrintExternalInfoLine( const char * s, ... ) XEOS_FORMAT_ATTRIBUTE( printf, 1, 2 );
 void __XEOS_Main_Prompt( const char * message );
 void __XEOS_Main_PromptSuccess( const char * successMessage );
 void __XEOS_Main_PromptFailure( const char * failureMessage );
@@ -102,7 +103,7 @@ void XEOS_Main( XEOS_InfoRef info )
     XEOS_Video_Clear();
     
     __XEOS_Main_PrintCopyright();
-    XEOS_Video_SetStickyLines( 6 );
+    XEOS_Video_SetStickyLines( 0 );
     
     __XEOS_Main_PromptWithStatus( "Entering the kernel:", "XEOS-0.2.0", XEOS_Video_ColorGreenLight );
     
@@ -281,14 +282,14 @@ void XEOS_Main( XEOS_InfoRef info )
     /* Initializes the physical memory system */
     {
         __XEOS_Main_Prompt( "Initializing the physical memory allocator:" );
-        XEOS_Mem_Initialize( XEOS_Info_GetMemory( info ), NULL );
+        XEOS_Mem_Initialize( XEOS_Info_GetMemory( info ), __XEOS_Main_PrintExternalInfoLine );
         __XEOS_Main_PromptSuccess( NULL );
     }
     
     /* Initializes the system map */
     {
         __XEOS_Main_Prompt( "Creating the system memory map:" );
-        XEOS_VM_SystemMapInitialize( NULL );
+        XEOS_VM_SystemMapInitialize( __XEOS_Main_PrintExternalInfoLine );
         __XEOS_Main_PromptSuccess( NULL );
     }
     

@@ -72,6 +72,11 @@
 
 int XEOS_Video_PrintPrompt( void )
 {
+    if( XEOS_Video_X() != 0 )
+    {
+        XEOS_Video_Print( "\n" );
+    }
+    
     XEOS_Video_SetFG( XEOS_Video_ColorWhite );
     XEOS_Video_Print( __XEOS_Video_PromptPart1 );
     XEOS_Video_SetFG( XEOS_Video_ColorGrayLight );

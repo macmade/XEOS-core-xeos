@@ -123,27 +123,25 @@ void XEOS_Mem_Initialize( XEOS_Info_MemoryRef memory, int ( * outputHandler )( c
                 continue;
             }
             
-            outputHandler( "%016#llX -> %016#llX: ", memoryStart, ( memoryStart + memoryLength ) - 1 );
+            outputHandler( "%016#llX -> %016#llX - ", memoryStart, ( memoryStart + memoryLength ) - 1 );
             
             switch( memoryType )
             {
-                case XEOS_Info_MemoryEntryTypeUnknown:          outputHandler( "Unknown " ); break;
-                case XEOS_Info_MemoryEntryTypeUsable:           outputHandler( "Usable  " ); break;
-                case XEOS_Info_MemoryEntryTypeReserved:         outputHandler( "Reserved" ); break;
-                case XEOS_Info_MemoryEntryTypeACPIReclaimable:  outputHandler( "ACPI    " ); break;
-                case XEOS_Info_MemoryEntryTypeACPINVS:          outputHandler( "ACPI NVS" ); break;
-                case XEOS_Info_MemoryEntryTypeBad:              outputHandler( "Bad     " ); break;
+                case XEOS_Info_MemoryEntryTypeUnknown:          outputHandler( "Unknown:  " ); break;
+                case XEOS_Info_MemoryEntryTypeUsable:           outputHandler( "Usable:   " ); break;
+                case XEOS_Info_MemoryEntryTypeReserved:         outputHandler( "Reserved: " ); break;
+                case XEOS_Info_MemoryEntryTypeACPIReclaimable:  outputHandler( "ACPI:     " ); break;
+                case XEOS_Info_MemoryEntryTypeACPINVS:          outputHandler( "ACPI NVS: " ); break;
+                case XEOS_Info_MemoryEntryTypeBad:              outputHandler( "Bad:      " ); break;
             }
-            
-            outputHandler( " - %llu B", memoryLength );
             
             if( memoryLength >= 0x100000 )
             {
-                outputHandler( " (%llu MB)\n", ( ( memoryLength / 1024 ) / 1024 ) );
+                outputHandler( "%7llu MB\n", ( ( memoryLength / 1024 ) / 1024 ) );
             }
             else
             {
-                outputHandler( "\n" );
+                outputHandler( "%7llu B\n", memoryLength );
             }
         }
         
