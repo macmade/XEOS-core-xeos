@@ -201,6 +201,7 @@ void XEOS_Main( XEOS_InfoRef info )
         if( XEOS_HAL_Keyboard_GetScanCodeSet() != XEOS_HAL_Keyboard_ScanCodeSet2 )
         {
             __XEOS_Main_PromptFailure( "IRQ:1 - FAIL" );
+            __XEOS_Main_FatalError();
         }
         else
         {
@@ -298,6 +299,7 @@ void XEOS_Main( XEOS_InfoRef info )
         if( ACPI_FAILURE( status ) )
         {
             __XEOS_Main_PromptFailure( NULL );
+            __XEOS_Main_FatalError();
         }
         else
         {
@@ -307,6 +309,7 @@ void XEOS_Main( XEOS_InfoRef info )
             if( ACPI_FAILURE( status ) )
             {
                 __XEOS_Main_PromptFailure( NULL );
+                __XEOS_Main_FatalError();
             }
             else
             {
@@ -316,6 +319,7 @@ void XEOS_Main( XEOS_InfoRef info )
                 if( ACPI_FAILURE( status ) )
                 {
                     __XEOS_Main_PromptFailure( NULL );
+                    __XEOS_Main_FatalError();
                 }
                 else
                 {
@@ -327,6 +331,7 @@ void XEOS_Main( XEOS_InfoRef info )
                     if( ACPI_FAILURE( status ) )
                     {
                         __XEOS_Main_PromptFailure( NULL );
+                        __XEOS_Main_FatalError();
                     }
                     else
                     {
@@ -336,6 +341,7 @@ void XEOS_Main( XEOS_InfoRef info )
                         if( ACPI_FAILURE( status ) )
                         {
                             __XEOS_Main_PromptFailure( NULL );
+                            __XEOS_Main_FatalError();
                         }
                         else
                         {

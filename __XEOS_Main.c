@@ -69,6 +69,7 @@
 
 #include "__XEOS_Main.h"
 #include "xeos/video.h"
+#include "xeos/hal.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -307,4 +308,24 @@ void __XEOS_Main_PromptFailure( const char * failureMessage )
     __XEOS_Main_PromptWithStatus( NULL, failureMessage, XEOS_Video_ColorRedLight );
     
     __lastPromptMessage = NULL;
+}
+
+void __XEOS_Main_FatalError()
+{
+    XEOS_Video_PrintPrompt();
+    XEOS_Video_SetFG( XEOS_Video_ColorRedLight );
+    XEOS_Video_Print( "A fatal error occured" );
+    XEOS_Video_SetFG( XEOS_Video_ColorWhite );
+    XEOS_Video_Print( " - Please reboot your computer" );
+    
+    XEOS_HAL_CPU_Halt();
+    
+    for( ; ; )
+    {
+        __asm__
+        (
+            "nop;nop;nop;nop;nop;\n"
+            "nop;nop;nop;nop;nop;\n"
+        );
+    }
 }

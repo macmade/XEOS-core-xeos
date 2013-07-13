@@ -85,6 +85,7 @@ int  __XEOS_Main_VPrintExternalInfoLine( const char * s, va_list args );
 void __XEOS_Main_Prompt( const char * message );
 void __XEOS_Main_PromptSuccess( const char * successMessage );
 void __XEOS_Main_PromptFailure( const char * failureMessage );
+void __XEOS_Main_FatalError( void ) XEOS_NORETURN_ATTRIBUTE;
 
 #ifdef __cplusplus
 }
