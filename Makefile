@@ -99,8 +99,8 @@ DIR_SRC_INC             := $(PATH_SRC_CORE_KERNEL)include/
 # Software arguments
 #-------------------------------------------------------------------------------
 
-ARGS_AS_32          := -f $(TARGET_ABI) -I $(PATH_SRC_CORE_INC)
-ARGS_AS_64          := -f $(TARGET_ABI)64 -I $(PATH_SRC_CORE_INC)
+ARGS_AS_32          := -I $(PATH_SRC_CORE_INC) $(ARGS_AS_32)
+ARGS_AS_64          := -I $(PATH_SRC_CORE_INC) $(ARGS_AS_64)
 ARGS_CC_32          := -iquote $(DIR_SRC_INC) $(ARGS_CC_32)
 ARGS_CC_64          := -iquote $(DIR_SRC_INC) $(ARGS_CC_64)
 
