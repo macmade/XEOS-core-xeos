@@ -310,7 +310,7 @@ void XEOS_Main( XEOS_InfoRef info )
         "Initializing the physical memory allocator:",
         NULL,
         {
-        XEOS_Mem_Initialize( XEOS_Info_GetMemory( info ), __XEOS_Main_PrintExternalInfoLine );
+            XEOS_Mem_Initialize( XEOS_Info_GetMemory( info ), __XEOS_Main_PrintExternalInfoLine );
         }
     );
     
