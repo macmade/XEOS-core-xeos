@@ -82,6 +82,18 @@
 #include <acpi/acpi.h>
 #include <acpi/acpica.h>
 
+#define __NOP                       \
+    __asm__                         \
+    (                               \
+        "nop;nop;nop;nop;nop;\n"    \
+        "nop;nop;nop;nop;nop;\n"    \
+    );
+
+#define __KERN_INIT_SECTION( _msg_, _status_, _code_ )  \
+        __XEOS_Main_Prompt( _msg_ );                    \
+        _code_                                          \
+        __XEOS_Main_PromptSuccess( _status_ )
+    
 void XEOS_Main( XEOS_InfoRef info )
 {
     unsigned int i;
@@ -101,256 +113,278 @@ void XEOS_Main( XEOS_InfoRef info )
     __XEOS_Main_PromptWithStatus( "Entering the kernel:", "XEOS-0.2.0", XEOS_Video_ColorGreenLight );
     
     /* Initializes the Interrupt Descriptor Table */
-    {
-        __XEOS_Main_Prompt( "Initializing the IDT:" );
-        XEOS_HAL_IDT_Init();
-        __XEOS_Main_PromptSuccess( NULL );
-    }
+    __KERN_INIT_SECTION
+    (
+        "Initializing the IDT:",
+        NULL,
+        {
+            XEOS_HAL_IDT_Init();
+        }
+    );
     
     /*
      * Maps IRQs 0-7 to 0x20-0x27 and IRQs 8-15 to 0x28-0x2F.
      * This will allow us to install the exception handlers, and avoid
      * conflicts with existing IRQs mapping to exceptions.
      */
-    {
-        __XEOS_Main_Prompt( "Remapping IRQs:" );
-        XEOS_HAL_PIC_Remap( 0x20, 0x28 );
-        __XEOS_Main_PromptSuccess( NULL );
-    }
-    
+    __KERN_INIT_SECTION
+    (
+        "Remapping IRQs:",
+        NULL,
+        {
+            XEOS_HAL_PIC_Remap( 0x20, 0x28 );
+        }
+    );
     
     /* Installs the exception handlers */
-    {
-        __XEOS_Main_Prompt( "Installing the exception handlers:" );
-        
-        for( i = 0x00; i < 0x14; i++ )
+    __KERN_INIT_SECTION
+    (
+        "Installing the exception handlers:",
+        NULL,
         {
-            XEOS_HAL_IDT_SetISREntry
-            (
-                ( uint8_t )i,
-                0x08,
-                XEOS_HAL_IDT_ISREntryTypeInterrupt32,
-                XEOS_HAL_IDT_ISREntryPrivilegeLevelRing0,
-                true,
-                XEOS_ISR_Exception
-            );
+            for( i = 0x00; i < 0x14; i++ )
+            {
+                XEOS_HAL_IDT_SetISREntry
+                (
+                    ( uint8_t )i,
+                    0x08,
+                    XEOS_HAL_IDT_ISREntryTypeInterrupt32,
+                    XEOS_HAL_IDT_ISREntryPrivilegeLevelRing0,
+                    true,
+                    XEOS_ISR_Exception
+                );
+            }
         }
-        
-        __XEOS_Main_PromptSuccess( NULL );
-    }
+    );
     
     /* Installs the IRQ handlers */
-    {
-        __XEOS_Main_Prompt( "Installing the IRQs handlers:" );
-        
-        for( i = 0x20; i < 0x2F; i++ )
+    __KERN_INIT_SECTION
+    (
+        "Installing the IRQs handlers:",
+        NULL,
+        {
+            for( i = 0x20; i < 0x2F; i++ )
+            {
+                XEOS_HAL_IDT_SetISREntry
+                (
+                    ( uint8_t )i,
+                    0x08,
+                    XEOS_HAL_IDT_ISREntryTypeInterrupt32,
+                    XEOS_HAL_IDT_ISREntryPrivilegeLevelRing0,
+                    true,
+                    XEOS_ISR_IRQ
+                );
+            }
+        }
+    );
+    
+    /* Installs the system call ISR */
+    __KERN_INIT_SECTION
+    (
+        "Registering the system call ISR:",
+        NULL,
         {
             XEOS_HAL_IDT_SetISREntry
             (
-                ( uint8_t )i,
+                0x80,
                 0x08,
                 XEOS_HAL_IDT_ISREntryTypeInterrupt32,
                 XEOS_HAL_IDT_ISREntryPrivilegeLevelRing0,
                 true,
-                XEOS_ISR_IRQ
+                XEOS_ISR_SysCall
             );
         }
-        
-        __XEOS_Main_PromptSuccess( NULL );
-    }
-    
-    /* Installs the system call ISR */
-    {
-        __XEOS_Main_Prompt( "Registering the system call ISR:" );
-        
-        XEOS_HAL_IDT_SetISREntry
-        (
-            0x80,
-            0x08,
-            XEOS_HAL_IDT_ISREntryTypeInterrupt32,
-            XEOS_HAL_IDT_ISREntryPrivilegeLevelRing0,
-            true,
-            XEOS_ISR_SysCall
-        );
-        
-        __XEOS_Main_PromptSuccess( NULL );
-    }
+    );
     
     /* Installs the new Interrupt Descriptor Table */
-    {
-        __XEOS_Main_Prompt( "Activating the IDT:" );
+    __KERN_INIT_SECTION
+    (
+        "Activating the IDT:",
+        NULL,
+        {
         XEOS_HAL_IDT_Reload();
-        __XEOS_Main_PromptSuccess( NULL );
-    }
+        }
+    );
     
     /* System timer IRQ */
-    {
-        __XEOS_Main_Prompt( "Registering the system timer IRQ:" );
-        XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ0, XEOS_IRQ_SystemTimer );
-        XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ0 );
-        __XEOS_Main_PromptSuccess( "IRQ:0" );
-    }
+    __KERN_INIT_SECTION
+    (
+        "Registering the system timer IRQ:",
+        "IRQ:0",
+        {
+            XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ0, XEOS_IRQ_SystemTimer );
+            XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ0 );
+        }
+    );
     
     /* Keyboard IRQ */
-    {
-        __XEOS_Main_Prompt( "Registering the keyboard IRQ:" );
-        XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ0, XEOS_IRQ_Keyboard );
-        XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ1 );
-        
-        /* Only translated scan-code set 2 is supported */
-        if( XEOS_HAL_Keyboard_GetScanCodeSet() != XEOS_HAL_Keyboard_ScanCodeSet2 )
+    __KERN_INIT_SECTION
+    (
+        "Registering the keyboard IRQ:",
+        "IRQ:1",
         {
-            __XEOS_Main_PromptFailure( "IRQ:1 - FAIL" );
-            __XEOS_Main_FatalError();
+            XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ0, XEOS_IRQ_Keyboard );
+            XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ1 );
+            
+            /* Only translated scan-code set 2 is supported */
+            if( XEOS_HAL_Keyboard_GetScanCodeSet() != XEOS_HAL_Keyboard_ScanCodeSet2 )
+            {
+                __XEOS_Main_PromptFailure( "IRQ:1 - FAIL" );
+                __XEOS_Main_FatalError();
+            }
         }
-        else
-        {
-            __XEOS_Main_PromptSuccess( "IRQ:1" );
-        }
-    }
+    );
     
     /* RTC IRQ */
-    {
-        __XEOS_Main_Prompt( "Registering the RTC IRQ:" );
-        XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ0, XEOS_IRQ_RealTimeClock );
-        XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ8 );
-        
-        /*
-         * Ensures we get RTC interrupts at a frequency of 1024 hertz
-         * The RTC runs at 32'768 hertz. The frequency is computed as follow:
-         * 
-         * frequency =  32768 >> ( rate - 1 )
-         * 
-         * So for a frequency of 1024 hertz, the rate needs to be 6:
-         * 
-         * 32768 >> 5 = 1024
-         */
-        XEOS_HAL_RTC_SetRate( 6 );
-        
-        __XEOS_Main_PromptSuccess( "IRQ:8" );
-    }
+    __KERN_INIT_SECTION
+    (
+        "Registering the RTC IRQ:",
+        "IRQ:8",
+        {
+            XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ0, XEOS_IRQ_RealTimeClock );
+            XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ8 );
+            
+            /*
+             * Ensures we get RTC interrupts at a frequency of 1024 hertz
+             * The RTC runs at 32'768 hertz. The frequency is computed as follow:
+             * 
+             * frequency =  32768 >> ( rate - 1 )
+             * 
+             * So for a frequency of 1024 hertz, the rate needs to be 6:
+             * 
+             * 32768 >> 5 = 1024
+             */
+            XEOS_HAL_RTC_SetRate( 6 );
+        }
+    );
     
     /* (Re)enables the interrupts (standard, NMI and RTC) */
-    {
-        __XEOS_Main_Prompt( "Activating all interrupts:" );
-        XEOS_HAL_RTC_EnablePeriodicInterrupts();
-        XEOS_HAL_CPU_EnableInterrupts();
-        XEOS_HAL_NMI_Enable();
-        __XEOS_Main_PromptSuccess( NULL );
-    }
+    __KERN_INIT_SECTION
+    (
+        "Activating all interrupts:",
+        NULL,
+        {
+            XEOS_HAL_RTC_EnablePeriodicInterrupts();
+            XEOS_HAL_CPU_EnableInterrupts();
+            XEOS_HAL_NMI_Enable();
+        }
+    );
     
     /* Makes sur the system time is initialized */
-    {
-        __XEOS_Main_Prompt( "Getting the system time:" );
-        
-        while( XEOS_System_GetTime() == 0 )
+    __KERN_INIT_SECTION
+    (
+        "Getting the system time:",
+        NULL,
         {
-            __asm__
-            (
-                "nop;nop;nop;nop;nop;\n"
-                "nop;nop;nop;nop;nop;\n"
-            );
+            while( XEOS_System_GetTime() == 0 )
+            {
+                __NOP;
+            }
         }
-        
-        __XEOS_Main_PromptSuccess( NULL );
-        __XEOS_Main_PrintInfoLine( "System time:  %lu", XEOS_System_GetTime() );
-    }
+    );
     
-    /* Gets CPU informations */
+    __XEOS_Main_PrintInfoLine( "System time:  %lu", XEOS_System_GetTime() );
+    
     {
         const char * cpuVendorID;
         const char * cpuBrandName;
         
-        __XEOS_Main_Prompt( "Getting CPU informations:" );
-        
-        cpuVendorID  = XEOS_HAL_CPU_GetVendorID();
-        cpuBrandName = XEOS_HAL_CPU_GetBrandName();
-        
-        __XEOS_Main_PromptSuccess( NULL );
+        /* Gets CPU informations */
+        __KERN_INIT_SECTION
+        (
+            "Getting CPU informations:",
+            NULL,
+            {
+                cpuVendorID  = XEOS_HAL_CPU_GetVendorID();
+                cpuBrandName = XEOS_HAL_CPU_GetBrandName();
+            }
+        );
         
         __XEOS_Main_PrintInfoLine( "CPU vendor:   %s", cpuVendorID );
         __XEOS_Main_PrintInfoLine( "CPU brand:    %s", cpuBrandName );
     }
     
     /* Initializes the physical memory system */
-    {
-        __XEOS_Main_Prompt( "Initializing the physical memory allocator:" );
+    __KERN_INIT_SECTION
+    (
+        "Initializing the physical memory allocator:",
+        NULL,
+        {
         XEOS_Mem_Initialize( XEOS_Info_GetMemory( info ), __XEOS_Main_PrintExternalInfoLine );
-        __XEOS_Main_PromptSuccess( NULL );
-    }
+        }
+    );
     
     /* Initializes the system map */
-    {
-        __XEOS_Main_Prompt( "Creating the system memory map:" );
-        XEOS_VM_SystemMapInitialize( __XEOS_Main_PrintExternalInfoLine );
-        __XEOS_Main_PromptSuccess( NULL );
-    }
+    __KERN_INIT_SECTION
+    (
+        "Creating the system memory map:",
+        NULL,
+        {
+            XEOS_VM_SystemMapInitialize( __XEOS_Main_PrintExternalInfoLine );
+        }
+    );
     
     /* Initialize the ACPICA subsystem */
-    {
-        ACPI_STATUS status;
-        
-        __XEOS_Main_Prompt( "Initializing the ACPI subsystem:" );
-        ACPI_SetLoggingFunction( __XEOS_Main_VPrintExternalInfoLine );
-        ACPI_EnableLogging();
-        
-        status = AcpiInitializeSubsystem();
-        
-        if( ACPI_FAILURE( status ) )
+    __KERN_INIT_SECTION
+    (
+        "Initializing the ACPI subsystem:",
+        NULL,
         {
-            __XEOS_Main_PromptFailure( NULL );
-            __XEOS_Main_FatalError();
+            ACPI_STATUS status;
+            
+            ACPI_SetLoggingFunction( __XEOS_Main_VPrintExternalInfoLine );
+            ACPI_EnableLogging();
+            
+            status = AcpiInitializeSubsystem();
+            
+            if( ACPI_FAILURE( status ) )
+            {
+                __XEOS_Main_PromptFailure( NULL );
+                __XEOS_Main_FatalError();
+            }
+            
+            /* Initialize the ACPICA Table Manager and get all ACPI tables */
+            status = AcpiInitializeTables( NULL, 16, false );
+            
+            if( ACPI_FAILURE( status ) )
+            {
+                __XEOS_Main_PromptFailure( NULL );
+                __XEOS_Main_FatalError();
+            }
+            
+            /* Create the ACPI namespace from ACPI tables */
+            status = AcpiLoadTables();
+            
+            if( ACPI_FAILURE( status ) )
+            {
+                __XEOS_Main_PromptFailure( NULL );
+                __XEOS_Main_FatalError();
+            }
+            
+            /* Note: local handlers should be installed here */
+            
+            /* Initialize the ACPI hardware */
+            status = AcpiEnableSubsystem( ACPI_FULL_INITIALIZATION );
+            
+            if( ACPI_FAILURE( status ) )
+            {
+                __XEOS_Main_PromptFailure( NULL );
+                __XEOS_Main_FatalError();
+            }
+            
+            /* Complete the ACPI namespace object initialization */
+            status = AcpiInitializeObjects( ACPI_FULL_INITIALIZATION );
+            
+            if( ACPI_FAILURE( status ) )
+            {
+                __XEOS_Main_PromptFailure( NULL );
+                __XEOS_Main_FatalError();
+            }
         }
-        
-        /* Initialize the ACPICA Table Manager and get all ACPI tables */
-        status = AcpiInitializeTables( NULL, 16, false );
-        
-        if( ACPI_FAILURE( status ) )
-        {
-            __XEOS_Main_PromptFailure( NULL );
-            __XEOS_Main_FatalError();
-        }
-        
-        /* Create the ACPI namespace from ACPI tables */
-        status = AcpiLoadTables();
-        
-        if( ACPI_FAILURE( status ) )
-        {
-            __XEOS_Main_PromptFailure( NULL );
-            __XEOS_Main_FatalError();
-        }
-        
-        /* Note: local handlers should be installed here */
-        
-        /* Initialize the ACPI hardware */
-        status = AcpiEnableSubsystem( ACPI_FULL_INITIALIZATION );
-        
-        if( ACPI_FAILURE( status ) )
-        {
-            __XEOS_Main_PromptFailure( NULL );
-            __XEOS_Main_FatalError();
-        }
-        
-        /* Complete the ACPI namespace object initialization */
-        status = AcpiInitializeObjects( ACPI_FULL_INITIALIZATION );
-        
-        if( ACPI_FAILURE( status ) )
-        {
-            __XEOS_Main_PromptFailure( NULL );
-            __XEOS_Main_FatalError();
-        }
-        else
-        {
-            __XEOS_Main_PromptSuccess( NULL );
-        }
-    }
+    );
     
     for( ; ; )
     {
-        __asm__
-        (
-            "nop;nop;nop;nop;nop;\n"
-            "nop;nop;nop;nop;nop;\n"
-        );
+        __NOP;
     }
 }
