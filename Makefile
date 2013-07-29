@@ -96,15 +96,6 @@ DIR_SRC_MEM             := $(PATH_SRC_CORE_KERNEL)mem/
 DIR_SRC_INC             := $(PATH_SRC_CORE_KERNEL)include/
 
 #-------------------------------------------------------------------------------
-# Software arguments
-#-------------------------------------------------------------------------------
-
-ARGS_AS_32          := -I $(PATH_SRC_CORE_INC) $(ARGS_AS_32)
-ARGS_AS_64          := -I $(PATH_SRC_CORE_INC) $(ARGS_AS_64)
-ARGS_CC_32          := -iquote $(DIR_SRC_INC) $(ARGS_CC_32)
-ARGS_CC_64          := -iquote $(DIR_SRC_INC) $(ARGS_CC_64)
-
-#-------------------------------------------------------------------------------
 # Search paths
 #-------------------------------------------------------------------------------
 
@@ -142,7 +133,12 @@ vpath %$(EXT_H)         $(DIR_SRC_INC)
 #-------------------------------------------------------------------------------
 
 # Adds the suffixes used in this file
-.SUFFIXES: $(EXT_ASM_32) $(EXT_ASM_64) $(EXT_C) $(EXT_H) $(EXT_OBJ) $(EXT_BIN)
+.SUFFIXES:  $(EXT_ASM_32)   \
+            $(EXT_ASM_64)   \
+            $(EXT_C)        \
+            $(EXT_H)        \
+            $(EXT_OBJ)      \
+            $(EXT_BIN)
 
 #-------------------------------------------------------------------------------
 # Files
@@ -179,17 +175,42 @@ _FILES_C_OBJ_BUILD_MEM          = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OB
 #-------------------------------------------------------------------------------
 
 # Declaration for phony targets, to avoid problems with local files
-.PHONY: all clean
+.PHONY: all     \
+        clean
 
 # Declaration for precious targets, to avoid cleaning of intermediate files
-.PRECIOUS: $(PATH_BUILD_64)%$(EXT_ASM_64)$(EXT_OBJ) $(PATH_BUILD_64)%$(EXT_C)$(EXT_OBJ)
+.PRECIOUS:  $(PATH_BUILD_64)%$(EXT_ASM_64)$(EXT_OBJ)    \
+            $(PATH_BUILD_64)%$(EXT_C)$(EXT_OBJ)
 
 #-------------------------------------------------------------------------------
 # Phony targets
 #-------------------------------------------------------------------------------
 
 # Build the full project
-all: $(_FILES_ASM_OBJ_BUILD) $(_FILES_ASM_OBJ_BUILD_RT) $(_FILES_C_OBJ_BUILD) $(_FILES_C_OBJ_BUILD_HAL) $(_FILES_C_OBJ_BUILD_HAL_CPU) $(_FILES_C_OBJ_BUILD_HAL_IO) $(_FILES_C_OBJ_BUILD_HAL_RTC) $(_FILES_C_OBJ_BUILD_HAL_CMOS) $(_FILES_C_OBJ_BUILD_HAL_IDT) $(_FILES_C_OBJ_BUILD_HAL_NMI) $(_FILES_C_OBJ_BUILD_HAL_GDT) $(_FILES_C_OBJ_BUILD_HAL_PIC) $(_FILES_C_OBJ_BUILD_HAL_PIT) $(_FILES_C_OBJ_BUILD_HAL_PS2) $(_FILES_C_OBJ_BUILD_HAL_KEYBOARD) $(_FILES_C_OBJ_BUILD_ISR) $(_FILES_C_OBJ_BUILD_IRQ) $(_FILES_C_OBJ_BUILD_SYSTEM) $(_FILES_C_OBJ_BUILD_SYSCALL) $(_FILES_C_OBJ_BUILD_VIDEO) $(_FILES_C_OBJ_BUILD_INFO) $(_FILES_C_OBJ_BUILD_VM) $(_FILES_C_OBJ_BUILD_PROC) $(_FILES_C_OBJ_BUILD_MEM)
+all:    $(_FILES_ASM_OBJ_BUILD)             \
+        $(_FILES_ASM_OBJ_BUILD_RT)          \
+        $(_FILES_C_OBJ_BUILD)               \
+        $(_FILES_C_OBJ_BUILD_HAL)           \
+        $(_FILES_C_OBJ_BUILD_HAL_CPU)       \
+        $(_FILES_C_OBJ_BUILD_HAL_IO)        \
+        $(_FILES_C_OBJ_BUILD_HAL_RTC)       \
+        $(_FILES_C_OBJ_BUILD_HAL_CMOS)      \
+        $(_FILES_C_OBJ_BUILD_HAL_IDT)       \
+        $(_FILES_C_OBJ_BUILD_HAL_NMI)       \
+        $(_FILES_C_OBJ_BUILD_HAL_GDT)       \
+        $(_FILES_C_OBJ_BUILD_HAL_PIC)       \
+        $(_FILES_C_OBJ_BUILD_HAL_PIT)       \
+        $(_FILES_C_OBJ_BUILD_HAL_PS2)       \
+        $(_FILES_C_OBJ_BUILD_HAL_KEYBOARD)  \
+        $(_FILES_C_OBJ_BUILD_ISR)           \
+        $(_FILES_C_OBJ_BUILD_IRQ)           \
+        $(_FILES_C_OBJ_BUILD_SYSTEM)        \
+        $(_FILES_C_OBJ_BUILD_SYSCALL)       \
+        $(_FILES_C_OBJ_BUILD_VIDEO)         \
+        $(_FILES_C_OBJ_BUILD_INFO)          \
+        $(_FILES_C_OBJ_BUILD_VM)            \
+        $(_FILES_C_OBJ_BUILD_PROC)          \
+        $(_FILES_C_OBJ_BUILD_MEM)
 	
 	@:
 
