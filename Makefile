@@ -292,6 +292,8 @@ clean:
 	@$(PRINT) $(PROMPT)"Cleaning all build files"
 	@$(RM) $(ARGS_RM) $(PATH_BUILD_32_CORE_OBJ_KERNEL)*
 	@$(RM) $(ARGS_RM) $(PATH_BUILD_64_CORE_OBJ_KERNEL)*
+	@$(RM) $(ARGS_RM) $(PATH_BUILD_32_CORE_OBJ_PIC_KERNEL)*
+	@$(RM) $(ARGS_RM) $(PATH_BUILD_64_CORE_OBJ_PIC_KERNEL)*
 	
 # Compiles an assembly file (32 bits)
 $(PATH_BUILD_32_CORE_OBJ_KERNEL)%$(EXT_ASM_32)$(EXT_OBJ): %$(EXT_ASM_32)
