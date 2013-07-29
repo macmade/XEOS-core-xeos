@@ -68,7 +68,7 @@
  */
 
 #include "xeos/info.h"
-#include "xeos/__info.h"
+#include "xeos/__private/info.h"
 
 uintptr_t XEOS_Info_GetKernelRODataSectionStartAddress( void )
 {

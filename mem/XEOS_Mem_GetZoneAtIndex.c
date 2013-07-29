@@ -68,7 +68,7 @@
  */
 
 #include "xeos/mem.h"
-#include "xeos/__mem.h"
+#include "xeos/__private/mem.h"
 #include <stdlib.h>
 
 XEOS_Mem_ZoneRef XEOS_Mem_GetZoneAtIndex( unsigned int index )

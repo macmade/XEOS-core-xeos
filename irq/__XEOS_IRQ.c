@@ -68,7 +68,7 @@
  */
 
 #include "xeos/irq.h"
-#include "xeos/__irq.h"
+#include "xeos/__private/irq.h"
 
 bool __XEOS_IRQ_Inited = false;
 

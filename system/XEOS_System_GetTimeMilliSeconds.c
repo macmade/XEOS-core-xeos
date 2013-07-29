@@ -68,7 +68,7 @@
  */
 
 #include "xeos/system.h"
-#include "xeos/__system.h"
+#include "xeos/__private/system.h"
 
 double XEOS_System_GetTimeMilliSeconds( void )
 {

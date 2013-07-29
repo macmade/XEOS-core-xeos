@@ -68,7 +68,7 @@
  */
 
 #include "xeos/info.h"
-#include "xeos/__info.h"
+#include "xeos/__private/info.h"
 #include <stdlib.h>
 
 unsigned int XEOS_Info_MemoryGetNumberOfEntries( XEOS_Info_MemoryRef memory )

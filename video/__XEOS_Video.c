@@ -68,7 +68,7 @@
  */
 
 #include "xeos/video.h"
-#include "xeos/__video.h"
+#include "xeos/__private/video.h"
 
 char          __XEOS_Video_Attribute        = XEOS_Video_ColorBlack << 4 | XEOS_Video_ColorWhite;
 unsigned int  __XEOS_Video_X                = 0x00;

@@ -68,7 +68,7 @@
  */
 
 #include "xeos/video.h"
-#include "xeos/__video.h"
+#include "xeos/__private/video.h"
 
 void XEOS_Video_SetFG( XEOS_Video_Color color )
 {

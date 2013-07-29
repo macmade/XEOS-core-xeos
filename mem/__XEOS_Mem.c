@@ -68,7 +68,7 @@
  */
 
 #include "xeos/mem.h"
-#include "xeos/__mem.h"
+#include "xeos/__private/mem.h"
 #include <stdlib.h>
 
 struct __XEOS_Mem_Zone * __XEOS_Mem_Zones       = NULL;

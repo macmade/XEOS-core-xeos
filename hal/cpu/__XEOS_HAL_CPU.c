@@ -68,7 +68,7 @@
  */
 
 #include "xeos/hal/cpu.h"
-#include "xeos/hal/__cpu.h"
+#include "xeos/hal/__private/cpu.h"
 
 uint32_t    __XEOS_HAL_CPU_FeatureLow   = 0;
 uint32_t    __XEOS_HAL_CPU_FeatureHigh  = 0;

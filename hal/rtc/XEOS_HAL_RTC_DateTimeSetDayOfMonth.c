@@ -68,7 +68,7 @@
  */
 
 #include "xeos/hal/rtc.h"
-#include "xeos/hal/__rtc.h"
+#include "xeos/hal/__private/rtc.h"
 #include <stdlib.h>
 
 void XEOS_HAL_RTC_DateTimeSetDayOfMonth( XEOS_HAL_RTC_DateTimeRef time, uint8_t value )

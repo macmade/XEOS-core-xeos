@@ -68,7 +68,7 @@
  */
 
 #include "xeos/irq.h"
-#include "xeos/__irq.h"
+#include "xeos/__private/irq.h"
 #include <string.h>
 
 void __XEOS_IRQ_Init( void )

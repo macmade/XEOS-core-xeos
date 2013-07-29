@@ -68,7 +68,7 @@
  */
 
 #include "xeos/mem.h"
-#include "xeos/__mem.h"
+#include "xeos/__private/mem.h"
 #include <stdlib.h>
 
 void * XEOS_Mem_ZoneGetAddress( XEOS_Mem_ZoneRef object )

@@ -68,7 +68,7 @@
  */
 
 #include "xeos/hal/idt.h"
-#include "xeos/hal/__idt.h"
+#include "xeos/hal/__private/idt.h"
 #include <stdlib.h>
 
 bool XEOS_HAL_IDT_ISREntryGetPresent( XEOS_HAL_IDT_ISREntryRef entry )

@@ -68,11 +68,11 @@
  */
 
 #include "xeos/irq.h"
-#include "xeos/__irq.h"
+#include "xeos/__private/irq.h"
 #include "xeos/hal/io.h"
 #include "xeos/hal/cmos.h"
 #include "xeos/hal/rtc.h"
-#include "xeos/__system.h"
+#include "xeos/__private/system.h"
 #include <time.h>
 
 #define __XEOS_IRQ_RTC_FREQUENCY    1024

@@ -68,7 +68,7 @@
  */
 
 #include "xeos/video.h"
-#include "xeos/__video.h"
+#include "xeos/__private/video.h"
 
 size_t XEOS_Video_GetPromptLength( void )
 {

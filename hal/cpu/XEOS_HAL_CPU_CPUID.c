@@ -68,7 +68,7 @@
  */
 
 #include "xeos/hal/cpu.h"
-#include "xeos/hal/__cpu.h"
+#include "xeos/hal/__private/cpu.h"
 
 void XEOS_HAL_CPU_CPUID( uint32_t info, uint32_t * eax, uint32_t * ebx, uint32_t * ecx, uint32_t * edx )
 {

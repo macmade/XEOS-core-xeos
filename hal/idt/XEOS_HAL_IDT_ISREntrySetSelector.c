@@ -68,7 +68,7 @@
  */
 
 #include "xeos/hal/idt.h"
-#include "xeos/hal/__idt.h"
+#include "xeos/hal/__private/idt.h"
 #include <stdlib.h>
 
 void XEOS_HAL_IDT_ISREntrySetSelector( XEOS_HAL_IDT_ISREntryRef entry, uint16_t selector )

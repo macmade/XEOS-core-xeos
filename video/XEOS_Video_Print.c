@@ -68,7 +68,7 @@
  */
 
 #include "xeos/video.h"
-#include "xeos/__video.h"
+#include "xeos/__private/video.h"
 
 int XEOS_Video_Print( const char * s )
 {

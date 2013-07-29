@@ -68,12 +68,11 @@
  */
 
 #include "xeos/vm.h"
-#include "xeos/__vm.h"
+#include "xeos/__private/vm.h"
 #include "xeos/mem.h"
 #include "xeos/hal/cpu.h"
 #include <stdlib.h>
 #include <string.h>
-#include <xeos/__mem.h>
 
 void XEOS_VM_SystemMapInitialize( int ( * outputHandler )( const char *, ... ) )
 {

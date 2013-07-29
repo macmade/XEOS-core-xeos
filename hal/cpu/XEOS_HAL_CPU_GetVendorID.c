@@ -68,7 +68,7 @@
  */
 
 #include "xeos/hal/cpu.h"
-#include "xeos/hal/__cpu.h"
+#include "xeos/hal/__private/cpu.h"
 #include <stdlib.h>
 #include <string.h>
 

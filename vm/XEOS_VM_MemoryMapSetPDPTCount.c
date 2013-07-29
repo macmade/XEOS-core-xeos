@@ -68,7 +68,7 @@
  */
 
 #include "xeos/vm.h"
-#include "xeos/__vm.h"
+#include "xeos/__private/vm.h"
 #include <stdlib.h>
 #include <string.h>
 

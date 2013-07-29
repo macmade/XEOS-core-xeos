@@ -68,6 +68,6 @@
  */
 
 #include "xeos/proc.h"
-#include "xeos/__proc.h"
+#include "xeos/__private/proc.h"
 
 struct __XEOS_Proc_Process __XEOS_Proc_KernelTask;

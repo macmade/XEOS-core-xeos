@@ -68,7 +68,7 @@
  */
 
 #include "xeos/irq.h"
-#include "xeos/__irq.h"
+#include "xeos/__private/irq.h"
 #include <stdlib.h>
 
 void XEOS_IRQ_ExecuteIRQHandlers( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * registers )

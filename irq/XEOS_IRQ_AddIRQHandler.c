@@ -68,7 +68,7 @@
  */
 
 #include "xeos/irq.h"
-#include "xeos/__irq.h"
+#include "xeos/__private/irq.h"
 #include <stdlib.h>
 
 bool XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ irq, XEOS_IRQ_IRQHandler handler )

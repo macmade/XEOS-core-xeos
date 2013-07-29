@@ -68,6 +68,6 @@
  */
 
 #include "xeos/vm.h"
-#include "xeos/__vm.h"
+#include "xeos/__private/vm.h"
 
 struct __XEOS_VM_MemoryMap __XEOS_VM_SystemMap = { 0, 0, 0, 0, 0, 0, 0, 0 };

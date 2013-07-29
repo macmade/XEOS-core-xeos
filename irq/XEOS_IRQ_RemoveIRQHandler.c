@@ -68,7 +68,7 @@
  */
 
 #include "xeos/irq.h"
-#include "xeos/__irq.h"
+#include "xeos/__private/irq.h"
 #include <stdlib.h>
 
 void XEOS_IRQ_RemoveIRQHandler( XEOS_HAL_PIC_IRQ irq, XEOS_IRQ_IRQHandler handler )

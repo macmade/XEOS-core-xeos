@@ -68,7 +68,7 @@
  */
 
 #include "xeos/video.h"
-#include "xeos/__video.h"
+#include "xeos/__private/video.h"
 
 static void __XEOS_Video_VPrintf_CharacterHandler( char c );
 static void __XEOS_Video_VPrintf_CharacterHandler( char c )

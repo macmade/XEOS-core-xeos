@@ -68,7 +68,7 @@
  */
 
 #include "xeos/info.h"
-#include "xeos/__info.h"
+#include "xeos/__private/info.h"
 #include <stdlib.h>
 
 uint64_t XEOS_Info_MemoryGetTotalBytes( XEOS_Info_MemoryRef memory )

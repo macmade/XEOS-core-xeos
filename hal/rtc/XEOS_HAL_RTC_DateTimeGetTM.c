@@ -68,7 +68,7 @@
  */
 
 #include "xeos/hal/rtc.h"
-#include "xeos/hal/__rtc.h"
+#include "xeos/hal/__private/rtc.h"
 #include "xeos/hal/io.h"
 #include "xeos/hal/cmos.h"
 #include <time.h>
