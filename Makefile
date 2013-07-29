@@ -178,10 +178,6 @@ _FILES_C_OBJ_BUILD_MEM          = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OB
 .PHONY: all     \
         clean
 
-# Declaration for precious targets, to avoid cleaning of intermediate files
-.PRECIOUS:  $(PATH_BUILD_64)%$(EXT_ASM_64)$(EXT_OBJ)    \
-            $(PATH_BUILD_64)%$(EXT_C)$(EXT_OBJ)
-
 #-------------------------------------------------------------------------------
 # Phony targets
 #-------------------------------------------------------------------------------
