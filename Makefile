@@ -155,22 +155,8 @@ vpath %$(EXT_H)         $(DIR_SRC_INC)
 # Files
 #-------------------------------------------------------------------------------
 
-_FILES_ASM_32                   = $(foreach dir,$(PATH_SRC_CORE_KERNEL),$(wildcard $(PATH_SRC_CORE_KERNEL)*$(EXT_ASM_32)))
-_FILES_ASM_64                   = $(foreach dir,$(PATH_SRC_CORE_KERNEL),$(wildcard $(PATH_SRC_CORE_KERNEL)*$(EXT_ASM_64)))
-_FILES_ASM_32_RT                = $(foreach dir,$(DIR_SRC_ASM_RT),$(wildcard $(DIR_SRC_ASM_RT)*$(EXT_ASM_32)))
-_FILES_ASM_64_RT                = $(foreach dir,$(DIR_SRC_ASM_RT),$(wildcard $(DIR_SRC_ASM_RT)*$(EXT_ASM_64)))
-_FILES_ASM_REL_32               = $(notdir $(_FILES_ASM_32))
-_FILES_ASM_REL_64               = $(notdir $(_FILES_ASM_64))
-_FILES_ASM_REL_32_RT            = $(notdir $(_FILES_ASM_32_RT))
-_FILES_ASM_REL_64_RT            = $(notdir $(_FILES_ASM_64_RT))
-_FILES_ASM_OBJ_32               = $(subst $(EXT_ASM_32),$(EXT_ASM_32)$(EXT_OBJ),$(_FILES_ASM_REL_32))
-_FILES_ASM_OBJ_64               = $(subst $(EXT_ASM_64),$(EXT_ASM_64)$(EXT_OBJ),$(_FILES_ASM_REL_64))
-_FILES_ASM_OBJ_32_RT            = $(subst $(EXT_ASM_32),$(EXT_ASM_32)$(EXT_OBJ),$(_FILES_ASM_REL_32_RT))
-_FILES_ASM_OBJ_64_RT            = $(subst $(EXT_ASM_64),$(EXT_ASM_64)$(EXT_OBJ),$(_FILES_ASM_REL_64_RT))
-_FILES_ASM_OBJ_BUILD_32         = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_ASM_OBJ_32))
-_FILES_ASM_OBJ_BUILD_64         = $(addprefix $(PATH_BUILD_64_CORE_OBJ_KERNEL),$(_FILES_ASM_OBJ_64))
-_FILES_ASM_OBJ_BUILD_32_RT      = $(addprefix $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(_FILES_ASM_OBJ_32_RT))
-_FILES_ASM_OBJ_BUILD_64_RT      = $(addprefix $(PATH_BUILD_64_CORE_OBJ_KERNEL),$(_FILES_ASM_OBJ_64_RT))
+_FILES_ASM_OBJ_BUILD            = $(call XEOS_FUNC_S_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(PATH_SRC_CORE_KERNEL))
+_FILES_ASM_OBJ_BUILD_RT         = $(call XEOS_FUNC_S_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_ASM_RT))
 
 _FILES_C_OBJ_BUILD              = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(PATH_SRC_CORE_KERNEL))
 _FILES_C_OBJ_BUILD_HAL          = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_HAL))
@@ -203,14 +189,14 @@ _FILES_C_OBJ_BUILD_MEM          = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OB
 .PHONY: all clean
 
 # Declaration for precious targets, to avoid cleaning of intermediate files
-.PRECIOUS: $(PATH_BUILD_64_CORE_OBJ_KERNEL)%$(EXT_C)$(EXT_OBJ)
+.PRECIOUS: $(PATH_BUILD_64_CORE_OBJ_KERNEL)%$(EXT_ASM_64)$(EXT_OBJ) $(PATH_BUILD_64_CORE_OBJ_KERNEL)%$(EXT_C)$(EXT_OBJ) $(PATH_BUILD_64_CORE_OBJ_KERNEL)%$(EXT_ASM_64)$(EXT_OBJ)
 
 #-------------------------------------------------------------------------------
 # Phony targets
 #-------------------------------------------------------------------------------
 
 # Build the full project
-all: $(_FILES_ASM_OBJ_BUILD_32) $(_FILES_ASM_OBJ_BUILD_64) $(_FILES_ASM_OBJ_BUILD_32_RT) $(_FILES_ASM_OBJ_BUILD_64_RT) $(_FILES_C_OBJ_BUILD) $(_FILES_C_OBJ_BUILD_HAL) $(_FILES_C_OBJ_BUILD_HAL_CPU) $(_FILES_C_OBJ_BUILD_HAL_IO) $(_FILES_C_OBJ_BUILD_HAL_RTC) $(_FILES_C_OBJ_BUILD_HAL_CMOS) $(_FILES_C_OBJ_BUILD_HAL_IDT) $(_FILES_C_OBJ_BUILD_HAL_NMI) $(_FILES_C_OBJ_BUILD_HAL_GDT) $(_FILES_C_OBJ_BUILD_HAL_PIC) $(_FILES_C_OBJ_BUILD_HAL_PIT) $(_FILES_C_OBJ_BUILD_HAL_PS2) $(_FILES_C_OBJ_BUILD_HAL_KEYBOARD) $(_FILES_C_OBJ_BUILD_ISR) $(_FILES_C_OBJ_BUILD_IRQ) $(_FILES_C_OBJ_BUILD_SYSTEM) $(_FILES_C_OBJ_BUILD_SYSCALL) $(_FILES_C_OBJ_BUILD_VIDEO) $(_FILES_C_OBJ_BUILD_INFO) $(_FILES_C_OBJ_BUILD_VM) $(_FILES_C_OBJ_BUILD_PROC) $(_FILES_C_OBJ_BUILD_MEM)
+all: $(_FILES_ASM_OBJ_BUILD_32) $(_FILES_ASM_OBJ_BUILD_32_RT) (_FILES_C_OBJ_BUILD) $(_FILES_C_OBJ_BUILD_HAL) $(_FILES_C_OBJ_BUILD_HAL_CPU) $(_FILES_C_OBJ_BUILD_HAL_IO) $(_FILES_C_OBJ_BUILD_HAL_RTC) $(_FILES_C_OBJ_BUILD_HAL_CMOS) $(_FILES_C_OBJ_BUILD_HAL_IDT) $(_FILES_C_OBJ_BUILD_HAL_NMI) $(_FILES_C_OBJ_BUILD_HAL_GDT) $(_FILES_C_OBJ_BUILD_HAL_PIC) $(_FILES_C_OBJ_BUILD_HAL_PIT) $(_FILES_C_OBJ_BUILD_HAL_PS2) $(_FILES_C_OBJ_BUILD_HAL_KEYBOARD) $(_FILES_C_OBJ_BUILD_ISR) $(_FILES_C_OBJ_BUILD_IRQ) $(_FILES_C_OBJ_BUILD_SYSTEM) $(_FILES_C_OBJ_BUILD_SYSCALL) $(_FILES_C_OBJ_BUILD_VIDEO) $(_FILES_C_OBJ_BUILD_INFO) $(_FILES_C_OBJ_BUILD_VM) $(_FILES_C_OBJ_BUILD_PROC) $(_FILES_C_OBJ_BUILD_MEM)
 	
 	@:
 
@@ -222,12 +208,6 @@ clean:
 	@$(RM) $(ARGS_RM) $(PATH_BUILD_64_CORE_OBJ_KERNEL)*
 	@$(RM) $(ARGS_RM) $(PATH_BUILD_32_CORE_OBJ_PIC_KERNEL)*
 	@$(RM) $(ARGS_RM) $(PATH_BUILD_64_CORE_OBJ_PIC_KERNEL)*
-	
-# Compiles an assembly file (32 bits)
-$(PATH_BUILD_32_CORE_OBJ_KERNEL)%$(EXT_ASM_32)$(EXT_OBJ): %$(EXT_ASM_32)
-	
-	@$(PRINT) $(PROMPT)"Compiling assembly file [ 32 bits ]: "$(COLOR_YELLOW)"$(notdir $< )"$(COLOR_NONE)" -> "$(COLOR_GRAY)"$(notdir $@)"$(COLOR_NONE)
-	@$(AS_32) $(ARGS_AS_32) -o $(PATH_BUILD_32_CORE_OBJ_KERNEL)$(@F) $(abspath $<)
 	
 # Compiles an assembly file (64 bits)
 $(PATH_BUILD_64_CORE_OBJ_KERNEL)%$(EXT_ASM_64)$(EXT_OBJ): %$(EXT_ASM_64)
@@ -243,6 +223,12 @@ $(PATH_BUILD_64_CORE_OBJ_KERNEL)%$(EXT_C)$(EXT_OBJ): %$(EXT_C)
 
 # Targets with second expansion
 .SECONDEXPANSION:
+
+# Compiles an assembly file (32 bits)
+$(PATH_BUILD_32_CORE_OBJ_KERNEL)%$(EXT_ASM_32)$(EXT_OBJ): %$(EXT_ASM_32) $$(subst $(EXT_ASM_32),$(EXT_ASM_64),$$(subst $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(PATH_BUILD_64_CORE_OBJ_KERNEL),$$@))
+	
+	@$(PRINT) $(PROMPT)"Compiling assembly file [ 32 bits ]: "$(COLOR_YELLOW)"$(notdir $< )"$(COLOR_NONE)" -> "$(COLOR_GRAY)"$(notdir $@)"$(COLOR_NONE)
+	@$(AS_32) $(ARGS_AS_32) -o $(PATH_BUILD_32_CORE_OBJ_KERNEL)$(@F) $(abspath $<)
     
 # Compiles a C file (32 bits)
 $(PATH_BUILD_32_CORE_OBJ_KERNEL)%$(EXT_C)$(EXT_OBJ): %$(EXT_C) $$(subst $(PATH_BUILD_32_CORE_OBJ_KERNEL),$(PATH_BUILD_64_CORE_OBJ_KERNEL),$$@)
