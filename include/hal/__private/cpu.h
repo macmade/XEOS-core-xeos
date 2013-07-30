@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_HAL___CPU_H__
-#define __XEOS_HAL___CPU_H__
+#ifndef __XEOS_HAL_PRIVATE_CPU_H__
+#define __XEOS_HAL_PRIVATE_CPU_H__
 #pragma once
 
 #ifdef __cplusplus
@@ -106,4 +106,4 @@ extern uint32_t __XEOS_HAL_CPU_FeatureHigh;
 }
 #endif
 
-#endif /* __XEOS_HAL___CPU_H__ */
+#endif /* __XEOS_HAL_PRIVATE_CPU_H__ */

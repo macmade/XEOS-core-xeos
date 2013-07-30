@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS___INFO_H__
-#define __XEOS___INFO_H__
+#ifndef __XEOS_PRIVATE_INFO_H__
+#define __XEOS_PRIVATE_INFO_H__
 #pragma once
 
 #ifdef __cplusplus
@@ -196,4 +196,4 @@ struct __XEOS_Info
 }
 #endif
 
-#endif /* __XEOS___INFO_H__ */
+#endif /* __XEOS_PRIVATE_INFO_H__ */

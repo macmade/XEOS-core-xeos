@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS___PROC_H__
-#define __XEOS___PROC_H__
+#ifndef __XEOS_PRIVATE_MEM_H__
+#define __XEOS_PRIVATE_MEM_H__
 #pragma once
 
 #ifdef __cplusplus
@@ -97,4 +97,4 @@ extern unsigned int             __XEOS_Mem_ZoneCount;
 }
 #endif
 
-#endif /* __XEOS___PROC_H__ */
+#endif /* __XEOS_PRIVATE_MEM_H__ */

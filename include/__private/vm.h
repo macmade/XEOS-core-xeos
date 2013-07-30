@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS___VM_H__
-#define __XEOS___VM_H__
+#ifndef __XEOS_PRIVATE_VM_H__
+#define __XEOS_PRIVATE_VM_H__
 #pragma once
 
 #ifdef __cplusplus
@@ -96,4 +96,4 @@ extern struct __XEOS_VM_MemoryMap __XEOS_VM_SystemMap;
 }
 #endif
 
-#endif /* __XEOS___VM_H__ */
+#endif /* __XEOS_PRIVATE_VM_H__ */
