@@ -70,7 +70,7 @@
 #include "xeos/mem.h"
 #include "xeos/__private/mem.h"
 #include <stdlib.h>
-#include <sys/atomic.h>
+#include <libsystem/atomic.h>
 
 void * XEOS_Mem_AllocPage( void )
 {

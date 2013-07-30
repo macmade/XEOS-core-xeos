@@ -70,7 +70,7 @@
 #include "xeos/mem.h"
 #include "xeos/__private/mem.h"
 #include <stdlib.h>
-#include <sys/atomic.h>
+#include <libsystem/atomic.h>
 
 #include "xeos/video.h"
 
