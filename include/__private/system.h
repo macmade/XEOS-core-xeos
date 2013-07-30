@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_PRIVATE_SYSTEM_H__
-#define __XEOS_PRIVATE_SYSTEM_H__
+#ifndef __XEOS___PRIVATE_SYSTEM_H__
+#define __XEOS___PRIVATE_SYSTEM_H__
 #pragma once
 
 #ifdef __cplusplus
@@ -94,4 +94,4 @@ extern double __XEOS_System_Milliseconds;
 }
 #endif
 
-#endif /* __XEOS_PRIVATE_SYSTEM_H__ */
+#endif /* __XEOS___PRIVATE_SYSTEM_H__ */

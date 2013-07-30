@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_HAL_PRIVATE_RTC_H__
-#define __XEOS_HAL_PRIVATE_RTC_H__
+#ifndef __XEOS_HAL___PRIVATE_RTC_H__
+#define __XEOS_HAL___PRIVATE_RTC_H__
 #pragma once
 
 #ifdef __cplusplus
@@ -143,4 +143,4 @@ uint8_t __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_Register r );
 }
 #endif
 
-#endif /* __XEOS_HAL_PRIVATE_RTC_H__ */
+#endif /* __XEOS_HAL___PRIVATE_RTC_H__ */

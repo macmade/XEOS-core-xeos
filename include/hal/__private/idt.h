@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_HAL_PRIVATE_IDT_H__
-#define __XEOS_HAL_PRIVATE_IDT_H__
+#ifndef __XEOS_HAL___PRIVATE_IDT_H__
+#define __XEOS_HAL___PRIVATE_IDT_H__
 #pragma once
 
 #ifdef __cplusplus
@@ -200,4 +200,4 @@ extern XEOS_HAL_IDT_ISRHandler __XEOS_HAL_IDT_ISRHandlers[];
 }
 #endif
 
-#endif /* __XEOS_HAL_PRIVATE_IDT_H__ */
+#endif /* __XEOS_HAL___PRIVATE_IDT_H__ */

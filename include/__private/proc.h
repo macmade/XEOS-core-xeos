@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_PRIVATE_PROC_H__
-#define __XEOS_PRIVATE_PROC_H__
+#ifndef __XEOS___PRIVATE_PROC_H__
+#define __XEOS___PRIVATE_PROC_H__
 #pragma once
 
 #ifdef __cplusplus
@@ -98,4 +98,4 @@ extern struct __XEOS_Proc_Process __XEOS_Proc_KernelTask;
 }
 #endif
 
-#endif /* __XEOS_PRIVATE_PROC_H__ */
+#endif /* __XEOS___PRIVATE_PROC_H__ */

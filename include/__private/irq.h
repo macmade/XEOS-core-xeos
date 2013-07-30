@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_PRIVATE_IRQ_H__
-#define __XEOS_PRIVATE_IRQ_H__
+#ifndef __XEOS___PRIVATE_IRQ_H__
+#define __XEOS___PRIVATE_IRQ_H__
 #pragma once
 
 #ifdef __cplusplus
@@ -204,4 +204,4 @@ extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ15Handlers[];
 }
 #endif
 
-#endif /* __XEOS_PRIVATE_IRQ_H__ */
+#endif /* __XEOS___PRIVATE_IRQ_H__ */
