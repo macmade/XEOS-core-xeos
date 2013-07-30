@@ -145,8 +145,6 @@ vpath %$(EXT_H)         $(DIR_SRC_INC)
 #-------------------------------------------------------------------------------
 
 _FILES_ASM_OBJ_BUILD            = $(call XEOS_FUNC_S_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(PATH_SRC_CORE_KERNEL))
-_FILES_ASM_OBJ_BUILD_RT         = $(call XEOS_FUNC_S_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_ASM_RT))
-
 _FILES_C_OBJ_BUILD              = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(PATH_SRC_CORE_KERNEL))
 _FILES_C_OBJ_BUILD_HAL          = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_HAL))
 _FILES_C_OBJ_BUILD_HAL_CPU      = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_HAL_CPU))
