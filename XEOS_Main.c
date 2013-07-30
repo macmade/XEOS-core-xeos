@@ -79,8 +79,8 @@
 #include <sys/syscall.h>
 #include <stdlib.h>
 #include <string.h>
-#include <acpi/acpi.h>
-#include <acpi/acpica.h>
+#include <libacpi/acpi.h>
+#include <libacpi/acpica.h>
 
 #define __NOP                       \
     __asm__                         \
