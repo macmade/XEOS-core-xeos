@@ -67,7 +67,7 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/hal/io.h"
+#include "hal/io.h"
 
 void XEOS_HAL_IO_Wait( void )
 {

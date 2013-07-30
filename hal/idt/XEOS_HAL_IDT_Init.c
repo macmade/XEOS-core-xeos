@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/hal/idt.h"
-#include "xeos/hal/__private/idt.h"
+#include "hal/idt.h"
+#include "hal/__private/idt.h"
 #include <string.h>
 
 #ifdef __LP64__

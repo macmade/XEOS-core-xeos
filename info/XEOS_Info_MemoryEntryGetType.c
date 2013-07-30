@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/info.h"
-#include "xeos/__private/info.h"
+#include "info.h"
+#include "__private/info.h"
 #include <stdlib.h>
 
 XEOS_Info_MemoryEntryType XEOS_Info_MemoryEntryGetType( XEOS_Info_MemoryEntryRef entry )

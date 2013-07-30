@@ -67,10 +67,10 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/irq.h"
-#include "xeos/__private/irq.h"
+#include "irq.h"
+#include "__private/irq.h"
 
-#include "xeos/video.h"
+#include "video.h"
 
 void XEOS_IRQ_SystemTimer( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * registers )
 {

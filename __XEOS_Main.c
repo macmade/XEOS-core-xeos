@@ -68,8 +68,8 @@
  */
 
 #include "__XEOS_Main.h"
-#include "xeos/video.h"
-#include "xeos/hal.h"
+#include "video.h"
+#include "hal.h"
 #include <stdlib.h>
 #include <string.h>
 

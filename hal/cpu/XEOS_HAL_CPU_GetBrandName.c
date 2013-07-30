@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/hal/cpu.h"
-#include "xeos/hal/__private/cpu.h"
+#include "hal/cpu.h"
+#include "hal/__private/cpu.h"
 #include <stdlib.h>
 #include <string.h>
 

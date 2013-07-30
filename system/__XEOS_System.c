@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/system.h"
-#include "xeos/__private/system.h"
+#include "system.h"
+#include "__private/system.h"
 
 time_t __XEOS_System_Timestamp;
 double __XEOS_System_Milliseconds;

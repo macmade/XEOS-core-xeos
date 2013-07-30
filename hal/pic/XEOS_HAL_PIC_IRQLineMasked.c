@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/hal/pic.h"
-#include "xeos/hal/io.h"
+#include "hal/pic.h"
+#include "hal/io.h"
 
 bool XEOS_HAL_PIC_IRQLineMasked( XEOS_HAL_PIC_IRQ irq )
 {

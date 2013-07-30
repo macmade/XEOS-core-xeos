@@ -67,9 +67,9 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/hal/nmi.h"
-#include "xeos/hal/io.h"
-#include "xeos/hal/cmos.h"
+#include "hal/nmi.h"
+#include "hal/io.h"
+#include "hal/cmos.h"
 
 void XEOS_HAL_NMI_Enable( void )
 {

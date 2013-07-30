@@ -67,9 +67,9 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/system.h"
-#include "xeos/video.h"
-#include "xeos/hal.h"
+#include "system.h"
+#include "video.h"
+#include "hal.h"
 
 void XEOS_System_Panicf( const char * format, ... )
 {

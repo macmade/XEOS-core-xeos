@@ -67,12 +67,12 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/irq.h"
-#include "xeos/__private/irq.h"
-#include "xeos/hal/io.h"
-#include "xeos/hal/cmos.h"
-#include "xeos/hal/rtc.h"
-#include "xeos/__private/system.h"
+#include "irq.h"
+#include "__private/irq.h"
+#include "hal/io.h"
+#include "hal/cmos.h"
+#include "hal/rtc.h"
+#include "__private/system.h"
 #include <time.h>
 
 #define __XEOS_IRQ_RTC_FREQUENCY    1024

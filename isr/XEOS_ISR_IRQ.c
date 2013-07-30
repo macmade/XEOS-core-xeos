@@ -67,9 +67,9 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/isr.h"
-#include "xeos/irq.h"
-#include "xeos/hal/pic.h"
+#include "isr.h"
+#include "irq.h"
+#include "hal/pic.h"
 
 void XEOS_ISR_IRQ( uint8_t isr, XEOS_HAL_CPU_Registers * registers )
 {

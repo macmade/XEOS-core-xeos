@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/irq.h"
-#include "xeos/__private/irq.h"
+#include "irq.h"
+#include "__private/irq.h"
 #include <stdlib.h>
 
 bool XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ irq, XEOS_IRQ_IRQHandler handler )

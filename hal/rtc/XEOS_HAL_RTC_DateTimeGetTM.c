@@ -67,10 +67,10 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/hal/rtc.h"
-#include "xeos/hal/__private/rtc.h"
-#include "xeos/hal/io.h"
-#include "xeos/hal/cmos.h"
+#include "hal/rtc.h"
+#include "hal/__private/rtc.h"
+#include "hal/io.h"
+#include "hal/cmos.h"
 #include <time.h>
 
 void XEOS_HAL_RTC_DateTimeGetTM( XEOS_HAL_RTC_DateTimeRef time, struct tm * t )

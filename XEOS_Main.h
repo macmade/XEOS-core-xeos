@@ -75,7 +75,7 @@
 extern "C" {
 #endif
 
-#include "xeos/info.h"
+#include "info.h"
 
 void XEOS_Main( XEOS_InfoRef info ) XEOS_NORETURN_ATTRIBUTE;
 

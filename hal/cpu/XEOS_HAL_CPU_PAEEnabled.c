@@ -67,7 +67,7 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/hal/cpu.h"
+#include "hal/cpu.h"
 
 bool XEOS_HAL_CPU_PAEEnabled( void )
 {

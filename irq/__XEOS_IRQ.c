@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/irq.h"
-#include "xeos/__private/irq.h"
+#include "irq.h"
+#include "__private/irq.h"
 
 bool __XEOS_IRQ_Inited = false;
 

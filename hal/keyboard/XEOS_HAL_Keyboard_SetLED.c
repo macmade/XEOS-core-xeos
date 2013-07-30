@@ -67,10 +67,10 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/hal/keyboard.h"
-#include "xeos/hal/io.h"
-#include "xeos/hal/ps2.h"
-#include "xeos/hal/pic.h"
+#include "hal/keyboard.h"
+#include "hal/io.h"
+#include "hal/ps2.h"
+#include "hal/pic.h"
 
 XEOS_HAL_Keyboard_Response XEOS_HAL_Keyboard_SetLED( XEOS_HAL_Keyboard_LEDState state )
 {

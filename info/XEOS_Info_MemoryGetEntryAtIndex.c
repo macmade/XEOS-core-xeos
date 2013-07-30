@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/info.h"
-#include "xeos/__private/info.h"
+#include "info.h"
+#include "__private/info.h"
 #include <stdlib.h>
 
 XEOS_Info_MemoryEntryRef XEOS_Info_MemoryGetEntryAtIndex( XEOS_Info_MemoryRef memory, unsigned int index )

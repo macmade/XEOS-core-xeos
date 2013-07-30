@@ -69,13 +69,13 @@
 
 #include "XEOS_Main.h"
 #include "__XEOS_Main.h"
-#include "xeos/video.h"
-#include "xeos/system.h"
-#include "xeos/mem.h"
-#include "xeos/vm.h"
-#include "xeos/hal.h"
-#include "xeos/isr.h"
-#include "xeos/irq.h"
+#include "video.h"
+#include "system.h"
+#include "mem.h"
+#include "vm.h"
+#include "hal.h"
+#include "isr.h"
+#include "irq.h"
 #include <sys/syscall.h>
 #include <stdlib.h>
 #include <string.h>

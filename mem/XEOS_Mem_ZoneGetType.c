@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/mem.h"
-#include "xeos/__private/mem.h"
+#include "mem.h"
+#include "__private/mem.h"
 #include <stdlib.h>
 
 XEOS_Mem_ZoneType XEOS_Mem_ZoneGetType( XEOS_Mem_ZoneRef object )

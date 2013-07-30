@@ -67,9 +67,9 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/hal/idt.h"
-#include "xeos/hal/__private/idt.h"
-#include "xeos/hal/cpu.h"
+#include "hal/idt.h"
+#include "hal/__private/idt.h"
+#include "hal/cpu.h"
 
 void XEOS_HAL_IDT_Reload( void )
 {

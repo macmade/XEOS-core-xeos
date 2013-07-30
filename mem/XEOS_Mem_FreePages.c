@@ -67,12 +67,12 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/mem.h"
-#include "xeos/__private/mem.h"
+#include "mem.h"
+#include "__private/mem.h"
 #include <stdlib.h>
 #include <libsystem/atomic.h>
 
-#include "xeos/video.h"
+#include "video.h"
 
 void XEOS_Mem_FreePages( void * address, unsigned int n )
 {

@@ -67,9 +67,9 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/hal/cmos.h"
-#include "xeos/hal/cpu.h"
-#include "xeos/hal/io.h"
+#include "hal/cmos.h"
+#include "hal/cpu.h"
+#include "hal/io.h"
 #include <stdbool.h>
 
 void XEOS_HAL_CMOS_Write( uint8_t * bytes, uint8_t length )

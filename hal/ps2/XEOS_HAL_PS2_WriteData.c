@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/hal/ps2.h"
-#include "xeos/hal/io.h"
+#include "hal/ps2.h"
+#include "hal/io.h"
 
 void XEOS_HAL_PS2_WriteData( uint8_t data )
 {

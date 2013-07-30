@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "xeos/video.h"
-#include "xeos/__private/video.h"
+#include "video.h"
+#include "__private/video.h"
 #include <stdint.h>
 
 void XEOS_Video_Clear( void )
