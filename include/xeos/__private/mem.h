@@ -79,7 +79,8 @@ extern "C" {
 
 struct __XEOS_Mem_Zone
 {
-    uint8_t                  __pad_0[ 4 ];
+    char                     __pad_0[ 4 ];
+    
     XEOS_Mem_ZoneType        type;
     void                   * base;
     uint64_t                 length;
