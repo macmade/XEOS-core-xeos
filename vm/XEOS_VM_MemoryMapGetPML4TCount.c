@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <vm.h>
-#include <__private/vm.h>
+#include <xeos/vm.h>
+#include <xeos/__private/vm.h>
 #include <stdlib.h>
 #include <string.h>
 

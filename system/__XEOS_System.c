@@ -68,7 +68,7 @@
  */
 
 #include <system.h>
-#include <__private/system.h>
+#include <xeos/__private/system.h>
 
 time_t __XEOS_System_Timestamp;
 double __XEOS_System_Milliseconds;

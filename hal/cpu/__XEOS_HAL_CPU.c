@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <hal/cpu.h>
-#include <hal/__private/cpu.h>
+#include <xeos/hal/cpu.h>
+#include <xeos/hal/__private/cpu.h>
 
 uint32_t    __XEOS_HAL_CPU_FeatureLow   = 0;
 uint32_t    __XEOS_HAL_CPU_FeatureHigh  = 0;

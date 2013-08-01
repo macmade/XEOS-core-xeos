@@ -67,9 +67,9 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <__XEOS_Main.h>
-#include <video.h>
-#include <hal.h>
+#include "__XEOS_Main.h"
+#include <xeos/video.h>
+#include <xeos/hal.h>
 #include <stdlib.h>
 #include <string.h>
 

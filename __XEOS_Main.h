@@ -74,7 +74,7 @@
 extern "C" {
 #endif
 
-#include <video.h>
+#include <xeos/video.h>
 
 void __XEOS_Main_PrintCopyright( void );
 void __XEOS_Main_PromptWithStatus( const char * message, const char * status, XEOS_Video_Color statusColor );

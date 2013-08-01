@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <info.h>
-#include <__private/info.h>
+#include <xeos/info.h>
+#include <xeos/__private/info.h>
 
 uintptr_t XEOS_Info_GetKernelDataSectionEndAddress( void )
 {

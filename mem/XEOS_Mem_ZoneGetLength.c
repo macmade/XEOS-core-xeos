@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <mem.h>
-#include <__private/mem.h>
+#include <xeos/mem.h>
+#include <xeos/__private/mem.h>
 #include <stdlib.h>
 
 uint64_t XEOS_Mem_ZoneGetLength( XEOS_Mem_ZoneRef object )

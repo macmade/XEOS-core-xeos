@@ -67,9 +67,9 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <hal/cmos.h>
-#include <hal/cpu.h>
-#include <hal/io.h>
+#include <xeos/hal/cmos.h>
+#include <xeos/hal/cpu.h>
+#include <xeos/hal/io.h>
 #include <stdbool.h>
 
 void XEOS_HAL_CMOS_Read( uint8_t * bytes, uint8_t length )

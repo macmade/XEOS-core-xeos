@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <hal/idt.h>
-#include <hal/__private/idt.h>
+#include <xeos/hal/idt.h>
+#include <xeos/hal/__private/idt.h>
 #include <stdlib.h>
 
 void XEOS_HAL_IDT_ISREntrySetSelector( XEOS_HAL_IDT_ISREntryRef entry, uint16_t selector )

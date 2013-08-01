@@ -67,11 +67,11 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <hal/rtc.h>
-#include <hal/__private/rtc.h>
-#include <hal/io.h>
-#include <hal/cpu.h>
-#include <hal/cmos.h>
+#include <xeos/hal/rtc.h>
+#include <xeos/hal/__private/rtc.h>
+#include <xeos/hal/io.h>
+#include <xeos/hal/cpu.h>
+#include <xeos/hal/cmos.h>
 
 void XEOS_HAL_RTC_SetRate( uint8_t rate )
 {

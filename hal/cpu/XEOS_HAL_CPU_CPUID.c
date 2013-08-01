@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <hal/cpu.h>
-#include <hal/__private/cpu.h>
+#include <xeos/hal/cpu.h>
+#include <xeos/hal/__private/cpu.h>
 
 void XEOS_HAL_CPU_CPUID( uint32_t info, uint32_t * eax, uint32_t * ebx, uint32_t * ecx, uint32_t * edx )
 {

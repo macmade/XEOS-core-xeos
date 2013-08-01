@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <hal/rtc.h>
-#include <hal/__private/rtc.h>
+#include <xeos/hal/rtc.h>
+#include <xeos/hal/__private/rtc.h>
 #include <stdlib.h>
 
 void XEOS_HAL_RTC_DateTimeSetCentury( XEOS_HAL_RTC_DateTimeRef time, uint8_t value )

@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <hal/ps2.h>
-#include <hal/io.h>
+#include <xeos/hal/ps2.h>
+#include <xeos/hal/io.h>
 
 bool XEOS_HAL_PS2_InputBufferEmpty( void )
 {

@@ -67,10 +67,10 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <irq.h>
-#include <__private/irq.h>
-#include <hal/io.h>
-#include <video.h>
+#include <xeos/irq.h>
+#include <xeos/__private/irq.h>
+#include <xeos/hal/io.h>
+#include <xeos/video.h>
 
 void XEOS_IRQ_Keyboard( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * registers )
 {

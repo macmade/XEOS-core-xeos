@@ -67,7 +67,7 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <hal/cpu.h>
+#include <xeos/hal/cpu.h>
 
 void XEOS_HAL_CPU_WRMSR( uint32_t id, uint64_t value )
 {

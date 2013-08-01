@@ -67,7 +67,7 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <hal/io.h>
+#include <xeos/hal/io.h>
 
 uint8_t XEOS_HAL_IO_PortIn( uint16_t port )
 {

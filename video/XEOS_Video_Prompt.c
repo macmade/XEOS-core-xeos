@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <video.h>
-#include <__private/video.h>
+#include <xeos/video.h>
+#include <xeos/__private/video.h>
 
 int XEOS_Video_Prompt( const char * s )
 {

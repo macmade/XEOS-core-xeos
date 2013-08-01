@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <video.h>
-#include <__private/video.h>
+#include <xeos/video.h>
+#include <xeos/__private/video.h>
 
 char          __XEOS_Video_Attribute        = XEOS_Video_ColorBlack << 4 | XEOS_Video_ColorWhite;
 unsigned int  __XEOS_Video_X                = 0x00;

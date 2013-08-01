@@ -67,7 +67,7 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <hal/cpu.h>
+#include <xeos/hal/cpu.h>
 
 bool XEOS_HAL_CPU_InterruptsEnabled( void )
 {

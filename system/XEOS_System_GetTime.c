@@ -68,7 +68,7 @@
  */
 
 #include <system.h>
-#include <__private/system.h>
+#include <xeos/__private/system.h>
 
 time_t XEOS_System_GetTime( void )
 {
