@@ -1,7 +1,7 @@
 /*******************************************************************************
  * XEOS - X86 Experimental Operating System
  * 
- * Copyright (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  * All rights reserved.
  * 
  * XEOS Software License - Version 1.0 - December 21, 2012
@@ -64,7 +64,7 @@
 /*!
  * @file            __XEOS_Main.c
  * @author          Jean-David Gadina
- * @copyright       (c) 2010-2012, Jean-David Gadina - www.xs-labs.com
+ * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
 #include "__XEOS_Main.h"
@@ -86,7 +86,7 @@ static const char * __copyrightLine1Left    = "                \x04";
 static const char * __copyrightLine1        = " XEOS - x86 Experimental Operating System ";
 static const char * __copyrightLine1Right   = "\x04                 ";
 static const char * __copyrightLine2        = "                                                                             ";
-static const char * __copyrightLine3        = "      Copyright (c) 2010-2012 Jean-David Gadina - www.xs-labs.com            ";
+static const char * __copyrightLine3        = "      Copyright (c) 2010-2013 Jean-David Gadina - www.xs-labs.com            ";
 static const char * __copyrightLine4        = "                       All rights (& wrongs) reserved                        ";
 static const char * __copyrightHRBottom     = "\xC8\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD"
                                               "\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD"
