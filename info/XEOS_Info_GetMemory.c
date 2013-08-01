@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "info.h"
-#include "__private/info.h"
+#include <info.h>
+#include <__private/info.h>
 #include <stdlib.h>
 
 XEOS_Info_MemoryRef XEOS_Info_GetMemory( XEOS_InfoRef info )

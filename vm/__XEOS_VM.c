@@ -67,7 +67,7 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "vm.h"
-#include "__private/vm.h"
+#include <vm.h>
+#include <__private/vm.h>
 
 struct __XEOS_VM_MemoryMap __XEOS_VM_SystemMap = { 0, 0, 0, 0, 0, 0, 0, 0 };

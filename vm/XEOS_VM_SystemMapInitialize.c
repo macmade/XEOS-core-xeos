@@ -67,10 +67,10 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "vm.h"
-#include "__private/vm.h"
-#include "mem.h"
-#include "hal/cpu.h"
+#include <vm.h>
+#include <__private/vm.h>
+#include <mem.h>
+#include <hal/cpu.h>
 #include <stdlib.h>
 #include <string.h>
 

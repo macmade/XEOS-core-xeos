@@ -67,10 +67,10 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "hal/rtc.h"
-#include "hal/__private/rtc.h"
-#include "hal/io.h"
-#include "hal/cmos.h"
+#include <hal/rtc.h>
+#include <hal/__private/rtc.h>
+#include <hal/io.h>
+#include <hal/cmos.h>
 
 uint8_t __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_Register r )
 {

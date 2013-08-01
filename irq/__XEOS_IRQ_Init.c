@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "irq.h"
-#include "__private/irq.h"
+#include <irq.h>
+#include <__private/irq.h>
 #include <string.h>
 
 void __XEOS_IRQ_Init( void )

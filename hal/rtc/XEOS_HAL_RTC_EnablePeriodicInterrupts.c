@@ -67,11 +67,11 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "hal/rtc.h"
-#include "hal/__private/rtc.h"
-#include "hal/cpu.h"
-#include "hal/io.h"
-#include "hal/cmos.h"
+#include <hal/rtc.h>
+#include <hal/__private/rtc.h>
+#include <hal/cpu.h>
+#include <hal/io.h>
+#include <hal/cmos.h>
 #include <stdbool.h>
 
 void XEOS_HAL_RTC_EnablePeriodicInterrupts( void )

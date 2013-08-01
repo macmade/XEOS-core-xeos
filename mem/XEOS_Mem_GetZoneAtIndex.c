@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "mem.h"
-#include "__private/mem.h"
+#include <mem.h>
+#include <__private/mem.h>
 #include <stdlib.h>
 
 XEOS_Mem_ZoneRef XEOS_Mem_GetZoneAtIndex( unsigned int index )

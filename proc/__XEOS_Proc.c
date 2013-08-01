@@ -67,7 +67,7 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "proc.h"
-#include "__private/proc.h"
+#include <proc.h>
+#include <__private/proc.h>
 
 struct __XEOS_Proc_Process __XEOS_Proc_KernelTask;

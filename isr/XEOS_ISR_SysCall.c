@@ -67,9 +67,9 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "isr.h"
-#include "system.h"
-#include "syscall.h"
+#include <isr.h>
+#include <system.h>
+#include <syscall.h>
 #include <sys/syscall.h>
 
 void XEOS_ISR_SysCall( uint8_t isr, XEOS_HAL_CPU_Registers * registers )

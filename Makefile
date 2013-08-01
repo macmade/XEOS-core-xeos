@@ -96,13 +96,6 @@ DIR_SRC_MEM             := $(PATH_SRC_CORE_KERNEL)mem/
 DIR_SRC_INC             := $(PATH_SRC_CORE_KERNEL)include/
 
 #-------------------------------------------------------------------------------
-# Software arguments
-#-------------------------------------------------------------------------------
-
-ARGS_CC_32          := -iquote $(PATH_SRC_CORE_KERNEL)include/xeos/ $(ARGS_CC_32)
-ARGS_CC_64          := -iquote $(PATH_SRC_CORE_KERNEL)include/xeos/ $(ARGS_CC_64)
-
-#-------------------------------------------------------------------------------
 # Search paths
 #-------------------------------------------------------------------------------
 

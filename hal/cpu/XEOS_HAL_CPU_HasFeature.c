@@ -67,10 +67,10 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "hal/cpu.h"
-#include "hal/__private/cpu.h"
+#include <hal/cpu.h>
+#include <hal/__private/cpu.h>
 
-#include "system.h"
+#include <system.h>
 
 static bool __XEOS_HAL_CPU_HasFeatures = false;
 

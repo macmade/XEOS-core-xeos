@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "isr.h"
-#include "system.h"
+#include <isr.h>
+#include <system.h>
 
 void XEOS_ISR_Exception( uint8_t isr, XEOS_HAL_CPU_Registers * registers )
 {

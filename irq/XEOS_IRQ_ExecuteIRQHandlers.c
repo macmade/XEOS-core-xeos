@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "irq.h"
-#include "__private/irq.h"
+#include <irq.h>
+#include <__private/irq.h>
 #include <stdlib.h>
 
 void XEOS_IRQ_ExecuteIRQHandlers( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * registers )

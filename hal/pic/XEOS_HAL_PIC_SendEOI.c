@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "hal/pic.h"
-#include "hal/io.h"
+#include <hal/pic.h>
+#include <hal/io.h>
 
 void XEOS_HAL_PIC_SendEOI( XEOS_HAL_PIC_Controller c )
 {

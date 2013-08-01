@@ -67,9 +67,9 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "video.h"
-#include "__private/video.h"
-#include "hal.h"
+#include <video.h>
+#include <__private/video.h>
+#include <hal.h>
 #include <stdint.h>
 
 void XEOS_Video_MoveCursor( unsigned int x, unsigned int y )

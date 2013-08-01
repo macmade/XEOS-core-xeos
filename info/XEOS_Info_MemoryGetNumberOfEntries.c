@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "info.h"
-#include "__private/info.h"
+#include <info.h>
+#include <__private/info.h>
 #include <stdlib.h>
 
 unsigned int XEOS_Info_MemoryGetNumberOfEntries( XEOS_Info_MemoryRef memory )

@@ -67,15 +67,15 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "XEOS_Main.h"
-#include "__XEOS_Main.h"
-#include "video.h"
-#include "system.h"
-#include "mem.h"
-#include "vm.h"
-#include "hal.h"
-#include "isr.h"
-#include "irq.h"
+#include <XEOS_Main.h>
+#include <__XEOS_Main.h>
+#include <video.h>
+#include <system.h>
+#include <mem.h>
+#include <vm.h>
+#include <hal.h>
+#include <isr.h>
+#include <irq.h>
 #include <sys/syscall.h>
 #include <stdlib.h>
 #include <string.h>

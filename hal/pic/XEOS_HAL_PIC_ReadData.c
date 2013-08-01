@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "hal/pic.h"
-#include "hal/io.h"
+#include <hal/pic.h>
+#include <hal/io.h>
 
 uint8_t XEOS_HAL_PIC_ReadData( XEOS_HAL_PIC_Controller c )
 {

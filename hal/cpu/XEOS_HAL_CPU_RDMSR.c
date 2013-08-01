@@ -67,7 +67,7 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "hal/cpu.h"
+#include <hal/cpu.h>
 
 uint64_t XEOS_HAL_CPU_RDMSR( uint32_t id )
 {

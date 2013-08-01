@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "video.h"
-#include "__private/video.h"
+#include <video.h>
+#include <__private/video.h>
 
 unsigned int XEOS_Video_Y( void )
 {

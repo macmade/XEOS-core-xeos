@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "mem.h"
-#include "__private/mem.h"
+#include <mem.h>
+#include <__private/mem.h>
 #include <stdlib.h>
 
 unsigned int XEOS_Mem_GetNumberOfZones( void )

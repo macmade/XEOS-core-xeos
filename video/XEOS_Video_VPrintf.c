@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "video.h"
-#include "__private/video.h"
+#include <video.h>
+#include <__private/video.h>
 
 static void __XEOS_Video_VPrintf_CharacterHandler( char c );
 static void __XEOS_Video_VPrintf_CharacterHandler( char c )

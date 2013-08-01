@@ -67,9 +67,9 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "hal/keyboard.h"
-#include "hal/io.h"
-#include "hal/ps2.h"
+#include <hal/keyboard.h>
+#include <hal/io.h>
+#include <hal/ps2.h>
 
 XEOS_HAL_Keyboard_Response XEOS_HAL_Keyboard_SendCommand( XEOS_HAL_Keyboard_Command command )
 {
