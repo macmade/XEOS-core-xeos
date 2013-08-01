@@ -69,7 +69,6 @@
 
 #ifndef __XEOS_HAL_ACPI_H__
 #define __XEOS_HAL_ACPI_H__
-#pragma once
 
 #ifdef __cplusplus
 extern "C" {

@@ -69,7 +69,6 @@
 
 #ifndef __XEOS_HAL___PRIVATE_IDT_H__
 #define __XEOS_HAL___PRIVATE_IDT_H__
-#pragma once
 
 #ifdef __cplusplus
 extern "C" {

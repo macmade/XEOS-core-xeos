@@ -69,7 +69,6 @@
 
 #ifndef __XEOS_ISR_H__
 #define __XEOS_ISR_H__
-#pragma once
 
 #ifdef __cplusplus
 extern "C" {

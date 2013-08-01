@@ -69,7 +69,7 @@
 
 #ifndef __XEOS_HAL_IO_H__
 #define __XEOS_HAL_IO_H__
-#pragma once
+
 
 #ifdef __cplusplus
 extern "C" {

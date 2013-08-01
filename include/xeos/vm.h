@@ -69,7 +69,7 @@
 
 #ifndef __XEOS_VM_H__
 #define __XEOS_VM_H__
-#pragma once
+
 
 #ifdef __cplusplus
 extern "C" {
