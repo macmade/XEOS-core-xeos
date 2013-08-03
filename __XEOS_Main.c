@@ -82,10 +82,10 @@ static const char * __copyrightHRTop        = "\xC9\xCD\xCD\xCD\xCD\xCD\xCD\xCD\
                                               "\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD"
                                               "\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD"
                                               "\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xBB";
+static const char * __copyrightSpace        = "                                                                             ";
 static const char * __copyrightLine1Left    = "                \x04";
 static const char * __copyrightLine1        = " XEOS - x86 Experimental Operating System ";
 static const char * __copyrightLine1Right   = "\x04                 ";
-static const char * __copyrightLine2        = "                                                                             ";
 static const char * __copyrightLine3        = "      Copyright (c) 2010-2013 Jean-David Gadina - www.xs-labs.com            ";
 static const char * __copyrightLine4        = "                       All rights (& wrongs) reserved                        ";
 static const char * __copyrightHRBottom     = "\xC8\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD"
@@ -94,9 +94,57 @@ static const char * __copyrightHRBottom     = "\xC8\xCD\xCD\xCD\xCD\xCD\xCD\xCD\
                                               "\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD"
                                               "\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xBC";
 
+static const char * __logo1                 = "           00000     00000  00000000000  0000000000000  0000000000000        ";
+static const char * __logo2                 = "            00000   00000   00000000000  0000000000000  0000000000000        ";
+static const char * __logo3                 = "              000000000     000          000       000  000                  ";
+static const char * __logo4                 = "               0000000      00000000000  000       000  0000000000000        ";
+static const char * __logo5                 = "              000000000     000          000       000            000        ";
+static const char * __logo6                 = "            00000   00000   00000000000  0000000000000  0000000000000        ";
+static const char * __logo7                 = "           00000     00000  00000000000  0000000000000  0000000000000        ";
+
 void __XEOS_Main_PrintCopyright( void )
 {
     XEOS_Video_Print( __copyrightHRTop );
+    XEOS_Video_Print( __copyrightNL );
+    
+    XEOS_Video_Print( __copyrightPipe );
+    XEOS_Video_Print( __logo1 );
+    XEOS_Video_Print( __copyrightPipe );
+    XEOS_Video_Print( __copyrightNL );
+    
+    XEOS_Video_Print( __copyrightPipe );
+    XEOS_Video_Print( __logo2 );
+    XEOS_Video_Print( __copyrightPipe );
+    XEOS_Video_Print( __copyrightNL );
+    
+    XEOS_Video_Print( __copyrightPipe );
+    XEOS_Video_Print( __logo3 );
+    XEOS_Video_Print( __copyrightPipe );
+    XEOS_Video_Print( __copyrightNL );
+    
+    XEOS_Video_Print( __copyrightPipe );
+    XEOS_Video_Print( __logo4 );
+    XEOS_Video_Print( __copyrightPipe );
+    XEOS_Video_Print( __copyrightNL );
+    
+    XEOS_Video_Print( __copyrightPipe );
+    XEOS_Video_Print( __logo5 );
+    XEOS_Video_Print( __copyrightPipe );
+    XEOS_Video_Print( __copyrightNL );
+    
+    XEOS_Video_Print( __copyrightPipe );
+    XEOS_Video_Print( __logo6 );
+    XEOS_Video_Print( __copyrightPipe );
+    XEOS_Video_Print( __copyrightNL );
+    
+    XEOS_Video_Print( __copyrightPipe );
+    XEOS_Video_Print( __logo7 );
+    XEOS_Video_Print( __copyrightPipe );
+    XEOS_Video_Print( __copyrightNL );
+    
+    XEOS_Video_Print( __copyrightPipe );
+    XEOS_Video_Print( __copyrightSpace );
+    XEOS_Video_Print( __copyrightPipe );
     XEOS_Video_Print( __copyrightNL );
     
     XEOS_Video_Print( __copyrightPipe );
@@ -109,9 +157,7 @@ void __XEOS_Main_PrintCopyright( void )
     XEOS_Video_Print( __copyrightNL );
     
     XEOS_Video_Print( __copyrightPipe );
-    XEOS_Video_SetFG( XEOS_Video_ColorGrayLight );
-    XEOS_Video_Print( __copyrightLine2 );
-    XEOS_Video_SetFG( XEOS_Video_ColorWhite );
+    XEOS_Video_Print( __copyrightSpace );
     XEOS_Video_Print( __copyrightPipe );
     XEOS_Video_Print( __copyrightNL );
     
