@@ -223,7 +223,7 @@ void XEOS_Main( XEOS_InfoRef info )
         "Registering the keyboard IRQ:",
         "IRQ:1",
         {
-            XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ0, XEOS_IRQ_Keyboard );
+            XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ1, XEOS_IRQ_Keyboard );
             XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ1 );
             
             /* Only translated scan-code set 2 is supported */
@@ -241,7 +241,7 @@ void XEOS_Main( XEOS_InfoRef info )
         "Registering the RTC IRQ:",
         "IRQ:8",
         {
-            XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ0, XEOS_IRQ_RealTimeClock );
+            XEOS_IRQ_AddIRQHandler( XEOS_HAL_PIC_IRQ8, XEOS_IRQ_RealTimeClock );
             XEOS_HAL_PIC_UnmaskIRQLine( XEOS_HAL_PIC_IRQ8 );
             
             /*
