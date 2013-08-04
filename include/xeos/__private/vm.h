@@ -74,7 +74,6 @@
 extern "C" {
 #endif
 
-#include <xeos/macros.h>
 #include <xeos/vm.h>
 
 struct __XEOS_VM_MemoryMap

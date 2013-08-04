@@ -74,7 +74,6 @@
 extern "C" {
 #endif
 
-#include <xeos/macros.h>
 #include <xeos/hal/pic.h>
 #include <xeos/hal/cpu.h>
 #include <stdint.h>

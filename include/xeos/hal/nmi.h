@@ -70,8 +70,6 @@
 #ifndef __XEOS_HAL_NMI_H__
 #define __XEOS_HAL_NMI_H__
 
-#include <xeos/macros.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif

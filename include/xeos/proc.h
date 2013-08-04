@@ -74,8 +74,6 @@
 extern "C" {
 #endif
 
-#include <xeos/macros.h>
-
 
 
 #ifdef __cplusplus

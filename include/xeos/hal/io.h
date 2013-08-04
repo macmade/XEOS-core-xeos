@@ -75,7 +75,6 @@
 extern "C" {
 #endif
 
-#include <xeos/macros.h>
 #include <stdint.h>
 
 /*!

@@ -74,7 +74,6 @@
 extern "C" {
 #endif
 
-#include <xeos/macros.h>
 #include <xeos/mem.h>
 
 struct __XEOS_Mem_Zone

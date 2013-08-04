@@ -75,16 +75,17 @@ extern "C" {
 #endif
 
 #include <xeos/video.h>
+#include <system/macros.h>
 
 void __XEOS_Main_PrintCopyright( void );
 void __XEOS_Main_PromptWithStatus( const char * message, const char * status, XEOS_Video_Color statusColor );
-void __XEOS_Main_PrintInfoLine( const char * format, ... ) XEOS_FORMAT_ATTRIBUTE( printf, 1, 2 );
-int  __XEOS_Main_PrintExternalInfoLine( const char * s, ... ) XEOS_FORMAT_ATTRIBUTE( printf, 1, 2 );
+void __XEOS_Main_PrintInfoLine( const char * format, ... ) FORMAT_ATTRIBUTE( printf, 1, 2 );
+int  __XEOS_Main_PrintExternalInfoLine( const char * s, ... ) FORMAT_ATTRIBUTE( printf, 1, 2 );
 int  __XEOS_Main_VPrintExternalInfoLine( const char * s, va_list args );
 void __XEOS_Main_Prompt( const char * message );
 void __XEOS_Main_PromptSuccess( const char * successMessage );
 void __XEOS_Main_PromptFailure( const char * failureMessage );
-void __XEOS_Main_FatalError( void ) XEOS_NORETURN_ATTRIBUTE;
+void __XEOS_Main_FatalError( void ) NORETURN_ATTRIBUTE;
 
 #ifdef __cplusplus
 }

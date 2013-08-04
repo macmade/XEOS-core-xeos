@@ -74,7 +74,6 @@
 extern "C" {
 #endif
 
-#include <xeos/macros.h>
 #include <xeos/irq.h>
 
 #ifdef __clang__

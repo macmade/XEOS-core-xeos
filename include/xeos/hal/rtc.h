@@ -74,7 +74,6 @@
 extern "C" {
 #endif
 
-#include <xeos/macros.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <time.h>

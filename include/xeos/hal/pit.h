@@ -74,8 +74,6 @@
 extern "C" {
 #endif
 
-#include <xeos/macros.h>
-
 typedef enum
 {
     XEOS_HAL_PIT_OCWNone                        = 0x00,

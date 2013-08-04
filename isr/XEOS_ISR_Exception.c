@@ -107,29 +107,29 @@ void XEOS_ISR_Exception( uint8_t isr, XEOS_HAL_CPU_Registers * registers )
         "\n"
         "x86-64 Registers:\n"
         "\n"
-        "RAX: %016#lX RBX: %016#lX RCX: %016#lX\n"
-        "RDX: %016#lX RDI: %016#lX RSI: %016#lX\n"
-        "R8:  %016#lX R9:  %016#lX R10: %016#lX\n"
-        "R11: %016#lX R12: %016#lX R13: %016#lX\n"
-        "R14: %016#lX R15: %016#lX\n"
-        "RSP: %016#lX RBP: %016#lX\n",
+        "RAX: %#016lX RBX: %#016lX RCX: %#016lX\n"
+        "RDX: %#016lX RDI: %#016lX RSI: %#016lX\n"
+        "R8:  %#016lX R9:  %#016lX R10: %#016lX\n"
+        "R11: %#016lX R12: %#016lX R13: %#016lX\n"
+        "R14: %#016lX R15: %#016lX\n"
+        "RSP: %#016lX RBP: %#016lX\n",
         exception,
-        registers->rax,
-        registers->rbx,
-        registers->rcx,
-        registers->rdx,
-        registers->rdi,
-        registers->rsi,
-        registers->r8,
-        registers->r9,
-        registers->r10,
-        registers->r11,
-        registers->r12,
-        registers->r13,
-        registers->r14,
-        registers->r15,
-        registers->rsp,
-        registers->rbp
+        ( long )( registers->rax ),
+        ( long )( registers->rbx ),
+        ( long )( registers->rcx ),
+        ( long )( registers->rdx ),
+        ( long )( registers->rdi ),
+        ( long )( registers->rsi ),
+        ( long )( registers->r8 ),
+        ( long )( registers->r9 ),
+        ( long )( registers->r10 ),
+        ( long )( registers->r11 ),
+        ( long )( registers->r12 ),
+        ( long )( registers->r13 ),
+        ( long )( registers->r14 ),
+        ( long )( registers->r15 ),
+        ( long )( registers->rsp ),
+        ( long )( registers->rbp )
     );
     
     #else
@@ -140,8 +140,8 @@ void XEOS_ISR_Exception( uint8_t isr, XEOS_HAL_CPU_Registers * registers )
         "\n"
         "i386 Registers:\n"
         "\n"
-        "EAX: %08#X EBX: %08#X ECX: %08#X EDI: %08#X\n"
-        "ESI: %08#X ESP: %08#X EAX: %08#X EBP: %08#X\n",
+        "EAX: %#08X EBX: %#08X ECX: %#08X EDI: %#08X\n"
+        "ESI: %#08X ESP: %#08X EAX: %#08X EBP: %#08X\n",
         exception,
         registers->eax,
         registers->ebx,

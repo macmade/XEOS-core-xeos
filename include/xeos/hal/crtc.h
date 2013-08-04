@@ -74,8 +74,6 @@
 extern "C" {
 #endif
 
-#include <xeos/macros.h>
-
 /*!
  * @typedef         XEOS_HAL_CRTC_Register
  * @abstract        CRT Controller register values

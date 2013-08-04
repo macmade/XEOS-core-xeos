@@ -74,7 +74,7 @@
 extern "C" {
 #endif
 
-#include <xeos/macros.h>
+#include <system/macros.h>
 #include <stdint.h>
 #include <time.h>
 
@@ -90,7 +90,7 @@ void XEOS_System_Panic( const char * message );
  * @abstract        Kernel panic
  * @param           format      The panic message format
  */
-void XEOS_System_Panicf( const char * format, ... );
+void XEOS_System_Panicf( const char * format, ... ) FORMAT_ATTRIBUTE( printf, 1, 2 );
 
 /*!
  * @function        XEOS_System_GetTime
