@@ -74,16 +74,16 @@ int XEOS_Video_Print( const char * s )
 {
     unsigned int x;
     unsigned int y;
-    int          c;
+    int          n;
+    char         c;
     
-    c = 0;
+    n = 0;
     
-    while( *( s ) != 0 )
+    while( ( c = *( s++ ) ) )
     {
-        XEOS_Video_Putc( ( *( s ) ), false );
+        XEOS_Video_Putc( ( c ), false );
         
-        s++;
-        c++;
+        n++;
     }
     
     x = XEOS_Video_X();
@@ -91,5 +91,5 @@ int XEOS_Video_Print( const char * s )
     
     XEOS_Video_MoveCursor( x, y );
     
-    return c;
+    return n;
 }
