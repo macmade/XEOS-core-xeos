@@ -70,7 +70,6 @@
 #ifndef __XEOS_HAL_H__
 #define __XEOS_HAL_H__
 
-
 #include <xeos/hal/acpi.h>
 #include <xeos/hal/cmos.h>
 #include <xeos/hal/cpu.h>
