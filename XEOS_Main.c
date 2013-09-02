@@ -324,6 +324,27 @@ void XEOS_Main( XEOS_InfoRef info )
         }
     );
     
+    {
+        __block int ii;
+        void ( ^ b )( void );
+        
+        
+        
+        ii = 42;
+        
+        b = ^( void )
+        {
+            XEOS_Video_Printf( "%i\n", ii );
+            
+            ii = 13;
+        };
+        
+        b();
+        
+        XEOS_Video_Printf( "%i\n", ii );
+        
+    }
+    
     /* Initialize the ACPICA subsystem */
     __KERN_INIT_SECTION
     (
