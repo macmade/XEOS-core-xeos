@@ -176,14 +176,76 @@ struct __XEOS_Info_MemoryEntry
     uint32_t type;
 };
 
+struct __XEOS_Info_Video_VESAInfo
+{
+    uint8_t     vbeSignature[ 4 ];
+    uint16_t    vbeVersion;
+    uint32_t    oemStringPtr;
+    uint32_t    capabilities;
+    uint32_t    videoModePtr;
+    uint16_t    totalMemory;
+    uint16_t    oemSoftwareRev;
+    uint32_t    oemVendorNamePtr;
+    uint32_t    oemProductNamePtr;
+    uint32_t    oemProductRevPtr;
+    uint8_t     reserved[ 222 ];
+    uint8_t     oemData[ 256 ];
+};
+
+struct __XEOS_Info_Video_VESAModeInfo
+{
+    uint16_t    modeAttributes;
+    uint8_t     winAAttributes;
+    uint8_t     winBAttributes;
+    uint16_t    winGranularity;
+    uint16_t    winSize;
+    uint16_t    winASegment;
+    uint16_t    winBSegment;
+    uint32_t    winFuncPtr;
+    uint16_t    bytesPerScanLine;
+    uint16_t    xResolution;
+    uint16_t    yResolution;
+    uint8_t     xCharSize;
+    uint8_t     yCharSize;
+    uint8_t     numberOfPlanes;
+    uint8_t     bitsPerPixel;
+    uint8_t     numberOfBanks;
+    uint8_t     memoryModel;
+    uint8_t     bankSize;
+    uint8_t     numberOfImagePages;
+    uint8_t     reserved_1;
+    uint8_t     redMaskSize;
+    uint8_t     redFieldPosition;
+    uint8_t     greenMaskSize;
+    uint8_t     greenFieldPosition;
+    uint8_t     blueMaskSize;
+    uint8_t     blueFieldPosition;
+    uint8_t     rsvdMaskSize;
+    uint8_t     rsvdFieldPosition;
+    uint8_t     directColorModeInfo;
+    uint32_t    physBasePtr;
+    uint32_t    offScreenMemOffset;
+    uint16_t    offScreenMemSize;
+    uint8_t     reserved_2[ 206 ];
+};
+
+struct __XEOS_Info_Video
+{
+    struct __XEOS_Info_Video_VESAInfo       vesa_info;
+    uint16_t                                mode;
+    struct __XEOS_Info_Video_VESAModeInfo   mode_info;
+};
+
 /*!
  * @struct          __XEOS_Info
  * @abstract        Info object, from the bootloader
  * @var             memory          The memory info structure
+ * @var             video           The video info structure
  */
 struct __XEOS_Info
 {
     struct __XEOS_Info_Memory memory;
+    struct __XEOS_Info_Video  video;
 };
 
 #ifdef __clang__
