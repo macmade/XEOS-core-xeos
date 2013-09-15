@@ -82,7 +82,7 @@ void XEOS_System_Panic( const char * message )
     XEOS_Video_Print( "\n" );
     XEOS_Video_Print( "                             " );
     XEOS_Video_SetFG( XEOS_Video_ColorBlue );
-    XEOS_Video_SetBG( XEOS_Video_ColorGrayLight );
+    XEOS_Video_SetBG( XEOS_Video_ColorWhite );
     XEOS_Video_Print( " XEOS - KERNEL PANIC " );
     XEOS_Video_SetFG( XEOS_Video_ColorWhite );
     XEOS_Video_SetBG( XEOS_Video_ColorBlue );

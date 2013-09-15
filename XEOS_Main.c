@@ -107,8 +107,10 @@ void XEOS_Main( XEOS_InfoRef info )
     XEOS_Video_SetBG( XEOS_Video_ColorBlack );
     XEOS_Video_Clear();
     
-    __XEOS_Main_PrintCopyright();
-    XEOS_Video_SetStickyLines( 0 );
+    XEOS_Video_SetStickyLines( 1 );
+    XEOS_Video_SetBG( XEOS_Video_ColorBlue );
+    XEOS_Video_Print( "XEOS Operating System                                                      0.2.0" );
+    XEOS_Video_SetBG( XEOS_Video_ColorBlack );
     
     __XEOS_Main_PromptWithStatus( "Entering the kernel:", "XEOS-0.2.0", XEOS_Video_ColorGreenLight );
     
