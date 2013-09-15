@@ -89,6 +89,7 @@ DIR_SRC_IRQ             := $(PATH_SRC_CORE_KERNEL)irq/
 DIR_SRC_SYSTEM          := $(PATH_SRC_CORE_KERNEL)system/
 DIR_SRC_SYSCALL         := $(PATH_SRC_CORE_KERNEL)syscall/
 DIR_SRC_VIDEO           := $(PATH_SRC_CORE_KERNEL)video/
+DIR_SRC_GUI             := $(PATH_SRC_CORE_KERNEL)gui/
 DIR_SRC_INFO            := $(PATH_SRC_CORE_KERNEL)info/
 DIR_SRC_VM              := $(PATH_SRC_CORE_KERNEL)vm/
 DIR_SRC_PROC            := $(PATH_SRC_CORE_KERNEL)proc/
@@ -122,6 +123,7 @@ vpath %$(EXT_C)         $(DIR_SRC_IRQ)
 vpath %$(EXT_C)         $(DIR_SRC_SYSTEM)
 vpath %$(EXT_C)         $(DIR_SRC_SYSCALL)
 vpath %$(EXT_C)         $(DIR_SRC_VIDEO)
+vpath %$(EXT_C)         $(DIR_SRC_GUI)
 vpath %$(EXT_C)         $(DIR_SRC_INFO)
 vpath %$(EXT_C)         $(DIR_SRC_VM)
 vpath %$(EXT_C)         $(DIR_SRC_PROC)
@@ -163,6 +165,7 @@ _FILES_C_OBJ_BUILD_IRQ          = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OB
 _FILES_C_OBJ_BUILD_SYSTEM       = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_SYSTEM))
 _FILES_C_OBJ_BUILD_SYSCALL      = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_SYSCALL))
 _FILES_C_OBJ_BUILD_VIDEO        = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_VIDEO))
+_FILES_C_OBJ_BUILD_GUI          = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_GUI))
 _FILES_C_OBJ_BUILD_INFO         = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_INFO))
 _FILES_C_OBJ_BUILD_VM           = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_VM))
 _FILES_C_OBJ_BUILD_PROC         = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_PROC))
@@ -201,6 +204,7 @@ all:    $(_FILES_ASM_OBJ_BUILD)             \
         $(_FILES_C_OBJ_BUILD_SYSTEM)        \
         $(_FILES_C_OBJ_BUILD_SYSCALL)       \
         $(_FILES_C_OBJ_BUILD_VIDEO)         \
+        $(_FILES_C_OBJ_BUILD_GUI)           \
         $(_FILES_C_OBJ_BUILD_INFO)          \
         $(_FILES_C_OBJ_BUILD_VM)            \
         $(_FILES_C_OBJ_BUILD_PROC)          \
