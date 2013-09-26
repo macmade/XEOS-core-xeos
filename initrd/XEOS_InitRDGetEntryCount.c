@@ -71,7 +71,7 @@
 #include <xeos/__private/initrd.h>
 #include <system/types/null.h>
 
-size_t XEOS_InitRDGetEntryCount( XEOS_InitRDRef initrd )
+uint32_t XEOS_InitRDGetEntryCount( XEOS_InitRDRef initrd )
 {
     if( initrd == NULL )
     {

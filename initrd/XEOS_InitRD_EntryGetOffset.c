@@ -71,7 +71,7 @@
 #include <xeos/__private/initrd.h>
 #include <system/types/null.h>
 
-off_t XEOS_InitRD_EntryGetOffset( XEOS_InitRD_EntryRef entry )
+uint32_t XEOS_InitRD_EntryGetOffset( XEOS_InitRD_EntryRef entry )
 {
     if( entry == NULL )
     {
