@@ -78,14 +78,14 @@ extern "C" {
 
 struct __XEOS_InitRD
 {
-    size_t entryCount;
+    uint32_t    entryCount;
 };
 
 struct __XEOS_InitRD_Entry
 {
-    char    filename[ 256 ];
-    size_t  size;
-    off_t   offset;
+    char        filename[ 256 ];
+    uint32_t    size;
+    uint32_t    offset;
 };
 
 #ifdef __cplusplus
