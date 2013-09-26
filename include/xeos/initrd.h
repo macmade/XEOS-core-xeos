@@ -74,17 +74,16 @@
 extern "C" {
 #endif
 
-#include <system/types/size_t.h>
-#include <system/types/off_t.h>
+#include <system/types/uint32_t.h>
 
 typedef struct __XEOS_InitRD       * XEOS_InitRDRef;
 typedef struct __XEOS_InitRD_Entry * XEOS_InitRD_EntryRef;
 
-size_t XEOS_InitRDGetEntryCount( XEOS_InitRDRef initrd );
+uint32_t XEOS_InitRDGetEntryCount( XEOS_InitRDRef initrd );
 
 const char *    XEOS_InitRD_EntryGetFilename( XEOS_InitRD_EntryRef entry );
-size_t          XEOS_InitRD_EntryGetSize( XEOS_InitRD_EntryRef entry );
-off_t           XEOS_InitRD_EntryGetOffset( XEOS_InitRD_EntryRef entry );
+uint32_t        XEOS_InitRD_EntryGetSize( XEOS_InitRD_EntryRef entry );
+uint32_t        XEOS_InitRD_EntryGetOffset( XEOS_InitRD_EntryRef entry );
 
 #ifdef __cplusplus
 }
