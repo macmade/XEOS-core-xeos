@@ -75,10 +75,13 @@ extern "C" {
 #endif
 
 #include <system/types/uint32_t.h>
+#include <stdbool.h>
 
 typedef struct __XEOS_InitRD       * XEOS_InitRDRef;
 typedef struct __XEOS_InitRD_Entry * XEOS_InitRD_EntryRef;
 
+uint32_t XEOS_InitRDGetSignature( XEOS_InitRDRef initrd );
+bool     XEOS_InitRDIsValid( XEOS_InitRDRef initrd );
 uint32_t XEOS_InitRDGetEntryCount( XEOS_InitRDRef initrd );
 
 const char *    XEOS_InitRD_EntryGetFilename( XEOS_InitRD_EntryRef entry );

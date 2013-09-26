@@ -62,37 +62,21 @@
 /* $Id$ */
 
 /*!
- * @header          initrd.h
+ * @file            XEOS_InitRDGetEntryCount.c
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS___PRIVATE_INITRD_H__
-#define __XEOS___PRIVATE_INITRD_H__
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include <xeos/initrd.h>
+#include <xeos/__private/initrd.h>
+#include <system/types/null.h>
 
-#define __XEOS_INITRD_SIGNATURE 0x44525358
-
-struct __XEOS_InitRD
+uint32_t XEOS_InitRDGetSignature( XEOS_InitRDRef initrd )
 {
-    uint32_t    signature;
-    uint32_t    entryCount;
-};
-
-struct __XEOS_InitRD_Entry
-{
-    char        filename[ 256 ];
-    uint32_t    size;
-    uint32_t    offset;
-};
-
-#ifdef __cplusplus
+    if( initrd == NULL )
+    {
+        return 0;
+    }
+    
+    return initrd->signature;
 }
-#endif
-
-#endif /* __XEOS___PRIVATE_INITRD_H__ */
