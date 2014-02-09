@@ -96,6 +96,7 @@ DIR_SRC_PROC            := $(PATH_SRC_CORE_KERNEL)proc/
 DIR_SRC_MEM             := $(PATH_SRC_CORE_KERNEL)mem/
 DIR_SRC_VFS             := $(PATH_SRC_CORE_KERNEL)vfs/
 DIR_SRC_INITRD          := $(PATH_SRC_CORE_KERNEL)initrd/
+DIR_SRC_DEBUG           := $(PATH_SRC_CORE_KERNEL)debug/
 DIR_SRC_INC             := $(PATH_SRC_CORE_KERNEL)include/
 
 #-------------------------------------------------------------------------------
@@ -132,6 +133,7 @@ vpath %$(EXT_C)         $(DIR_SRC_PROC)
 vpath %$(EXT_C)         $(DIR_SRC_MEM)
 vpath %$(EXT_C)         $(DIR_SRC_VFS)
 vpath %$(EXT_C)         $(DIR_SRC_INITRD)
+vpath %$(EXT_C)         $(DIR_SRC_DEBUG)
 vpath %$(EXT_H)         $(DIR_SRC_INC)
 
 #-------------------------------------------------------------------------------
@@ -175,6 +177,7 @@ _FILES_C_OBJ_BUILD_VM           = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OB
 _FILES_C_OBJ_BUILD_PROC         = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_PROC))
 _FILES_C_OBJ_BUILD_MEM          = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_MEM))
 _FILES_C_OBJ_BUILD_INITRD       = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_INITRD))
+_FILES_C_OBJ_BUILD_DEBUG        = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_DEBUG))
 _FILES_C_OBJ_BUILD_VFS          = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_VFS))
 
 #-------------------------------------------------------------------------------
@@ -216,6 +219,7 @@ all:    $(_FILES_ASM_OBJ_BUILD)             \
         $(_FILES_C_OBJ_BUILD_PROC)          \
         $(_FILES_C_OBJ_BUILD_MEM)           \
         $(_FILES_C_OBJ_BUILD_INITRD)        \
+        $(_FILES_C_OBJ_BUILD_DEBUG)         \
         $(_FILES_C_OBJ_BUILD_VFS)
 	
 	@:

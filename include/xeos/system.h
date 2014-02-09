@@ -83,14 +83,14 @@ extern "C" {
  * @abstract        Kernel panic
  * @param           message     The panic message
  */
-void XEOS_System_Panic( const char * message );
+void XEOS_System_Panic( const char * message, void ( * beforeHalt )( void ) );
 
 /*!
  * @function        XEOS_System_Panicf
  * @abstract        Kernel panic
  * @param           format      The panic message format
  */
-void XEOS_System_Panicf( const char * format, ... ) FORMAT_ATTRIBUTE( printf, 1, 2 );
+void XEOS_System_Panicf( const char * format, void ( * beforeHalt )( void ), ... ) FORMAT_ATTRIBUTE( printf, 1, 3 );
 
 /*!
  * @function        XEOS_System_GetTime

@@ -69,6 +69,48 @@
 
 #include <xeos/isr.h>
 #include <xeos/system.h>
+#include <xeos/video.h>
+#include <xeos/debug.h>
+
+static void XEOS_ISR_Exception_PrintKernelTrace( void );
+static void XEOS_ISR_Exception_PrintKernelTrace( void )
+{
+    XEOS_Debug_TraceRef     trace;
+    unsigned int            i;
+    XEOS_Debug_SymbolRef    symbol;
+    void                  * address;
+    
+    trace = XEOS_Debug_GetKernelTrace();
+    
+    for( i = 5; i < XEOS_Debug_TraceGetSymbolCount( trace ); i++ )
+    {
+        if( i > 6 )
+        {
+            break;
+        }
+        
+        symbol = XEOS_Debug_TraceGetSymbolAtIndex( trace, i );
+        
+        if
+        (
+               symbol == NULL
+            || XEOS_Debug_SymbolGetFunctionAddress( symbol ) == NULL
+            || XEOS_Debug_SymbolGetCallSiteAddress( symbol ) == NULL
+        )
+        {
+            break;
+        }
+        
+        address = XEOS_Debug_SymbolGetFunctionAddress( symbol );
+        
+        XEOS_Video_Printf
+        (
+            "0x%016llX %s\n",
+            ( uint64_t )address,
+            XEOS_Debug_SymbolGetFunctionName( symbol )
+        );
+    }
+}
 
 void XEOS_ISR_Exception( uint8_t isr, XEOS_HAL_CPU_Registers * registers )
 {
@@ -105,14 +147,13 @@ void XEOS_ISR_Exception( uint8_t isr, XEOS_HAL_CPU_Registers * registers )
     (
         "%s\n"
         "\n"
-        "x86-64 Registers:\n"
-        "\n"
         "RAX: %#016lX RBX: %#016lX RCX: %#016lX\n"
         "RDX: %#016lX RDI: %#016lX RSI: %#016lX\n"
         "R8:  %#016lX R9:  %#016lX R10: %#016lX\n"
         "R11: %#016lX R12: %#016lX R13: %#016lX\n"
         "R14: %#016lX R15: %#016lX\n"
         "RSP: %#016lX RBP: %#016lX\n",
+        XEOS_ISR_Exception_PrintKernelTrace,
         exception,
         ( long )( registers->rax ),
         ( long )( registers->rbx ),
@@ -138,10 +179,9 @@ void XEOS_ISR_Exception( uint8_t isr, XEOS_HAL_CPU_Registers * registers )
     (
         "%s\n"
         "\n"
-        "i386 Registers:\n"
-        "\n"
         "EAX: %#08X EBX: %#08X ECX: %#08X EDI: %#08X\n"
         "ESI: %#08X ESP: %#08X EAX: %#08X EBP: %#08X\n",
+        XEOS_ISR_Exception_PrintKernelTrace,
         exception,
         registers->eax,
         registers->ebx,

@@ -71,7 +71,7 @@
 #include <xeos/video.h>
 #include <xeos/hal.h>
 
-void XEOS_System_Panicf( const char * format, ... )
+void XEOS_System_Panicf( const char * format, void ( * beforeHalt )( void ), ... )
 {
     va_list args;
     
@@ -91,27 +91,23 @@ void XEOS_System_Panicf( const char * format, ... )
     XEOS_Video_Print( "                             " );
     XEOS_Video_Print( "\n" );
     XEOS_Video_Print( "\n" );
-    XEOS_Video_Print( "\n" );
     XEOS_Video_Print( "A problem has been detected and XEOS has been shut down to prevent damage\nto your computer." );
     XEOS_Video_Print( "\n" );
     XEOS_Video_Print( "\n" );
-    XEOS_Video_Print( "Please restart your computer." );
-    XEOS_Video_Print( "\n" );
-    XEOS_Video_Print( "Any unsaved information will be lost." );
-    XEOS_Video_Print( "\n" );
-    XEOS_Video_Print( "\n" );
-    XEOS_Video_Print( "\n" );
-    XEOS_Video_SetFG( XEOS_Video_ColorGrayLight );
-    XEOS_Video_Print( "Technical information:" );
-    XEOS_Video_SetFG( XEOS_Video_ColorWhite );
+    XEOS_Video_Print( "Please restart your computer. Any unsaved information will be lost." );
     XEOS_Video_Print( "\n" );
     XEOS_Video_Print( "\n" );
     
-    va_start( args, format );
+    va_start( args, beforeHalt );
     XEOS_Video_VPrintf( format, args );
     va_end( args );
     
     XEOS_Video_Print( "\n" );
+    
+    if( beforeHalt != NULL )
+    {
+        beforeHalt();
+    }
     
     XEOS_HAL_CPU_Halt();
 }
