@@ -113,11 +113,11 @@ _FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)debug/)
 # Build the full project
 all: $(_FILES)
 	
-	@$(PRINT) $(PROMPT)$(COLOR_CYAN)"Generating the library archive"$(COLOR_NONE)" [ 32 bits ]: "$(COLOR_GRAY)"core-xeos.a"$(COLOR_NONE)
-	@$(call XEOS_FUNC_LIB_STATIC_32,core-xeos,$^)
+	@$(PRINT) $(PROMPT)$(COLOR_CYAN)"Generating the library archive"$(COLOR_NONE)" [ 32 bits ]: "$(COLOR_GRAY)"libcore-xeos.a"$(COLOR_NONE)
+	@$(call XEOS_FUNC_LIB_STATIC_32,libcore-xeos,$^)
 	
-	@$(PRINT) $(PROMPT)$(COLOR_CYAN)"Generating the library archive"$(COLOR_NONE)" [ 64 bits ]: "$(COLOR_GRAY)"core-xeos.a"$(COLOR_NONE)
-	@$(call XEOS_FUNC_LIB_STATIC_64,core-xeos,$^)
+	@$(PRINT) $(PROMPT)$(COLOR_CYAN)"Generating the library archive"$(COLOR_NONE)" [ 64 bits ]: "$(COLOR_GRAY)"libcore-xeos.a"$(COLOR_NONE)
+	@$(call XEOS_FUNC_LIB_STATIC_64,libcore-xeos,$^)
 
 # Cleans the build files
 clean:
@@ -125,3 +125,5 @@ clean:
 	@$(PRINT) $(PROMPT)"Cleaning all build files"
 	@$(RM) $(ARGS_RM) $(PATH_BUILD_32_OBJ)$(subst $(PATH_SRC),,$(PATH_SRC_CORE_KERNEL))
 	@$(RM) $(ARGS_RM) $(PATH_BUILD_64_OBJ)$(subst $(PATH_SRC),,$(PATH_SRC_CORE_KERNEL))
+	@$(RM) $(ARGS_RM) $(PATH_BUILD_32_BIN)libcore-xeos.*
+	@$(RM) $(ARGS_RM) $(PATH_BUILD_64_BIN)libcore-xeos.*
