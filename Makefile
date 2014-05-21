@@ -65,168 +65,63 @@ include ../../../Makefile-Config.mk
 # Display
 #-------------------------------------------------------------------------------
 
-PROMPT              := "    ["$(COLOR_GREEN)" XEOS "$(COLOR_NONE)"]> ["$(COLOR_GREEN)" SRC  "$(COLOR_NONE)"]> ["$(COLOR_GREEN)" CORE "$(COLOR_NONE)"]> ["$(COLOR_GREEN)" KERN "$(COLOR_NONE)"]> *** "
-
-#-------------------------------------------------------------------------------
-# Paths
-#-------------------------------------------------------------------------------
-
-DIR_SRC_HAL             := $(PATH_SRC_CORE_KERNEL)hal/
-DIR_SRC_HAL_CPU         := $(DIR_SRC_HAL)cpu/
-DIR_SRC_HAL_IO          := $(DIR_SRC_HAL)io/
-DIR_SRC_HAL_RTC         := $(DIR_SRC_HAL)rtc/
-DIR_SRC_HAL_CMOS        := $(DIR_SRC_HAL)cmos/
-DIR_SRC_HAL_IDT         := $(DIR_SRC_HAL)idt/
-DIR_SRC_HAL_NMI         := $(DIR_SRC_HAL)nmi/
-DIR_SRC_HAL_GDT         := $(DIR_SRC_HAL)gdt/
-DIR_SRC_HAL_PIC         := $(DIR_SRC_HAL)pic/
-DIR_SRC_HAL_PIT         := $(DIR_SRC_HAL)pit/
-DIR_SRC_HAL_PS2         := $(DIR_SRC_HAL)ps2/
-DIR_SRC_HAL_KEYBOARD    := $(DIR_SRC_HAL)keyboard/
-DIR_SRC_ASM_RT          := $(PATH_SRC_CORE_KERNEL)asm/rt/
-DIR_SRC_ISR             := $(PATH_SRC_CORE_KERNEL)isr/
-DIR_SRC_IRQ             := $(PATH_SRC_CORE_KERNEL)irq/
-DIR_SRC_SYSTEM          := $(PATH_SRC_CORE_KERNEL)system/
-DIR_SRC_SYSCALL         := $(PATH_SRC_CORE_KERNEL)syscall/
-DIR_SRC_VIDEO           := $(PATH_SRC_CORE_KERNEL)video/
-DIR_SRC_GUI             := $(PATH_SRC_CORE_KERNEL)gui/
-DIR_SRC_INFO            := $(PATH_SRC_CORE_KERNEL)info/
-DIR_SRC_VM              := $(PATH_SRC_CORE_KERNEL)vm/
-DIR_SRC_PROC            := $(PATH_SRC_CORE_KERNEL)proc/
-DIR_SRC_MEM             := $(PATH_SRC_CORE_KERNEL)mem/
-DIR_SRC_VFS             := $(PATH_SRC_CORE_KERNEL)vfs/
-DIR_SRC_INITRD          := $(PATH_SRC_CORE_KERNEL)initrd/
-DIR_SRC_DEBUG           := $(PATH_SRC_CORE_KERNEL)debug/
-DIR_SRC_INC             := $(PATH_SRC_CORE_KERNEL)include/
-
-#-------------------------------------------------------------------------------
-# Search paths
-#-------------------------------------------------------------------------------
-
-# Define the search paths for source files
-vpath %$(EXT_ASM_32)    $(PATH_SRC_CORE_KERNEL)
-vpath %$(EXT_ASM_64)    $(PATH_SRC_CORE_KERNEL)
-vpath %$(EXT_ASM_32)    $(DIR_SRC_ASM_RT)
-vpath %$(EXT_ASM_64)    $(DIR_SRC_ASM_RT)
-vpath %$(EXT_C)         $(PATH_SRC_CORE_KERNEL)
-vpath %$(EXT_C)         $(DIR_SRC_HAL)
-vpath %$(EXT_C)         $(DIR_SRC_HAL_IO)
-vpath %$(EXT_C)         $(DIR_SRC_HAL_RTC)
-vpath %$(EXT_C)         $(DIR_SRC_HAL_CMOS)
-vpath %$(EXT_C)         $(DIR_SRC_HAL_CPU)
-vpath %$(EXT_C)         $(DIR_SRC_HAL_IDT)
-vpath %$(EXT_C)         $(DIR_SRC_HAL_NMI)
-vpath %$(EXT_C)         $(DIR_SRC_HAL_GDT)
-vpath %$(EXT_C)         $(DIR_SRC_HAL_PIC)
-vpath %$(EXT_C)         $(DIR_SRC_HAL_PIT)
-vpath %$(EXT_C)         $(DIR_SRC_HAL_PS2)
-vpath %$(EXT_C)         $(DIR_SRC_HAL_KEYBOARD)
-vpath %$(EXT_C)         $(DIR_SRC_ISR)
-vpath %$(EXT_C)         $(DIR_SRC_IRQ)
-vpath %$(EXT_C)         $(DIR_SRC_SYSTEM)
-vpath %$(EXT_C)         $(DIR_SRC_SYSCALL)
-vpath %$(EXT_C)         $(DIR_SRC_VIDEO)
-vpath %$(EXT_C)         $(DIR_SRC_GUI)
-vpath %$(EXT_C)         $(DIR_SRC_INFO)
-vpath %$(EXT_C)         $(DIR_SRC_VM)
-vpath %$(EXT_C)         $(DIR_SRC_PROC)
-vpath %$(EXT_C)         $(DIR_SRC_MEM)
-vpath %$(EXT_C)         $(DIR_SRC_VFS)
-vpath %$(EXT_C)         $(DIR_SRC_INITRD)
-vpath %$(EXT_C)         $(DIR_SRC_DEBUG)
-vpath %$(EXT_H)         $(DIR_SRC_INC)
-
-#-------------------------------------------------------------------------------
-# File suffixes
-#-------------------------------------------------------------------------------
-
-# Adds the suffixes used in this file
-.SUFFIXES:  $(EXT_ASM_32)   \
-            $(EXT_ASM_64)   \
-            $(EXT_C)        \
-            $(EXT_H)        \
-            $(EXT_OBJ)      \
-            $(EXT_BIN)
+PROMPT  := "    ["$(COLOR_GREEN)" XEOS "$(COLOR_NONE)"]> ["$(COLOR_GREEN)" SRC  "$(COLOR_NONE)"]> ["$(COLOR_GREEN)" CORE "$(COLOR_NONE)"]> ["$(COLOR_GREEN)" KERN "$(COLOR_NONE)"]> *** "
 
 #-------------------------------------------------------------------------------
 # Files
 #-------------------------------------------------------------------------------
 
-_FILES_ASM_OBJ_BUILD            = $(call XEOS_FUNC_S_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(PATH_SRC_CORE_KERNEL))
-_FILES_C_OBJ_BUILD              = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(PATH_SRC_CORE_KERNEL))
-_FILES_C_OBJ_BUILD_HAL          = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_HAL))
-_FILES_C_OBJ_BUILD_HAL_CPU      = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_HAL_CPU))
-_FILES_C_OBJ_BUILD_HAL_IO       = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_HAL_IO))
-_FILES_C_OBJ_BUILD_HAL_RTC      = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_HAL_RTC))
-_FILES_C_OBJ_BUILD_HAL_CMOS     = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_HAL_CMOS))
-_FILES_C_OBJ_BUILD_HAL_IDT      = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_HAL_IDT))
-_FILES_C_OBJ_BUILD_HAL_NMI      = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_HAL_NMI))
-_FILES_C_OBJ_BUILD_HAL_GDT      = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_HAL_GDT))
-_FILES_C_OBJ_BUILD_HAL_PIC      = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_HAL_PIC))
-_FILES_C_OBJ_BUILD_HAL_PIT      = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_HAL_PIT))
-_FILES_C_OBJ_BUILD_HAL_PS2      = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_HAL_PS2))
-_FILES_C_OBJ_BUILD_HAL_KEYBOARD = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_HAL_KEYBOARD))
-_FILES_C_OBJ_BUILD_ISR          = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_ISR))
-_FILES_C_OBJ_BUILD_IRQ          = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_IRQ))
-_FILES_C_OBJ_BUILD_SYSTEM       = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_SYSTEM))
-_FILES_C_OBJ_BUILD_SYSCALL      = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_SYSCALL))
-_FILES_C_OBJ_BUILD_VIDEO        = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_VIDEO))
-_FILES_C_OBJ_BUILD_GUI          = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_GUI))
-_FILES_C_OBJ_BUILD_INFO         = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_INFO))
-_FILES_C_OBJ_BUILD_VM           = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_VM))
-_FILES_C_OBJ_BUILD_PROC         = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_PROC))
-_FILES_C_OBJ_BUILD_MEM          = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_MEM))
-_FILES_C_OBJ_BUILD_INITRD       = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_INITRD))
-_FILES_C_OBJ_BUILD_DEBUG        = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_DEBUG))
-_FILES_C_OBJ_BUILD_VFS          = $(call XEOS_FUNC_C_OBJ,$(PATH_BUILD_32_CORE_OBJ_KERNEL),$(DIR_SRC_VFS))
+_FILES  = $(call XEOS_FUNC_S_OBJ,$(PATH_SRC_CORE_KERNEL))
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL))
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/cpu/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/io/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/rtc/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/cmos/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/idt/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/nmi/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/gdt/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/pic/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/pit/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/ps2)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/keyboard)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)isr/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)irq/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)system/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)syscall/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)video/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)gui/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)info/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)vm/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)proc/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)mem/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)vfs/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)initrd/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)debug/)
 
 #-------------------------------------------------------------------------------
 # Built-in targets
 #-------------------------------------------------------------------------------
 
 # Declaration for phony targets, to avoid problems with local files
-.PHONY: all     \
-        clean
+.PHONY: all clean
 
 #-------------------------------------------------------------------------------
 # Phony targets
 #-------------------------------------------------------------------------------
 
 # Build the full project
-all:    $(_FILES_ASM_OBJ_BUILD)             \
-        $(_FILES_ASM_OBJ_BUILD_RT)          \
-        $(_FILES_C_OBJ_BUILD)               \
-        $(_FILES_C_OBJ_BUILD_HAL)           \
-        $(_FILES_C_OBJ_BUILD_HAL_CPU)       \
-        $(_FILES_C_OBJ_BUILD_HAL_IO)        \
-        $(_FILES_C_OBJ_BUILD_HAL_RTC)       \
-        $(_FILES_C_OBJ_BUILD_HAL_CMOS)      \
-        $(_FILES_C_OBJ_BUILD_HAL_IDT)       \
-        $(_FILES_C_OBJ_BUILD_HAL_NMI)       \
-        $(_FILES_C_OBJ_BUILD_HAL_GDT)       \
-        $(_FILES_C_OBJ_BUILD_HAL_PIC)       \
-        $(_FILES_C_OBJ_BUILD_HAL_PIT)       \
-        $(_FILES_C_OBJ_BUILD_HAL_PS2)       \
-        $(_FILES_C_OBJ_BUILD_HAL_KEYBOARD)  \
-        $(_FILES_C_OBJ_BUILD_ISR)           \
-        $(_FILES_C_OBJ_BUILD_IRQ)           \
-        $(_FILES_C_OBJ_BUILD_SYSTEM)        \
-        $(_FILES_C_OBJ_BUILD_SYSCALL)       \
-        $(_FILES_C_OBJ_BUILD_VIDEO)         \
-        $(_FILES_C_OBJ_BUILD_GUI)           \
-        $(_FILES_C_OBJ_BUILD_INFO)          \
-        $(_FILES_C_OBJ_BUILD_VM)            \
-        $(_FILES_C_OBJ_BUILD_PROC)          \
-        $(_FILES_C_OBJ_BUILD_MEM)           \
-        $(_FILES_C_OBJ_BUILD_INITRD)        \
-        $(_FILES_C_OBJ_BUILD_DEBUG)         \
-        $(_FILES_C_OBJ_BUILD_VFS)
+all: $(_FILES)
 	
-	@:
+	@$(PRINT) $(PROMPT)$(COLOR_CYAN)"Generating the library archive"$(COLOR_NONE)" [ 32 bits ]: "$(COLOR_GRAY)"core-xeos.a"$(COLOR_NONE)
+	@$(call XEOS_FUNC_LIB_STATIC_32,core-xeos,$^)
+	
+	@$(PRINT) $(PROMPT)$(COLOR_CYAN)"Generating the library archive"$(COLOR_NONE)" [ 64 bits ]: "$(COLOR_GRAY)"core-xeos.a"$(COLOR_NONE)
+	@$(call XEOS_FUNC_LIB_STATIC_64,core-xeos,$^)
 
 # Cleans the build files
 clean:
 	
 	@$(PRINT) $(PROMPT)"Cleaning all build files"
-	@$(RM) $(ARGS_RM) $(PATH_BUILD_32_CORE_OBJ_KERNEL)*
-	@$(RM) $(ARGS_RM) $(PATH_BUILD_64_CORE_OBJ_KERNEL)*
+	@$(RM) $(ARGS_RM) $(PATH_BUILD_32_OBJ)$(subst $(PATH_SRC),,$(PATH_SRC_CORE_KERNEL))
+	@$(RM) $(ARGS_RM) $(PATH_BUILD_64_OBJ)$(subst $(PATH_SRC),,$(PATH_SRC_CORE_KERNEL))
