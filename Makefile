@@ -83,8 +83,8 @@ _FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/nmi/)
 _FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/gdt/)
 _FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/pic/)
 _FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/pit/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/ps2)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/keyboard)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/ps2/)
+_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/keyboard/)
 _FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)isr/)
 _FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)irq/)
 _FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)system/)
@@ -113,11 +113,11 @@ _FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)debug/)
 # Build the full project
 all: $(_FILES)
 	
-	@$(PRINT) $(PROMPT)$(COLOR_CYAN)"Generating the library archive"$(COLOR_NONE)" [ 32 bits ]: "$(COLOR_GRAY)"libcore-xeos.a"$(COLOR_NONE)
-	@$(call XEOS_FUNC_LIB_STATIC_32,libcore-xeos,$^)
+	@$(PRINT) $(PROMPT)$(COLOR_CYAN)"Generating main object file"$(COLOR_NONE)" [ 32 bits ]: "$(COLOR_GRAY)"core-xeos$(EXT_OBJ)"$(COLOR_NONE)
+	@$(LD_32) -r $(call XEOS_FUNC_FILES_OBJECT_32,$^) -o $(PATH_BUILD_32_OBJ)core-xeos$(EXT_OBJ)
 	
-	@$(PRINT) $(PROMPT)$(COLOR_CYAN)"Generating the library archive"$(COLOR_NONE)" [ 64 bits ]: "$(COLOR_GRAY)"libcore-xeos.a"$(COLOR_NONE)
-	@$(call XEOS_FUNC_LIB_STATIC_64,libcore-xeos,$^)
+	@$(PRINT) $(PROMPT)$(COLOR_CYAN)"Generating main object file"$(COLOR_NONE)" [ 64 bits ]: "$(COLOR_GRAY)"core-xeos$(EXT_OBJ)"$(COLOR_NONE)
+	@$(LD_64) -r $(call XEOS_FUNC_FILES_OBJECT_64,$^) -o $(PATH_BUILD_64_OBJ)core-xeos$(EXT_OBJ)
 
 # Cleans the build files
 clean:
