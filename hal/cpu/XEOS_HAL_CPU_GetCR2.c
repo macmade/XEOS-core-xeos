@@ -73,6 +73,19 @@ uint32_t XEOS_HAL_CPU_GetCR2( void )
 {
     uint32_t value;
     
+    #ifdef __LP64__
+    
+    __asm__ __volatile__
+    (
+        "mov %%cr2, %%rax\n"
+        "mov %%eax, %[value]"
+        
+        : [ value ] "=r" ( value )
+        :
+    );
+    
+    #else
+    
     __asm__ __volatile__
     (
         "mov %%cr2, %[value]"
@@ -80,6 +93,8 @@ uint32_t XEOS_HAL_CPU_GetCR2( void )
         : [ value ] "=r" ( value )
         :
     );
+    
+    #endif
     
     return value;
 }

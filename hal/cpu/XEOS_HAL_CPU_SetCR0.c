@@ -71,6 +71,19 @@
 
 void XEOS_HAL_CPU_SetCR0( uint32_t value )
 {
+    #ifdef __LP64__
+    
+    __asm__ __volatile__
+    (
+        "mov %[value], %%eax\n"
+        "mov %%rax, %%cr0\n"
+        
+        :
+        : [ value ] "r" ( value )
+    );
+    
+    #else
+    
     __asm__ __volatile__
     (
         "mov %[value], %%cr0"
@@ -78,4 +91,6 @@ void XEOS_HAL_CPU_SetCR0( uint32_t value )
         :
         : [ value ] "r" ( value )
     );
+    
+    #endif
 }

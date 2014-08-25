@@ -73,6 +73,20 @@ bool XEOS_HAL_CPU_InterruptsEnabled( void )
 {
     int f;
     
+    #ifdef __LP64__
+    
+    __asm__ __volatile__
+    (
+        "pushf\n"
+        "popq %%rax\n"
+        "mov %%eax, %[f]\n"
+        
+        : [ f ] "=a" ( f )
+        :
+    );
+    
+    #else
+    
     __asm__ __volatile__
     (
         "pushf\n"
@@ -81,6 +95,8 @@ bool XEOS_HAL_CPU_InterruptsEnabled( void )
         : [ f ] "=a" ( f )
         :
     );
+    
+    #endif
     
     /* Interrupt flag (IF) is bit 9 */
     return ( bool )( ( f & ( 1 << 9 ) ) != 0 );
