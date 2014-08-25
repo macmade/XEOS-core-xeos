@@ -94,7 +94,7 @@ uint8_t XEOS_HAL_PS2_GetStatus( void );
 /*!
  * @function        XEOS_HAL_PS2_ReadData
  * @abstract        Reads data from the PS2 controller
- * @abstract        Always check that the output buffer is full before
+ * @discussion      Always check that the output buffer is full before
  *                  reading data.
  * @result          The content of the PS2 data register
  */
@@ -103,7 +103,7 @@ uint8_t XEOS_HAL_PS2_ReadData( void );
 /*!
  * @function        XEOS_HAL_PS2_WriteData
  * @abstract        Writes data to the PS2 controller
- * @abstract        Always check that the input buffer is empty before
+ * @discussion      Always check that the input buffer is empty before
  *                  writing data.
  * @param           data        The data to write
  */
