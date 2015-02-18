@@ -49,7 +49,6 @@
 		055EB5971A94B6F6009ACFEC /* vfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vfs.h; sourceTree = "<group>"; };
 		055EB5981A94B6F6009ACFEC /* video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video.h; sourceTree = "<group>"; };
 		055EB5991A94B6F6009ACFEC /* vm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vm.h; sourceTree = "<group>"; };
-		055EB59A1A94B6F6009ACFEC /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		055EB59B1A94B6F6009ACFEC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		055EB59D1A94B6F6009ACFEC /* __XEOS_Main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = __XEOS_Main.c; sourceTree = "<group>"; };
 		055EB59E1A94B6F6009ACFEC /* __XEOS_Main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = __XEOS_Main.h; sourceTree = "<group>"; };
@@ -326,6 +325,7 @@
 		055EB6C41A94B6F7009ACFEC /* XEOS_Main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEOS_Main.h; sourceTree = "<group>"; };
 		055EB6C51A94B6F7009ACFEC /* XEOS_Stub.32.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = XEOS_Stub.32.s; sourceTree = "<group>"; };
 		055EB6C61A94B6F7009ACFEC /* XEOS_Stub.64.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = XEOS_Stub.64.s; sourceTree = "<group>"; };
+		055EB6C71A94B917009ACFEC /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -880,7 +880,7 @@
 			isa = PBXGroup;
 			children = (
 				055EB56B1A94B6F6009ACFEC /* include */,
-				055EB59A1A94B6F6009ACFEC /* Makefile */,
+				055EB6C71A94B917009ACFEC /* Makefile */,
 				055EB59B1A94B6F6009ACFEC /* README.md */,
 				055EB59C1A94B6F6009ACFEC /* source */,
 			);
