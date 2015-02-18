@@ -59,71 +59,32 @@
 
 # $Id$
 
-include ../../../Makefile-Config.mk
+include make/Config.mk
+include make/Targets.mk
 
-#-------------------------------------------------------------------------------
-# Display
-#-------------------------------------------------------------------------------
+PROMPT  := XEOS SOURCE CORE XEOS
+DEPS    := XEOS-lib-posix XEOS-lib-c99 XEOS-lib-system XEOS-core-acpi
+FILES   := $(call XEOS_FUNC_C_FILES,$(DIR_SRC))         \
+           $(call XEOS_FUNC_S_FILES,$(DIR_SRC))         \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)debug/)   \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)gui/)     \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)hal/)     \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)info/)    \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)initrd/)  \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)irq/)     \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)isr/)     \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)mem/)     \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)proc/)    \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)syscall/) \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)system/)  \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)vfs/)     \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)video/)   \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)vm/)
 
-PROMPT  := "    ["$(COLOR_GREEN)" XEOS "$(COLOR_NONE)"]> ["$(COLOR_GREEN)" SRC  "$(COLOR_NONE)"]> ["$(COLOR_GREEN)" CORE "$(COLOR_NONE)"]> ["$(COLOR_GREEN)" KERN "$(COLOR_NONE)"]> *** "
-
-#-------------------------------------------------------------------------------
-# Files
-#-------------------------------------------------------------------------------
-
-_FILES  = $(call XEOS_FUNC_S_OBJ,$(PATH_SRC_CORE_KERNEL))
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL))
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/cpu/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/io/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/rtc/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/cmos/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/idt/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/nmi/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/gdt/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/pic/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/pit/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/ps2/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)hal/keyboard/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)isr/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)irq/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)system/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)syscall/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)video/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)gui/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)info/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)vm/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)proc/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)mem/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)vfs/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)initrd/)
-_FILES += $(call XEOS_FUNC_C_OBJ,$(PATH_SRC_CORE_KERNEL)debug/)
-
-#-------------------------------------------------------------------------------
-# Built-in targets
-#-------------------------------------------------------------------------------
-
-# Declaration for phony targets, to avoid problems with local files
-.PHONY: all clean
-
-#-------------------------------------------------------------------------------
-# Phony targets
-#-------------------------------------------------------------------------------
-
-# Build the full project
-all: $(_FILES)
+all: obj-build
 	
-	@$(PRINT) $(PROMPT)$(COLOR_CYAN)"Generating main object file"$(COLOR_NONE)" [ 32 bits ]: "$(COLOR_GRAY)"core-xeos$(EXT_OBJ)"$(COLOR_NONE)
-	@$(LD_32) -r $(call XEOS_FUNC_FILES_OBJECT_32,$^) -o $(PATH_BUILD_32_OBJ)core-xeos$(EXT_OBJ)
+	@:
 	
-	@$(PRINT) $(PROMPT)$(COLOR_CYAN)"Generating main object file"$(COLOR_NONE)" [ 64 bits ]: "$(COLOR_GRAY)"core-xeos$(EXT_OBJ)"$(COLOR_NONE)
-	@$(LD_64) -r $(call XEOS_FUNC_FILES_OBJECT_64,$^) -o $(PATH_BUILD_64_OBJ)core-xeos$(EXT_OBJ)
-
-# Cleans the build files
-clean:
+clean: obj-clean
 	
-	@$(PRINT) $(PROMPT)"Cleaning all build files"
-	@$(RM) $(ARGS_RM) $(PATH_BUILD_32_OBJ)$(subst $(PATH_SRC),,$(PATH_SRC_CORE_KERNEL))
-	@$(RM) $(ARGS_RM) $(PATH_BUILD_64_OBJ)$(subst $(PATH_SRC),,$(PATH_SRC_CORE_KERNEL))
-	@$(RM) $(ARGS_RM) $(PATH_BUILD_32_OBJ)core-xeos.*
-	@$(RM) $(ARGS_RM) $(PATH_BUILD_64_OBJ)core-xeos.*
+	@:
