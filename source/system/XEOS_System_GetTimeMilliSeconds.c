@@ -67,7 +67,6 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <system.h>
 #include <xeos/__private/system.h>
 
 double XEOS_System_GetTimeMilliSeconds( void )

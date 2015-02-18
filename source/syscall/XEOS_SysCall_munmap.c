@@ -68,7 +68,6 @@
  */
 
 #include <system/syscall.h>
-#include <system.h>
 #include <xeos/syscall.h>
 
 uint64_t XEOS_SysCall_munmap( void * addr, size_t len )

@@ -68,7 +68,6 @@
  */
 
 #include <system/syscall.h>
-#include <system.h>
 #include <xeos/syscall.h>
 
 uint64_t XEOS_SysCall_mmap( void * addr, size_t len, int prot, int flags, int fildes, off_t off )

@@ -71,8 +71,6 @@
 #include <xeos/hal/__private/idt.h>
 #include <stdlib.h>
 
-#include <system.h>
-
 #ifdef __LP64__
     
     struct __XEOS_HAL_IDT_Pointer64  __XEOS_HAL_IDT_Address;

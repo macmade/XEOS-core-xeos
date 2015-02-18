@@ -68,7 +68,6 @@
  */
 
 #include <xeos/isr.h>
-#include <system.h>
 #include <system/syscall.h>
 #include <xeos/syscall.h>
 

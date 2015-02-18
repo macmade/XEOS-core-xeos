@@ -70,8 +70,6 @@
 #include <xeos/hal/cpu.h>
 #include <xeos/hal/__private/cpu.h>
 
-#include <system.h>
-
 static bool __XEOS_HAL_CPU_HasFeatures = false;
 
 bool XEOS_HAL_CPU_HasFeature( XEOS_HAL_CPUInfos_Feature feature )
