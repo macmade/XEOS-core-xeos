@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_HAL_PIT_H__
-#define __XEOS_HAL_PIT_H__
+#ifndef XEOS_HAL_PIT_H
+#define XEOS_HAL_PIT_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -104,4 +104,4 @@ XEOS_HAL_PIT_Register;
 }
 #endif
 
-#endif /* __XEOS_HAL_PIT_H__ */
+#endif /* XEOS_HAL_PIT_H */

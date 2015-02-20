@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_SYSCALL_H__
-#define __XEOS_SYSCALL_H__
+#ifndef XEOS_SYSCALL_H
+#define XEOS_SYSCALL_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -85,4 +85,4 @@ uint64_t XEOS_SysCall_munmap( void * addr, size_t len );
 }
 #endif
 
-#endif /* __XEOS_SYSCALL_H__ */
+#endif /* XEOS_SYSCALL_H */

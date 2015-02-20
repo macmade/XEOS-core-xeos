@@ -62,13 +62,13 @@
 /* $Id$ */
 
 /*!
- * @header          __vm.h
+ * @header          vm.h
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS___PRIVATE_VM_H__
-#define __XEOS___PRIVATE_VM_H__
+#ifndef XEOS___PRIVATE_VM_H
+#define XEOS___PRIVATE_VM_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -94,4 +94,4 @@ extern struct __XEOS_VM_MemoryMap __XEOS_VM_SystemMap;
 }
 #endif
 
-#endif /* __XEOS___PRIVATE_VM_H__ */
+#endif /* XEOS___PRIVATE_VM_H */

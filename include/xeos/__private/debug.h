@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS___PRIVATE_PRIVATE_H__
-#define __XEOS___PRIVATE_PRIVATE_H__
+#ifndef XEOS___PRIVATE_PRIVATE_H
+#define XEOS___PRIVATE_PRIVATE_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -76,7 +76,7 @@ extern "C" {
 
 #include <xeos/debug.h>
 
-#define __XEOS_DEBUG_KERNEL_TRACE_MAX_LENGTH 50
+#define XEOS_DEBUG_KERNEL_TRACE_MAX_LENGTH 50
 
 struct __XEOS_Debug_Trace
 {
@@ -100,4 +100,4 @@ void __cyg_profile_func_exit(  void * function, void * caller ) __attribute__( (
 }
 #endif
 
-#endif /* __XEOS___PRIVATE_PRIVATE_H__ */
+#endif /* XEOS___PRIVATE_PRIVATE_H */

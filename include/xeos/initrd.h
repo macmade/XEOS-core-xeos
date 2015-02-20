@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_INITRD_H__
-#define __XEOS_INITRD_H__
+#ifndef XEOS_INITRD_H
+#define XEOS_INITRD_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -92,4 +92,4 @@ uint32_t        XEOS_InitRD_EntryGetOffset( XEOS_InitRD_EntryRef entry );
 }
 #endif
 
-#endif /* __XEOS_INITRD_H__ */
+#endif /* XEOS_INITRD_H */

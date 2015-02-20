@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_MAIN_H__
-#define __XEOS_MAIN_H__
+#ifndef XEOS_MAIN_H
+#define XEOS_MAIN_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -83,4 +83,4 @@ void XEOS_Main( XEOS_InfoRef info ) NORETURN_ATTRIBUTE;
 }
 #endif
 
-#endif /* __XEOS_MAIN_H__ */
+#endif /* XEOS_MAIN_H */

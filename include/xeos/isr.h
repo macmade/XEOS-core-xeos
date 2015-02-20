@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_ISR_H__
-#define __XEOS_ISR_H__
+#ifndef XEOS_ISR_H
+#define XEOS_ISR_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -106,4 +106,4 @@ void XEOS_ISR_SysCall( uint8_t isr, XEOS_HAL_CPU_Registers * registers );
 }
 #endif
 
-#endif /* __XEOS_ISR_H__ */
+#endif /* XEOS_ISR_H */

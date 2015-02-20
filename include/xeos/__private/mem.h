@@ -62,13 +62,13 @@
 /* $Id$ */
 
 /*!
- * @header          __proc.h
+ * @header          mem.h
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS___PRIVATE_MEM_H__
-#define __XEOS___PRIVATE_MEM_H__
+#ifndef XEOS___PRIVATE_MEM_H
+#define XEOS___PRIVATE_MEM_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -96,4 +96,4 @@ extern unsigned int             __XEOS_Mem_ZoneCount;
 }
 #endif
 
-#endif /* __XEOS___PRIVATE_MEM_H__ */
+#endif /* XEOS___PRIVATE_MEM_H */

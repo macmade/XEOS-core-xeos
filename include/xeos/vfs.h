@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_VFS_H__
-#define __XEOS_VFS_H__
+#ifndef XEOS_VFS_H
+#define XEOS_VFS_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -107,4 +107,4 @@ XEOS_VFS_DriverRef  XEOS_VFS_EntryGetDriver( XEOS_VFS_EntryRef entry );
 }
 #endif
 
-#endif /* __XEOS_SYSTEM_H__ */
+#endif /* XEOS_VFS_H */

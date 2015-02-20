@@ -78,5 +78,5 @@ bool XEOS_InitRDIsValid( XEOS_InitRDRef initrd )
         return false;
     }
     
-    return ( XEOS_InitRDGetSignature( initrd ) == __XEOS_INITRD_SIGNATURE ) ? true : false;
+    return ( XEOS_InitRDGetSignature( initrd ) == XEOS_INITRD_SIGNATURE ) ? true : false;
 }

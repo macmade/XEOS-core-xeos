@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_HAL_ACPI_H__
-#define __XEOS_HAL_ACPI_H__
+#ifndef XEOS_HAL_ACPI_H
+#define XEOS_HAL_ACPI_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -80,4 +80,4 @@ extern "C" {
 }
 #endif
 
-#endif /* __XEOS_HAL_ACPI_H__ */
+#endif /* XEOS_HAL_ACPI_H */

@@ -62,13 +62,13 @@
 /* $Id$ */
 
 /*!
- * @header          __rtc.h
+ * @header          rtc.h
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_HAL___PRIVATE_RTC_H__
-#define __XEOS_HAL___PRIVATE_RTC_H__
+#ifndef XEOS_HAL___PRIVATE_RTC_H
+#define XEOS_HAL___PRIVATE_RTC_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -141,4 +141,4 @@ uint8_t __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_Register r );
 }
 #endif
 
-#endif /* __XEOS_HAL___PRIVATE_RTC_H__ */
+#endif /* XEOS_HAL___PRIVATE_RTC_H */

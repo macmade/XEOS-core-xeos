@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS___PRIVATE_INITRD_H__
-#define __XEOS___PRIVATE_INITRD_H__
+#ifndef XEOS___PRIVATE_INITRD_H
+#define XEOS___PRIVATE_INITRD_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -76,7 +76,7 @@ extern "C" {
 
 #include <xeos/initrd.h>
 
-#define __XEOS_INITRD_SIGNATURE 0x44525358
+#define XEOS_INITRD_SIGNATURE 0x44525358
 
 struct __XEOS_InitRD
 {
@@ -95,4 +95,4 @@ struct __XEOS_InitRD_Entry
 }
 #endif
 
-#endif /* __XEOS___PRIVATE_INITRD_H__ */
+#endif /* XEOS___PRIVATE_INITRD_H */

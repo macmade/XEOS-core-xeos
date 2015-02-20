@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_PROC_H__
-#define __XEOS_PROC_H__
+#ifndef XEOS_PROC_H
+#define XEOS_PROC_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -80,4 +80,4 @@ extern "C" {
 }
 #endif
 
-#endif /* __XEOS_PROC_H__ */
+#endif /* XEOS_PROC_H */

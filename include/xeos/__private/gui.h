@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS___PRIVATE_GUI_H__
-#define __XEOS___PRIVATE_GUI_H__
+#ifndef XEOS___PRIVATE_GUI_H
+#define XEOS___PRIVATE_GUI_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -116,4 +116,4 @@ extern XEOS_GUI_Color __XEOS_GUI_Color_WindowBackground;
 }
 #endif
 
-#endif /* __XEOS___PRIVATE_GUI_H__ */
+#endif /* XEOS___PRIVATE_GUI_H */

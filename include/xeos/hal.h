@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_HAL_H__
-#define __XEOS_HAL_H__
+#ifndef XEOS_HAL_H
+#define XEOS_HAL_H
 
 #include <xeos/hal/acpi.h>
 #include <xeos/hal/cmos.h>
@@ -84,4 +84,4 @@
 #include <xeos/hal/smbios.h>
 #include <xeos/hal/keyboard.h>
 
-#endif /* __XEOS_HAL_H__ */
+#endif /* XEOS_HAL_H */

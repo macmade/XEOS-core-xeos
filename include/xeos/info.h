@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_INFO_H__
-#define __XEOS_INFO_H__
+#ifndef XEOS_INFO_H
+#define XEOS_INFO_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -246,4 +246,4 @@ uintptr_t XEOS_Info_GetKernelBSSSectionEndAddress( void );
 }
 #endif
 
-#endif /* __XEOS_INFO_H__ */
+#endif /* XEOS_INFO_H */

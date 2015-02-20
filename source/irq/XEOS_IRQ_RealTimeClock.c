@@ -75,7 +75,7 @@
 #include <xeos/__private/system.h>
 #include <time.h>
 
-#define __XEOS_IRQ_RTC_FREQUENCY    1024
+#define XEOS_IRQ_RTC_FREQUENCY    1024
 
 static int  __count  = 0;
 static bool __inited = false;
@@ -104,7 +104,7 @@ void XEOS_IRQ_RealTimeClock( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * regi
     }
     else
     {
-        if( __count == __XEOS_IRQ_RTC_FREQUENCY )
+        if( __count == XEOS_IRQ_RTC_FREQUENCY )
         {
             __count                     = 0;
             __XEOS_System_Milliseconds  = 0;
@@ -115,7 +115,7 @@ void XEOS_IRQ_RealTimeClock( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * regi
         {
             __count++;
             
-            __XEOS_System_Milliseconds = ( ( double )__count / ( double )__XEOS_IRQ_RTC_FREQUENCY ) * ( double )1000;
+            __XEOS_System_Milliseconds = ( ( double )__count / ( double )XEOS_IRQ_RTC_FREQUENCY ) * ( double )1000;
         }
     }
     

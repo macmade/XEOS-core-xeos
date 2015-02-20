@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_SYSTEM_H__
-#define __XEOS_SYSTEM_H__
+#ifndef XEOS_SYSTEM_H
+#define XEOS_SYSTEM_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -110,4 +110,4 @@ double XEOS_System_GetTimeMilliSeconds( void );
 }
 #endif
 
-#endif /* __XEOS_SYSTEM_H__ */
+#endif /* XEOS_SYSTEM_H */

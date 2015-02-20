@@ -62,13 +62,13 @@
 /* $Id$ */
 
 /*!
- * @header          proc.h
+ * @header          mem.h
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_PROC_H__
-#define __XEOS_PROC_H__
+#ifndef XEOS_MEM_H
+#define XEOS_MEM_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -123,4 +123,4 @@ uint64_t            XEOS_Mem_GetTotalBytes( void );
 }
 #endif
 
-#endif /* __XEOS_PROC_H__ */
+#endif /* XEOS_MEM_H */

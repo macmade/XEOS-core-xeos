@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_VM_H__
-#define __XEOS_VM_H__
+#ifndef XEOS_VM_H
+#define XEOS_VM_H
 
 
 #ifdef __cplusplus
@@ -198,4 +198,4 @@ bool                    XEOS_VM_PTEntryGetFlag( XEOS_VM_PTEntryRef object, XEOS_
 }
 #endif
 
-#endif /* __XEOS_VM_H__ */
+#endif /* XEOS_VM_H */

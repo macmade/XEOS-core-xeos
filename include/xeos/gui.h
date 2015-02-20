@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_GUI_H__
-#define __XEOS_GUI_H__
+#ifndef XEOS_GUI_H
+#define XEOS_GUI_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -163,15 +163,15 @@ XEOS_GUI_Point  XEOS_GUI_GetCursorPosition( void );
 void            XEOS_GUI_SetCursorPosition( XEOS_GUI_Point point );
 
 int     XEOS_GUI_Prompt( const char * s );
-int     XEOS_Video_Promptf( const char * format, ... ) FORMAT_ATTRIBUTE( printf, 1, 2 );
-int     XEOS_Video_Print( const char * s );
-int     XEOS_Video_Printf( const char * format, ... ) FORMAT_ATTRIBUTE( printf, 1, 2 );
-int     XEOS_Video_VPrintf( const char * format, va_list arg );
-void    XEOS_Video_Putc( char c, bool updateCursor );
-void    XEOS_Video_Scroll( uint32_t lines );
+int     XEOS_GUI_Promptf( const char * format, ... ) FORMAT_ATTRIBUTE( printf, 1, 2 );
+int     XEOS_GUI_Print( const char * s );
+int     XEOS_GUI_Printf( const char * format, ... ) FORMAT_ATTRIBUTE( printf, 1, 2 );
+int     XEOS_GUI_VPrintf( const char * format, va_list arg );
+void    XEOS_GUI_Putc( char c, bool updateCursor );
+void    XEOS_GUI_Scroll( uint32_t lines );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __XEOS_GUI_H__ */
+#endif /* XEOS_GUI_H */

@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_HAL_CMOS_H__
-#define __XEOS_HAL_CMOS_H__
+#ifndef XEOS_HAL_CMOS_H
+#define XEOS_HAL_CMOS_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -109,4 +109,4 @@ void XEOS_HAL_CMOS_Write( uint8_t * bytes, uint8_t length );
 }
 #endif
 
-#endif /* __XEOS_HAL_CMOS_H__ */
+#endif /* XEOS_HAL_CMOS_H */

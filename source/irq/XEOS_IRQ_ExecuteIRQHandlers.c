@@ -98,7 +98,7 @@ void XEOS_IRQ_ExecuteIRQHandlers( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers *
         case XEOS_HAL_PIC_IRQ15:    handlers = __XEOS_IRQ_IRQ15Handlers;    break;
     }
     
-    for( i = 0; i < __XEOS_IRQ_MAX_HANDLERS; i++ )
+    for( i = 0; i < XEOS_IRQ_MAX_HANDLERS; i++ )
     {
         if( handlers[ i ] != NULL )
         {

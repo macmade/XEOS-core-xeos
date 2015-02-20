@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_HAL_KEYBOARD_H__
-#define __XEOS_HAL_KEYBOARD_H__
+#ifndef XEOS_HAL_KEYBOARD_H
+#define XEOS_HAL_KEYBOARD_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -137,4 +137,4 @@ XEOS_HAL_Keyboard_Response      XEOS_HAL_Keyboard_Reset( void );
 }
 #endif
 
-#endif /* __XEOS_HAL_KEYBOARD_H__ */
+#endif /* XEOS_HAL_KEYBOARD_H */

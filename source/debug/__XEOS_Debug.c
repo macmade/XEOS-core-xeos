@@ -71,7 +71,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-static struct __XEOS_Debug_Symbol __XEOS_Debug_KernelTraceSymbols[ __XEOS_DEBUG_KERNEL_TRACE_MAX_LENGTH ];
+static struct __XEOS_Debug_Symbol __XEOS_Debug_KernelTraceSymbols[ XEOS_DEBUG_KERNEL_TRACE_MAX_LENGTH ];
 
 static bool __XEOS_Debug_KernelTraceSymbolsInited = false;
 
@@ -79,7 +79,7 @@ struct __XEOS_Debug_Trace __XEOS_Debug_KernelTrace =
 {
     __XEOS_Debug_KernelTraceSymbols,
     0,
-    __XEOS_DEBUG_KERNEL_TRACE_MAX_LENGTH
+    XEOS_DEBUG_KERNEL_TRACE_MAX_LENGTH
 };
 
 void __cyg_profile_func_enter( void * function, void * caller )

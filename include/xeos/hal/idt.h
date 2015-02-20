@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_HAL_IDT_H__
-#define __XEOS_HAL_IDT_H__
+#ifndef XEOS_HAL_IDT_H
+#define XEOS_HAL_IDT_H
 
 
 #ifdef __cplusplus
@@ -265,4 +265,4 @@ int XEOS_HAL_IDT_ISREntryGetIndex( XEOS_HAL_IDT_ISREntryRef entry );
 }
 #endif
 
-#endif /* __XEOS_HAL_IDT_H__ */
+#endif /* XEOS_HAL_IDT_H */

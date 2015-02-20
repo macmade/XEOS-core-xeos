@@ -62,13 +62,13 @@
 /* $Id$ */
 
 /*!
- * @header          __video.h
+ * @header          video.h
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS___PRIVATE_VIDEO_H__
-#define __XEOS___PRIVATE_VIDEO_H__
+#ifndef XEOS___PRIVATE_VIDEO_H
+#define XEOS___PRIVATE_VIDEO_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -132,4 +132,4 @@ extern unsigned int __XEOS_Video_StickyLines;
 }
 #endif
 
-#endif /* __XEOS___PRIVATE_VIDEO_H__ */
+#endif /* XEOS___PRIVATE_VIDEO_H */

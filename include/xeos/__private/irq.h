@@ -62,13 +62,13 @@
 /* $Id$ */
 
 /*!
- * @header          __irq.h
+ * @header          irq.h
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS___PRIVATE_IRQ_H__
-#define __XEOS___PRIVATE_IRQ_H__
+#ifndef XEOS___PRIVATE_IRQ_H
+#define XEOS___PRIVATE_IRQ_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -81,10 +81,10 @@ extern "C" {
 #endif
 
 /*!
- * @define      __XEOS_IRQ_MAX_HANDLERS
+ * @define      XEOS_IRQ_MAX_HANDLERS
  * @abstract    The maximum number of handlers for an IRQ line
  */
-#define __XEOS_IRQ_MAX_HANDLERS     32
+#define XEOS_IRQ_MAX_HANDLERS     32
 
 /*!
  * @function    __XEOS_IRQ_Init
@@ -202,4 +202,4 @@ extern XEOS_IRQ_IRQHandler __XEOS_IRQ_IRQ15Handlers[];
 }
 #endif
 
-#endif /* __XEOS___PRIVATE_IRQ_H__ */
+#endif /* XEOS___PRIVATE_IRQ_H */

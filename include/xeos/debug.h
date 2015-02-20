@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_DEBUG_H__
-#define __XEOS_DEBUG_H__
+#ifndef XEOS_DEBUG_H
+#define XEOS_DEBUG_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -91,4 +91,4 @@ const char * XEOS_Debug_SymbolGetCallSiteFunctionName( XEOS_Debug_SymbolRef sym 
 }
 #endif
 
-#endif /* __XEOS_DEBUG_H__ */
+#endif /* XEOS_DEBUG_H */

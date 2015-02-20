@@ -62,13 +62,13 @@
 /* $Id$ */
 
 /*!
- * @header          __idt.h
+ * @header          idt.h
  * @author          Jean-David Gadina
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_HAL___PRIVATE_IDT_H__
-#define __XEOS_HAL___PRIVATE_IDT_H__
+#ifndef XEOS_HAL___PRIVATE_IDT_H
+#define XEOS_HAL___PRIVATE_IDT_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -198,4 +198,4 @@ extern XEOS_HAL_IDT_ISRHandler __XEOS_HAL_IDT_ISRHandlers[];
 }
 #endif
 
-#endif /* __XEOS_HAL___PRIVATE_IDT_H__ */
+#endif /* XEOS_HAL___PRIVATE_IDT_H */

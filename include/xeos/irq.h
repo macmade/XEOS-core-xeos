@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_IRQ_H__
-#define __XEOS_IRQ_H__
+#ifndef XEOS_IRQ_H
+#define XEOS_IRQ_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -143,4 +143,4 @@ void XEOS_IRQ_Keyboard( XEOS_HAL_PIC_IRQ irq, XEOS_HAL_CPU_Registers * registers
 }
 #endif
 
-#endif /* __XEOS_IRQ_H__ */
+#endif /* XEOS_IRQ_H */

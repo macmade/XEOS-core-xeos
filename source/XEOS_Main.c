@@ -82,16 +82,16 @@
 #include <acpi/acpi.h>
 #include <acpi/acpica.h>
 
-#define __NOP                       \
+#define XEOS_MAIN_ASM_NOP           \
     __asm__                         \
     (                               \
         "nop;nop;nop;nop;nop;\n"    \
         "nop;nop;nop;nop;nop;\n"    \
     );
 
-#define __KERN_INIT_SECTION( _msg_, _status_, _code_ )  \
-        __XEOS_Main_Prompt( _msg_ );                    \
-        _code_                                          \
+#define KERN_INIT_SECTION( _msg_, _status_, _code_ )  \
+        __XEOS_Main_Prompt( _msg_ );                  \
+        _code_                                        \
         __XEOS_Main_PromptSuccess( _status_ )
     
 void XEOS_Main( XEOS_InfoRef info )
@@ -115,7 +115,7 @@ void XEOS_Main( XEOS_InfoRef info )
     __XEOS_Main_PromptWithStatus( "Entering the kernel:", "XEOS-0.2.0", XEOS_Video_ColorGreenLight );
     
     /* Initializes the Interrupt Descriptor Table */
-    __KERN_INIT_SECTION
+    KERN_INIT_SECTION
     (
         "Initializing the IDT:",
         NULL,
@@ -129,7 +129,7 @@ void XEOS_Main( XEOS_InfoRef info )
      * This will allow us to install the exception handlers, and avoid
      * conflicts with existing IRQs mapping to exceptions.
      */
-    __KERN_INIT_SECTION
+    KERN_INIT_SECTION
     (
         "Remapping IRQs:",
         NULL,
@@ -139,7 +139,7 @@ void XEOS_Main( XEOS_InfoRef info )
     );
     
     /* Installs the exception handlers */
-    __KERN_INIT_SECTION
+    KERN_INIT_SECTION
     (
         "Installing the exception handlers:",
         NULL,
@@ -160,7 +160,7 @@ void XEOS_Main( XEOS_InfoRef info )
     );
     
     /* Installs the IRQ handlers */
-    __KERN_INIT_SECTION
+    KERN_INIT_SECTION
     (
         "Installing the IRQs handlers:",
         NULL,
@@ -181,7 +181,7 @@ void XEOS_Main( XEOS_InfoRef info )
     );
     
     /* Installs the system call ISR */
-    __KERN_INIT_SECTION
+    KERN_INIT_SECTION
     (
         "Registering the system call ISR:",
         NULL,
@@ -199,7 +199,7 @@ void XEOS_Main( XEOS_InfoRef info )
     );
     
     /* Installs the new Interrupt Descriptor Table */
-    __KERN_INIT_SECTION
+    KERN_INIT_SECTION
     (
         "Activating the IDT:",
         NULL,
@@ -209,7 +209,7 @@ void XEOS_Main( XEOS_InfoRef info )
     );
     
     /* System timer IRQ */
-    __KERN_INIT_SECTION
+    KERN_INIT_SECTION
     (
         "Registering the system timer IRQ:",
         "IRQ:0",
@@ -220,7 +220,7 @@ void XEOS_Main( XEOS_InfoRef info )
     );
     
     /* Keyboard IRQ */
-    __KERN_INIT_SECTION
+    KERN_INIT_SECTION
     (
         "Registering the keyboard IRQ:",
         "IRQ:1",
@@ -238,7 +238,7 @@ void XEOS_Main( XEOS_InfoRef info )
     );
     
     /* RTC IRQ */
-    __KERN_INIT_SECTION
+    KERN_INIT_SECTION
     (
         "Registering the RTC IRQ:",
         "IRQ:8",
@@ -261,7 +261,7 @@ void XEOS_Main( XEOS_InfoRef info )
     );
     
     /* (Re)enables the interrupts (standard, NMI and RTC) */
-    __KERN_INIT_SECTION
+    KERN_INIT_SECTION
     (
         "Activating all interrupts:",
         NULL,
@@ -273,14 +273,14 @@ void XEOS_Main( XEOS_InfoRef info )
     );
     
     /* Makes sur the system time is initialized */
-    __KERN_INIT_SECTION
+    KERN_INIT_SECTION
     (
         "Getting the system time:",
         NULL,
         {
             while( XEOS_System_GetTime() == 0 )
             {
-                __NOP;
+                XEOS_MAIN_ASM_NOP;
             }
         }
     );
@@ -292,7 +292,7 @@ void XEOS_Main( XEOS_InfoRef info )
         const char * cpuBrandName;
         
         /* Gets CPU informations */
-        __KERN_INIT_SECTION
+        KERN_INIT_SECTION
         (
             "Getting CPU informations:",
             NULL,
@@ -307,7 +307,7 @@ void XEOS_Main( XEOS_InfoRef info )
     }
     
     /* Initializes the physical memory system */
-    __KERN_INIT_SECTION
+    KERN_INIT_SECTION
     (
         "Initializing the physical memory allocator:",
         NULL,
@@ -317,7 +317,7 @@ void XEOS_Main( XEOS_InfoRef info )
     );
     
     /* Initializes the system map */
-    __KERN_INIT_SECTION
+    KERN_INIT_SECTION
     (
         "Creating the system memory map:",
         NULL,
@@ -327,7 +327,7 @@ void XEOS_Main( XEOS_InfoRef info )
     );
     
     /* Initialize the ACPICA subsystem */
-    __KERN_INIT_SECTION
+    KERN_INIT_SECTION
     (
         "Initializing the ACPI subsystem:",
         NULL,
@@ -387,6 +387,6 @@ void XEOS_Main( XEOS_InfoRef info )
     
     for( ; ; )
     {
-        __NOP;
+        XEOS_MAIN_ASM_NOP;
     }
 }

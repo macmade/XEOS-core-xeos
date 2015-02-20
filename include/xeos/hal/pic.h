@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_HAL_PIC_H__
-#define __XEOS_HAL_PIC_H__
+#ifndef XEOS_HAL_PIC_H
+#define XEOS_HAL_PIC_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -262,4 +262,4 @@ bool XEOS_HAL_PIC_IRQLineMasked( XEOS_HAL_PIC_IRQ irq );
 }
 #endif
 
-#endif /* __XEOS_HAL_PIC_H__ */
+#endif /* XEOS_HAL_PIC_H */

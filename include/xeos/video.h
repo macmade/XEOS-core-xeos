@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_VIDEO_H__
-#define __XEOS_VIDEO_H__
+#ifndef XEOS_VIDEO_H
+#define XEOS_VIDEO_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -261,4 +261,4 @@ void XEOS_Video_SetStickyLines( unsigned int lines );
 }
 #endif
 
-#endif /* __XEOS_VIDEO_H__ */
+#endif /* XEOS_VIDEO_H */

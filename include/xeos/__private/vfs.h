@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS___PRIVATE_VFS_H__
-#define __XEOS___PRIVATE_VFS_H__
+#ifndef XEOS___PRIVATE_VFS_H
+#define XEOS___PRIVATE_VFS_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -101,4 +101,4 @@ struct __XEOS_VFS_Entry
 }
 #endif
 
-#endif /* __XEOS___PRIVATE_VFS_H__ */
+#endif /* XEOS___PRIVATE_VFS_H */

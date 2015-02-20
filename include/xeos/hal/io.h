@@ -67,8 +67,8 @@
  * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef __XEOS_HAL_IO_H__
-#define __XEOS_HAL_IO_H__
+#ifndef XEOS_HAL_IO_H
+#define XEOS_HAL_IO_H
 
 
 #ifdef __cplusplus
@@ -103,4 +103,4 @@ void XEOS_HAL_IO_PortOut( uint16_t port, uint8_t value );
 }
 #endif
 
-#endif /* __XEOS_HAL_IO_H__ */
+#endif /* XEOS_HAL_IO_H */
