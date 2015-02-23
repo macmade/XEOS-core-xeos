@@ -108,7 +108,7 @@ void __XEOS_HAL_IDT_HandleISR( uint8_t isr, XEOS_HAL_CPU_Registers * registers )
 
 #ifdef __LP64__
 
-#define __XEOS_HAL_IDT_DEF_ISR( _n_ )           \
+#define XEOS_HAL_IDT_DEF_ISR( _n_ )           \
                                                 \
 __asm__                                         \
 (                                               \
@@ -158,7 +158,7 @@ __asm__                                         \
 
 #else
 
-#define __XEOS_HAL_IDT_DEF_ISR( _n_ )           \
+#define XEOS_HAL_IDT_DEF_ISR( _n_ )           \
                                                 \
 __asm__                                         \
 (                                               \
@@ -195,37 +195,37 @@ __asm__                                         \
 
 #endif
 
-#define __XEOS_HAL_IDT_DEF_ISR_GROUP( _n_ )     \
-        __XEOS_HAL_IDT_DEF_ISR( _n_ ## 0 );     \
-        __XEOS_HAL_IDT_DEF_ISR( _n_ ## 1 );     \
-        __XEOS_HAL_IDT_DEF_ISR( _n_ ## 2 );     \
-        __XEOS_HAL_IDT_DEF_ISR( _n_ ## 3 );     \
-        __XEOS_HAL_IDT_DEF_ISR( _n_ ## 4 );     \
-        __XEOS_HAL_IDT_DEF_ISR( _n_ ## 5 );     \
-        __XEOS_HAL_IDT_DEF_ISR( _n_ ## 6 );     \
-        __XEOS_HAL_IDT_DEF_ISR( _n_ ## 7 );     \
-        __XEOS_HAL_IDT_DEF_ISR( _n_ ## 8 );     \
-        __XEOS_HAL_IDT_DEF_ISR( _n_ ## 9 );     \
-        __XEOS_HAL_IDT_DEF_ISR( _n_ ## A );     \
-        __XEOS_HAL_IDT_DEF_ISR( _n_ ## B );     \
-        __XEOS_HAL_IDT_DEF_ISR( _n_ ## C );     \
-        __XEOS_HAL_IDT_DEF_ISR( _n_ ## D );     \
-        __XEOS_HAL_IDT_DEF_ISR( _n_ ## E );     \
-        __XEOS_HAL_IDT_DEF_ISR( _n_ ## F )
+#define XEOS_HAL_IDT_DEF_ISR_GROUP( _n_ )     \
+        XEOS_HAL_IDT_DEF_ISR( _n_ ## 0 );     \
+        XEOS_HAL_IDT_DEF_ISR( _n_ ## 1 );     \
+        XEOS_HAL_IDT_DEF_ISR( _n_ ## 2 );     \
+        XEOS_HAL_IDT_DEF_ISR( _n_ ## 3 );     \
+        XEOS_HAL_IDT_DEF_ISR( _n_ ## 4 );     \
+        XEOS_HAL_IDT_DEF_ISR( _n_ ## 5 );     \
+        XEOS_HAL_IDT_DEF_ISR( _n_ ## 6 );     \
+        XEOS_HAL_IDT_DEF_ISR( _n_ ## 7 );     \
+        XEOS_HAL_IDT_DEF_ISR( _n_ ## 8 );     \
+        XEOS_HAL_IDT_DEF_ISR( _n_ ## 9 );     \
+        XEOS_HAL_IDT_DEF_ISR( _n_ ## A );     \
+        XEOS_HAL_IDT_DEF_ISR( _n_ ## B );     \
+        XEOS_HAL_IDT_DEF_ISR( _n_ ## C );     \
+        XEOS_HAL_IDT_DEF_ISR( _n_ ## D );     \
+        XEOS_HAL_IDT_DEF_ISR( _n_ ## E );     \
+        XEOS_HAL_IDT_DEF_ISR( _n_ ## F )
 
-__XEOS_HAL_IDT_DEF_ISR_GROUP( 0 );
-__XEOS_HAL_IDT_DEF_ISR_GROUP( 1 );
-__XEOS_HAL_IDT_DEF_ISR_GROUP( 2 );
-__XEOS_HAL_IDT_DEF_ISR_GROUP( 3 );
-__XEOS_HAL_IDT_DEF_ISR_GROUP( 4 );
-__XEOS_HAL_IDT_DEF_ISR_GROUP( 5 );
-__XEOS_HAL_IDT_DEF_ISR_GROUP( 6 );
-__XEOS_HAL_IDT_DEF_ISR_GROUP( 7 );
-__XEOS_HAL_IDT_DEF_ISR_GROUP( 8 );
-__XEOS_HAL_IDT_DEF_ISR_GROUP( 9 );
-__XEOS_HAL_IDT_DEF_ISR_GROUP( A );
-__XEOS_HAL_IDT_DEF_ISR_GROUP( B );
-__XEOS_HAL_IDT_DEF_ISR_GROUP( C );
-__XEOS_HAL_IDT_DEF_ISR_GROUP( D );
-__XEOS_HAL_IDT_DEF_ISR_GROUP( E );
-__XEOS_HAL_IDT_DEF_ISR_GROUP( F );
+XEOS_HAL_IDT_DEF_ISR_GROUP( 0 );
+XEOS_HAL_IDT_DEF_ISR_GROUP( 1 );
+XEOS_HAL_IDT_DEF_ISR_GROUP( 2 );
+XEOS_HAL_IDT_DEF_ISR_GROUP( 3 );
+XEOS_HAL_IDT_DEF_ISR_GROUP( 4 );
+XEOS_HAL_IDT_DEF_ISR_GROUP( 5 );
+XEOS_HAL_IDT_DEF_ISR_GROUP( 6 );
+XEOS_HAL_IDT_DEF_ISR_GROUP( 7 );
+XEOS_HAL_IDT_DEF_ISR_GROUP( 8 );
+XEOS_HAL_IDT_DEF_ISR_GROUP( 9 );
+XEOS_HAL_IDT_DEF_ISR_GROUP( A );
+XEOS_HAL_IDT_DEF_ISR_GROUP( B );
+XEOS_HAL_IDT_DEF_ISR_GROUP( C );
+XEOS_HAL_IDT_DEF_ISR_GROUP( D );
+XEOS_HAL_IDT_DEF_ISR_GROUP( E );
+XEOS_HAL_IDT_DEF_ISR_GROUP( F );

@@ -73,7 +73,7 @@
 
 #ifdef __LP64__
     
-    #define __XEOS_HAL_IDT_INIT_ISR( _i_ )                                                          \
+    #define XEOS_HAL_IDT_INIT_ISR( _i_ )                                                          \
                                                                                                     \
         {                                                                                           \
             __XEOS_HAL_IDT_ISREntry * entry;                                                        \
@@ -96,7 +96,7 @@
         
 #else
     
-    #define __XEOS_HAL_IDT_INIT_ISR( _i_ )                                                          \
+    #define XEOS_HAL_IDT_INIT_ISR( _i_ )                                                          \
                                                                                                     \
         {                                                                                           \
             __XEOS_HAL_IDT_ISREntry * entry;                                                        \
@@ -118,23 +118,23 @@
     
 #endif
 
-#define __XEOS_HAL_IDT_INIT_ISR_GROUP( _i_ )    \
-        __XEOS_HAL_IDT_INIT_ISR( _i_ ## 0 )     \
-        __XEOS_HAL_IDT_INIT_ISR( _i_ ## 1 )     \
-        __XEOS_HAL_IDT_INIT_ISR( _i_ ## 2 )     \
-        __XEOS_HAL_IDT_INIT_ISR( _i_ ## 3 )     \
-        __XEOS_HAL_IDT_INIT_ISR( _i_ ## 4 )     \
-        __XEOS_HAL_IDT_INIT_ISR( _i_ ## 5 )     \
-        __XEOS_HAL_IDT_INIT_ISR( _i_ ## 6 )     \
-        __XEOS_HAL_IDT_INIT_ISR( _i_ ## 7 )     \
-        __XEOS_HAL_IDT_INIT_ISR( _i_ ## 8 )     \
-        __XEOS_HAL_IDT_INIT_ISR( _i_ ## 9 )     \
-        __XEOS_HAL_IDT_INIT_ISR( _i_ ## A )     \
-        __XEOS_HAL_IDT_INIT_ISR( _i_ ## B )     \
-        __XEOS_HAL_IDT_INIT_ISR( _i_ ## C )     \
-        __XEOS_HAL_IDT_INIT_ISR( _i_ ## D )     \
-        __XEOS_HAL_IDT_INIT_ISR( _i_ ## E )     \
-        __XEOS_HAL_IDT_INIT_ISR( _i_ ## F )
+#define XEOS_HAL_IDT_INIT_ISR_GROUP( _i_ )    \
+        XEOS_HAL_IDT_INIT_ISR( _i_ ## 0 )     \
+        XEOS_HAL_IDT_INIT_ISR( _i_ ## 1 )     \
+        XEOS_HAL_IDT_INIT_ISR( _i_ ## 2 )     \
+        XEOS_HAL_IDT_INIT_ISR( _i_ ## 3 )     \
+        XEOS_HAL_IDT_INIT_ISR( _i_ ## 4 )     \
+        XEOS_HAL_IDT_INIT_ISR( _i_ ## 5 )     \
+        XEOS_HAL_IDT_INIT_ISR( _i_ ## 6 )     \
+        XEOS_HAL_IDT_INIT_ISR( _i_ ## 7 )     \
+        XEOS_HAL_IDT_INIT_ISR( _i_ ## 8 )     \
+        XEOS_HAL_IDT_INIT_ISR( _i_ ## 9 )     \
+        XEOS_HAL_IDT_INIT_ISR( _i_ ## A )     \
+        XEOS_HAL_IDT_INIT_ISR( _i_ ## B )     \
+        XEOS_HAL_IDT_INIT_ISR( _i_ ## C )     \
+        XEOS_HAL_IDT_INIT_ISR( _i_ ## D )     \
+        XEOS_HAL_IDT_INIT_ISR( _i_ ## E )     \
+        XEOS_HAL_IDT_INIT_ISR( _i_ ## F )
 
 void XEOS_HAL_IDT_Init( void )
 {
@@ -145,22 +145,22 @@ void XEOS_HAL_IDT_Init( void )
     memset(  __XEOS_HAL_IDT_ISREntries,  0, sizeof( __XEOS_HAL_IDT_ISREntry ) * XEOS_HAL_IDT_MAX_DESCRIPTORS );
     memset(  __XEOS_HAL_IDT_ISRHandlers, 0, sizeof( XEOS_HAL_IDT_ISRHandler ) * XEOS_HAL_IDT_MAX_DESCRIPTORS );
     
-    __XEOS_HAL_IDT_INIT_ISR_GROUP( 0 )
-    __XEOS_HAL_IDT_INIT_ISR_GROUP( 1 )
-    __XEOS_HAL_IDT_INIT_ISR_GROUP( 2 )
-    __XEOS_HAL_IDT_INIT_ISR_GROUP( 3 )
-    __XEOS_HAL_IDT_INIT_ISR_GROUP( 4 )
-    __XEOS_HAL_IDT_INIT_ISR_GROUP( 5 )
-    __XEOS_HAL_IDT_INIT_ISR_GROUP( 6 )
-    __XEOS_HAL_IDT_INIT_ISR_GROUP( 7 )
-    __XEOS_HAL_IDT_INIT_ISR_GROUP( 8 )
-    __XEOS_HAL_IDT_INIT_ISR_GROUP( 9 )
-    __XEOS_HAL_IDT_INIT_ISR_GROUP( A )
-    __XEOS_HAL_IDT_INIT_ISR_GROUP( B )
-    __XEOS_HAL_IDT_INIT_ISR_GROUP( C )
-    __XEOS_HAL_IDT_INIT_ISR_GROUP( D )
-    __XEOS_HAL_IDT_INIT_ISR_GROUP( E )
-    __XEOS_HAL_IDT_INIT_ISR_GROUP( F )
+    XEOS_HAL_IDT_INIT_ISR_GROUP( 0 )
+    XEOS_HAL_IDT_INIT_ISR_GROUP( 1 )
+    XEOS_HAL_IDT_INIT_ISR_GROUP( 2 )
+    XEOS_HAL_IDT_INIT_ISR_GROUP( 3 )
+    XEOS_HAL_IDT_INIT_ISR_GROUP( 4 )
+    XEOS_HAL_IDT_INIT_ISR_GROUP( 5 )
+    XEOS_HAL_IDT_INIT_ISR_GROUP( 6 )
+    XEOS_HAL_IDT_INIT_ISR_GROUP( 7 )
+    XEOS_HAL_IDT_INIT_ISR_GROUP( 8 )
+    XEOS_HAL_IDT_INIT_ISR_GROUP( 9 )
+    XEOS_HAL_IDT_INIT_ISR_GROUP( A )
+    XEOS_HAL_IDT_INIT_ISR_GROUP( B )
+    XEOS_HAL_IDT_INIT_ISR_GROUP( C )
+    XEOS_HAL_IDT_INIT_ISR_GROUP( D )
+    XEOS_HAL_IDT_INIT_ISR_GROUP( E )
+    XEOS_HAL_IDT_INIT_ISR_GROUP( F )
     
     for( i = 0; i < XEOS_HAL_IDT_MAX_DESCRIPTORS; i++ )
     {
