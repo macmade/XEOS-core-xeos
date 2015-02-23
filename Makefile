@@ -64,21 +64,30 @@ include make/Targets.mk
 
 PROMPT  := XEOS SOURCE CORE XEOS
 DEPS    := XEOS-lib-posix XEOS-lib-c99 XEOS-lib-system XEOS-core-acpi
-FILES   := $(call XEOS_FUNC_C_FILES,$(DIR_SRC))         \
-           $(call XEOS_FUNC_S_FILES,$(DIR_SRC))         \
-           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)debug/)   \
-           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)gui/)     \
-           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)hal/)     \
-           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)info/)    \
-           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)initrd/)  \
-           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)irq/)     \
-           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)isr/)     \
-           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)mem/)     \
-           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)proc/)    \
-           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)syscall/) \
-           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)system/)  \
-           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)vfs/)     \
-           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)video/)   \
+FILES   := $(call XEOS_FUNC_C_FILES,$(DIR_SRC))              \
+           $(call XEOS_FUNC_S_FILES,$(DIR_SRC))              \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)debug/)        \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)gui/)          \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)hal/)          \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)hal/cmos/)     \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)hal/cpu/)      \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)hal/idt/)      \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)hal/io/)       \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)hal/keyboard/) \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)hal/nmi/)      \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)hal/pic/)      \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)hal/ps2/)      \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)hal/rtc/)      \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)info/)         \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)initrd/)       \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)irq/)          \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)isr/)          \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)mem/)          \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)proc/)         \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)syscall/)      \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)system/)       \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)vfs/)          \
+           $(call XEOS_FUNC_C_FILES,$(DIR_SRC)video/)        \
            $(call XEOS_FUNC_C_FILES,$(DIR_SRC)vm/)
 
 all: obj-build
