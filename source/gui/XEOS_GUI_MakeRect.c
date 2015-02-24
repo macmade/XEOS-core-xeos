@@ -59,6 +59,11 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
+/*!
+ * @author          Jean-David Gadina
+ * @copyright       (c) 2010-2015, Jean-David Gadina - www.xs-labs.com
+ */
+
 #include <xeos/gui.h>
 
 XEOS_GUI_Rect XEOS_GUI_MakeRect( uint32_t x, uint32_t y, uint32_t width, uint32_t height )
