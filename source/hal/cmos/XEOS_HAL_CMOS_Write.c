@@ -59,14 +59,6 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-/* $Id$ */
-
-/*!
- * @file            XEOS_HAL_CMOS_Write.c
- * @author          Jean-David Gadina
- * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
- */
-
 #include <xeos/hal/cmos.h>
 #include <xeos/hal/cpu.h>
 #include <xeos/hal/io.h>

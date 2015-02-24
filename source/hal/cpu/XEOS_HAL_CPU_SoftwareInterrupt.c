@@ -59,14 +59,6 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-/* $Id$ */
-
-/*!
- * @file            XEOS_HAL_CPU_SoftwareInterrupt.c
- * @author          Jean-David Gadina
- * @copyright       (c) 2010-2013, Jean-David Gadina - www.xs-labs.com
- */
-
 #include <xeos/hal/cpu.h>
 
 #define XEOS_HAL_CPU_GENT_INT( _n_ )  __asm__ __volatile__( "int $0x" # _n_ )
