@@ -277,7 +277,7 @@ void XEOS_Main( XEOS_InfoRef info )
         {
             while( XEOS_System_GetTime() == 0 )
             {
-                XEOS_MAIN_ASM_NOP;
+                XEOS_MAIN_ASM_NOP
             }
         }
     );
@@ -384,6 +384,6 @@ void XEOS_Main( XEOS_InfoRef info )
     
     for( ; ; )
     {
-        XEOS_MAIN_ASM_NOP;
+        XEOS_MAIN_ASM_NOP
     }
 }
