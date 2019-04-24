@@ -75,7 +75,7 @@ XEOS_HAL_Keyboard_Response XEOS_HAL_Keyboard_SendCommand( XEOS_HAL_Keyboard_Comm
     /* Makes sure we can write data to the PS2 controller */
     while( XEOS_HAL_PS2_InputBufferEmpty() == false );
     
-    XEOS_HAL_PS2_WriteData( command );
+    XEOS_HAL_PS2_WriteData( ( uint8_t )command );
     
     ret = XEOS_HAL_Keyboard_ReadData();
     

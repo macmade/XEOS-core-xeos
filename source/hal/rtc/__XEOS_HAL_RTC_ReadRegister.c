@@ -71,7 +71,7 @@
 
 uint8_t __XEOS_HAL_RTC_ReadRegister( __XEOS_HAL_RTC_Register r )
 {
-    XEOS_HAL_IO_PortOut( XEOS_HAL_CMOS_RegisterAddress, r );
+    XEOS_HAL_IO_PortOut( XEOS_HAL_CMOS_RegisterAddress, ( uint8_t )r );
     
     return XEOS_HAL_IO_PortIn( XEOS_HAL_CMOS_RegisterData );
 }
